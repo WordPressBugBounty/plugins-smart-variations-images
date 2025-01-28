@@ -271,7 +271,7 @@ class Smart_Variations_Images_Public {
                 'version' => $version,
             ),
             $this->plugin_name . '-swiper'                => array(
-                'src'     => '//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js',
+                'src'     => '//cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
                 'deps'    => array(),
                 'version' => null,
             ),
@@ -357,7 +357,7 @@ class Smart_Variations_Images_Public {
                 'has_rtl' => false,
             ),
             $this->plugin_name . '-swiper'                  => array(
-                'src'     => '//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css',
+                'src'     => '//cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
                 'deps'    => array(),
                 'version' => null,
                 'has_rtl' => false,

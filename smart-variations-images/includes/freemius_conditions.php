@@ -55,7 +55,7 @@ svi_fs()->add_filter(
     2
 );
 function svi_default_currency(  $currency  ) {
-    return 'auto';
+    return 'eur';
 }
 
 svi_fs()->add_filter( 'default_currency', 'svi_default_currency' );
