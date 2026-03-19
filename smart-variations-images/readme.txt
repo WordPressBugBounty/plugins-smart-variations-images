@@ -3,7 +3,7 @@ Contributors: drosendo
 Tags: woocommerce, product variations, image gallery, swatches, ecommerce  
 Requires at least: 4.9 
 Tested up to: 6.9
-Stable tag: 5.2.25
+Stable tag: 5.2.26
 Requires PHP: 7.4
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -127,6 +127,11 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 7. Setup swatches on Product > Attributes
 
 == Changelog ==
+
+= 5.2.26 =
+* Fix: Breakdance compatibility - added final AJAX fallback in gallery bootstrap when `data-wcsvi` is not available, using `sviloadProduct` to load product gallery payload safely.
+* Fix: Registered missing AJAX handlers for both guests and logged-in users (`wp_ajax_sviloadProduct` and `wp_ajax_nopriv_sviloadProduct`).
+* Improvement: Routed debug `console.log` output through `Vue.prototype.consoleLog`, gated by `SCRIPT_DEBUG` (`wcsvi.prod`).
 
 = 5.2.25 =
 * Added: GDPR-compliant local asset loading option - Load PhotoSwipe, Plyr, Swiper, and imagesLoaded from plugin directories instead of CDN (Cloudflare, jsDelivr, UNPKG) to protect visitor privacy and comply with GDPR regulations
