@@ -2,8 +2,8 @@
 Contributors: drosendo
 Tags: woocommerce, product variations, image gallery, swatches, ecommerce  
 Requires at least: 4.9 
-Tested up to: 7.1
-Stable tag: 5.2.28
+Tested up to: 7.0
+Stable tag: 5.2.29
 Requires PHP: 7.4
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -127,6 +127,10 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 7. Setup swatches on Product > Attributes
 
 == Changelog ==
+
+= 5.2.29 =
+* Compatibility: WordPress tested up to 7.0.
+* Update: Freemius SDK updated to latest stable version.
 
 = 5.2.28 =
 * Compatibility: WooCommerce tested up to 10.7.0.
