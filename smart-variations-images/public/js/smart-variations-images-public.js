@@ -1,1 +1,8125 @@
-"use strict";(self.webpackChunksmart_variations_images=self.webpackChunksmart_variations_images||[]).push([[317],{2987:(t,i,e)=>{e(113),e(4423),e(6099),e(7495),e(1699),e(5440),e(2762),e(3500);var o=e(5007);e(9432);const n={name:"stackedComponent",mounted:function(){var t=this;"sticky"in wcsvi.options&&this.boolEval(wcsvi.options.sticky)&&"desktop"==this.windowType&&this.buildSticky(),this.$bus.$on("vidPlayerStack_"+this.$root.$children[0].pid,(function(i){var e=$jq(t.$el).find("li:eq("+i+")").closest("li"),o=".svi-player_"+t.list[i].id+"_"+t.list[i].idk+"_"+t.$el.className;parseInt(i);e.find(o).remove(),e.find("img,.sviicon-play").show(),t.$bus.$emit("sviEmit","pos_vidPlayerStack")})),this.$bus.$on("thumbImages_static_"+this.$root.$children[0].pid,(function(i){"status"in i&&(i=i.gal),t.isEquivalent(t.list,i)||(t.list=[],setTimeout((function(){t.list=i,"sticky"in wcsvi.options&&t.boolEval(wcsvi.options.sticky)&&"desktop"==t.windowType&&t.goSticky()}),200)),t.$bus.$emit("sviEmit","pos_thumbImages_static")})),this.$nextTick((function(){var t=this;window.addEventListener("resize",(function(){t.getWindowWidth()})),this.getWindowWidth()}))},data:function(){var t="stacked_columns"in wcsvi.options&&wcsvi.options.stacked_columns?wcsvi.options.stacked_columns:1;return{columns:t,columns_original:t,list:[],windowType:this.getWindowWidth(!0),activateTitle:!(!("imagecaption"in wcsvi.options)||!this.boolEval(wcsvi.options.imagecaption)),imagecaption_option:"imagecaption_option"in wcsvi.options&&wcsvi.options.imagecaption_option?wcsvi.options.imagecaption_option:"",thumbtype:"svimainthumb"}},methods:{buildSticky:function(){"sa_element"in wcsvi.options&&$jq(wcsvi.options.sa_element).length>0&&$jq(wcsvi.options.sa_element).wrapInner((function(){return'<div class="stickysvi" style="top:'+wcsvi.options.sticky_margin+'px;"></div>'}))},goSticky:function(){$jq(".stickysvi").length>0&&$jq(".stickysvi").stickThis({top:"sticky_margin"in wcsvi.options&&wcsvi.options.sticky_margin?wcsvi.options.sticky_margin:0,pushup:"sa_pushup"in wcsvi.options&&wcsvi.options.sa_pushup?wcsvi.options.sa_pushup:""})}}},r=n;var s=e(4486),a=(0,s.A)(r,(function(){var t=this,i=t._self._c;return i("div",{staticClass:"svi-stackedsection"},[i("ul",{staticClass:"svistacked svithumbnails",class:["columns-"+t.columns]},t._l(t.list,(function(e,o){return i("li",{directives:[{name:"ezPlusStacked",rawName:"v-ezPlusStacked"},{name:"playVideo",rawName:"v-playVideo",value:e,expression:"item"}],key:e.id+"_"+o,class:t.colposition(o),domProps:{innerHTML:t._s(t.imgEl(e,"stack"))},on:{click:function(i){return t.photo(e,i,"stack")}}})})),0)])}),[],!1,null,null,null);const c=a.exports;e(2062);const l={components:{},name:"SliderComponent",mounted:function(){this.disable_thumb||(this.galleryThumbs=this.sliderThumbs()),this.galleryTop=this.sliderMain(),this.thumbImages_static(),this.mainImage_slider_thumbadd()},data:function(){return{statusThumbs:!1,originalCount:0,imgTitle:"",mainTitle:!(!("imagecaption"in wcsvi.options)||!this.boolEval(wcsvi.options.imagecaption)),thumbTitle:!(!("thumb_imagecaption"in wcsvi.options)||!this.boolEval(wcsvi.options.thumb_imagecaption)),slides:[],disable_thumb:!(!("disable_thumb"in wcsvi.options)||!this.boolEval(wcsvi.options.disable_thumb)),galleryThumbs:!1,galleryTop:!1,thumbAppend:!1,slider_pagination:!(!("slider_pagination"in wcsvi.options)||!this.boolEval(wcsvi.options.slider_pagination)),slider_pagination_color:{"--paginationColor":"slider_pagination_color"in wcsvi.options&&wcsvi.options.slider_pagination_color?wcsvi.options.slider_pagination_color:""},slider_navigation:!(!("slider_navigation"in wcsvi.options)||!this.boolEval(wcsvi.options.slider_navigation)),slider_navigation_thumb:!(!("slider_navigation_thumb"in wcsvi.options)||!this.boolEval(wcsvi.options.slider_navigation_thumb)),slider_navigation_color:{"--sviproslider_navcolor":"slider_navigation_color"in wcsvi.options&&wcsvi.options.slider_navigation_color?wcsvi.options.slider_navigation_color:""},slider_navcolor:"slider_navcolor"in wcsvi.options&&wcsvi.options.slider_navcolor?wcsvi.options.slider_navcolor:"",lazyLoadHtml:"slider_lazyload"in wcsvi.options&&this.boolEval(wcsvi.options.slider_lazyload)?'<div class="swiper-lazy-preloader" style="--lazyloadColor:'+wcsvi.options.slider_lazyload_color+'"></div>':""}},methods:{thumbImages_static:function(){var t=this;this.$bus.$on("vidPlayerSlider_"+this.$root.$children[0].pid,(function(i){t.vidRun(i,t.slides),t.$bus.$emit("sviEmit","vidPlayerSlider")})),this.$bus.$on("thumbImages_static_"+this.$root.$children[0].pid,(function(i){if(t.thumbAppend&&(t.galleryTop.removeSlide(0),t.disable_thumb||t.galleryThumbs.removeSlide(0),t.thumbAppend=!1),t.isEquivalent(t.slides,i.gal))"skip_equivalent"in wcsvi.options&&t.boolEval(wcsvi.options.skip_equivalent)&&t.galleryTop.slideTo(0),t.$root.$children[0].originalAttributes&&"skip_equivalent"in wcsvi.options&&!t.boolEval(wcsvi.options.skip_equivalent)&&t.runKeepThumbnailsImageChange(t.$root.$children[0].originalAttributes,!0);else{t.originalCount=t.slides.length,t.statusThumbs=i.status,t.slides=i.gal,$jq.each(i.gal,(function(i,e){e.sviid=e.id;var o=t.imgEl(e,"slider"),n=t.calculateAspectRatioFit(e),r='style="min-height:'+n.height+'px"';if(t.galleryTop.appendSlide('<div class="swiper-slide" '+(e.video?"":r)+">"+o+(e.video?"":t.lazyLoadHtml)+"</div>"),t.galleryTop.update(),!t.disable_thumb){var s=t.imgEl(e,"sliderthumb"),a="";t.thumbTitle&&(a='<div class="svititleimg">'+t.returnTitle(wcsvi.options.thumb_imagecaption_option,e)+"</div>"),t.galleryThumbs.appendSlide('<div class="swiper-slide">'+s+t.lazyLoadHtml+a+"</div>"),t.galleryThumbs.update(),0==i&&t.runOpacity()}})),"slider_lazyload"in wcsvi.options&&t.boolEval(wcsvi.options.slider_lazyload)?t.completeLoad():t.waitload(".svi-gallery-top")}t.$bus.$emit("sviEmit","pos_thumbImages_static")}))},mainImage_slider_thumbadd:function(){var t=this;this.$bus.$on("mainImage_slider_thumbadd_"+this.$root.$children[0].pid,(function(i){t.thumbAppend&&(t.galleryTop.removeSlide(0),t.disable_thumb||t.galleryThumbs.removeSlide(0));var e=t.isImgInSlider(i);if("false"!=e)return t.galleryTop.slideTo(e),void(t.thumbAppend=!1);v.class="swiper-lazy",v.sviid=i.id;var o=t.imgEl(i,"slider");if(t.galleryTop.appendSlide('<div class="swiper-slide">'+o+t.lazyLoadHtml+"</div>"),t.galleryTop.update(),!t.disable_thumb){v.class="swiper-lazy",v.sviid=i.id;var n=t.imgEl(i,"sliderthumb");t.galleryThumbs.appendSlide('<div class="swiper-slide">'+n+t.lazyLoadHtml+"</div>"),t.galleryThumbs.update()}t.galleryTop.slideTo(0),t.thumbAppend=!0,t.$bus.$emit("sviEmit","pos_mainImage_slider_thumbadd")}))},isImgInSlider:function(t){var i=t.id,e=$jq.map(this.galleryTop.slides,(function(t,e){var o=$jq(t).find("img").data("sviid");if(o==i)return e}));return e.length>0?e[0]:"false"},setHeight:function(){var t=this;this.disable_thumb||this.statusThumbs||0==parseInt(wcsvi.options.slider_position)||setTimeout((function(){t.galleryThumbs.updateAutoHeight(),t.galleryThumbs.updateSlides()}),100)},waitload:function(t){var i=this;$jq(t).imagesLoaded().done((function(t){i.completeLoad()}))},completeLoad:function(){this.originalCount>0?this.removeSlides():this.handleUpdate()},removeSlides:function(){var t,i=this,e=[];for(t=0;t<this.originalCount;t++)e.push(t);this.galleryTop.removeSlide(e),this.disable_thumb||this.galleryThumbs.removeSlide(e),setTimeout((function(){i.handleUpdate()}),50)},handleUpdate:function(){"slider_lazyload"in wcsvi.options&&this.boolEval(wcsvi.options.slider_lazyload)&&(this.galleryTop.update(),this.disable_thumb||this.galleryThumbs.update()),this.vidRun(0,this.slides),this.setHeight(),this.$forceUpdate(),this.mainTitle&&this.runInsertTitle(this.galleryTop.realIndex),this.$root.$children[0].originalAttributes&&"skip_equivalent"in wcsvi.options&&!this.boolEval(wcsvi.options.skip_equivalent)?this.runKeepThumbnailsImageChange(this.$root.$children[0].originalAttributes,!0):this.galleryTop.slideTo(0,500)}}},u=l;var p=(0,s.A)(u,(function(){var t=this,i=t._self._c;return i("div",{staticClass:"sviproslider"},[i("div",{staticClass:"swiper svi-gallery-top"},[i("div",{directives:[{name:"ezPlusSlider",rawName:"v-ezPlusSlider"}],staticClass:"swiper-wrapper"}),t._v(" "),t.slider_pagination?i("div",{staticClass:"swiper-pagination sviswiper-pagination",style:t.slider_pagination_color}):t._e(),t._v(" "),t.slider_navigation?i("div",{staticClass:"swiper-button-next swiperTop-swiper-button-next",class:["swiper-button"+t.slider_navcolor],style:["custom"==t.slider_navcolor?t.slider_navigation_color:""],attrs:{slot:"button-next"},slot:"button-next"}):t._e(),t._v(" "),t.slider_navigation?i("div",{staticClass:"swiper-button-prev swiperTop-swiper-button-prev",class:["swiper-button"+t.slider_navcolor],style:["custom"==t.slider_navcolor?t.slider_navigation_color:""],attrs:{slot:"button-prev"},slot:"button-prev"}):t._e()]),t._v(" "),t.mainTitle?i("div",{staticClass:"svititleimg gallery-top-title",domProps:{innerHTML:t._s(t.imgTitle)}}):t._e(),t._v(" "),t.disable_thumb?t._e():i("div",{directives:[{name:"show",rawName:"v-show",value:!t.statusThumbs,expression:"!statusThumbs"}],staticClass:"swiper svi-gallery-thumbs"},[i("div",{staticClass:"swiper-wrapper"}),t._v(" "),t.slider_navigation_thumb?i("div",{staticClass:"swiper-button-next swiperThumbs-swiper-button-next",class:"swiper-button"+t.slider_navcolor,style:["custom"==t.slider_navcolor?t.slider_navigation_color:""]}):t._e(),t._v(" "),t.slider_navigation_thumb?i("div",{staticClass:"swiper-button-prev swiperThumbs-swiper-button-prev",class:"swiper-button"+t.slider_navcolor,style:["custom"==t.slider_navcolor?t.slider_navigation_color:""]}):t._e()])])}),[],!1,null,null,null);const d=p.exports;const h={name:"imageComponent",watch:{image:function(t){var i=this;setTimeout((function(){"video"in wcsvi.options&&i.plyr(t)}),100)}},mounted:function(){var t=this;this.$bus.$on("mainImage_static_"+this.$root.$children[0].pid,(function(i){t.isEquivalent(t.gallery,i)||(t.gallery=i,t.image=i[0],""==t.image.video?(t.ratio=t.calculateAspectRatioFit(),t.imgStyle={"min-height":t.ratio.height+"px"}):t.imgStyle={"min-height":"auto"},t.$bus.$emit("sviEmit","pos_mainImage_static")),t.$bus.$emit("sviEmit","mainImage_complete")})),this.$bus.$on("mainImage_static_change_"+this.$root.$children[0].pid,(function(i){t.image=i,""==t.image.video?(t.ratio=t.calculateAspectRatioFit(),t.imgStyle={"min-height":t.ratio.height+"px"}):t.imgStyle={"min-height":"auto"},t.$bus.$emit("sviEmit","pos_mainImage_static_change")})),this.$bus.$on("mainImage_static_changeRestore_"+this.$root.$children[0].pid,(function(i){i||t.notPresent()||(t.image=t.gallery[0],t.$bus.$emit("sviEmit","pos_mainImage_static_changeRestore"))})),this.$root.$children[0].form&&this.$root.$children[0].form.on("click",".reset_variations",(function(){t.image=t.gallery[0]}))},data:function(){return{gallery:[],image:"",imgStyle:{},pic:!1,ratio:{},activateTitle:!(!("imagecaption"in wcsvi.options)||!this.boolEval(wcsvi.options.imagecaption))}},methods:{notPresent:function(){var t=this,i=!1;return $jq.each(this.gallery,(function(e,o){t.isEquivalent(t.image,o)&&(i=!0)})),i},waitload:function(t){$jq(this.$el).imagesLoaded().done((function(t){$jq(this.$el).removeAttr("style")}))}}},f=h;var m=(0,s.A)(f,(function(){var t=this,i=t._self._c;return i("div",{directives:[{name:"ezPlus",rawName:"v-ezPlus"}],staticClass:"svi-mainsection",style:t.imgStyle,domProps:{innerHTML:t._s(t.imgEl(t.image,"static"))},on:{click:function(i){return t.photo(t.image,i,"static")}}})}),[],!1,null,null,null);const g=m.exports;e(2010);const w={name:"ThumbnailComponent",mounted:function(){var t=this;this.$bus.$on(this.cbus_event+"_"+this.$root.$children[0].pid,(function(i){t.isEquivalent(t.list,i)||(t.list=i,t.$bus.$emit("sviEmit","pos_"+t.cbus_event)),t.$root.$children[0].originalAttributes&&t.runKeepThumbnailsImageChange(t.$root.$children[0].originalAttributes)}))},data:function(){var t=parseInt(wcsvi.options.columns),i="columns_showcase"in wcsvi.options&&parseInt(wcsvi.options.columns_showcase)?parseInt(wcsvi.options.columns_showcase):4;"slider_position"in wcsvi.options&&"main-svi"==this.$root.$children[0].$options.name&&0!=parseInt(wcsvi.options.slider_position)&&(t=1);var e="main-svi"==this.$root.$children[0].$options.name?"svimainthumb":"svivariationsthumb",o="svimainthumb"==e?"thumbImages_static":"variationThumbImages_static";return{columns:"svimainthumb"==e?t:i,list:[],cbus_event:o,thumbtype:e,activateTitle:!(!("thumb_imagecaption"in wcsvi.options)||!this.boolEval(wcsvi.options.thumb_imagecaption))}},methods:{triggerChange:function(t,i){"svimainthumb"==this.thumbtype?(this.runOpacity(i),this.$bus.$emit("mainImage_static_change_"+this.$root.$children[0].pid,t),"slider"in wcsvi.options&&this.boolEval(wcsvi.options.slider)&&this.$bus.$emit("mainImage_slider_thumbadd_"+this.$root.$children[0].pid,t),"variation_swap"in wcsvi.options&&this.boolEval(wcsvi.options.variation_swap)&&this.ThumbClickSwap(t)):"variation_thumbnails_lb"in wcsvi.options&&(this.boolEval(wcsvi.options.variation_thumbnails_lb)||t.video?this.photo(t,i,"variationThumbImages"):$jq(this.$el).find("video,.plyr").length>0&&($jq(this.$el).find("video,.plyr").remove(),$jq(this.$el).find(".sviicon-play").show()))}}},_=w;var y=(0,s.A)(_,(function(){var t=this,i=t._self._c;return i("div",{staticClass:"svi-thumbsection",class:t.thumbtype},[i("ul",{key:"svithumbnails",staticClass:"svithumbnails",class:["columns-"+t.columns,t.list.length<1?"svi100":"",t.list.length>0?"svishow":""]},t._l(t.list,(function(e,o){return i("li",{key:e.id+"_"+o,class:t.colposition(o),domProps:{innerHTML:t._s(t.imgEl(e,t.thumbtype))},on:{click:function(i){return t.triggerChange(e,i)}}})})),0)])}),[],!1,null,"dfa72ae6",null);const b=y.exports,x={components:{mainImageGalComponent:g,thumbnailsComponent:b},name:"StaticComponent",mounted:function(){},data:function(){return{disabledThumbs:!(!1 in wcsvi.options)&&!this.boolEval(wcsvi.options.disable_thumb)}}},$=x;var E=(0,s.A)($,(function(){var t=this,i=t._self._c;return i("div",{staticClass:"svistatic"},[i("mainImageGalComponent"),t._v(" "),t.disabledThumbs?i("thumbnailsComponent"):t._e()],1)}),[],!1,null,null,null);const I=E.exports,S={components:{stackedComponent:c,sliderComponent:d,staticComponent:I},props:["pid","form","ptype","wcsvi","ajax"],name:"main-svi",watch:{windowType:function(t){var i=this;this.boolEval(this.options.stacked)&&setTimeout((function(){i.loadSviGalleries()}),150)}},mounted:function(){var t=this,i=this.$el&&this.$el.closest?this.$el.closest(".svi_wrapper"):null;i&&(i.classList.add("svi-app-mounted"),this.cleanupPlaceholder(i)),this.form.length>0&&parseInt(wcsvi.options.default_swatches)?(this.form.addClass("swatches-support"),this.buildSwatches()):parseInt(wcsvi.options.default_swatches)&&this.buildSwatches(),this.hasImages&&(this.ajax&&this.loadSviGalleries(),this.ptype&&this.hasSVIdata?this.DetectChangesInForm():this.loadSviGalleries(),this.$nextTick((function(){var t=this;window.addEventListener("resize",(function(){t.getWindowWidth()})),this.getWindowWidth(),0==$jq(".gallery-svi").css("opacity")&&$jq(".gallery-svi").css("opacity",1);var i=this.$el&&this.$el.closest?this.$el.closest(".svi_wrapper"):null;if(i){var e=function(){i.classList.add("svi-app-ready"),t.cleanupPlaceholder(i)};"function"==typeof window.requestAnimationFrame?window.requestAnimationFrame((function(){window.requestAnimationFrame(e)})):setTimeout(e,50)}})),this.$bus.$on("vidPlayer_"+this.$root.$children[0].pid,(function(i){t.curVideo?(t.curVideo.playing&&(t.curVideo.stop(),t.curVideo.destroy(),t.curVideo=!1),t.curVideo=i||!1):t.curVideo=i,t.$bus.$emit("sviEmit","pos_vidPlayer")})))},computed:{variations_form:function(){return this.form},attributeFields:function(){return this.variations_form.find(".variations select")},singleVariation:function(){return this.variations_form.find(".single_variation")},resetVariations:function(){return this.variations_form.find(".reset_variations")},variationData:function(){return this.variations_form.data("product_variations")},sviflex:function(){var t;return"slider_position"in wcsvi.options?("1"==wcsvi.options.slider_position&&(t=" sviflex-l"),"2"==wcsvi.options.slider_position&&(t=" sviflex-r"),"0"==wcsvi.options.slider_position?"svi-horizontal":"sviflex"+t):"svi-horizontal"}},data:function(){return window.wcsvislugs="slugs"in this.wcsvi&&Object.keys(this.wcsvi.slugs).length>0?this.wcsvi.slugs:[],{hasImages:"images"in this.wcsvi&&this.wcsvi.images.length>0,type:"static",options:wcsvi.options,gallery:this.wcsvi,attributes:!1,template:"svi-"+wcsvi.options.template,windowType:this.getWindowWidth(!0),curVideo:!1,hasSVIdata:"slugs"in this.wcsvi&&Object.keys(this.wcsvi.slugs).length>0,originalAttributes:!(!("keep_thumbnails"in wcsvi.options)||!parseInt(wcsvi.options.keep_thumbnails))&&[]}},methods:{cleanupPlaceholder:function(t){var i=t.querySelector(".svi-initial-holder");i&&i.remove()}}},T=S;var j=(0,s.A)(T,(function(){var t=this,i=t._self._c;return i("div",{staticClass:"woosvi_strap",class:[t.sviflex,t.template,t.boolEval(t.options.stacked)?"svi-stacked-parent":""]},[t.boolEval(t.options.stacked)?[t.boolEval(t.options.force_stacked)?i("stackedComponent"):t._e(),t._v(" "),t.boolEval(t.options.force_stacked)||"desktop"!=t.windowType?t._e():i("stackedComponent"),t._v(" "),t.boolEval(t.options.force_stacked)||t.boolEval(t.options.slider)||"mobile"!=t.windowType?t._e():[i("staticComponent")],t._v(" "),!t.boolEval(t.options.force_stacked)&&t.boolEval(t.options.slider)&&"mobile"==t.windowType?[i("sliderComponent")]:t._e()]:t._e(),t._v(" "),t.boolEval(t.options.slider)||t.boolEval(t.options.stacked)?t._e():[i("staticComponent")],t._v(" "),t.boolEval(t.options.slider)&&!t.boolEval(t.options.stacked)?[i("sliderComponent")]:t._e()],2)}),[],!1,null,null,null);const C=j.exports;const O={components:{thumbnailsComponent:b},props:["pid","form","ptype"],name:"thumb-svi",data:function(){return{}}},k=O;var A=(0,s.A)(k,(function(){var t=this._self._c;return t("div",{staticClass:"svi-drop-gallery"},[t("thumbnailsComponent")],1)}),[],!1,null,null,null);const q=A.exports;o.Ay.config.productionTip=!1,window.Vue=o.Ay,window.jQuery=window.$jq=jQuery,e(7725),e(3604),e(3155);var P=function(t){$jq(".svi_wrapper").length>0&&$jq.each($jq(".svi_wrapper"),(function(i,e){"Divi"===wcsvi.options.template&&$jq(e).closest(".woocommerce-product-gallery").removeClass("woocommerce-product-gallery"),o.Ay.prototype.buildMainGallery(i,e,C,t)})),$jq(".svi_wrapper_drop").length>0&&$jq.each($jq(".svi_wrapper_drop"),(function(i,e){o.Ay.prototype.buildMainGallery(i,e,q,t)}))},N=function(){"porto"===wcsvi.options.template&&"use_skeleton_screen"in js_porto_vars&&(js_porto_vars.use_skeleton_screen.includes("product")||js_porto_vars.use_skeleton_screen.includes("quickview"))&&$jq("body").hasClass("single-product")?o.Ay.prototype.waitForEl(".svi_wrapper",P,100,50):P()};!function(){var t=function(){var t=document.querySelector('[data-block-name="woocommerce/product-image-gallery"]'),i=document.querySelector(".gallery-svi.woocommerce-product-gallery");t&&i&&!t.contains(i)&&t.appendChild(i)};document.addEventListener("DOMContentLoaded",t);var i=new MutationObserver((function(){return t()}));i.observe(document.body,{childList:!0,subtree:!0})}(),"quick_view"in wcsvi.options&&parseInt(wcsvi.options.quick_view)&&$jq(document).ajaxComplete((function(t,i,e){if(!(e.data&&e.data.indexOf("loadProduct")>0)){var o=!1;if($jq(".svi_wrapper").length>0&&e.url.indexOf("admin-ajax.php")>-1)"flatsome"===wcsvi.options.template&&$jq(".product-lightbox .product-gallery-slider").remove(),P(!0);else if(e.url.indexOf("admin-ajax.php")>-1&&$jq(".woosvi_strap").length<1&&""!==wcsvi.options.quick_view_target.trim()){var n=$jq(t.currentTarget.body),r=n.find('[id^="product-"],[data-product-id]');if(r.length>0){o=r.attr("id").replace(/\D/g,"")||r.data("product-id");var s=n.find(wcsvi.options.quick_view_target).parent();"shopkeeper"===wcsvi.options.template&&$jq(".cd-quick-view").addClass("shopkeeper-svi"),n.find(wcsvi.options.quick_view_target).remove(),parseInt(o)&&jQuery.ajax({url:wcsvi.call,type:"POST",data:{action:"loadProduct",id:o}}).done((function(){o=!1})).complete((function(t){s.prepend(t),P(!0)}))}}}})),function(){if(parseInt(wcsvi.options.loop_showcase)){var t="loop_showcase_wrapper_el"in wcsvi.options&&wcsvi.options.loop_showcase_wrapper_el?wcsvi.options.loop_showcase_wrapper_el:".product",i="loop_showcase_wrapper_el_img"in wcsvi.options&&wcsvi.options.loop_showcase_wrapper_el_img?wcsvi.options.loop_showcase_wrapper_el_img:"img";if($jq(t).each((function(){var t=$jq(this).find(i).first().parent();t.attr("data-default-background",t.css("background")||"none")})),"status"in wcsvi.options&&wcsvi.options.status||$jq(".svitn_img").length>0&&$jq(t).each((function(){$jq(this).find(".svitn_img").length>0&&$jq(this).find(".svitn_img").eq(1).nextAll().remove()})),$jq(".svitn_img").length>0){var e=function(){var e=$jq(this).closest(t),n=e.find(i).first().parent();n.is("li")&&(n=n.closest("ul").parent()),$jq(".svitn_current_img").removeClass("svitn_current_img"),$jq(this).addClass("svitn_current_img"),o(n,this,$jq(this).index())};$jq(".svitn_img").on("mouseenter",e),$jq(".svitn_img").on("click",e),$jq(".svitn_img").on("mouseleave",(function(){var e=$jq(this).closest(t),o=e.find(i).first().parent();o.is("li")&&(o=o.closest("ul").parent());var n=e.find(".svi-image-compare");if($jq(".svitn_current_img").removeClass("svitn_current_img"),n.length>0){var r=o.attr("data-default-background")||"none";o.css("background",r),o.find("*").not(".svitn_wrapper,.svitn_img").css({opacity:""})}else{var s=o.attr("data-default-background")||"none";o.css("background",s),o.find("*").not(".svitn_wrapper,.svitn_img").removeAttr("style")}}));var o=function(t,i,e){var o=$jq(i).data("large_image");o&&"string"==typeof o&&o.trim()?(t.css({background:"url(".concat(o,") no-repeat center center"),"background-size":"cover",display:"block"}),t.find("*").not(".svitn_wrapper,.svitn_img").css({opacity:"0"})):console.error("SVI: Loop showcase - Invalid image URL:",o)}}}}(),function(){if("filter_attribute"in wcsvi.options&&parseInt(wcsvi.options.filter_attribute)){var t=function(t){t.each((function(){var t=$jq(this);if(!t.hasClass("svi-initialized")){var i=t.find("> li"),e=t.data("cut")||"diagonal",n="1"===wcsvi.options.filter_attribute_animation,r=0,s=t.closest("li.wc-block-product, li.product"),a=s.siblings("li.wc-block-product, li.product").not(":has(.svi-image-compare)").first(),c=a.find("img").first();c.length>0&&(r=c.height(),o.Ay.prototype.consoleLog("referenceHeight",r));var l=t.closest("li.wc-block-product, li.product"),u=l.length>0?l.outerHeight(!0):0,p=r>0?r:u>0?u:231;t.css("height","".concat(p,"px")),t.data("initial-height",p),t.css({"--count":i.length,"--width":t.width()+"px"});var v=i.length,d=100/v,h=10,f=100-(v-1)*h;i.each((function(r){var s=$jq(this),a=s.data("image");if(s.css({"background-image":'url("'.concat(a,'")'),"background-position":"center center","background-size":"cover","background-repeat":"no-repeat"}),"vertical"===e)s.css({width:"100%",height:"".concat(p/v,"px"),position:"static"}),n&&(s.on("mouseenter",(function(){i.each((function(t){var i=$jq(this);if(t===r)i.css({height:"85%","z-index":2});else{var e=15/(v-1);if(i.css({height:"".concat(e,"%"),"z-index":1}),t<r)i.css("top","".concat(t*e,"%"));else{var o=85+(t-r)*e;i.css("top","".concat(o,"%"))}}}))})),s.on("mouseleave",(function(){i.each((function(t){var i=$jq(this);i.css({height:"".concat(p/v,"px"),top:"auto","z-index":1})}))})));else if("horizontal"===e){var c=r*d;s.css({width:"".concat(d,"%"),left:"".concat(c,"%")}),n&&(s.on("mouseenter",(function(){i.each((function(t){var i=$jq(this);if(t===r)if(i.css({width:"".concat(f,"%"),"z-index":2}),0===t)i.css("left","0%");else if(t===v-1)i.css("left","".concat(100-f,"%"));else{var e=t*h,o=e;i.css("left","".concat(o,"%"))}else if(i.css({width:"".concat(h,"%"),"z-index":1}),t<r)i.css("left","".concat(t*h,"%"));else{var n=f+(t-r-1)*h+r*h;i.css("left","".concat(n,"%"))}}))})),s.on("mouseleave",(function(){i.each((function(t){var i=$jq(this),e=t*d;i.css({width:"".concat(d,"%"),left:"".concat(e,"%"),"z-index":1})}))})))}else{var l;o.Ay.prototype.consoleLog("SVI: Processing diagonal layout with ".concat(v," images")),l=2===v?90:3===v?80:70,t.css("--cut-percentage","".concat(l,"%"));var u=r*d;s.css({width:"".concat(d+10,"%"),left:"".concat(u,"%"),"z-index":v-r}),n&&(s.on("mouseenter",(function(){i.each((function(t){var i=$jq(this);if(t===r)i.css({width:"85%","z-index":v+1,"clip-path":"none",left:"7.5%"});else if(i.css({width:"".concat(7.5,"%"),"z-index":v-t,"clip-path":"none",visibility:"visible"}),t<r)i.css("left","".concat(7.5*t,"%"));else{var e=92.5+7.5*(t-r-1);i.css("left","".concat(e,"%"))}}))})),s.on("mouseleave",(function(){i.each((function(t){var i=$jq(this),e=t*d;i.css({width:"".concat(d+10,"%"),left:"".concat(e,"%"),"z-index":v-t,visibility:"visible"}),t===v-1?i.css("clip-path","none"):i.css("clip-path","polygon(0 0, 100% 0, ".concat(l,"% 100%, 0 100%)"))}))})))}})),t.addClass("svi-initialized")}}))};t($jq(".svi-image-compare"));var i=new MutationObserver((function(i){i.forEach((function(i){if(i.addedNodes.length){var e=$jq(i.addedNodes).find(".svi-image-compare").addBack(".svi-image-compare");e.length&&t(e)}}))}));i.observe(document.body,{childList:!0,subtree:!0}),$jq(window).on("resize",(function(){setTimeout((function(){$jq(".svi-image-compare").each((function(){var t=$jq(this);t.css({"--width":t.width()+"px"})}))}),1)}))}}(),N()},3604:(t,i,e)=>{e.r(i);e(113),e(6099);var o={zoomContainerAppendTo:".woosvi_strap",container:"sviZoomContainer",cursor:"pointer",attrImageZoomSrc:"zoom-image",galleryActiveClass:"active",containLensZoom:!0,borderColour:"lens_border"in wcsvi.options&&wcsvi.options.lens_border?wcsvi.options.lens_border:"#888",lensBorderSize:"lens_lensBorder"in wcsvi.options&&wcsvi.options.lens_lensBorder?wcsvi.options.lens_lensBorder:1,lensShape:"lens_type"in wcsvi.options&&wcsvi.options.lens_type?wcsvi.options.lens_type:"round",lensSize:"lens_size"in wcsvi.options&&wcsvi.options.lens_size?wcsvi.options.lens_size:125,zoomType:"lens_zoomtype"in wcsvi.options&&wcsvi.options.lens_zoomtype?wcsvi.options.lens_zoomtype:"lens",easing:!(!("lens_easing"in wcsvi.options)||!parseInt(wcsvi.options.lens_easing)),scrollZoom:!(!("lens_scrollzoom"in wcsvi.options)||!wcsvi.options.lens_scrollzoom),lensFadeIn:!(!("lens_lensFadeIn"in wcsvi.options)||!parseInt(wcsvi.options.lens_lensFadeIn))&&wcsvi.options.lens_lensFadeIn,zoomWindowFadeIn:!(!("lens_zoomWindowFadeIn"in wcsvi.options)||!parseInt(wcsvi.options.lens_zoomWindowFadeIn))&&wcsvi.options.lens_zoomWindowFadeIn,zIndex:"lens_zIndex"in wcsvi.options&&wcsvi.options.lens_zIndex?wcsvi.options.lens_zIndex:1e3,zoomWindowWidth:"lens_zoomWindowWidth"in wcsvi.options&&parseInt(wcsvi.options.lens_zoomWindowWidth)?wcsvi.options.lens_zoomWindowWidth:400,zoomWindowHeight:"lens_zoomWindowHeight"in wcsvi.options&&parseInt(wcsvi.options.lens_zoomWindowHeight)?wcsvi.options.lens_zoomWindowHeight:400,zoomWindowPosition:"rtl"in wcsvi.options&&parseInt(wcsvi.options.rtl)?11:1};Vue.directive("ezPlus",{update:function(t,i,e){var n=!1;if(parseInt(wcsvi.options.lens)&&(document.documentElement.clientWidth<768&&(n=!0),!n||parseInt(wcsvi.options.lens_mobiledisabled))){var r=$jq(t).find("img");$jq("div.sviZoomContainer").remove(),$jq(r).ezPlus(o)}}}),Vue.directive("ezPlusStacked",{bind:function(t,i,e){var n=!1;if(parseInt(wcsvi.options.lens)&&(document.documentElement.clientWidth<768&&(n=!0),(!n||!(!1 in wcsvi.options)&&parseInt(wcsvi.options.lens_mobiledisabled))&&!($jq(t).find(".sviicon-play").length>0))){var r=$jq(t).find("img"),s=o;s.container="sviStackedZoomContainer";var a=setInterval((function(){$jq(r).mouseover((function(){$jq(r).ezPlus(s)})),clearInterval(a)}),15)}}}),Vue.directive("ezPlusSlider",{componentUpdated:function(t,i,e){var n=!1;if(parseInt(wcsvi.options.lens)&&(document.documentElement.clientWidth<768&&(n=!0),!n||!(!1 in wcsvi.options)&&parseInt(wcsvi.options.lens_mobiledisabled))){var r=$jq(t).find(".swiper-slide-active img");if(o.zoomContainerAppendTo=".woosvi_strap .svi-gallery-top .swiper-slide-active",o.zIndex=9,$jq("div.zoomContainer,div.zoomWindowContainer").remove(),$jq(r).ezPlus(o),"window"==o.zoomType)var s=setInterval((function(){$jq("div.sviZoomContainer div.zoomWindowContainer").length>0&&($jq("div.sviZoomContainer div.zoomWindowContainer").detach().appendTo(".woosvi_strap"),clearInterval(s))}),10)}}}),Vue.directive("playVideo",{bind:function(t,i,e){setTimeout((function(){e.context.plyr(i.value)}),500)}})},3155:(t,i,e)=>{e(2675),e(9463),e(2259),e(8980),e(3418),e(3792),e(4782),e(2010),e(6099),e(7495),e(8781),e(7764),e(2953);function o(t,i){var e="undefined"!=typeof Symbol&&t[Symbol.iterator]||t["@@iterator"];if(!e){if(Array.isArray(t)||(e=function(t,i){if(t){if("string"==typeof t)return n(t,i);var e={}.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?n(t,i):void 0}}(t))||i&&t&&"number"==typeof t.length){e&&(t=e);var o=0,r=function(){};return{s:r,n:function(){return o>=t.length?{done:!0}:{done:!1,value:t[o++]}},e:function(t){throw t},f:r}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var s,a=!0,c=!1;return{s:function(){e=e.call(t)},n:function(){var t=e.next();return a=t.done,t},e:function(t){c=!0,s=t},f:function(){try{a||null==e.return||e.return()}finally{if(c)throw s}}}}function n(t,i){(null==i||i>t.length)&&(i=t.length);for(var e=0,o=Array(i);e<i;e++)o[e]=t[e];return o}const r={name:"pswp",data:function(){return{options:{closeEl:!!parseInt(wcsvi.options.lightbox_close),captionEl:!(!("lightbox_title"in wcsvi.options)||!parseInt(wcsvi.options.lightbox_title)),fullscreenEl:!!parseInt(wcsvi.options.lightbox_fullScreen),zoomEl:!!parseInt(wcsvi.options.lightbox_zoom),shareEl:!!parseInt(wcsvi.options.lightbox_share),counterEl:!!parseInt(wcsvi.options.lightbox_counter),arrowEl:!!parseInt(wcsvi.options.lightbox_controls),preloaderEl:!0,index:0},thumbnails:!(!("lightbox_thumbnails"in wcsvi.options)||!parseInt(wcsvi.options.lightbox_thumbnails)),gallery:!1,photoEl:!1,photoswipe:!1,toggleCheck:!0,pid:0}},mounted:function(){this.$nextTick((function(){}))},watch:{photoswipe:function(t){var i=this;this.photoswipe.listen("afterChange",(function(){var e=t.getCurrentIndex();i.vidRun(e,i.gallery,i.pid)})),this.photoswipe.listen("close",(function(){var e=t.getCurrentIndex();i.plyr(!1,i.pid),i.$bus.$emit("vidPlayerSlider_"+i.pid,e),i.$bus.$emit("vidPlayerStack_"+i.pid,e)}))}},methods:{open:function(t,i,e,o){var n=this;this.pid=o,this.plyr(!1,this.pid),this.gallery=i,this.options.index=this.findIndex(t,this.gallery),this.photoEl=e,this.photoswipe=new PhotoSwipe(this.$el,PhotoSwipeUI_Default,this.lightbox_prep(),this.options),this.thumbnails&&!wcsvi.options.nothumbs&&this.photoswipePreviews(this.photoswipe),this.photoswipe.init(),setTimeout((function(){n.vidRun(n.options.index,n.gallery,n.pid)}),100)},lightbox_prep:function(){var t=this,i=[];return $jq.each(this.gallery,(function(e,o){if("video"in wcsvi.options&&o.video&&parseInt(wcsvi.options.video)){var n=t.plyr_video(o);i.push({html:n,msrc:o.thumb_image})}else i.push({src:o.full_image,msrc:o.thumb_image,w:o.full_image_width,h:o.full_image_height,title:o.title})})),i},photoswipePreviews:function(t){var i=this,e=!1,o={gallery:t,selector:"[data-previews]"};t.listen("gettingData",(function(){e||(e=!0,i.addPreviews(o))})),t.listen("close",(function(){i.removePreviews(o)})),t.listen("afterChange",(function(){i.setActivePreview(o)}))},addPreviews:function(t){var i,e=t.gallery,n=t.selector,r=e.scrollWrap,s=e.items,a=r.querySelector(n),c=o(s);try{var l=function(){var t=i.value,o=t.msrc,n=document.createElement("img");n.setAttribute("src",o),n.addEventListener("click",(function(){e.goTo(s.indexOf(t))})),a.appendChild(n)};for(c.s();!(i=c.n()).done;)l()}catch(t){c.e(t)}finally{c.f()}},removePreviews:function(t){var i=t.gallery,e=t.selector,o=i.scrollWrap,n=o.querySelector(e);n.innerHTML=""},setActivePreview:function(t){var i,e=t.gallery,n=t.selector,r=e.scrollWrap,s=e.currItem,a=s.msrc,c=r.querySelector(n),l=c.querySelectorAll("img"),u=o(l);try{for(u.s();!(i=u.n()).done;){var p=i.value,v=p.getAttribute("src"),d="is-active";v===a?(p.classList.add(d),p.scrollIntoView({behavior:"smooth"})):p.classList.remove(d)}}catch(t){u.e(t)}finally{u.f()}},togglePreview:function(){this.toggleCheck=!this.toggleCheck,1==this.toggleCheck?$jq(".pswp__previews").slideDown():$jq(".pswp__previews").slideUp()}}},s=r;var a=e(4486),c=(0,a.A)(s,(function(){var t=this,i=t._self._c;return i("div",{staticClass:"pswp",attrs:{tabindex:"-1",role:"dialog","aria-hidden":"true"}},[i("div",{staticClass:"pswp__bg"}),t._v(" "),i("div",{staticClass:"pswp__scroll-wrap"},[t._m(0),t._v(" "),i("div",{staticClass:"pswp__ui pswp__ui--hidden"},[i("div",{staticClass:"pswp__top-bar"},[i("div",{staticClass:"pswp__counter"}),t._v(" "),i("button",{staticClass:"pswp__button pswp__button--close",attrs:{title:"Close (Esc)"}}),t._v(" "),i("button",{staticClass:"pswp__button pswp__button--share",attrs:{title:"Share"}}),t._v(" "),i("button",{staticClass:"pswp__button pswp__button--fs",attrs:{title:"Toggle fullscreen"}}),t._v(" "),i("button",{staticClass:"pswp__button pswp__button--zoom",attrs:{title:"Zoom in/out"}}),t._v(" "),t.thumbnails?i("button",{staticClass:"pswp__button pswp__button--thumb",attrs:{title:"Thumbnails Show/hide"},on:{click:t.togglePreview}},[i("span",{staticClass:"dashicons dashicons-screenoptions"})]):t._e(),t._v(" "),t._m(1)]),t._v(" "),t._m(2),t._v(" "),i("button",{staticClass:"pswp__button pswp__button--arrow--left",attrs:{title:"Previous (arrow left)"}}),t._v(" "),i("button",{staticClass:"pswp__button pswp__button--arrow--right",attrs:{title:"Next (arrow right)"}}),t._v(" "),i("div",{staticClass:"pswp__previews",attrs:{"data-previews":"data-previews"}}),t._v(" "),t._m(3)])])])}),[function(){var t=this,i=t._self._c;return i("div",{staticClass:"pswp__container"},[i("div",{staticClass:"pswp__item"}),t._v(" "),i("div",{staticClass:"pswp__item"}),t._v(" "),i("div",{staticClass:"pswp__item"})])},function(){var t=this._self._c;return t("div",{staticClass:"pswp__preloader"},[t("div",{staticClass:"pswp__preloader__icn"},[t("div",{staticClass:"pswp__preloader__cut"},[t("div",{staticClass:"pswp__preloader__donut"})])])])},function(){var t=this._self._c;return t("div",{staticClass:"pswp__share-modal pswp__share-modal--hidden pswp__single-tap"},[t("div",{staticClass:"pswp__share-tooltip"})])},function(){var t=this._self._c;return t("div",{staticClass:"pswp__caption"},[t("div",{staticClass:"pswp__caption__center"})])}],!1,null,null,null);const l=c.exports;if("lightbox"in wcsvi.options&&parseInt(wcsvi.options.lightbox)){var u,p=Vue.extend(l);u||(u=new p({el:document.createElement("div")})),Vue.$photoswipe={open:function(t,i,e,o){document.body.appendChild(u.$el),u.open(t,i,e,o)},close:function(){$jq(u.$el).remove()}},Vue.mixin({created:function(){this.$photoswipe=Vue.$photoswipe}})}},7725:(t,i,e)=>{e.r(i);e(2675),e(9463),e(2259),e(8706),e(2008),e(113),e(8980),e(3418),e(4423),e(3792),e(8598),e(2062),e(4782),e(2010),e(8130),e(9432),e(6099),e(3362),e(4864),e(7495),e(8781),e(1699),e(7764),e(1761),e(5440),e(2762),e(3500),e(2953);function o(t,i){return function(t){if(Array.isArray(t))return t}(t)||function(t,i){var e=null==t?null:"undefined"!=typeof Symbol&&t[Symbol.iterator]||t["@@iterator"];if(null!=e){var o,n,r,s,a=[],c=!0,l=!1;try{if(r=(e=e.call(t)).next,0===i){if(Object(e)!==e)return;c=!1}else for(;!(c=(o=r.call(e)).done)&&(a.push(o.value),a.length!==i);c=!0);}catch(t){l=!0,n=t}finally{try{if(!c&&null!=e.return&&(s=e.return(),Object(s)!==s))return}finally{if(l)throw n}}return a}}(t,i)||function(t,i){if(t){if("string"==typeof t)return n(t,i);var e={}.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?n(t,i):void 0}}(t,i)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function n(t,i){(null==i||i>t.length)&&(i=t.length);for(var e=0,o=Array(i);e<i;e++)o[e]=t[e];return o}function r(t){return r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},r(t)}Vue.prototype.$bus=new Vue,Vue.prototype.buildMainGallery=function(t,i,e,o){var n=this,r=$jq(i).parent(),s=r.data("sviproduct_id"),a=r.data("wcsvi"),c=r.data("wcsviRef"),l=r.find("[data-svi-mount]").get(0)||i;if(!a&&"undefined"!=typeof wcsvi&&wcsvi.products){var u=c||s;u&&Object.prototype.hasOwnProperty.call(wcsvi.products,u)&&(a=wcsvi.products[u],r.data("wcsvi",a))}if(!a&&void 0!==window.wcsviProducts){var p=c||s;p&&Object.prototype.hasOwnProperty.call(window.wcsviProducts,p)&&(a=window.wcsviProducts[p],r.data("wcsvi",a))}var v=!!r.hasClass("svi-variable"),d=!!v&&this.findVariationsForm(s),h=function(t){var i={main:e,v:l,product_id:s,form:d,ptype:v,svidata:t||!1,ajaxData:o};"not_found"==d?Vue.prototype.waitForEl(".variations_form",n.startMount,100,50,i):n.startMount(i)};a?h(a):s?this.loadProduct(s).then((function(t){t&&r.data("wcsvi",t),h(t)})).catch((function(){h(!1)})):h(!1)},Vue.prototype.loadProduct=function(t){return new Promise((function(i,e){jQuery.ajax({url:wcsvi.call,type:"POST",data:{action:"sviloadProduct",id:t}}).done((function(t){t&&t.success&&t.data?i(t.data):i(!1)})).fail((function(t,i,o){e(o||i)}))}))},Vue.prototype.startMount=function(t){window.svi_method=new Vue({render:function(i){return i(t.main,{props:{pid:t.product_id,form:t.form,ptype:t.ptype,wcsvi:t.svidata,ajax:t.ajaxData}})}}).$mount(t.v)},Vue.prototype.findVariationsForm=function(t){return $jq(".variations_form[data-product_id='"+t+"']").length>1?$jq(".variations_form[data-product_id='"+t+"']").first():$jq(".variations_form[data-product_id='"+t+"']").length>0?$jq(".variations_form[data-product_id='"+t+"']"):"not_found"},Vue.prototype.DetectChangesInForm=function(){var t=this,i={data:!1};this.form.on("check_variations",(function(){wcsvi.options.nothumbs=!1,setTimeout((function(){var e=t.getChosenAttributes();t.isEquivalentAttributes(i.data,e.data)||(i=e,t.attributes=e,t.gallery?t.loadSviGalleries():t.requestSviGalleries())}),50)}))},Vue.prototype.isEquivalentAttributes=function(t,i){return JSON.stringify(t)===JSON.stringify(i)},Vue.prototype.getChosenAttributes=function(){var t={},i=0,e=0;return this.attributeFields.each((function(){var o=$jq(this).data("attribute_name")||$jq(this).attr("name"),n=$jq(this).val()||"";n.length>0&&e++,i++,t[o]=n})),{count:i,chosenCount:e,data:t}},Vue.prototype.loadSviGalleries=function(){var t=this.gallery.images;this.ptype&&(t=this.RetrieveGalleryForDisplay());var i=!!(this.boolEval(wcsvi.options.hide_thumbs)&&t.length<1);if(i?this.$bus.$emit("mainImage_"+this.type+"_"+this.pid,this.gallery.images):this.$bus.$emit("mainImage_"+this.type+"_"+this.pid,t),"slider"in wcsvi.options&&this.boolEval(wcsvi.options.slider)?this.$bus.$emit("thumbImages_"+this.type+"_"+this.pid,{gal:i?this.gallery.images:t,status:i}):this.$bus.$emit("thumbImages_"+this.type+"_"+this.pid,t),this.boolEval(wcsvi.options.variation_thumbnails)){var e=this.RetrieveGalleryForDisplay(!0);(!1 in wcsvi.options||!wcsvi.options.status)&&e.length>1&&(e=e.slice(1,2)),this.$bus.$emit("variationThumbImages_"+this.type+"_"+this.pid,e)}},Vue.prototype.RetrieveGalleryForDisplay=function(){var t=arguments.length>0&&void 0!==arguments[0]&&arguments[0],i=this.attributes;this.consoleLog("CHECKPOINT PRE FIN",i);var e=this.removeDuplicatesID(this.RetrieveImagesAccordingToSelectedAttributes(i.data,t));return this.consoleLog("CHECKPOINT FINAL",[e,e.length]),"placeholder"in wcsvi.options&&this.boolEval(wcsvi.options.placeholder)&&e.length<1&&this.attributes.chosenCount>0&&e.push(this.placeholder()),t?e.length>0&&i.chosenCount>0?e:[]:e.length>0?e:this.boolEval(wcsvi.options.hide_thumbs)?(wcsvi.options.nothumbs=!0,[]):this.removeDuplicatesByKeyID(this.gallery.images)},Vue.prototype.RetrieveImagesAccordingToSelectedAttributes=function(t,i){var e=this;this.consoleLog("CHECKPOINT 1",[t,this.gallery]);var o=$jq.map(t,(function(t){if(e.consoleLog("CHECKPOINT 1.5",t),t)return e.convertAttributesNames(t)}));this.consoleLog("CHECKPOINT 2",o);var n=this.RetrieveAttributesCombinations(o,i);this.consoleLog("CHECKPOINT 3",n);var r=this.RetrieveTheImagesID(n);return r.length<1&&(n=["svidefault"],r=this.RetrieveTheImagesID(n),this.consoleLog("CHECKPOINT 3.5 [FALLBACK TO DEFAULT SVI GALLERY]",n)),this.consoleLog("CHECKPOINT 4.5",r),this.RetrieveTheImages(r,i)},Vue.prototype.RetrieveImagesAccordingToSelectedOriginalAttributes=function(t){var i=this.RetrieveTheImagesID(t);return this.RetrieveTheImages(i)},Vue.prototype.RetrieveTheImages=function(t,i){return $jq.map(this.gallery.images,(function(i){return $jq.map(t,(function(t,e){if(parseInt(t.id)==parseInt(i.id)&&parseInt(t.k)==parseInt(i.idk))return i}))}))},Vue.prototype.RetrieveTheImagesID=function(t){var i=this;return $jq.map(this.gallery.svi,(function(e,o){var n="wc_svimainvideo";if("slugs"in e&&(n=e.slugs.join("_svipro_")),i.consoleLog("CHECKPOINT 3.5 FIND COMBINATION",n),t.includes(n)){var r=e.imgs.map((function(t){return{id:parseInt(t),k:parseInt(o)}}));return i.consoleLog("CHECKPOINT 4",r),r}}))},Vue.prototype.RetrieveAttributesCombinations=function(t,i){var e=[];if(this.consoleLog("CHECKPOINT 2.5",[t,Object.keys(t).length]),"triger_match"in wcsvi.options&&parseInt(wcsvi.options.triger_match)&&t.length>1){var o=t.join("_svipro_");e.push(o)}else{var n=function(t,i){for(var o=0;o<i.length;o++)t?(e.push(t+"_svipro_"+i[o]),n(t+"_svipro_"+i[o],i.slice(o+1))):(e.push(t+i[o]),n(t+i[o],i.slice(o+1)))};n("",t)}return"keep_thumbnails"in wcsvi.options&&parseInt(wcsvi.options.keep_thumbnails)&&(this.originalAttributes=this.RetrieveImagesAccordingToSelectedOriginalAttributes(this.removeDuplicates(e))),e.length<1?e.unshift("svidefault"):e.push("sviproglobal"),"keep_thumbnails_option"in wcsvi.options&&"svidefault"==wcsvi.options.keep_thumbnails_option&&e.unshift("svidefault"),(!1 in wcsvi.options||!parseInt(wcsvi.options.swselect))&&this.attributes.chosenCount<this.attributes.count||parseInt(wcsvi.options.keep_thumbnails)?e=$jq.map(e,(function(t){if("svidefault"==wcsvi.options.keep_thumbnails_option&&"svidefault"==t)return t})):("swselect"in wcsvi.options&&parseInt(wcsvi.options.swselect)&&this.attributes.chosenCount>0||this.attributes.chosenCount>0)&&(e=$jq.map(e,(function(t){if("svidefault"!=t)return t}))),"variation_thumbnails"in wcsvi.options&&this.boolEval(wcsvi.options.variation_thumbnails)&&(e=i?$jq.map(e,(function(t){if("svidefault"!=t)return t})):["svidefault"]),this.removeDuplicates(e)},Vue.prototype.removeDuplicates=function(t){return t.filter((function(i,e){return t.indexOf(i)===e}))},Vue.prototype.removeDuplicatesID=function(t){var i=t.filter((function(i,e){return e===t.findIndex((function(t){return t.id===i.id}))}));return i},Vue.prototype.removeDuplicatesByKeyID=function(t){var i=t.filter((function(i,e){var o=JSON.stringify(i.id);return!!("video"in wcsvi.options&&parseInt(wcsvi.options.video)&&i.video)||e===t.findIndex((function(t){return JSON.stringify(t.id)===o}))}));return i},Vue.prototype.convertAttributesNames=function(t){var i="tetste";return t.match(/%[0-9a-f]{2}/i)?(this.consoleLog("MATCH"),i=t):(i=this.slugify(t),this.consoleLog("SLUGIFY",[i,i.length])),i},Vue.prototype.slugify=function(t){var i=this,e=window.wcsvislugs,o=Object.keys(e).find((function(o){return i.escapeHtml(e[o])===t.trim()}));return o||t},Vue.prototype.isEncoded=function(t){return"string"==typeof t&&decodeURIComponent(t)!==t},Vue.prototype.boolEval=function(t){return parseInt(t)||0},Vue.prototype.escapeHtml=function(t){return t.replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#039;/g,"'")},Vue.prototype.sliderMain=function(){var t=this,i={effect:"slider_effect"in wcsvi.options&&wcsvi.options.slider_effect?wcsvi.options.slider_effect:"slide",spaceBetween:10,loopedSlides:1,autoHeight:!0,updateOnImagesReady:!0,preloadImages:!("slider_lazyload"in wcsvi.options)||!this.boolEval(wcsvi.options.slider_lazyload),lazy:!(!("slider_lazyload"in wcsvi.options)||!this.boolEval(wcsvi.options.slider_lazyload))&&{loadPrevNext:!0,loadOnTransitionStart:!0},on:{click:function(i,e){t.photo(t.slides[t.galleryTop.realIndex],e,"slider")},slideChange:function(){var i=t.galleryTop.realIndex;t.galleryThumbs&&"function"==typeof t.galleryThumbs.slideTo&&t.galleryThumbs.slideTo(i)},slideChangeTransitionStart:function(){t.stopVideos(),t.plyr(!1),t.mainTitle&&t.runInsertTitle(t.galleryTop.realIndex),t.vidRun(t.galleryTop.realIndex,t.slides),t.$forceUpdate()}}};return"slider_autoslide"in wcsvi.options&&this.boolEval(wcsvi.options.slider_autoslide)&&(i.autoplay={delay:wcsvi.options.slider_autoslide_ms||5e3,disableOnInteraction:this.boolEval(wcsvi.options.slider_autoslide_disableOnInteraction),pauseOnMouseEnter:!0}),!(!1 in wcsvi.options)&&this.boolEval(wcsvi.options.disable_thumb)||(i.thumbs={swiper:this.galleryThumbs}),"slider_navigation"in wcsvi.options&&this.boolEval(wcsvi.options.slider_navigation)&&(i.navigation={nextEl:".swiperTop-swiper-button-next",prevEl:".swiperTop-swiper-button-prev"}),"slider_pagination"in wcsvi.options&&this.boolEval(wcsvi.options.slider_pagination)&&(i.pagination={el:".sviswiper-pagination",dynamicBullets:"slider_paginationDynamicBullets"in wcsvi.options&&this.boolEval(wcsvi.options.slider_paginationDynamicBullets),type:"slider_paginationType"in wcsvi.options&&wcsvi.options.slider_paginationType?wcsvi.options.slider_paginationType:"bullets",clickable:"slider_paginationclickable"in wcsvi.options&&this.boolEval(wcsvi.options.slider_paginationclickable)}),new Swiper(".svi-gallery-top",i)},Vue.prototype.sliderThumbs=function(){var t=this,i={spaceBetween:10,direction:"slider_position"in wcsvi.options?0===parseInt(wcsvi.options.slider_position)?"horizontal":"vertical":"horizontal",slidesPerView:"slider_position"in wcsvi.options?0===parseInt(wcsvi.options.slider_position)?parseFloat(wcsvi.options.columns):4.8:parseInt(wcsvi.options.columns),loopedSlides:1,watchSlidesVisibility:!0,watchSlidesProgress:!0,centeredSlides:!1,slideToClickedSlide:!0,preloadImages:!("slider_lazyload"in wcsvi.options)||!this.boolEval(wcsvi.options.slider_lazyload),lazy:!(!("slider_lazyload"in wcsvi.options)||!this.boolEval(wcsvi.options.slider_lazyload))&&{loadPrevNext:!0},watchOverflow:!0,threshold:2,on:{click:function(i){if(t.runOpacity(i),"variation_swap"in wcsvi.options&&t.boolEval(wcsvi.options.variation_swap)){var e=t.slides[t.galleryTop.realIndex];t.ThumbClickSwap(e)}}}};return"slider_navigation_thumb"in wcsvi.options&&this.boolEval(wcsvi.options.slider_navigation_thumb)&&(i.navigation={nextEl:".swiperThumbs-swiper-button-next",prevEl:".swiperThumbs-swiper-button-prev"}),new Swiper(".svi-gallery-thumbs",i)},Vue.prototype.isEquivalent=function(t,i){var e=JSON.parse(JSON.stringify(t)).map((function(t,i){return t.id})),o=JSON.parse(JSON.stringify(i)).map((function(t,i){return t.id}));return!("skip_equivalent"in wcsvi.options&&this.boolEval(wcsvi.options.skip_equivalent)&&"slider"in wcsvi.options&&!this.boolEval(wcsvi.options.slider))&&JSON.stringify(e)===JSON.stringify(o)},Vue.prototype.imgEl=function(t){var i,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"static";if("object"!=r(t))return"";!(!1 in wcsvi.options)&&parseInt(wcsvi.options.video)||(t.video="");var o="",n="",s="",a="",c=!1;switch(""!=t.video&&(o='<div class="sviicon-play"><span class="dashicons dashicons-controls-play"></span></div>'),"lightbox"in wcsvi.options&&parseInt(wcsvi.options.lightbox)&&"lightbox_icon"in wcsvi.options&&parseInt(wcsvi.options.lightbox_icon)&&(n='<span style="color:'+wcsvi.options.lightbox_iconcolor+'" class="sviLigthgallery"></span>'),e){case"static":""!=t.video?(s=this.plyr_video(t),o=""):s=this.imgElstatic(t),i=n+o+s,c="main";break;case"slider":""!=t.video?(s=this.plyr_video(t),o=""):s=this.imgElslider(t),i=n+o+s;break;case"sliderthumb":s=this.imgElslider(t,!0),i=o+s;break;case"stack":""!=t.video?(s=this.plyr_video(t),o=""):s=this.imgElstack(t),i=n+o+s,c="main";break;case"svimainthumb":s=this.imgElstatic(t,!0),i=o+s,c="thumb";break;case"svivariationsthumb":o?!(!1 in wcsvi.options)&&parseInt(wcsvi.options.lightbox_icon)||(n=""):(!1 in wcsvi.options||!this.boolEval(wcsvi.options.variation_thumbnails_lb)||"variation_thumbnails_lb"in wcsvi.options&&this.boolEval(wcsvi.options.variation_thumbnails_lb)&&(!1 in wcsvi.options||!parseInt(wcsvi.options.lightbox_icon)))&&(n=""),s=this.imgElstatic(t,!0),i=n+o+s,c="thumb"}return"activateTitle"in this&&this.activateTitle&&0!=c&&("thumb"==c&&(a="thumb_imagecaption_option"in wcsvi.options?this.returnTitle(wcsvi.options.thumb_imagecaption_option,t):""),"main"==c&&(a="imagecaption_option"in wcsvi.options?this.returnTitle(wcsvi.options.imagecaption_option,t):""),i=i+'<div class="svititleimg">'+a+"</div>"),i};var s=function(t,i,e){return i in e&&Number(e[i])&&t};Vue.prototype.imgElstatic=function(t){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1],e=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],o=t.src,n=t.title,r=t.alt,a=t.id,c=t.srcset,l=t.height,u=t.width,p=t.class,v=t.thumb_class,d=t.large_image_height,h=t.thumb_image_height,f=t.large_image_width,m=t.thumb_image_width,g=t.large_image,w=t.thumb_image,_=wcsvi,y=_.options,b=document.createElement("img");return o&&(b.src=i?w:g),s(n,"svititleattr",y)&&(b.title=this.decodeEntities(n)),s(r,"svialtattr",y)&&(b.alt=this.decodeEntities(r)),a&&(b.dataset.sviid=a),s(c,"sviesrcset",y)&&(b.dataset.srcset=c),"lens"in y&&Number(y.lens)&&!i&&(b.dataset.zoomImage=o),l&&(b.height=i?h:d),u&&(b.width=i?m:f),p&&e&&(b.className=i?"".concat(v," svi-thumb-image"):p),e?b.outerHTML:b},Vue.prototype.decodeEntities=function(t){var i=document.createElement("textarea");return i.innerHTML=t,i.value},Vue.prototype.imgElslider=function(t){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1],e=this.imgElstatic(t,i,!1);return"class"in t&&(e.className=i?t.thumb_class+" svi-thumb-image":t.class),"slider_lazyload"in wcsvi.options&&this.boolEval(wcsvi.options.slider_lazyload)&&(e.dataset.src=i?t.thumb_image:t.large_image,e.className+=" swiper-lazy "),e.className=e.className.trim(),e.outerHTML},Vue.prototype.imgElstack=function(t){var i=this.imgElstatic(t,!1,!1);return i.className+="svi-stack-image ",i.className=i.className.trim(),i.outerHTML},Vue.prototype.runOpacity=function(t){!(!1 in wcsvi.options)&&parseInt(wcsvi.options.thumbnails_showactive)&&(void 0===t?"slider"in wcsvi.options&&this.boolEval(wcsvi.options.slider)?$jq(this.$el).find(".svi-gallery-thumbs .swiper-slide-active img").addClass("svi-opacity"):$jq(this.$el).find("ul>li:first-child img").addClass("svi-opacity"):($jq("img.svi-opacity").removeClass("svi-opacity"),"slider"in wcsvi.options&&this.boolEval(wcsvi.options.slider)?$jq(this.$el).find(".svi-gallery-thumbs .swiper-slide-thumb-active img").addClass("svi-opacity"):$jq(t.target).addClass("svi-opacity")))},Vue.prototype.placeholder=function(){return{alt:"",caption:"",class:wcsvi.options.placeholder_img.class,full_image:wcsvi.options.placeholder_img.src,full_image_height:wcsvi.options.placeholder_img.height,full_image_width:wcsvi.options.placeholder_img.width,height:wcsvi.options.placeholder_img.height,id:"xPlaceholder",large_image:wcsvi.options.placeholder_img.src,large_image_height:wcsvi.options.placeholder_img.height,large_image_width:wcsvi.options.placeholder_img.width,product_img:!0,sizes:wcsvi.options.placeholder_img.sizes,src:wcsvi.options.placeholder_img.src,srcset:wcsvi.options.placeholder_img.srcset,thumb_image:wcsvi.options.placeholder_img.src,thumb_image_height:wcsvi.options.placeholder_img.height,thumb_image_width:wcsvi.options.placeholder_img.width,title:"",width:wcsvi.options.placeholder_img.width,video:""}},Vue.prototype.getWindowWidth=function(){var t=arguments.length>0&&void 0!==arguments[0]&&arguments[0];if(document.documentElement.clientWidth<768){if(t)return"mobile";this.windowType="mobile"}if(document.documentElement.clientWidth>=768){if(t)return"desktop";this.windowType="desktop"}},Vue.prototype.runInsertTitle=function(t){var i=this.slides[t];this.imgTitle="imagecaption_option"in wcsvi.options?this.returnTitle(wcsvi.options.imagecaption_option,i):""},Vue.prototype.returnTitle=function(t,i){return"caption"==t?i.caption:i.title},Vue.prototype.ThumbClickSwap=function(t){var i=this.$root.$children[0].attributeFields,e=this.RetrieveTheSlugs(t.id),o=this;i.map((function(t,i){var n=!1,r=""!==$jq(i).val();$jq.each(e[0],(function(t,e){$jq(i).find("option").map((function(t,r){o.slugify(r.value)!=e||$jq(r).is(":selected")||($jq(i).val(r.value).trigger("change"),n=!0,$jq(".swatches-support").trigger("click")),o.slugify(r.value)==e&&(n=!0)}))})),n||r||$jq(i).prop("selectedIndex",0)}))},Vue.prototype.RetrieveTheSlugs=function(t){var i=this.$root.$children[0].gallery.svi;return $jq.map(i,(function(i){if(i.imgs.includes(t.toString()))return[i.slugs]}))},Vue.prototype.stopVideos=function(){document.querySelectorAll("video").forEach((function(t){t.pause(),t.currentTime=0})),document.querySelectorAll(".plyr__video-wrapper.plyr__video-embed iframe").forEach((function(t){t.src=t.src}))},Vue.prototype.photo=function(t,i,e){if("variationThumbImages"==e&&(!1 in wcsvi.options||!this.boolEval(wcsvi.options.lightbox)||"span"!=i.target.localName&&"img"!=i.target.localName))return $jq(this.$el).find("video,.plyr").length>0&&($jq(this.$el).find("video,.plyr").remove(),$jq(this.$el).find(".sviicon-play").show()),$jq(i.target).closest("li").find(".sviicon-play").hide(),$jq(i.target).closest(".svivariationsthumb").append(this.plyr_video(t)),void this.plyr(t);!1 in wcsvi.options||!this.boolEval(wcsvi.options.lightbox)||"span"!=i.target.localName&&"img"!=i.target.localName&&"zoomLens"!=i.target.className&&"zoomWindow"!=i.target.className||(i.target.className.includes("play")&&"stack"==e?($jq(i.target).closest("li").find("img,.sviicon-play").hide(),$jq(i.target).closest("li").append(this.plyr_video(t)),this.plyr(t)):(!1 in wcsvi.options||!this.boolEval(wcsvi.options.lightbox_iconclick)||"lightbox_iconclick"in wcsvi.options&&this.boolEval(wcsvi.options.lightbox_iconclick)&&"sviLigthgallery"==i.target.className)&&this.photoSwipeTrigger(t,e))},Vue.prototype.photoSwipeTrigger=function(t,i){"slider"==i?this.$photoswipe.open(t,this.slides,this.$photoswipe,this.$root.$children[0].pid):"static"==i?this.$photoswipe.open(t,this.gallery,this.$photoswipe,this.$root.$children[0].pid):"stack"!=i&&"variationThumbImages"!=i||this.$photoswipe.open(t,this.list,this.$photoswipe,this.$root.$children[0].pid)},Vue.prototype.findIndex=function(t,i){var e=0;return $jq.each(i,(function(i,o){if(t.id==o.id)return e=i,!1})),e},Vue.prototype.consoleLog=function(){var t,i=this.boolEval(wcsvi.prod);i||"undefined"==typeof console||"function"!=typeof console.log||(t=console).log.apply(t,arguments)},Vue.prototype.plyr_video=function(t){if(t.video){var i=this.parseVideo(t.video),e="video_poster"in wcsvi.options&&parseInt(wcsvi.options.video_poster)?t.large_image:"",o="";return"video_maincolor"in wcsvi.options&&wcsvi.options.video_maincolor&&(o='style="--plyr-color-main: '+wcsvi.options.video_maincolor+';"'),"youtube"==i.type||"vimeo"==i.type?'<div class="svi-player_'+t.id+"_"+t.idk+"_"+this.$el.className+'" data-plyr-provider="'+i.type+'" data-plyr-embed-id="'+i.id+'" data-poster="'+e+'" '+o+"></div>":'<video class="svi-player_'+t.id+"_"+t.idk+"_"+this.$el.className+'" data-poster="'+e+'" '+o+' preload="auto"><source src="'+t.video+'" type="video/mp4" /></video>'}},Vue.prototype.plyr=function(t){var i,e=arguments.length>1&&void 0!==arguments[1]&&arguments[1],n=!1;if(null!==(i=wcsvi.options)&&void 0!==i&&i.video){var s,a,c,l,u,p,v,d;if(!t||""===t.video)return void this.$bus.$emit("vidPlayer_"+e,n);var h=this,f="object"===r(wcsvi.options.video_controls)&&wcsvi.options.video_controls,m=this.$el.className.split(" "),g=".svi-player_".concat(t.id,"_").concat(t.idk,"_").concat(m[0]),w="sviproslider"===h.$el.className,_=h.$el.classList.contains("pswp");n=new Plyr(g,{autoplay:parseInt(null!==(s=wcsvi.options.video_autoplay)&&void 0!==s?s:0),muted:parseInt(null!==(a=wcsvi.options.video_muted)&&void 0!==a?a:0),clickToPlay:parseInt(null!==(c=wcsvi.options.video_clickToPlay)&&void 0!==c?c:1),hideControls:parseInt(null!==(l=wcsvi.options.video_hideControls)&&void 0!==l?l:1),fullscreen:{enabled:parseInt(null!==(u=wcsvi.options.video_fullscreen)&&void 0!==u?u:1)},controls:f,ratio:"auto"===wcsvi.options.video_ratio||_?"":null!==(p=wcsvi.options.video_ratio)&&void 0!==p?p:"",loop:{active:parseInt(null!==(v=wcsvi.options.video_loop)&&void 0!==v?v:0)}}),this.$bus.$emit("vidPlayer_"+e,n);var y=null===(d=wcsvi.options)||void 0===d?void 0:d.video_ratio;if(y&&"auto"!==y&&y.includes(":")&&!_){var b=y.split(":").map(Number),x=o(b,2),$=x[0],E=x[1],I=$/E,S=h.$el.querySelectorAll(".plyr");S.forEach((function(t){t.style.aspectRatio="".concat(I)})),w&&h.galleryTop.update()}n.on("ready",(function(){var t,i,e=parseInt(null!==(t=wcsvi.options.video_autoplay)&&void 0!==t?t:0),o=!parseInt(null!==(i=wcsvi.options.video_muted)&&void 0!==i?i:0);e&&(n.play(),o&&(n.muted=!1))}))}},Vue.prototype.vidRun=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,i=arguments.length>1?arguments[1]:void 0,e=arguments.length>2&&void 0!==arguments[2]&&arguments[2];i[t].video?this.plyr(i[t],e):this.plyr(!1,e)},Vue.prototype.parseVideo=function(t){var i="html5";return t.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/)?RegExp.$3.indexOf("youtu")>-1?i="youtube":RegExp.$3.indexOf("vimeo")>-1&&(i="vimeo"):i="html5",{type:i,id:RegExp.$6}},Vue.prototype.colposition=function(t){var i=Number(t),e=[""];return 0!==i&&i%this.columns!=0||e.push("first"),(i+1)%this.columns==0&&e.push("last"),0==t&&"svimainthumb"==this.thumbtype&&this.runOpacity(),e.join(" ")},Vue.prototype.calculateAspectRatioFit=function(){var t,i,e,o=arguments.length>0&&void 0!==arguments[0]&&arguments[0],n=$jq(this.$el).outerWidth();if(o&&o.width&&o.height&&o.full_image_height)t=o.width,i=o.height,e=o.full_image_height;else{if(!(this.image&&this.image.width&&this.image.height&&this.image.full_image_height))return{width:0,height:0};t=this.image.width,i=this.image.height,e=this.image.full_image_height}var r=Math.min(n/t,e/i);return{width:t*r,height:i*r}},Vue.prototype.runKeepThumbnailsImageChange=function(t,i){var e=this,o=!1;o=i?this.slides:this.list,!o||t.length<1||$jq.each(o,(function(o,n){$jq.each(t,(function(t,r){"id"in r&&n.id==r.id&&(i?e.galleryTop.slideTo(o):$jq(e.$el).find("[data-sviid='"+n.id+"']").click())}))}))},Vue.prototype.waitForEl=function(t,i){var e=arguments.length>2&&void 0!==arguments[2]&&arguments[2],o=arguments.length>3&&void 0!==arguments[3]?arguments[3]:100,n=arguments.length>4&&void 0!==arguments[4]&&arguments[4],r=setInterval((function(){var o=jQuery(t),s=!1===e||e-- >0;s&&o.length<1||(clearInterval(r),n?(n.form=$jq(".variations_form[data-product_id='"+n.product_id+"']"),i(n)):i(o||null))}),o)},Vue.prototype.buildSwatches=function(){var t=this.form?this.form:$jq("div.wcsvfs-swatches").first().closest("form");t.on("click",".swatch",(function(i){i.preventDefault();var e=$jq(this),o=e.closest(".value").find("select"),n=e.attr("data-value");if(!e.hasClass("disabled")){if(o.trigger("focusin"),!o.find('option[value="'+n+'"]').length)return e.siblings(".swatch").removeClass("selected"),o.val("").change(),void t.trigger("wcsvfs_no_matching_variations",[e]);e.hasClass("selected")?(o.val(""),e.removeClass("selected")):(e.addClass("selected").siblings(".selected").removeClass("selected"),o.val(n)),o.change()}})).on("click",".reset_variations",(function(){t.find(".swatch.selected").removeClass("selected"),t.find(".swatch.disabled").removeClass("disabled")})).on("woocommerce_update_variation_values",(function(){setTimeout((function(){t.find("tbody tr").each((function(){var t=$jq(this),i=t.find("select").find("option"),e=i.filter(":selected"),o=[];i.each((function(t,i){""!==i.value&&o.push(i.value)})),t.find(".swatch").each((function(){var t=$jq(this),i=t.attr("data-value");o.indexOf(i)>-1?(t.removeClass("disabled"),e.length&&i===e.val()&&t.addClass("selected")):(t.addClass("disabled"),e.length&&i===e.val()&&t.removeClass("selected"))}))}))}),150)})).on("wcsvfs_no_matching_variations",(function(){window.alert(wc_add_to_cart_variation_params.i18n_no_matching_variations_text)}))}},4486:(t,i,e)=>{function o(t,i,e,o,n,r,s,a){var c,l="function"==typeof t?t.options:t;if(i&&(l.render=i,l.staticRenderFns=e,l._compiled=!0),o&&(l.functional=!0),r&&(l._scopeId="data-v-"+r),s?(c=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),n&&n.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(s)},l._ssrRegister=c):n&&(c=a?function(){n.call(this,(l.functional?this.parent:this).$root.$options.shadowRoot)}:n),c)if(l.functional){l._injectStyles=c;var u=l.render;l.render=function(t,i){return c.call(i),u(t,i)}}else{var p=l.beforeCreate;l.beforeCreate=p?[].concat(p,c):[c]}return{exports:t,options:l}}e.d(i,{A:()=>o})},9306:(t,i,e)=>{var o=e(4901),n=e(6823),r=TypeError;t.exports=function(t){if(o(t))return t;throw new r(n(t)+" is not a function")}},5548:(t,i,e)=>{var o=e(3517),n=e(6823),r=TypeError;t.exports=function(t){if(o(t))return t;throw new r(n(t)+" is not a constructor")}},3506:(t,i,e)=>{var o=e(3925),n=String,r=TypeError;t.exports=function(t){if(o(t))return t;throw new r("Can't set "+n(t)+" as a prototype")}},6469:(t,i,e)=>{var o=e(8227),n=e(2360),r=e(4913).f,s=o("unscopables"),a=Array.prototype;void 0===a[s]&&r(a,s,{configurable:!0,value:n(null)}),t.exports=function(t){a[s][t]=!0}},7829:(t,i,e)=>{var o=e(8183).charAt;t.exports=function(t,i,e){return i+(e?o(t,i).length:1)}},679:(t,i,e)=>{var o=e(1625),n=TypeError;t.exports=function(t,i){if(o(i,t))return t;throw new n("Incorrect invocation")}},8551:(t,i,e)=>{var o=e(34),n=String,r=TypeError;t.exports=function(t){if(o(t))return t;throw new r(n(t)+" is not an object")}},235:(t,i,e)=>{var o=e(9213).forEach,n=e(4598),r=n("forEach");t.exports=r?[].forEach:function(t){return o(this,t,arguments.length>1?arguments[1]:void 0)}},7916:(t,i,e)=>{var o=e(6080),n=e(9565),r=e(8981),s=e(6319),a=e(4209),c=e(3517),l=e(6198),u=e(4659),p=e(81),v=e(851),d=Array;t.exports=function(t){var i=r(t),e=c(this),h=arguments.length,f=h>1?arguments[1]:void 0,m=void 0!==f;m&&(f=o(f,h>2?arguments[2]:void 0));var g,w,_,y,b,x,$=v(i),E=0;if(!$||this===d&&a($))for(g=l(i),w=e?new this(g):d(g);g>E;E++)x=m?f(i[E],E):i[E],u(w,E,x);else for(w=e?new this:[],y=p(i,$),b=y.next;!(_=n(b,y)).done;E++)x=m?s(y,f,[_.value,E],!0):_.value,u(w,E,x);return w.length=E,w}},9617:(t,i,e)=>{var o=e(5397),n=e(5610),r=e(6198),s=function(t){return function(i,e,s){var a=o(i),c=r(a);if(0===c)return!t&&-1;var l,u=n(s,c);if(t&&e!=e){for(;c>u;)if(l=a[u++],l!=l)return!0}else for(;c>u;u++)if((t||u in a)&&a[u]===e)return t||u||0;return!t&&-1}};t.exports={includes:s(!0),indexOf:s(!1)}},9213:(t,i,e)=>{var o=e(6080),n=e(9504),r=e(7055),s=e(8981),a=e(6198),c=e(1469),l=n([].push),u=function(t){var i=1===t,e=2===t,n=3===t,u=4===t,p=6===t,v=7===t,d=5===t||p;return function(h,f,m,g){for(var w,_,y=s(h),b=r(y),x=a(b),$=o(f,m),E=0,I=g||c,S=i?I(h,x):e||v?I(h,0):void 0;x>E;E++)if((d||E in b)&&(w=b[E],_=$(w,E,y),t))if(i)S[E]=_;else if(_)switch(t){case 3:return!0;case 5:return w;case 6:return E;case 2:l(S,w)}else switch(t){case 4:return!1;case 7:l(S,w)}return p?-1:n||u?u:S}};t.exports={forEach:u(0),map:u(1),filter:u(2),some:u(3),every:u(4),find:u(5),findIndex:u(6),filterReject:u(7)}},597:(t,i,e)=>{var o=e(9039),n=e(8227),r=e(9519),s=n("species");t.exports=function(t){return r>=51||!o((function(){var i=[],e=i.constructor={};return e[s]=function(){return{foo:1}},1!==i[t](Boolean).foo}))}},4598:(t,i,e)=>{var o=e(9039);t.exports=function(t,i){var e=[][t];return!!e&&o((function(){e.call(null,i||function(){return 1},1)}))}},7680:(t,i,e)=>{var o=e(9504);t.exports=o([].slice)},7433:(t,i,e)=>{var o=e(4376),n=e(3517),r=e(34),s=e(8227),a=s("species"),c=Array;t.exports=function(t){var i;return o(t)&&(i=t.constructor,n(i)&&(i===c||o(i.prototype))?i=void 0:r(i)&&(i=i[a],null===i&&(i=void 0))),void 0===i?c:i}},1469:(t,i,e)=>{var o=e(7433);t.exports=function(t,i){return new(o(t))(0===i?0:i)}},6319:(t,i,e)=>{var o=e(8551),n=e(9539);t.exports=function(t,i,e,r){try{return r?i(o(e)[0],e[1]):i(e)}catch(i){n(t,"throw",i)}}},4428:(t,i,e)=>{var o=e(8227),n=o("iterator"),r=!1;try{var s=0,a={next:function(){return{done:!!s++}},return:function(){r=!0}};a[n]=function(){return this},Array.from(a,(function(){throw 2}))}catch(t){}t.exports=function(t,i){try{if(!i&&!r)return!1}catch(t){return!1}var e=!1;try{var o={};o[n]=function(){return{next:function(){return{done:e=!0}}}},t(o)}catch(t){}return e}},2195:(t,i,e)=>{var o=e(9504),n=o({}.toString),r=o("".slice);t.exports=function(t){return r(n(t),8,-1)}},6955:(t,i,e)=>{var o=e(2140),n=e(4901),r=e(2195),s=e(8227),a=s("toStringTag"),c=Object,l="Arguments"===r(function(){return arguments}());t.exports=o?r:function(t){var i,e,o;return void 0===t?"Undefined":null===t?"Null":"string"==typeof(e=function(t,i){try{return t[i]}catch(t){}}(i=c(t),a))?e:l?r(i):"Object"===(o=r(i))&&n(i.callee)?"Arguments":o}},7740:(t,i,e)=>{var o=e(9297),n=e(5031),r=e(7347),s=e(4913);t.exports=function(t,i,e){for(var a=n(i),c=s.f,l=r.f,u=0;u<a.length;u++){var p=a[u];o(t,p)||e&&o(e,p)||c(t,p,l(i,p))}}},1436:(t,i,e)=>{var o=e(8227),n=o("match");t.exports=function(t){var i=/./;try{"/./"[t](i)}catch(e){try{return i[n]=!1,"/./"[t](i)}catch(t){}}return!1}},2211:(t,i,e)=>{var o=e(9039);t.exports=!o((function(){function t(){}return t.prototype.constructor=null,Object.getPrototypeOf(new t)!==t.prototype}))},2529:t=>{t.exports=function(t,i){return{value:t,done:i}}},6699:(t,i,e)=>{var o=e(3724),n=e(4913),r=e(6980);t.exports=o?function(t,i,e){return n.f(t,i,r(1,e))}:function(t,i,e){return t[i]=e,t}},6980:t=>{t.exports=function(t,i){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:i}}},4659:(t,i,e)=>{var o=e(3724),n=e(4913),r=e(6980);t.exports=function(t,i,e){o?n.f(t,i,r(0,e)):t[i]=e}},2106:(t,i,e)=>{var o=e(283),n=e(4913);t.exports=function(t,i,e){return e.get&&o(e.get,i,{getter:!0}),e.set&&o(e.set,i,{setter:!0}),n.f(t,i,e)}},6840:(t,i,e)=>{var o=e(4901),n=e(4913),r=e(283),s=e(9433);t.exports=function(t,i,e,a){a||(a={});var c=a.enumerable,l=void 0!==a.name?a.name:i;if(o(e)&&r(e,l,a),a.global)c?t[i]=e:s(i,e);else{try{a.unsafe?t[i]&&(c=!0):delete t[i]}catch(t){}c?t[i]=e:n.f(t,i,{value:e,enumerable:!1,configurable:!a.nonConfigurable,writable:!a.nonWritable})}return t}},9433:(t,i,e)=>{var o=e(4576),n=Object.defineProperty;t.exports=function(t,i){try{n(o,t,{value:i,configurable:!0,writable:!0})}catch(e){o[t]=i}return i}},3724:(t,i,e)=>{var o=e(9039);t.exports=!o((function(){return 7!==Object.defineProperty({},1,{get:function(){return 7}})[1]}))},4055:(t,i,e)=>{var o=e(4576),n=e(34),r=o.document,s=n(r)&&n(r.createElement);t.exports=function(t){return s?r.createElement(t):{}}},6837:t=>{var i=TypeError;t.exports=function(t){if(t>9007199254740991)throw i("Maximum allowed index exceeded");return t}},7400:t=>{t.exports={CSSRuleList:0,CSSStyleDeclaration:0,CSSValueList:0,ClientRectList:0,DOMRectList:0,DOMStringList:0,DOMTokenList:1,DataTransferItemList:0,FileList:0,HTMLAllCollection:0,HTMLCollection:0,HTMLFormElement:0,HTMLSelectElement:0,MediaList:0,MimeTypeArray:0,NamedNodeMap:0,NodeList:1,PaintRequestList:0,Plugin:0,PluginArray:0,SVGLengthList:0,SVGNumberList:0,SVGPathSegList:0,SVGPointList:0,SVGStringList:0,SVGTransformList:0,SourceBufferList:0,StyleSheetList:0,TextTrackCueList:0,TextTrackList:0,TouchList:0}},9296:(t,i,e)=>{var o=e(4055),n=o("span").classList,r=n&&n.constructor&&n.constructor.prototype;t.exports=r===Object.prototype?void 0:r},8727:t=>{t.exports=["constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"]},4265:(t,i,e)=>{var o=e(2839);t.exports=/ipad|iphone|ipod/i.test(o)&&"undefined"!=typeof Pebble},9544:(t,i,e)=>{var o=e(2839);t.exports=/(?:ipad|iphone|ipod).*applewebkit/i.test(o)},6193:(t,i,e)=>{var o=e(4215);t.exports="NODE"===o},7860:(t,i,e)=>{var o=e(2839);t.exports=/web0s(?!.*chrome)/i.test(o)},2839:(t,i,e)=>{var o=e(4576),n=o.navigator,r=n&&n.userAgent;t.exports=r?String(r):""},9519:(t,i,e)=>{var o,n,r=e(4576),s=e(2839),a=r.process,c=r.Deno,l=a&&a.versions||c&&c.version,u=l&&l.v8;u&&(o=u.split("."),n=o[0]>0&&o[0]<4?1:+(o[0]+o[1])),!n&&s&&(o=s.match(/Edge\/(\d+)/),(!o||o[1]>=74)&&(o=s.match(/Chrome\/(\d+)/),o&&(n=+o[1]))),t.exports=n},4215:(t,i,e)=>{var o=e(4576),n=e(2839),r=e(2195),s=function(t){return n.slice(0,t.length)===t};t.exports=s("Bun/")?"BUN":s("Cloudflare-Workers")?"CLOUDFLARE":s("Deno/")?"DENO":s("Node.js/")?"NODE":o.Bun&&"string"==typeof Bun.version?"BUN":o.Deno&&"object"==typeof Deno.version?"DENO":"process"===r(o.process)?"NODE":o.window&&o.document?"BROWSER":"REST"},6518:(t,i,e)=>{var o=e(4576),n=e(7347).f,r=e(6699),s=e(6840),a=e(9433),c=e(7740),l=e(2796);t.exports=function(t,i){var e,u,p,v,d,h,f=t.target,m=t.global,g=t.stat;if(u=m?o:g?o[f]||a(f,{}):o[f]&&o[f].prototype,u)for(p in i){if(d=i[p],t.dontCallGetSet?(h=n(u,p),v=h&&h.value):v=u[p],e=l(m?p:f+(g?".":"#")+p,t.forced),!e&&void 0!==v){if(typeof d==typeof v)continue;c(d,v)}(t.sham||v&&v.sham)&&r(d,"sham",!0),s(u,p,d,t)}}},9039:t=>{t.exports=function(t){try{return!!t()}catch(t){return!0}}},9228:(t,i,e)=>{e(7495);var o=e(9565),n=e(6840),r=e(7323),s=e(9039),a=e(8227),c=e(6699),l=a("species"),u=RegExp.prototype;t.exports=function(t,i,e,p){var v=a(t),d=!s((function(){var i={};return i[v]=function(){return 7},7!==""[t](i)})),h=d&&!s((function(){var i=!1,e=/a/;return"split"===t&&(e={},e.constructor={},e.constructor[l]=function(){return e},e.flags="",e[v]=/./[v]),e.exec=function(){return i=!0,null},e[v](""),!i}));if(!d||!h||e){var f=/./[v],m=i(v,""[t],(function(t,i,e,n,s){var a=i.exec;return a===r||a===u.exec?d&&!s?{done:!0,value:o(f,i,e,n)}:{done:!0,value:o(t,e,i,n)}:{done:!1}}));n(String.prototype,t,m[0]),n(u,v,m[1])}p&&c(u[v],"sham",!0)}},8745:(t,i,e)=>{var o=e(616),n=Function.prototype,r=n.apply,s=n.call;t.exports="object"==typeof Reflect&&Reflect.apply||(o?s.bind(r):function(){return s.apply(r,arguments)})},6080:(t,i,e)=>{var o=e(7476),n=e(9306),r=e(616),s=o(o.bind);t.exports=function(t,i){return n(t),void 0===i?t:r?s(t,i):function(){return t.apply(i,arguments)}}},616:(t,i,e)=>{var o=e(9039);t.exports=!o((function(){var t=function(){}.bind();return"function"!=typeof t||t.hasOwnProperty("prototype")}))},9565:(t,i,e)=>{var o=e(616),n=Function.prototype.call;t.exports=o?n.bind(n):function(){return n.apply(n,arguments)}},350:(t,i,e)=>{var o=e(3724),n=e(9297),r=Function.prototype,s=o&&Object.getOwnPropertyDescriptor,a=n(r,"name"),c=a&&"something"===function(){}.name,l=a&&(!o||o&&s(r,"name").configurable);t.exports={EXISTS:a,PROPER:c,CONFIGURABLE:l}},6706:(t,i,e)=>{var o=e(9504),n=e(9306);t.exports=function(t,i,e){try{return o(n(Object.getOwnPropertyDescriptor(t,i)[e]))}catch(t){}}},7476:(t,i,e)=>{var o=e(2195),n=e(9504);t.exports=function(t){if("Function"===o(t))return n(t)}},9504:(t,i,e)=>{var o=e(616),n=Function.prototype,r=n.call,s=o&&n.bind.bind(r,r);t.exports=o?s:function(t){return function(){return r.apply(t,arguments)}}},7751:(t,i,e)=>{var o=e(4576),n=e(4901);t.exports=function(t,i){return arguments.length<2?(e=o[t],n(e)?e:void 0):o[t]&&o[t][i];var e}},851:(t,i,e)=>{var o=e(6955),n=e(5966),r=e(4117),s=e(6269),a=e(8227),c=a("iterator");t.exports=function(t){if(!r(t))return n(t,c)||n(t,"@@iterator")||s[o(t)]}},81:(t,i,e)=>{var o=e(9565),n=e(9306),r=e(8551),s=e(6823),a=e(851),c=TypeError;t.exports=function(t,i){var e=arguments.length<2?a(t):i;if(n(e))return r(o(e,t));throw new c(s(t)+" is not iterable")}},6933:(t,i,e)=>{var o=e(9504),n=e(4376),r=e(4901),s=e(2195),a=e(655),c=o([].push);t.exports=function(t){if(r(t))return t;if(n(t)){for(var i=t.length,e=[],o=0;o<i;o++){var l=t[o];"string"==typeof l?c(e,l):"number"!=typeof l&&"Number"!==s(l)&&"String"!==s(l)||c(e,a(l))}var u=e.length,p=!0;return function(t,i){if(p)return p=!1,i;if(n(this))return i;for(var o=0;o<u;o++)if(e[o]===t)return i}}}},5966:(t,i,e)=>{var o=e(9306),n=e(4117);t.exports=function(t,i){var e=t[i];return n(e)?void 0:o(e)}},2478:(t,i,e)=>{var o=e(9504),n=e(8981),r=Math.floor,s=o("".charAt),a=o("".replace),c=o("".slice),l=/\$([$&'`]|\d{1,2}|<[^>]*>)/g,u=/\$([$&'`]|\d{1,2})/g;t.exports=function(t,i,e,o,p,v){var d=e+t.length,h=o.length,f=u;return void 0!==p&&(p=n(p),f=l),a(v,f,(function(n,a){var l;switch(s(a,0)){case"$":return"$";case"&":return t;case"`":return c(i,0,e);case"'":return c(i,d);case"<":l=p[c(a,1,-1)];break;default:var u=+a;if(0===u)return n;if(u>h){var v=r(u/10);return 0===v?n:v<=h?void 0===o[v-1]?s(a,1):o[v-1]+s(a,1):n}l=o[u-1]}return void 0===l?"":l}))}},4576:function(t,i,e){var o=function(t){return t&&t.Math===Math&&t};t.exports=o("object"==typeof globalThis&&globalThis)||o("object"==typeof window&&window)||o("object"==typeof self&&self)||o("object"==typeof e.g&&e.g)||o("object"==typeof this&&this)||function(){return this}()||Function("return this")()},9297:(t,i,e)=>{var o=e(9504),n=e(8981),r=o({}.hasOwnProperty);t.exports=Object.hasOwn||function(t,i){return r(n(t),i)}},421:t=>{t.exports={}},3138:t=>{t.exports=function(t,i){try{1===arguments.length?console.error(t):console.error(t,i)}catch(t){}}},397:(t,i,e)=>{var o=e(7751);t.exports=o("document","documentElement")},5917:(t,i,e)=>{var o=e(3724),n=e(9039),r=e(4055);t.exports=!o&&!n((function(){return 7!==Object.defineProperty(r("div"),"a",{get:function(){return 7}}).a}))},7055:(t,i,e)=>{var o=e(9504),n=e(9039),r=e(2195),s=Object,a=o("".split);t.exports=n((function(){return!s("z").propertyIsEnumerable(0)}))?function(t){return"String"===r(t)?a(t,""):s(t)}:s},3167:(t,i,e)=>{var o=e(4901),n=e(34),r=e(2967);t.exports=function(t,i,e){var s,a;return r&&o(s=i.constructor)&&s!==e&&n(a=s.prototype)&&a!==e.prototype&&r(t,a),t}},3706:(t,i,e)=>{var o=e(9504),n=e(4901),r=e(7629),s=o(Function.toString);n(r.inspectSource)||(r.inspectSource=function(t){return s(t)}),t.exports=r.inspectSource},1181:(t,i,e)=>{var o,n,r,s=e(8622),a=e(4576),c=e(34),l=e(6699),u=e(9297),p=e(7629),v=e(6119),d=e(421),h="Object already initialized",f=a.TypeError,m=a.WeakMap;if(s||p.state){var g=p.state||(p.state=new m);g.get=g.get,g.has=g.has,g.set=g.set,o=function(t,i){if(g.has(t))throw new f(h);return i.facade=t,g.set(t,i),i},n=function(t){return g.get(t)||{}},r=function(t){return g.has(t)}}else{var w=v("state");d[w]=!0,o=function(t,i){if(u(t,w))throw new f(h);return i.facade=t,l(t,w,i),i},n=function(t){return u(t,w)?t[w]:{}},r=function(t){return u(t,w)}}t.exports={set:o,get:n,has:r,enforce:function(t){return r(t)?n(t):o(t,{})},getterFor:function(t){return function(i){var e;if(!c(i)||(e=n(i)).type!==t)throw new f("Incompatible receiver, "+t+" required");return e}}}},4209:(t,i,e)=>{var o=e(8227),n=e(6269),r=o("iterator"),s=Array.prototype;t.exports=function(t){return void 0!==t&&(n.Array===t||s[r]===t)}},4376:(t,i,e)=>{var o=e(2195);t.exports=Array.isArray||function(t){return"Array"===o(t)}},4901:t=>{var i="object"==typeof document&&document.all;t.exports=void 0===i&&void 0!==i?function(t){return"function"==typeof t||t===i}:function(t){return"function"==typeof t}},3517:(t,i,e)=>{var o=e(9504),n=e(9039),r=e(4901),s=e(6955),a=e(7751),c=e(3706),l=function(){},u=a("Reflect","construct"),p=/^\s*(?:class|function)\b/,v=o(p.exec),d=!p.test(l),h=function(t){if(!r(t))return!1;try{return u(l,[],t),!0}catch(t){return!1}},f=function(t){if(!r(t))return!1;switch(s(t)){case"AsyncFunction":case"GeneratorFunction":case"AsyncGeneratorFunction":return!1}try{return d||!!v(p,c(t))}catch(t){return!0}};f.sham=!0,t.exports=!u||n((function(){var t;return h(h.call)||!h(Object)||!h((function(){t=!0}))||t}))?f:h},2796:(t,i,e)=>{var o=e(9039),n=e(4901),r=/#|\.prototype\./,s=function(t,i){var e=c[a(t)];return e===u||e!==l&&(n(i)?o(i):!!i)},a=s.normalize=function(t){return String(t).replace(r,".").toLowerCase()},c=s.data={},l=s.NATIVE="N",u=s.POLYFILL="P";t.exports=s},4117:t=>{t.exports=function(t){return null==t}},34:(t,i,e)=>{var o=e(4901);t.exports=function(t){return"object"==typeof t?null!==t:o(t)}},3925:(t,i,e)=>{var o=e(34);t.exports=function(t){return o(t)||null===t}},6395:t=>{t.exports=!1},788:(t,i,e)=>{var o=e(34),n=e(2195),r=e(8227),s=r("match");t.exports=function(t){var i;return o(t)&&(void 0!==(i=t[s])?!!i:"RegExp"===n(t))}},757:(t,i,e)=>{var o=e(7751),n=e(4901),r=e(1625),s=e(7040),a=Object;t.exports=s?function(t){return"symbol"==typeof t}:function(t){var i=o("Symbol");return n(i)&&r(i.prototype,a(t))}},2652:(t,i,e)=>{var o=e(6080),n=e(9565),r=e(8551),s=e(6823),a=e(4209),c=e(6198),l=e(1625),u=e(81),p=e(851),v=e(9539),d=TypeError,h=function(t,i){this.stopped=t,this.result=i},f=h.prototype;t.exports=function(t,i,e){var m,g,w,_,y,b,x,$=e&&e.that,E=!(!e||!e.AS_ENTRIES),I=!(!e||!e.IS_RECORD),S=!(!e||!e.IS_ITERATOR),T=!(!e||!e.INTERRUPTED),j=o(i,$),C=function(t){return m&&v(m,"normal",t),new h(!0,t)},O=function(t){return E?(r(t),T?j(t[0],t[1],C):j(t[0],t[1])):T?j(t,C):j(t)};if(I)m=t.iterator;else if(S)m=t;else{if(g=p(t),!g)throw new d(s(t)+" is not iterable");if(a(g)){for(w=0,_=c(t);_>w;w++)if(y=O(t[w]),y&&l(f,y))return y;return new h(!1)}m=u(t,g)}for(b=I?t.next:m.next;!(x=n(b,m)).done;){try{y=O(x.value)}catch(t){v(m,"throw",t)}if("object"==typeof y&&y&&l(f,y))return y}return new h(!1)}},9539:(t,i,e)=>{var o=e(9565),n=e(8551),r=e(5966);t.exports=function(t,i,e){var s,a;n(t);try{if(s=r(t,"return"),!s){if("throw"===i)throw e;return e}s=o(s,t)}catch(t){a=!0,s=t}if("throw"===i)throw e;if(a)throw s;return n(s),e}},3994:(t,i,e)=>{var o=e(7657).IteratorPrototype,n=e(2360),r=e(6980),s=e(687),a=e(6269),c=function(){return this};t.exports=function(t,i,e,l){var u=i+" Iterator";return t.prototype=n(o,{next:r(+!l,e)}),s(t,u,!1,!0),a[u]=c,t}},1088:(t,i,e)=>{var o=e(6518),n=e(9565),r=e(6395),s=e(350),a=e(4901),c=e(3994),l=e(2787),u=e(2967),p=e(687),v=e(6699),d=e(6840),h=e(8227),f=e(6269),m=e(7657),g=s.PROPER,w=s.CONFIGURABLE,_=m.IteratorPrototype,y=m.BUGGY_SAFARI_ITERATORS,b=h("iterator"),x="keys",$="values",E="entries",I=function(){return this};t.exports=function(t,i,e,s,h,m,S){c(e,i,s);var T,j,C,O=function(t){if(t===h&&N)return N;if(!y&&t&&t in q)return q[t];switch(t){case x:case $:case E:return function(){return new e(this,t)}}return function(){return new e(this)}},k=i+" Iterator",A=!1,q=t.prototype,P=q[b]||q["@@iterator"]||h&&q[h],N=!y&&P||O(h),R="Array"===i&&q.entries||P;if(R&&(T=l(R.call(new t)),T!==Object.prototype&&T.next&&(r||l(T)===_||(u?u(T,_):a(T[b])||d(T,b,I)),p(T,k,!0,!0),r&&(f[k]=I))),g&&h===$&&P&&P.name!==$&&(!r&&w?v(q,"name",$):(A=!0,N=function(){return n(P,this)})),h)if(j={values:O($),keys:m?N:O(x),entries:O(E)},S)for(C in j)(y||A||!(C in q))&&d(q,C,j[C]);else o({target:i,proto:!0,forced:y||A},j);return r&&!S||q[b]===N||d(q,b,N,{name:h}),f[i]=N,j}},7657:(t,i,e)=>{var o,n,r,s=e(9039),a=e(4901),c=e(34),l=e(2360),u=e(2787),p=e(6840),v=e(8227),d=e(6395),h=v("iterator"),f=!1;[].keys&&(r=[].keys(),"next"in r?(n=u(u(r)),n!==Object.prototype&&(o=n)):f=!0);var m=!c(o)||s((function(){var t={};return o[h].call(t)!==t}));m?o={}:d&&(o=l(o)),a(o[h])||p(o,h,(function(){return this})),t.exports={IteratorPrototype:o,BUGGY_SAFARI_ITERATORS:f}},6269:t=>{t.exports={}},6198:(t,i,e)=>{var o=e(8014);t.exports=function(t){return o(t.length)}},283:(t,i,e)=>{var o=e(9504),n=e(9039),r=e(4901),s=e(9297),a=e(3724),c=e(350).CONFIGURABLE,l=e(3706),u=e(1181),p=u.enforce,v=u.get,d=String,h=Object.defineProperty,f=o("".slice),m=o("".replace),g=o([].join),w=a&&!n((function(){return 8!==h((function(){}),"length",{value:8}).length})),_=String(String).split("String"),y=t.exports=function(t,i,e){"Symbol("===f(d(i),0,7)&&(i="["+m(d(i),/^Symbol\(([^)]*)\).*$/,"$1")+"]"),e&&e.getter&&(i="get "+i),e&&e.setter&&(i="set "+i),(!s(t,"name")||c&&t.name!==i)&&(a?h(t,"name",{value:i,configurable:!0}):t.name=i),w&&e&&s(e,"arity")&&t.length!==e.arity&&h(t,"length",{value:e.arity});try{e&&s(e,"constructor")&&e.constructor?a&&h(t,"prototype",{writable:!1}):t.prototype&&(t.prototype=void 0)}catch(t){}var o=p(t);return s(o,"source")||(o.source=g(_,"string"==typeof i?i:"")),t};Function.prototype.toString=y((function(){return r(this)&&v(this).source||l(this)}),"toString")},741:t=>{var i=Math.ceil,e=Math.floor;t.exports=Math.trunc||function(t){var o=+t;return(o>0?e:i)(o)}},1955:(t,i,e)=>{var o,n,r,s,a,c=e(4576),l=e(3389),u=e(6080),p=e(9225).set,v=e(8265),d=e(9544),h=e(4265),f=e(7860),m=e(6193),g=c.MutationObserver||c.WebKitMutationObserver,w=c.document,_=c.process,y=c.Promise,b=l("queueMicrotask");if(!b){var x=new v,$=function(){var t,i;for(m&&(t=_.domain)&&t.exit();i=x.get();)try{i()}catch(t){throw x.head&&o(),t}t&&t.enter()};d||m||f||!g||!w?!h&&y&&y.resolve?(s=y.resolve(void 0),s.constructor=y,a=u(s.then,s),o=function(){a($)}):m?o=function(){_.nextTick($)}:(p=u(p,c),o=function(){p($)}):(n=!0,r=w.createTextNode(""),new g($).observe(r,{characterData:!0}),o=function(){r.data=n=!n}),b=function(t){x.head||o(),x.add(t)}}t.exports=b},6043:(t,i,e)=>{var o=e(9306),n=TypeError,r=function(t){var i,e;this.promise=new t((function(t,o){if(void 0!==i||void 0!==e)throw new n("Bad Promise constructor");i=t,e=o})),this.resolve=o(i),this.reject=o(e)};t.exports.f=function(t){return new r(t)}},511:(t,i,e)=>{var o=e(788),n=TypeError;t.exports=function(t){if(o(t))throw new n("The method doesn't accept regular expressions");return t}},2360:(t,i,e)=>{var o,n=e(8551),r=e(6801),s=e(8727),a=e(421),c=e(397),l=e(4055),u=e(6119),p="prototype",v="script",d=u("IE_PROTO"),h=function(){},f=function(t){return"<"+v+">"+t+"</"+v+">"},m=function(t){t.write(f("")),t.close();var i=t.parentWindow.Object;return t=null,i},g=function(){try{o=new ActiveXObject("htmlfile")}catch(t){}var t,i,e;g="undefined"!=typeof document?document.domain&&o?m(o):(i=l("iframe"),e="java"+v+":",i.style.display="none",c.appendChild(i),i.src=String(e),t=i.contentWindow.document,t.open(),t.write(f("document.F=Object")),t.close(),t.F):m(o);for(var n=s.length;n--;)delete g[p][s[n]];return g()};a[d]=!0,t.exports=Object.create||function(t,i){var e;return null!==t?(h[p]=n(t),e=new h,h[p]=null,e[d]=t):e=g(),void 0===i?e:r.f(e,i)}},6801:(t,i,e)=>{var o=e(3724),n=e(8686),r=e(4913),s=e(8551),a=e(5397),c=e(1072);i.f=o&&!n?Object.defineProperties:function(t,i){s(t);for(var e,o=a(i),n=c(i),l=n.length,u=0;l>u;)r.f(t,e=n[u++],o[e]);return t}},4913:(t,i,e)=>{var o=e(3724),n=e(5917),r=e(8686),s=e(8551),a=e(6969),c=TypeError,l=Object.defineProperty,u=Object.getOwnPropertyDescriptor,p="enumerable",v="configurable",d="writable";i.f=o?r?function(t,i,e){if(s(t),i=a(i),s(e),"function"==typeof t&&"prototype"===i&&"value"in e&&d in e&&!e[d]){var o=u(t,i);o&&o[d]&&(t[i]=e.value,e={configurable:v in e?e[v]:o[v],enumerable:p in e?e[p]:o[p],writable:!1})}return l(t,i,e)}:l:function(t,i,e){if(s(t),i=a(i),s(e),n)try{return l(t,i,e)}catch(t){}if("get"in e||"set"in e)throw new c("Accessors not supported");return"value"in e&&(t[i]=e.value),t}},7347:(t,i,e)=>{var o=e(3724),n=e(9565),r=e(8773),s=e(6980),a=e(5397),c=e(6969),l=e(9297),u=e(5917),p=Object.getOwnPropertyDescriptor;i.f=o?p:function(t,i){if(t=a(t),i=c(i),u)try{return p(t,i)}catch(t){}if(l(t,i))return s(!n(r.f,t,i),t[i])}},298:(t,i,e)=>{var o=e(2195),n=e(5397),r=e(8480).f,s=e(7680),a="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[];t.exports.f=function(t){return a&&"Window"===o(t)?function(t){try{return r(t)}catch(t){return s(a)}}(t):r(n(t))}},8480:(t,i,e)=>{var o=e(1828),n=e(8727),r=n.concat("length","prototype");i.f=Object.getOwnPropertyNames||function(t){return o(t,r)}},3717:(t,i)=>{i.f=Object.getOwnPropertySymbols},2787:(t,i,e)=>{var o=e(9297),n=e(4901),r=e(8981),s=e(6119),a=e(2211),c=s("IE_PROTO"),l=Object,u=l.prototype;t.exports=a?l.getPrototypeOf:function(t){var i=r(t);if(o(i,c))return i[c];var e=i.constructor;return n(e)&&i instanceof e?e.prototype:i instanceof l?u:null}},1625:(t,i,e)=>{var o=e(9504);t.exports=o({}.isPrototypeOf)},1828:(t,i,e)=>{var o=e(9504),n=e(9297),r=e(5397),s=e(9617).indexOf,a=e(421),c=o([].push);t.exports=function(t,i){var e,o=r(t),l=0,u=[];for(e in o)!n(a,e)&&n(o,e)&&c(u,e);for(;i.length>l;)n(o,e=i[l++])&&(~s(u,e)||c(u,e));return u}},1072:(t,i,e)=>{var o=e(1828),n=e(8727);t.exports=Object.keys||function(t){return o(t,n)}},8773:(t,i)=>{var e={}.propertyIsEnumerable,o=Object.getOwnPropertyDescriptor,n=o&&!e.call({1:2},1);i.f=n?function(t){var i=o(this,t);return!!i&&i.enumerable}:e},2967:(t,i,e)=>{var o=e(6706),n=e(34),r=e(7750),s=e(3506);t.exports=Object.setPrototypeOf||("__proto__"in{}?function(){var t,i=!1,e={};try{t=o(Object.prototype,"__proto__","set"),t(e,[]),i=e instanceof Array}catch(t){}return function(e,o){return r(e),s(o),n(e)?(i?t(e,o):e.__proto__=o,e):e}}():void 0)},3179:(t,i,e)=>{var o=e(2140),n=e(6955);t.exports=o?{}.toString:function(){return"[object "+n(this)+"]"}},4270:(t,i,e)=>{var o=e(9565),n=e(4901),r=e(34),s=TypeError;t.exports=function(t,i){var e,a;if("string"===i&&n(e=t.toString)&&!r(a=o(e,t)))return a;if(n(e=t.valueOf)&&!r(a=o(e,t)))return a;if("string"!==i&&n(e=t.toString)&&!r(a=o(e,t)))return a;throw new s("Can't convert object to primitive value")}},5031:(t,i,e)=>{var o=e(7751),n=e(9504),r=e(8480),s=e(3717),a=e(8551),c=n([].concat);t.exports=o("Reflect","ownKeys")||function(t){var i=r.f(a(t)),e=s.f;return e?c(i,e(t)):i}},9167:(t,i,e)=>{var o=e(4576);t.exports=o},1103:t=>{t.exports=function(t){try{return{error:!1,value:t()}}catch(t){return{error:!0,value:t}}}},916:(t,i,e)=>{var o=e(4576),n=e(550),r=e(4901),s=e(2796),a=e(3706),c=e(8227),l=e(4215),u=e(6395),p=e(9519),v=n&&n.prototype,d=c("species"),h=!1,f=r(o.PromiseRejectionEvent),m=s("Promise",(function(){var t=a(n),i=t!==String(n);if(!i&&66===p)return!0;if(u&&(!v.catch||!v.finally))return!0;if(!p||p<51||!/native code/.test(t)){var e=new n((function(t){t(1)})),o=function(t){t((function(){}),(function(){}))},r=e.constructor={};if(r[d]=o,h=e.then((function(){}))instanceof o,!h)return!0}return!(i||"BROWSER"!==l&&"DENO"!==l||f)}));t.exports={CONSTRUCTOR:m,REJECTION_EVENT:f,SUBCLASSING:h}},550:(t,i,e)=>{var o=e(4576);t.exports=o.Promise},3438:(t,i,e)=>{var o=e(8551),n=e(34),r=e(6043);t.exports=function(t,i){if(o(t),n(i)&&i.constructor===t)return i;var e=r.f(t),s=e.resolve;return s(i),e.promise}},537:(t,i,e)=>{var o=e(550),n=e(4428),r=e(916).CONSTRUCTOR;t.exports=r||!n((function(t){o.all(t).then(void 0,(function(){}))}))},1056:(t,i,e)=>{var o=e(4913).f;t.exports=function(t,i,e){e in t||o(t,e,{configurable:!0,get:function(){return i[e]},set:function(t){i[e]=t}})}},8265:t=>{var i=function(){this.head=null,this.tail=null};i.prototype={add:function(t){var i={item:t,next:null},e=this.tail;e?e.next=i:this.head=i,this.tail=i},get:function(){var t=this.head;if(t){var i=this.head=t.next;return null===i&&(this.tail=null),t.item}}},t.exports=i},6682:(t,i,e)=>{var o=e(9565),n=e(8551),r=e(4901),s=e(2195),a=e(7323),c=TypeError;t.exports=function(t,i){var e=t.exec;if(r(e)){var l=o(e,t,i);return null!==l&&n(l),l}if("RegExp"===s(t))return o(a,t,i);throw new c("RegExp#exec called on incompatible receiver")}},7323:(t,i,e)=>{var o,n,r=e(9565),s=e(9504),a=e(655),c=e(7979),l=e(8429),u=e(5745),p=e(2360),v=e(1181).get,d=e(3635),h=e(8814),f=u("native-string-replace",String.prototype.replace),m=RegExp.prototype.exec,g=m,w=s("".charAt),_=s("".indexOf),y=s("".replace),b=s("".slice),x=(o=/a/,n=/b*/g,r(m,o,"a"),r(m,n,"a"),0!==o.lastIndex||0!==n.lastIndex),$=l.BROKEN_CARET,E=void 0!==/()??/.exec("")[1],I=x||E||$||d||h;I&&(g=function(t){var i,e,o,n,s,l,u,d=this,h=v(d),I=a(t),S=h.raw;if(S)return S.lastIndex=d.lastIndex,i=r(g,S,I),d.lastIndex=S.lastIndex,i;var T=h.groups,j=$&&d.sticky,C=r(c,d),O=d.source,k=0,A=I;if(j&&(C=y(C,"y",""),-1===_(C,"g")&&(C+="g"),A=b(I,d.lastIndex),d.lastIndex>0&&(!d.multiline||d.multiline&&"\n"!==w(I,d.lastIndex-1))&&(O="(?: "+O+")",A=" "+A,k++),e=new RegExp("^(?:"+O+")",C)),E&&(e=new RegExp("^"+O+"$(?!\\s)",C)),x&&(o=d.lastIndex),n=r(m,j?e:d,A),j?n?(n.input=b(n.input,k),n[0]=b(n[0],k),n.index=d.lastIndex,d.lastIndex+=n[0].length):d.lastIndex=0:x&&n&&(d.lastIndex=d.global?n.index+n[0].length:o),E&&n&&n.length>1&&r(f,n[0],e,(function(){for(s=1;s<arguments.length-2;s++)void 0===arguments[s]&&(n[s]=void 0)})),n&&T)for(n.groups=l=p(null),s=0;s<T.length;s++)u=T[s],l[u[0]]=n[u[1]];return n}),t.exports=g},7979:(t,i,e)=>{var o=e(8551);t.exports=function(){var t=o(this),i="";return t.hasIndices&&(i+="d"),t.global&&(i+="g"),t.ignoreCase&&(i+="i"),t.multiline&&(i+="m"),t.dotAll&&(i+="s"),t.unicode&&(i+="u"),t.unicodeSets&&(i+="v"),t.sticky&&(i+="y"),i}},1034:(t,i,e)=>{var o=e(9565),n=e(9297),r=e(1625),s=e(7979),a=RegExp.prototype;t.exports=function(t){var i=t.flags;return void 0!==i||"flags"in a||n(t,"flags")||!r(a,t)?i:o(s,t)}},8429:(t,i,e)=>{var o=e(9039),n=e(4576),r=n.RegExp,s=o((function(){var t=r("a","y");return t.lastIndex=2,null!==t.exec("abcd")})),a=s||o((function(){return!r("a","y").sticky})),c=s||o((function(){var t=r("^r","gy");return t.lastIndex=2,null!==t.exec("str")}));t.exports={BROKEN_CARET:c,MISSED_STICKY:a,UNSUPPORTED_Y:s}},3635:(t,i,e)=>{var o=e(9039),n=e(4576),r=n.RegExp;t.exports=o((function(){var t=r(".","s");return!(t.dotAll&&t.test("\n")&&"s"===t.flags)}))},8814:(t,i,e)=>{var o=e(9039),n=e(4576),r=n.RegExp;t.exports=o((function(){var t=r("(?<a>b)","g");return"b"!==t.exec("b").groups.a||"bc"!=="b".replace(t,"$<a>c")}))},7750:(t,i,e)=>{var o=e(4117),n=TypeError;t.exports=function(t){if(o(t))throw new n("Can't call method on "+t);return t}},3389:(t,i,e)=>{var o=e(4576),n=e(3724),r=Object.getOwnPropertyDescriptor;t.exports=function(t){if(!n)return o[t];var i=r(o,t);return i&&i.value}},7633:(t,i,e)=>{var o=e(7751),n=e(2106),r=e(8227),s=e(3724),a=r("species");t.exports=function(t){var i=o(t);s&&i&&!i[a]&&n(i,a,{configurable:!0,get:function(){return this}})}},687:(t,i,e)=>{var o=e(4913).f,n=e(9297),r=e(8227),s=r("toStringTag");t.exports=function(t,i,e){t&&!e&&(t=t.prototype),t&&!n(t,s)&&o(t,s,{configurable:!0,value:i})}},6119:(t,i,e)=>{var o=e(5745),n=e(3392),r=o("keys");t.exports=function(t){return r[t]||(r[t]=n(t))}},7629:(t,i,e)=>{var o=e(6395),n=e(4576),r=e(9433),s="__core-js_shared__",a=t.exports=n[s]||r(s,{});(a.versions||(a.versions=[])).push({version:"3.40.0",mode:o?"pure":"global",copyright:"© 2014-2025 Denis Pushkarev (zloirock.ru)",license:"https://github.com/zloirock/core-js/blob/v3.40.0/LICENSE",source:"https://github.com/zloirock/core-js"})},5745:(t,i,e)=>{var o=e(7629);t.exports=function(t,i){return o[t]||(o[t]=i||{})}},2293:(t,i,e)=>{var o=e(8551),n=e(5548),r=e(4117),s=e(8227),a=s("species");t.exports=function(t,i){var e,s=o(t).constructor;return void 0===s||r(e=o(s)[a])?i:n(e)}},8183:(t,i,e)=>{var o=e(9504),n=e(1291),r=e(655),s=e(7750),a=o("".charAt),c=o("".charCodeAt),l=o("".slice),u=function(t){return function(i,e){var o,u,p=r(s(i)),v=n(e),d=p.length;return v<0||v>=d?t?"":void 0:(o=c(p,v),o<55296||o>56319||v+1===d||(u=c(p,v+1))<56320||u>57343?t?a(p,v):o:t?l(p,v,v+2):u-56320+(o-55296<<10)+65536)}};t.exports={codeAt:u(!1),charAt:u(!0)}},706:(t,i,e)=>{var o=e(350).PROPER,n=e(9039),r=e(7452);t.exports=function(t){return n((function(){return!!r[t]()||"​᠎"!=="​᠎"[t]()||o&&r[t].name!==t}))}},3802:(t,i,e)=>{var o=e(9504),n=e(7750),r=e(655),s=e(7452),a=o("".replace),c=RegExp("^["+s+"]+"),l=RegExp("(^|[^"+s+"])["+s+"]+$"),u=function(t){return function(i){var e=r(n(i));return 1&t&&(e=a(e,c,"")),2&t&&(e=a(e,l,"$1")),e}};t.exports={start:u(1),end:u(2),trim:u(3)}},4495:(t,i,e)=>{var o=e(9519),n=e(9039),r=e(4576),s=r.String;t.exports=!!Object.getOwnPropertySymbols&&!n((function(){var t=Symbol("symbol detection");return!s(t)||!(Object(t)instanceof Symbol)||!Symbol.sham&&o&&o<41}))},8242:(t,i,e)=>{var o=e(9565),n=e(7751),r=e(8227),s=e(6840);t.exports=function(){var t=n("Symbol"),i=t&&t.prototype,e=i&&i.valueOf,a=r("toPrimitive");i&&!i[a]&&s(i,a,(function(t){return o(e,this)}),{arity:1})}},1296:(t,i,e)=>{var o=e(4495);t.exports=o&&!!Symbol.for&&!!Symbol.keyFor},9225:(t,i,e)=>{var o,n,r,s,a=e(4576),c=e(8745),l=e(6080),u=e(4901),p=e(9297),v=e(9039),d=e(397),h=e(7680),f=e(4055),m=e(2812),g=e(9544),w=e(6193),_=a.setImmediate,y=a.clearImmediate,b=a.process,x=a.Dispatch,$=a.Function,E=a.MessageChannel,I=a.String,S=0,T={},j="onreadystatechange";v((function(){o=a.location}));var C=function(t){if(p(T,t)){var i=T[t];delete T[t],i()}},O=function(t){return function(){C(t)}},k=function(t){C(t.data)},A=function(t){a.postMessage(I(t),o.protocol+"//"+o.host)};_&&y||(_=function(t){m(arguments.length,1);var i=u(t)?t:$(t),e=h(arguments,1);return T[++S]=function(){c(i,void 0,e)},n(S),S},y=function(t){delete T[t]},w?n=function(t){b.nextTick(O(t))}:x&&x.now?n=function(t){x.now(O(t))}:E&&!g?(r=new E,s=r.port2,r.port1.onmessage=k,n=l(s.postMessage,s)):a.addEventListener&&u(a.postMessage)&&!a.importScripts&&o&&"file:"!==o.protocol&&!v(A)?(n=A,a.addEventListener("message",k,!1)):n=j in f("script")?function(t){d.appendChild(f("script"))[j]=function(){d.removeChild(this),C(t)}}:function(t){setTimeout(O(t),0)}),t.exports={set:_,clear:y}},1240:(t,i,e)=>{var o=e(9504);t.exports=o(1..valueOf)},5610:(t,i,e)=>{var o=e(1291),n=Math.max,r=Math.min;t.exports=function(t,i){var e=o(t);return e<0?n(e+i,0):r(e,i)}},5397:(t,i,e)=>{var o=e(7055),n=e(7750);t.exports=function(t){return o(n(t))}},1291:(t,i,e)=>{var o=e(741);t.exports=function(t){var i=+t;return i!=i||0===i?0:o(i)}},8014:(t,i,e)=>{var o=e(1291),n=Math.min;t.exports=function(t){var i=o(t);return i>0?n(i,9007199254740991):0}},8981:(t,i,e)=>{var o=e(7750),n=Object;t.exports=function(t){return n(o(t))}},2777:(t,i,e)=>{var o=e(9565),n=e(34),r=e(757),s=e(5966),a=e(4270),c=e(8227),l=TypeError,u=c("toPrimitive");t.exports=function(t,i){if(!n(t)||r(t))return t;var e,c=s(t,u);if(c){if(void 0===i&&(i="default"),e=o(c,t,i),!n(e)||r(e))return e;throw new l("Can't convert object to primitive value")}return void 0===i&&(i="number"),a(t,i)}},6969:(t,i,e)=>{var o=e(2777),n=e(757);t.exports=function(t){var i=o(t,"string");return n(i)?i:i+""}},2140:(t,i,e)=>{var o=e(8227),n=o("toStringTag"),r={};r[n]="z",t.exports="[object z]"===String(r)},655:(t,i,e)=>{var o=e(6955),n=String;t.exports=function(t){if("Symbol"===o(t))throw new TypeError("Cannot convert a Symbol value to a string");return n(t)}},6823:t=>{var i=String;t.exports=function(t){try{return i(t)}catch(t){return"Object"}}},3392:(t,i,e)=>{var o=e(9504),n=0,r=Math.random(),s=o(1..toString);t.exports=function(t){return"Symbol("+(void 0===t?"":t)+")_"+s(++n+r,36)}},7040:(t,i,e)=>{var o=e(4495);t.exports=o&&!Symbol.sham&&"symbol"==typeof Symbol.iterator},8686:(t,i,e)=>{var o=e(3724),n=e(9039);t.exports=o&&n((function(){return 42!==Object.defineProperty((function(){}),"prototype",{value:42,writable:!1}).prototype}))},2812:t=>{var i=TypeError;t.exports=function(t,e){if(t<e)throw new i("Not enough arguments");return t}},8622:(t,i,e)=>{var o=e(4576),n=e(4901),r=o.WeakMap;t.exports=n(r)&&/native code/.test(String(r))},2892:(t,i,e)=>{var o=e(9167),n=e(9297),r=e(1951),s=e(4913).f;t.exports=function(t){var i=o.Symbol||(o.Symbol={});n(i,t)||s(i,t,{value:r.f(t)})}},1951:(t,i,e)=>{var o=e(8227);i.f=o},8227:(t,i,e)=>{var o=e(4576),n=e(5745),r=e(9297),s=e(3392),a=e(4495),c=e(7040),l=o.Symbol,u=n("wks"),p=c?l.for||l:l&&l.withoutSetter||s;t.exports=function(t){return r(u,t)||(u[t]=a&&r(l,t)?l[t]:p("Symbol."+t)),u[t]}},7452:t=>{t.exports="\t\n\v\f\r                　\u2028\u2029\ufeff"},8706:(t,i,e)=>{var o=e(6518),n=e(9039),r=e(4376),s=e(34),a=e(8981),c=e(6198),l=e(6837),u=e(4659),p=e(1469),v=e(597),d=e(8227),h=e(9519),f=d("isConcatSpreadable"),m=h>=51||!n((function(){var t=[];return t[f]=!1,t.concat()[0]!==t})),g=function(t){if(!s(t))return!1;var i=t[f];return void 0!==i?!!i:r(t)},w=!m||!v("concat");o({target:"Array",proto:!0,arity:1,forced:w},{concat:function(t){var i,e,o,n,r,s=a(this),v=p(s,0),d=0;for(i=-1,o=arguments.length;i<o;i++)if(r=-1===i?s:arguments[i],g(r))for(n=c(r),l(d+n),e=0;e<n;e++,d++)e in r&&u(v,d,r[e]);else l(d+1),u(v,d++,r);return v.length=d,v}})},2008:(t,i,e)=>{var o=e(6518),n=e(9213).filter,r=e(597),s=r("filter");o({target:"Array",proto:!0,forced:!s},{filter:function(t){return n(this,t,arguments.length>1?arguments[1]:void 0)}})},8980:(t,i,e)=>{var o=e(6518),n=e(9213).findIndex,r=e(6469),s="findIndex",a=!0;s in[]&&Array(1)[s]((function(){a=!1})),o({target:"Array",proto:!0,forced:a},{findIndex:function(t){return n(this,t,arguments.length>1?arguments[1]:void 0)}}),r(s)},113:(t,i,e)=>{var o=e(6518),n=e(9213).find,r=e(6469),s="find",a=!0;s in[]&&Array(1)[s]((function(){a=!1})),o({target:"Array",proto:!0,forced:a},{find:function(t){return n(this,t,arguments.length>1?arguments[1]:void 0)}}),r(s)},3418:(t,i,e)=>{var o=e(6518),n=e(7916),r=e(4428),s=!r((function(t){Array.from(t)}));o({target:"Array",stat:!0,forced:s},{from:n})},4423:(t,i,e)=>{var o=e(6518),n=e(9617).includes,r=e(9039),s=e(6469),a=r((function(){return!Array(1).includes()}));o({target:"Array",proto:!0,forced:a},{includes:function(t){return n(this,t,arguments.length>1?arguments[1]:void 0)}}),s("includes")},3792:(t,i,e)=>{var o=e(5397),n=e(6469),r=e(6269),s=e(1181),a=e(4913).f,c=e(1088),l=e(2529),u=e(6395),p=e(3724),v="Array Iterator",d=s.set,h=s.getterFor(v);t.exports=c(Array,"Array",(function(t,i){d(this,{type:v,target:o(t),index:0,kind:i})}),(function(){var t=h(this),i=t.target,e=t.index++;if(!i||e>=i.length)return t.target=null,l(void 0,!0);switch(t.kind){case"keys":return l(e,!1);case"values":return l(i[e],!1)}return l([e,i[e]],!1)}),"values");var f=r.Arguments=r.Array;if(n("keys"),n("values"),n("entries"),!u&&p&&"values"!==f.name)try{a(f,"name",{value:"values"})}catch(t){}},8598:(t,i,e)=>{var o=e(6518),n=e(9504),r=e(7055),s=e(5397),a=e(4598),c=n([].join),l=r!==Object,u=l||!a("join",",");o({target:"Array",proto:!0,forced:u},{join:function(t){return c(s(this),void 0===t?",":t)}})},2062:(t,i,e)=>{var o=e(6518),n=e(9213).map,r=e(597),s=r("map");o({target:"Array",proto:!0,forced:!s},{map:function(t){return n(this,t,arguments.length>1?arguments[1]:void 0)}})},4782:(t,i,e)=>{var o=e(6518),n=e(4376),r=e(3517),s=e(34),a=e(5610),c=e(6198),l=e(5397),u=e(4659),p=e(8227),v=e(597),d=e(7680),h=v("slice"),f=p("species"),m=Array,g=Math.max;o({target:"Array",proto:!0,forced:!h},{slice:function(t,i){var e,o,p,v=l(this),h=c(v),w=a(t,h),_=a(void 0===i?h:i,h);if(n(v)&&(e=v.constructor,r(e)&&(e===m||n(e.prototype))?e=void 0:s(e)&&(e=e[f],null===e&&(e=void 0)),e===m||void 0===e))return d(v,w,_);for(o=new(void 0===e?m:e)(g(_-w,0)),p=0;w<_;w++,p++)w in v&&u(o,p,v[w]);return o.length=p,o}})},2010:(t,i,e)=>{var o=e(3724),n=e(350).EXISTS,r=e(9504),s=e(2106),a=Function.prototype,c=r(a.toString),l=/function\b(?:\s|\/\*[\S\s]*?\*\/|\/\/[^\n\r]*[\n\r]+)*([^\s(/]*)/,u=r(l.exec);o&&!n&&s(a,"name",{configurable:!0,get:function(){try{return u(l,c(this))[1]}catch(t){return""}}})},3110:(t,i,e)=>{var o=e(6518),n=e(7751),r=e(8745),s=e(9565),a=e(9504),c=e(9039),l=e(4901),u=e(757),p=e(7680),v=e(6933),d=e(4495),h=String,f=n("JSON","stringify"),m=a(/./.exec),g=a("".charAt),w=a("".charCodeAt),_=a("".replace),y=a(1..toString),b=/[\uD800-\uDFFF]/g,x=/^[\uD800-\uDBFF]$/,$=/^[\uDC00-\uDFFF]$/,E=!d||c((function(){var t=n("Symbol")("stringify detection");return"[null]"!==f([t])||"{}"!==f({a:t})||"{}"!==f(Object(t))})),I=c((function(){return'"\\udf06\\ud834"'!==f("\udf06\ud834")||'"\\udead"'!==f("\udead")})),S=function(t,i){var e=p(arguments),o=v(i);if(l(o)||void 0!==t&&!u(t))return e[1]=function(t,i){if(l(o)&&(i=s(o,this,h(t),i)),!u(i))return i},r(f,null,e)},T=function(t,i,e){var o=g(e,i-1),n=g(e,i+1);return m(x,t)&&!m($,n)||m($,t)&&!m(x,o)?"\\u"+y(w(t,0),16):t};f&&o({target:"JSON",stat:!0,arity:3,forced:E||I},{stringify:function(t,i,e){var o=p(arguments),n=r(E?S:f,null,o);return I&&"string"==typeof n?_(n,b,T):n}})},8130:(t,i,e)=>{var o=e(6518),n=e(6395),r=e(3724),s=e(4576),a=e(9167),c=e(9504),l=e(2796),u=e(9297),p=e(3167),v=e(1625),d=e(757),h=e(2777),f=e(9039),m=e(8480).f,g=e(7347).f,w=e(4913).f,_=e(1240),y=e(3802).trim,b="Number",x=s[b],$=a[b],E=x.prototype,I=s.TypeError,S=c("".slice),T=c("".charCodeAt),j=function(t){var i,e,o,n,r,s,a,c,l=h(t,"number");if(d(l))throw new I("Cannot convert a Symbol value to a number");if("string"==typeof l&&l.length>2)if(l=y(l),i=T(l,0),43===i||45===i){if(e=T(l,2),88===e||120===e)return NaN}else if(48===i){switch(T(l,1)){case 66:case 98:o=2,n=49;break;case 79:case 111:o=8,n=55;break;default:return+l}for(r=S(l,2),s=r.length,a=0;a<s;a++)if(c=T(r,a),c<48||c>n)return NaN;return parseInt(r,o)}return+l},C=l(b,!x(" 0o1")||!x("0b1")||x("+0x1")),O=function(t){var i,e=arguments.length<1?0:x(function(t){var i=h(t,"number");return"bigint"==typeof i?i:j(i)}(t));return i=this,v(E,i)&&f((function(){_(i)}))?p(Object(e),this,O):e};O.prototype=E,C&&!n&&(E.constructor=O),o({global:!0,constructor:!0,wrap:!0,forced:C},{Number:O});var k=function(t,i){for(var e,o=r?m(i):"MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,EPSILON,MAX_SAFE_INTEGER,MIN_SAFE_INTEGER,isFinite,isInteger,isNaN,isSafeInteger,parseFloat,parseInt,fromString,range".split(","),n=0;o.length>n;n++)u(i,e=o[n])&&!u(t,e)&&w(t,e,g(i,e))};n&&$&&k(a[b],$),(C||n)&&k(a[b],x)},9773:(t,i,e)=>{var o=e(6518),n=e(4495),r=e(9039),s=e(3717),a=e(8981),c=!n||r((function(){s.f(1)}));o({target:"Object",stat:!0,forced:c},{getOwnPropertySymbols:function(t){var i=s.f;return i?i(a(t)):[]}})},9432:(t,i,e)=>{var o=e(6518),n=e(8981),r=e(1072),s=e(9039),a=s((function(){r(1)}));o({target:"Object",stat:!0,forced:a},{keys:function(t){return r(n(t))}})},6099:(t,i,e)=>{var o=e(2140),n=e(6840),r=e(3179);o||n(Object.prototype,"toString",r,{unsafe:!0})},6499:(t,i,e)=>{var o=e(6518),n=e(9565),r=e(9306),s=e(6043),a=e(1103),c=e(2652),l=e(537);o({target:"Promise",stat:!0,forced:l},{all:function(t){var i=this,e=s.f(i),o=e.resolve,l=e.reject,u=a((function(){var e=r(i.resolve),s=[],a=0,u=1;c(t,(function(t){var r=a++,c=!1;u++,n(e,i,t).then((function(t){c||(c=!0,s[r]=t,--u||o(s))}),l)})),--u||o(s)}));return u.error&&l(u.value),e.promise}})},2003:(t,i,e)=>{var o=e(6518),n=e(6395),r=e(916).CONSTRUCTOR,s=e(550),a=e(7751),c=e(4901),l=e(6840),u=s&&s.prototype;if(o({target:"Promise",proto:!0,forced:r,real:!0},{catch:function(t){return this.then(void 0,t)}}),!n&&c(s)){var p=a("Promise").prototype.catch;u.catch!==p&&l(u,"catch",p,{unsafe:!0})}},436:(t,i,e)=>{var o,n,r,s=e(6518),a=e(6395),c=e(6193),l=e(4576),u=e(9565),p=e(6840),v=e(2967),d=e(687),h=e(7633),f=e(9306),m=e(4901),g=e(34),w=e(679),_=e(2293),y=e(9225).set,b=e(1955),x=e(3138),$=e(1103),E=e(8265),I=e(1181),S=e(550),T=e(916),j=e(6043),C="Promise",O=T.CONSTRUCTOR,k=T.REJECTION_EVENT,A=T.SUBCLASSING,q=I.getterFor(C),P=I.set,N=S&&S.prototype,R=S,z=N,L=l.TypeError,V=l.document,F=l.process,D=j.f,M=D,W=!!(V&&V.createEvent&&l.dispatchEvent),H="unhandledrejection",U=function(t){var i;return!(!g(t)||!m(i=t.then))&&i},G=function(t,i){var e,o,n,r=i.value,s=1===i.state,a=s?t.ok:t.fail,c=t.resolve,l=t.reject,p=t.domain;try{a?(s||(2===i.rejection&&Z(i),i.rejection=1),!0===a?e=r:(p&&p.enter(),e=a(r),p&&(p.exit(),n=!0)),e===t.promise?l(new L("Promise-chain cycle")):(o=U(e))?u(o,e,c,l):c(e)):l(r)}catch(t){p&&!n&&p.exit(),l(t)}},B=function(t,i){t.notified||(t.notified=!0,b((function(){for(var e,o=t.reactions;e=o.get();)G(e,t);t.notified=!1,i&&!t.rejection&&J(t)})))},K=function(t,i,e){var o,n;W?(o=V.createEvent("Event"),o.promise=i,o.reason=e,o.initEvent(t,!1,!0),l.dispatchEvent(o)):o={promise:i,reason:e},!k&&(n=l["on"+t])?n(o):t===H&&x("Unhandled promise rejection",e)},J=function(t){u(y,l,(function(){var i,e=t.facade,o=t.value,n=Y(t);if(n&&(i=$((function(){c?F.emit("unhandledRejection",o,e):K(H,e,o)})),t.rejection=c||Y(t)?2:1,i.error))throw i.value}))},Y=function(t){return 1!==t.rejection&&!t.parent},Z=function(t){u(y,l,(function(){var i=t.facade;c?F.emit("rejectionHandled",i):K("rejectionhandled",i,t.value)}))},X=function(t,i,e){return function(o){t(i,o,e)}},Q=function(t,i,e){t.done||(t.done=!0,e&&(t=e),t.value=i,t.state=2,B(t,!0))},tt=function(t,i,e){if(!t.done){t.done=!0,e&&(t=e);try{if(t.facade===i)throw new L("Promise can't be resolved itself");var o=U(i);o?b((function(){var e={done:!1};try{u(o,i,X(tt,e,t),X(Q,e,t))}catch(i){Q(e,i,t)}})):(t.value=i,t.state=1,B(t,!1))}catch(i){Q({done:!1},i,t)}}};if(O&&(R=function(t){w(this,z),f(t),u(o,this);var i=q(this);try{t(X(tt,i),X(Q,i))}catch(t){Q(i,t)}},z=R.prototype,o=function(t){P(this,{type:C,done:!1,notified:!1,parent:!1,reactions:new E,rejection:!1,state:0,value:null})},o.prototype=p(z,"then",(function(t,i){var e=q(this),o=D(_(this,R));return e.parent=!0,o.ok=!m(t)||t,o.fail=m(i)&&i,o.domain=c?F.domain:void 0,0===e.state?e.reactions.add(o):b((function(){G(o,e)})),o.promise})),n=function(){var t=new o,i=q(t);this.promise=t,this.resolve=X(tt,i),this.reject=X(Q,i)},j.f=D=function(t){return t===R||undefined===t?new n(t):M(t)},!a&&m(S)&&N!==Object.prototype)){r=N.then,A||p(N,"then",(function(t,i){var e=this;return new R((function(t,i){u(r,e,t,i)})).then(t,i)}),{unsafe:!0});try{delete N.constructor}catch(t){}v&&v(N,z)}s({global:!0,constructor:!0,wrap:!0,forced:O},{Promise:R}),d(R,C,!1,!0),h(C)},3362:(t,i,e)=>{e(436),e(6499),e(2003),e(7743),e(1481),e(280)},7743:(t,i,e)=>{var o=e(6518),n=e(9565),r=e(9306),s=e(6043),a=e(1103),c=e(2652),l=e(537);o({target:"Promise",stat:!0,forced:l},{race:function(t){var i=this,e=s.f(i),o=e.reject,l=a((function(){var s=r(i.resolve);c(t,(function(t){n(s,i,t).then(e.resolve,o)}))}));return l.error&&o(l.value),e.promise}})},1481:(t,i,e)=>{var o=e(6518),n=e(6043),r=e(916).CONSTRUCTOR;o({target:"Promise",stat:!0,forced:r},{reject:function(t){var i=n.f(this),e=i.reject;return e(t),i.promise}})},280:(t,i,e)=>{var o=e(6518),n=e(7751),r=e(6395),s=e(550),a=e(916).CONSTRUCTOR,c=e(3438),l=n("Promise"),u=r&&!a;o({target:"Promise",stat:!0,forced:r||a},{resolve:function(t){return c(u&&this===l?s:this,t)}})},4864:(t,i,e)=>{var o=e(3724),n=e(4576),r=e(9504),s=e(2796),a=e(3167),c=e(6699),l=e(2360),u=e(8480).f,p=e(1625),v=e(788),d=e(655),h=e(1034),f=e(8429),m=e(1056),g=e(6840),w=e(9039),_=e(9297),y=e(1181).enforce,b=e(7633),x=e(8227),$=e(3635),E=e(8814),I=x("match"),S=n.RegExp,T=S.prototype,j=n.SyntaxError,C=r(T.exec),O=r("".charAt),k=r("".replace),A=r("".indexOf),q=r("".slice),P=/^\?<[^\s\d!#%&*+<=>@^][^\s!#%&*+<=>@^]*>/,N=/a/g,R=/a/g,z=new S(N)!==N,L=f.MISSED_STICKY,V=f.UNSUPPORTED_Y,F=o&&(!z||L||$||E||w((function(){return R[I]=!1,S(N)!==N||S(R)===R||"/a/i"!==String(S(N,"i"))})));if(s("RegExp",F)){for(var D=function(t,i){var e,o,n,r,s,u,f=p(T,this),m=v(t),g=void 0===i,w=[],b=t;if(!f&&m&&g&&t.constructor===D)return t;if((m||p(T,t))&&(t=t.source,g&&(i=h(b))),t=void 0===t?"":d(t),i=void 0===i?"":d(i),b=t,$&&"dotAll"in N&&(o=!!i&&A(i,"s")>-1,o&&(i=k(i,/s/g,""))),e=i,L&&"sticky"in N&&(n=!!i&&A(i,"y")>-1,n&&V&&(i=k(i,/y/g,""))),E&&(r=function(t){for(var i,e=t.length,o=0,n="",r=[],s=l(null),a=!1,c=!1,u=0,p="";o<=e;o++){if(i=O(t,o),"\\"===i)i+=O(t,++o);else if("]"===i)a=!1;else if(!a)switch(!0){case"["===i:a=!0;break;case"("===i:if(n+=i,"?:"===q(t,o+1,o+3))continue;C(P,q(t,o+1))&&(o+=2,c=!0),u++;continue;case">"===i&&c:if(""===p||_(s,p))throw new j("Invalid capture group name");s[p]=!0,r[r.length]=[p,u],c=!1,p="";continue}c?p+=i:n+=i}return[n,r]}(t),t=r[0],w=r[1]),s=a(S(t,i),f?this:T,D),(o||n||w.length)&&(u=y(s),o&&(u.dotAll=!0,u.raw=D(function(t){for(var i,e=t.length,o=0,n="",r=!1;o<=e;o++)i=O(t,o),"\\"!==i?r||"."!==i?("["===i?r=!0:"]"===i&&(r=!1),n+=i):n+="[\\s\\S]":n+=i+O(t,++o);return n}(t),e)),n&&(u.sticky=!0),w.length&&(u.groups=w)),t!==b)try{c(s,"source",""===b?"(?:)":b)}catch(t){}return s},M=u(S),W=0;M.length>W;)m(D,S,M[W++]);T.constructor=D,D.prototype=T,g(n,"RegExp",D,{constructor:!0})}b("RegExp")},7495:(t,i,e)=>{var o=e(6518),n=e(7323);o({target:"RegExp",proto:!0,forced:/./.exec!==n},{exec:n})},8781:(t,i,e)=>{var o=e(350).PROPER,n=e(6840),r=e(8551),s=e(655),a=e(9039),c=e(1034),l="toString",u=RegExp.prototype,p=u[l],v=a((function(){return"/a/b"!==p.call({source:"a",flags:"b"})})),d=o&&p.name!==l;(v||d)&&n(u,l,(function(){var t=r(this),i=s(t.source),e=s(c(t));return"/"+i+"/"+e}),{unsafe:!0})},1699:(t,i,e)=>{var o=e(6518),n=e(9504),r=e(511),s=e(7750),a=e(655),c=e(1436),l=n("".indexOf);o({target:"String",proto:!0,forced:!c("includes")},{includes:function(t){return!!~l(a(s(this)),a(r(t)),arguments.length>1?arguments[1]:void 0)}})},7764:(t,i,e)=>{var o=e(8183).charAt,n=e(655),r=e(1181),s=e(1088),a=e(2529),c="String Iterator",l=r.set,u=r.getterFor(c);s(String,"String",(function(t){l(this,{type:c,string:n(t),index:0})}),(function(){var t,i=u(this),e=i.string,n=i.index;return n>=e.length?a(void 0,!0):(t=o(e,n),i.index+=t.length,a(t,!1))}))},1761:(t,i,e)=>{var o=e(9565),n=e(9228),r=e(8551),s=e(4117),a=e(8014),c=e(655),l=e(7750),u=e(5966),p=e(7829),v=e(6682);n("match",(function(t,i,e){return[function(i){var e=l(this),n=s(i)?void 0:u(i,t);return n?o(n,i,e):new RegExp(i)[t](c(e))},function(t){var o=r(this),n=c(t),s=e(i,o,n);if(s.done)return s.value;if(!o.global)return v(o,n);var l=o.unicode;o.lastIndex=0;for(var u,d=[],h=0;null!==(u=v(o,n));){var f=c(u[0]);d[h]=f,""===f&&(o.lastIndex=p(n,a(o.lastIndex),l)),h++}return 0===h?null:d}]}))},5440:(t,i,e)=>{var o=e(8745),n=e(9565),r=e(9504),s=e(9228),a=e(9039),c=e(8551),l=e(4901),u=e(4117),p=e(1291),v=e(8014),d=e(655),h=e(7750),f=e(7829),m=e(5966),g=e(2478),w=e(6682),_=e(8227),y=_("replace"),b=Math.max,x=Math.min,$=r([].concat),E=r([].push),I=r("".indexOf),S=r("".slice),T="$0"==="a".replace(/./,"$0"),j=!!/./[y]&&""===/./[y]("a","$0"),C=!a((function(){var t=/./;return t.exec=function(){var t=[];return t.groups={a:"7"},t},"7"!=="".replace(t,"$<a>")}));s("replace",(function(t,i,e){var r=j?"$":"$0";return[function(t,e){var o=h(this),r=u(t)?void 0:m(t,y);return r?n(r,t,o,e):n(i,d(o),t,e)},function(t,n){var s=c(this),a=d(t);if("string"==typeof n&&-1===I(n,r)&&-1===I(n,"$<")){var u=e(i,s,a,n);if(u.done)return u.value}var h=l(n);h||(n=d(n));var m,_=s.global;_&&(m=s.unicode,s.lastIndex=0);for(var y,T=[];y=w(s,a),null!==y&&(E(T,y),_);){var j=d(y[0]);""===j&&(s.lastIndex=f(a,v(s.lastIndex),m))}for(var C,O="",k=0,A=0;A<T.length;A++){y=T[A];for(var q,P=d(y[0]),N=b(x(p(y.index),a.length),0),R=[],z=1;z<y.length;z++)E(R,(C=y[z],void 0===C?C:String(C)));var L=y.groups;if(h){var V=$([P],R,N,a);void 0!==L&&E(V,L),q=d(o(n,void 0,V))}else q=g(P,a,N,R,L,n);N>=k&&(O+=S(a,k,N)+q,k=N+P.length)}return O+S(a,k)}]}),!C||!T||j)},2762:(t,i,e)=>{var o=e(6518),n=e(3802).trim,r=e(706);o({target:"String",proto:!0,forced:r("trim")},{trim:function(){return n(this)}})},6761:(t,i,e)=>{var o=e(6518),n=e(4576),r=e(9565),s=e(9504),a=e(6395),c=e(3724),l=e(4495),u=e(9039),p=e(9297),v=e(1625),d=e(8551),h=e(5397),f=e(6969),m=e(655),g=e(6980),w=e(2360),_=e(1072),y=e(8480),b=e(298),x=e(3717),$=e(7347),E=e(4913),I=e(6801),S=e(8773),T=e(6840),j=e(2106),C=e(5745),O=e(6119),k=e(421),A=e(3392),q=e(8227),P=e(1951),N=e(2892),R=e(8242),z=e(687),L=e(1181),V=e(9213).forEach,F=O("hidden"),D="Symbol",M="prototype",W=L.set,H=L.getterFor(D),U=Object[M],G=n.Symbol,B=G&&G[M],K=n.RangeError,J=n.TypeError,Y=n.QObject,Z=$.f,X=E.f,Q=b.f,tt=S.f,it=s([].push),et=C("symbols"),ot=C("op-symbols"),nt=C("wks"),rt=!Y||!Y[M]||!Y[M].findChild,st=function(t,i,e){var o=Z(U,i);o&&delete U[i],X(t,i,e),o&&t!==U&&X(U,i,o)},at=c&&u((function(){return 7!==w(X({},"a",{get:function(){return X(this,"a",{value:7}).a}})).a}))?st:X,ct=function(t,i){var e=et[t]=w(B);return W(e,{type:D,tag:t,description:i}),c||(e.description=i),e},lt=function(t,i,e){t===U&&lt(ot,i,e),d(t);var o=f(i);return d(e),p(et,o)?(e.enumerable?(p(t,F)&&t[F][o]&&(t[F][o]=!1),e=w(e,{enumerable:g(0,!1)})):(p(t,F)||X(t,F,g(1,w(null))),t[F][o]=!0),at(t,o,e)):X(t,o,e)},ut=function(t,i){d(t);var e=h(i),o=_(e).concat(ht(e));return V(o,(function(i){c&&!r(pt,e,i)||lt(t,i,e[i])})),t},pt=function(t){var i=f(t),e=r(tt,this,i);return!(this===U&&p(et,i)&&!p(ot,i))&&(!(e||!p(this,i)||!p(et,i)||p(this,F)&&this[F][i])||e)},vt=function(t,i){var e=h(t),o=f(i);if(e!==U||!p(et,o)||p(ot,o)){var n=Z(e,o);return!n||!p(et,o)||p(e,F)&&e[F][o]||(n.enumerable=!0),n}},dt=function(t){var i=Q(h(t)),e=[];return V(i,(function(t){p(et,t)||p(k,t)||it(e,t)})),e},ht=function(t){var i=t===U,e=Q(i?ot:h(t)),o=[];return V(e,(function(t){!p(et,t)||i&&!p(U,t)||it(o,et[t])})),o};l||(G=function(){if(v(B,this))throw new J("Symbol is not a constructor");var t=arguments.length&&void 0!==arguments[0]?m(arguments[0]):void 0,i=A(t),e=function(t){var o=void 0===this?n:this;o===U&&r(e,ot,t),p(o,F)&&p(o[F],i)&&(o[F][i]=!1);var s=g(1,t);try{at(o,i,s)}catch(t){if(!(t instanceof K))throw t;st(o,i,s)}};return c&&rt&&at(U,i,{configurable:!0,set:e}),ct(i,t)},B=G[M],T(B,"toString",(function(){return H(this).tag})),T(G,"withoutSetter",(function(t){return ct(A(t),t)})),S.f=pt,E.f=lt,I.f=ut,$.f=vt,y.f=b.f=dt,x.f=ht,P.f=function(t){return ct(q(t),t)},c&&(j(B,"description",{configurable:!0,get:function(){return H(this).description}}),a||T(U,"propertyIsEnumerable",pt,{unsafe:!0}))),o({global:!0,constructor:!0,wrap:!0,forced:!l,sham:!l},{Symbol:G}),V(_(nt),(function(t){N(t)})),o({target:D,stat:!0,forced:!l},{useSetter:function(){rt=!0},useSimple:function(){rt=!1}}),o({target:"Object",stat:!0,forced:!l,sham:!c},{create:function(t,i){return void 0===i?w(t):ut(w(t),i)},defineProperty:lt,defineProperties:ut,getOwnPropertyDescriptor:vt}),o({target:"Object",stat:!0,forced:!l},{getOwnPropertyNames:dt}),R(),z(G,D),k[F]=!0},9463:(t,i,e)=>{var o=e(6518),n=e(3724),r=e(4576),s=e(9504),a=e(9297),c=e(4901),l=e(1625),u=e(655),p=e(2106),v=e(7740),d=r.Symbol,h=d&&d.prototype;if(n&&c(d)&&(!("description"in h)||void 0!==d().description)){var f={},m=function(){var t=arguments.length<1||void 0===arguments[0]?void 0:u(arguments[0]),i=l(h,this)?new d(t):void 0===t?d():d(t);return""===t&&(f[i]=!0),i};v(m,d),m.prototype=h,h.constructor=m;var g="Symbol(description detection)"===String(d("description detection")),w=s(h.valueOf),_=s(h.toString),y=/^Symbol\((.*)\)[^)]+$/,b=s("".replace),x=s("".slice);p(h,"description",{configurable:!0,get:function(){var t=w(this);if(a(f,t))return"";var i=_(t),e=g?x(i,7,-1):b(i,y,"$1");return""===e?void 0:e}}),o({global:!0,constructor:!0,forced:!0},{Symbol:m})}},1510:(t,i,e)=>{var o=e(6518),n=e(7751),r=e(9297),s=e(655),a=e(5745),c=e(1296),l=a("string-to-symbol-registry"),u=a("symbol-to-string-registry");o({target:"Symbol",stat:!0,forced:!c},{for:function(t){var i=s(t);if(r(l,i))return l[i];var e=n("Symbol")(i);return l[i]=e,u[e]=i,e}})},2259:(t,i,e)=>{var o=e(2892);o("iterator")},2675:(t,i,e)=>{e(6761),e(1510),e(7812),e(3110),e(9773)},7812:(t,i,e)=>{var o=e(6518),n=e(9297),r=e(757),s=e(6823),a=e(5745),c=e(1296),l=a("symbol-to-string-registry");o({target:"Symbol",stat:!0,forced:!c},{keyFor:function(t){if(!r(t))throw new TypeError(s(t)+" is not a symbol");if(n(l,t))return l[t]}})},3500:(t,i,e)=>{var o=e(4576),n=e(7400),r=e(9296),s=e(235),a=e(6699),c=function(t){if(t&&t.forEach!==s)try{a(t,"forEach",s)}catch(i){t.forEach=s}};for(var l in n)n[l]&&c(o[l]&&o[l].prototype);c(r)},2953:(t,i,e)=>{var o=e(4576),n=e(7400),r=e(9296),s=e(3792),a=e(6699),c=e(687),l=e(8227),u=l("iterator"),p=s.values,v=function(t,i){if(t){if(t[u]!==p)try{a(t,u,p)}catch(i){t[u]=p}if(c(t,i,!0),n[i])for(var e in s)if(t[e]!==s[e])try{a(t,e,s[e])}catch(i){t[e]=s[e]}}};for(var d in n)v(o[d]&&o[d].prototype,d);v(r,"DOMTokenList")}},t=>{t.O(0,[110,410],(()=>{return i=2987,t(t.s=i);var i}));t.O()}]);
+(function() {
+  "use strict";
+  var define_global_process_env_default = {};
+  /*!
+   * Vue.js v2.7.16
+   * (c) 2014-2023 Evan You
+   * Released under the MIT License.
+   */
+  var emptyObject = Object.freeze({});
+  var isArray = Array.isArray;
+  function isUndef(v2) {
+    return v2 === void 0 || v2 === null;
+  }
+  function isDef(v2) {
+    return v2 !== void 0 && v2 !== null;
+  }
+  function isTrue(v2) {
+    return v2 === true;
+  }
+  function isFalse(v2) {
+    return v2 === false;
+  }
+  function isPrimitive(value) {
+    return typeof value === "string" || typeof value === "number" || // $flow-disable-line
+    typeof value === "symbol" || typeof value === "boolean";
+  }
+  function isFunction(value) {
+    return typeof value === "function";
+  }
+  function isObject(obj) {
+    return obj !== null && typeof obj === "object";
+  }
+  var _toString = Object.prototype.toString;
+  function isPlainObject(obj) {
+    return _toString.call(obj) === "[object Object]";
+  }
+  function isRegExp(v2) {
+    return _toString.call(v2) === "[object RegExp]";
+  }
+  function isValidArrayIndex(val) {
+    var n = parseFloat(String(val));
+    return n >= 0 && Math.floor(n) === n && isFinite(val);
+  }
+  function isPromise(val) {
+    return isDef(val) && typeof val.then === "function" && typeof val.catch === "function";
+  }
+  function toString(val) {
+    return val == null ? "" : Array.isArray(val) || isPlainObject(val) && val.toString === _toString ? JSON.stringify(val, replacer, 2) : String(val);
+  }
+  function replacer(_key, val) {
+    if (val && val.__v_isRef) {
+      return val.value;
+    }
+    return val;
+  }
+  function toNumber(val) {
+    var n = parseFloat(val);
+    return isNaN(n) ? val : n;
+  }
+  function makeMap(str, expectsLowerCase) {
+    var map = /* @__PURE__ */ Object.create(null);
+    var list = str.split(",");
+    for (var i = 0; i < list.length; i++) {
+      map[list[i]] = true;
+    }
+    return expectsLowerCase ? function(val) {
+      return map[val.toLowerCase()];
+    } : function(val) {
+      return map[val];
+    };
+  }
+  makeMap("slot,component", true);
+  var isReservedAttribute = makeMap("key,ref,slot,slot-scope,is");
+  function remove$2(arr, item) {
+    var len = arr.length;
+    if (len) {
+      if (item === arr[len - 1]) {
+        arr.length = len - 1;
+        return;
+      }
+      var index2 = arr.indexOf(item);
+      if (index2 > -1) {
+        return arr.splice(index2, 1);
+      }
+    }
+  }
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
+  function hasOwn(obj, key) {
+    return hasOwnProperty.call(obj, key);
+  }
+  function cached(fn) {
+    var cache = /* @__PURE__ */ Object.create(null);
+    return function cachedFn(str) {
+      var hit = cache[str];
+      return hit || (cache[str] = fn(str));
+    };
+  }
+  var camelizeRE = /-(\w)/g;
+  var camelize = cached(function(str) {
+    return str.replace(camelizeRE, function(_, c) {
+      return c ? c.toUpperCase() : "";
+    });
+  });
+  var capitalize = cached(function(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  });
+  var hyphenateRE = /\B([A-Z])/g;
+  var hyphenate = cached(function(str) {
+    return str.replace(hyphenateRE, "-$1").toLowerCase();
+  });
+  function polyfillBind(fn, ctx) {
+    function boundFn(a) {
+      var l = arguments.length;
+      return l ? l > 1 ? fn.apply(ctx, arguments) : fn.call(ctx, a) : fn.call(ctx);
+    }
+    boundFn._length = fn.length;
+    return boundFn;
+  }
+  function nativeBind(fn, ctx) {
+    return fn.bind(ctx);
+  }
+  var bind = Function.prototype.bind ? nativeBind : polyfillBind;
+  function toArray(list, start) {
+    start = start || 0;
+    var i = list.length - start;
+    var ret = new Array(i);
+    while (i--) {
+      ret[i] = list[i + start];
+    }
+    return ret;
+  }
+  function extend(to, _from) {
+    for (var key in _from) {
+      to[key] = _from[key];
+    }
+    return to;
+  }
+  function toObject(arr) {
+    var res = {};
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i]) {
+        extend(res, arr[i]);
+      }
+    }
+    return res;
+  }
+  function noop(a, b, c) {
+  }
+  var no = function(a, b, c) {
+    return false;
+  };
+  var identity = function(_) {
+    return _;
+  };
+  function looseEqual(a, b) {
+    if (a === b)
+      return true;
+    var isObjectA = isObject(a);
+    var isObjectB = isObject(b);
+    if (isObjectA && isObjectB) {
+      try {
+        var isArrayA = Array.isArray(a);
+        var isArrayB = Array.isArray(b);
+        if (isArrayA && isArrayB) {
+          return a.length === b.length && a.every(function(e, i) {
+            return looseEqual(e, b[i]);
+          });
+        } else if (a instanceof Date && b instanceof Date) {
+          return a.getTime() === b.getTime();
+        } else if (!isArrayA && !isArrayB) {
+          var keysA = Object.keys(a);
+          var keysB = Object.keys(b);
+          return keysA.length === keysB.length && keysA.every(function(key) {
+            return looseEqual(a[key], b[key]);
+          });
+        } else {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    } else if (!isObjectA && !isObjectB) {
+      return String(a) === String(b);
+    } else {
+      return false;
+    }
+  }
+  function looseIndexOf(arr, val) {
+    for (var i = 0; i < arr.length; i++) {
+      if (looseEqual(arr[i], val))
+        return i;
+    }
+    return -1;
+  }
+  function once(fn) {
+    var called = false;
+    return function() {
+      if (!called) {
+        called = true;
+        fn.apply(this, arguments);
+      }
+    };
+  }
+  function hasChanged(x, y) {
+    if (x === y) {
+      return x === 0 && 1 / x !== 1 / y;
+    } else {
+      return x === x || y === y;
+    }
+  }
+  var SSR_ATTR = "data-server-rendered";
+  var ASSET_TYPES = ["component", "directive", "filter"];
+  var LIFECYCLE_HOOKS = [
+    "beforeCreate",
+    "created",
+    "beforeMount",
+    "mounted",
+    "beforeUpdate",
+    "updated",
+    "beforeDestroy",
+    "destroyed",
+    "activated",
+    "deactivated",
+    "errorCaptured",
+    "serverPrefetch",
+    "renderTracked",
+    "renderTriggered"
+  ];
+  var config = {
+    /**
+     * Option merge strategies (used in core/util/options)
+     */
+    // $flow-disable-line
+    optionMergeStrategies: /* @__PURE__ */ Object.create(null),
+    /**
+     * Whether to suppress warnings.
+     */
+    silent: false,
+    /**
+     * Show production mode tip message on boot?
+     */
+    productionTip: false,
+    /**
+     * Whether to enable devtools
+     */
+    devtools: false,
+    /**
+     * Whether to record perf
+     */
+    performance: false,
+    /**
+     * Error handler for watcher errors
+     */
+    errorHandler: null,
+    /**
+     * Warn handler for watcher warns
+     */
+    warnHandler: null,
+    /**
+     * Ignore certain custom elements
+     */
+    ignoredElements: [],
+    /**
+     * Custom user key aliases for v-on
+     */
+    // $flow-disable-line
+    keyCodes: /* @__PURE__ */ Object.create(null),
+    /**
+     * Check if a tag is reserved so that it cannot be registered as a
+     * component. This is platform-dependent and may be overwritten.
+     */
+    isReservedTag: no,
+    /**
+     * Check if an attribute is reserved so that it cannot be used as a component
+     * prop. This is platform-dependent and may be overwritten.
+     */
+    isReservedAttr: no,
+    /**
+     * Check if a tag is an unknown element.
+     * Platform-dependent.
+     */
+    isUnknownElement: no,
+    /**
+     * Get the namespace of an element
+     */
+    getTagNamespace: noop,
+    /**
+     * Parse the real tag name for the specific platform.
+     */
+    parsePlatformTagName: identity,
+    /**
+     * Check if an attribute must be bound using property, e.g. value
+     * Platform-dependent.
+     */
+    mustUseProp: no,
+    /**
+     * Perform updates asynchronously. Intended to be used by Vue Test Utils
+     * This will significantly reduce performance if set to false.
+     */
+    async: true,
+    /**
+     * Exposed for legacy reasons
+     */
+    _lifecycleHooks: LIFECYCLE_HOOKS
+  };
+  var unicodeRegExp = /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/;
+  function isReserved(str) {
+    var c = (str + "").charCodeAt(0);
+    return c === 36 || c === 95;
+  }
+  function def(obj, key, val, enumerable) {
+    Object.defineProperty(obj, key, {
+      value: val,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    });
+  }
+  var bailRE = new RegExp("[^".concat(unicodeRegExp.source, ".$_\\d]"));
+  function parsePath(path) {
+    if (bailRE.test(path)) {
+      return;
+    }
+    var segments = path.split(".");
+    return function(obj) {
+      for (var i = 0; i < segments.length; i++) {
+        if (!obj)
+          return;
+        obj = obj[segments[i]];
+      }
+      return obj;
+    };
+  }
+  var hasProto = "__proto__" in {};
+  var inBrowser = typeof window !== "undefined";
+  var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+  var isIE = UA && /msie|trident/.test(UA);
+  var isIE9 = UA && UA.indexOf("msie 9.0") > 0;
+  var isEdge = UA && UA.indexOf("edge/") > 0;
+  UA && UA.indexOf("android") > 0;
+  var isIOS = UA && /iphone|ipad|ipod|ios/.test(UA);
+  var isFF = UA && UA.match(/firefox\/(\d+)/);
+  var nativeWatch = {}.watch;
+  var supportsPassive = false;
+  if (inBrowser) {
+    try {
+      var opts = {};
+      Object.defineProperty(opts, "passive", {
+        get: function() {
+          supportsPassive = true;
+        }
+      });
+      window.addEventListener("test-passive", null, opts);
+    } catch (e) {
+    }
+  }
+  var _isServer;
+  var isServerRendering = function() {
+    if (_isServer === void 0) {
+      if (!inBrowser && typeof global !== "undefined") {
+        _isServer = global["process"] && define_global_process_env_default.VUE_ENV === "server";
+      } else {
+        _isServer = false;
+      }
+    }
+    return _isServer;
+  };
+  var devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+  function isNative(Ctor) {
+    return typeof Ctor === "function" && /native code/.test(Ctor.toString());
+  }
+  var hasSymbol = typeof Symbol !== "undefined" && isNative(Symbol) && typeof Reflect !== "undefined" && isNative(Reflect.ownKeys);
+  var _Set;
+  if (typeof Set !== "undefined" && isNative(Set)) {
+    _Set = Set;
+  } else {
+    _Set = /** @class */
+    function() {
+      function Set2() {
+        this.set = /* @__PURE__ */ Object.create(null);
+      }
+      Set2.prototype.has = function(key) {
+        return this.set[key] === true;
+      };
+      Set2.prototype.add = function(key) {
+        this.set[key] = true;
+      };
+      Set2.prototype.clear = function() {
+        this.set = /* @__PURE__ */ Object.create(null);
+      };
+      return Set2;
+    }();
+  }
+  var currentInstance = null;
+  function setCurrentInstance(vm) {
+    if (vm === void 0) {
+      vm = null;
+    }
+    if (!vm)
+      currentInstance && currentInstance._scope.off();
+    currentInstance = vm;
+    vm && vm._scope.on();
+  }
+  var VNode = (
+    /** @class */
+    function() {
+      function VNode2(tag, data, children, text, elm, context, componentOptions, asyncFactory) {
+        this.tag = tag;
+        this.data = data;
+        this.children = children;
+        this.text = text;
+        this.elm = elm;
+        this.ns = void 0;
+        this.context = context;
+        this.fnContext = void 0;
+        this.fnOptions = void 0;
+        this.fnScopeId = void 0;
+        this.key = data && data.key;
+        this.componentOptions = componentOptions;
+        this.componentInstance = void 0;
+        this.parent = void 0;
+        this.raw = false;
+        this.isStatic = false;
+        this.isRootInsert = true;
+        this.isComment = false;
+        this.isCloned = false;
+        this.isOnce = false;
+        this.asyncFactory = asyncFactory;
+        this.asyncMeta = void 0;
+        this.isAsyncPlaceholder = false;
+      }
+      Object.defineProperty(VNode2.prototype, "child", {
+        // DEPRECATED: alias for componentInstance for backwards compat.
+        /* istanbul ignore next */
+        get: function() {
+          return this.componentInstance;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      return VNode2;
+    }()
+  );
+  var createEmptyVNode = function(text) {
+    if (text === void 0) {
+      text = "";
+    }
+    var node = new VNode();
+    node.text = text;
+    node.isComment = true;
+    return node;
+  };
+  function createTextVNode(val) {
+    return new VNode(void 0, void 0, void 0, String(val));
+  }
+  function cloneVNode(vnode) {
+    var cloned = new VNode(
+      vnode.tag,
+      vnode.data,
+      // #7975
+      // clone children array to avoid mutating original in case of cloning
+      // a child.
+      vnode.children && vnode.children.slice(),
+      vnode.text,
+      vnode.elm,
+      vnode.context,
+      vnode.componentOptions,
+      vnode.asyncFactory
+    );
+    cloned.ns = vnode.ns;
+    cloned.isStatic = vnode.isStatic;
+    cloned.key = vnode.key;
+    cloned.isComment = vnode.isComment;
+    cloned.fnContext = vnode.fnContext;
+    cloned.fnOptions = vnode.fnOptions;
+    cloned.fnScopeId = vnode.fnScopeId;
+    cloned.asyncMeta = vnode.asyncMeta;
+    cloned.isCloned = true;
+    return cloned;
+  }
+  typeof SuppressedError === "function" ? SuppressedError : function(error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+  };
+  var uid$2 = 0;
+  var pendingCleanupDeps = [];
+  var cleanupDeps = function() {
+    for (var i = 0; i < pendingCleanupDeps.length; i++) {
+      var dep = pendingCleanupDeps[i];
+      dep.subs = dep.subs.filter(function(s) {
+        return s;
+      });
+      dep._pending = false;
+    }
+    pendingCleanupDeps.length = 0;
+  };
+  var Dep = (
+    /** @class */
+    function() {
+      function Dep2() {
+        this._pending = false;
+        this.id = uid$2++;
+        this.subs = [];
+      }
+      Dep2.prototype.addSub = function(sub) {
+        this.subs.push(sub);
+      };
+      Dep2.prototype.removeSub = function(sub) {
+        this.subs[this.subs.indexOf(sub)] = null;
+        if (!this._pending) {
+          this._pending = true;
+          pendingCleanupDeps.push(this);
+        }
+      };
+      Dep2.prototype.depend = function(info) {
+        if (Dep2.target) {
+          Dep2.target.addDep(this);
+        }
+      };
+      Dep2.prototype.notify = function(info) {
+        var subs = this.subs.filter(function(s) {
+          return s;
+        });
+        for (var i = 0, l = subs.length; i < l; i++) {
+          var sub = subs[i];
+          sub.update();
+        }
+      };
+      return Dep2;
+    }()
+  );
+  Dep.target = null;
+  var targetStack = [];
+  function pushTarget(target2) {
+    targetStack.push(target2);
+    Dep.target = target2;
+  }
+  function popTarget() {
+    targetStack.pop();
+    Dep.target = targetStack[targetStack.length - 1];
+  }
+  var arrayProto = Array.prototype;
+  var arrayMethods = Object.create(arrayProto);
+  var methodsToPatch = [
+    "push",
+    "pop",
+    "shift",
+    "unshift",
+    "splice",
+    "sort",
+    "reverse"
+  ];
+  methodsToPatch.forEach(function(method) {
+    var original = arrayProto[method];
+    def(arrayMethods, method, function mutator() {
+      var args = [];
+      for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+      }
+      var result = original.apply(this, args);
+      var ob = this.__ob__;
+      var inserted;
+      switch (method) {
+        case "push":
+        case "unshift":
+          inserted = args;
+          break;
+        case "splice":
+          inserted = args.slice(2);
+          break;
+      }
+      if (inserted)
+        ob.observeArray(inserted);
+      {
+        ob.dep.notify();
+      }
+      return result;
+    });
+  });
+  var arrayKeys = Object.getOwnPropertyNames(arrayMethods);
+  var NO_INITIAL_VALUE = {};
+  var shouldObserve = true;
+  function toggleObserving(value) {
+    shouldObserve = value;
+  }
+  var mockDep = {
+    notify: noop,
+    depend: noop,
+    addSub: noop,
+    removeSub: noop
+  };
+  var Observer = (
+    /** @class */
+    function() {
+      function Observer2(value, shallow, mock) {
+        if (shallow === void 0) {
+          shallow = false;
+        }
+        if (mock === void 0) {
+          mock = false;
+        }
+        this.value = value;
+        this.shallow = shallow;
+        this.mock = mock;
+        this.dep = mock ? mockDep : new Dep();
+        this.vmCount = 0;
+        def(value, "__ob__", this);
+        if (isArray(value)) {
+          if (!mock) {
+            if (hasProto) {
+              value.__proto__ = arrayMethods;
+            } else {
+              for (var i = 0, l = arrayKeys.length; i < l; i++) {
+                var key = arrayKeys[i];
+                def(value, key, arrayMethods[key]);
+              }
+            }
+          }
+          if (!shallow) {
+            this.observeArray(value);
+          }
+        } else {
+          var keys = Object.keys(value);
+          for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            defineReactive(value, key, NO_INITIAL_VALUE, void 0, shallow, mock);
+          }
+        }
+      }
+      Observer2.prototype.observeArray = function(value) {
+        for (var i = 0, l = value.length; i < l; i++) {
+          observe(value[i], false, this.mock);
+        }
+      };
+      return Observer2;
+    }()
+  );
+  function observe(value, shallow, ssrMockReactivity) {
+    if (value && hasOwn(value, "__ob__") && value.__ob__ instanceof Observer) {
+      return value.__ob__;
+    }
+    if (shouldObserve && (ssrMockReactivity || !isServerRendering()) && (isArray(value) || isPlainObject(value)) && Object.isExtensible(value) && !value.__v_skip && !isRef(value) && !(value instanceof VNode)) {
+      return new Observer(value, shallow, ssrMockReactivity);
+    }
+  }
+  function defineReactive(obj, key, val, customSetter, shallow, mock, observeEvenIfShallow) {
+    if (observeEvenIfShallow === void 0) {
+      observeEvenIfShallow = false;
+    }
+    var dep = new Dep();
+    var property = Object.getOwnPropertyDescriptor(obj, key);
+    if (property && property.configurable === false) {
+      return;
+    }
+    var getter = property && property.get;
+    var setter = property && property.set;
+    if ((!getter || setter) && (val === NO_INITIAL_VALUE || arguments.length === 2)) {
+      val = obj[key];
+    }
+    var childOb = shallow ? val && val.__ob__ : observe(val, false, mock);
+    Object.defineProperty(obj, key, {
+      enumerable: true,
+      configurable: true,
+      get: function reactiveGetter() {
+        var value = getter ? getter.call(obj) : val;
+        if (Dep.target) {
+          {
+            dep.depend();
+          }
+          if (childOb) {
+            childOb.dep.depend();
+            if (isArray(value)) {
+              dependArray(value);
+            }
+          }
+        }
+        return isRef(value) && !shallow ? value.value : value;
+      },
+      set: function reactiveSetter(newVal) {
+        var value = getter ? getter.call(obj) : val;
+        if (!hasChanged(value, newVal)) {
+          return;
+        }
+        if (setter) {
+          setter.call(obj, newVal);
+        } else if (getter) {
+          return;
+        } else if (!shallow && isRef(value) && !isRef(newVal)) {
+          value.value = newVal;
+          return;
+        } else {
+          val = newVal;
+        }
+        childOb = shallow ? newVal && newVal.__ob__ : observe(newVal, false, mock);
+        {
+          dep.notify();
+        }
+      }
+    });
+    return dep;
+  }
+  function set(target2, key, val) {
+    if (isReadonly(target2)) {
+      return;
+    }
+    var ob = target2.__ob__;
+    if (isArray(target2) && isValidArrayIndex(key)) {
+      target2.length = Math.max(target2.length, key);
+      target2.splice(key, 1, val);
+      if (ob && !ob.shallow && ob.mock) {
+        observe(val, false, true);
+      }
+      return val;
+    }
+    if (key in target2 && !(key in Object.prototype)) {
+      target2[key] = val;
+      return val;
+    }
+    if (target2._isVue || ob && ob.vmCount) {
+      return val;
+    }
+    if (!ob) {
+      target2[key] = val;
+      return val;
+    }
+    defineReactive(ob.value, key, val, void 0, ob.shallow, ob.mock);
+    {
+      ob.dep.notify();
+    }
+    return val;
+  }
+  function del(target2, key) {
+    if (isArray(target2) && isValidArrayIndex(key)) {
+      target2.splice(key, 1);
+      return;
+    }
+    var ob = target2.__ob__;
+    if (target2._isVue || ob && ob.vmCount) {
+      return;
+    }
+    if (isReadonly(target2)) {
+      return;
+    }
+    if (!hasOwn(target2, key)) {
+      return;
+    }
+    delete target2[key];
+    if (!ob) {
+      return;
+    }
+    {
+      ob.dep.notify();
+    }
+  }
+  function dependArray(value) {
+    for (var e = void 0, i = 0, l = value.length; i < l; i++) {
+      e = value[i];
+      if (e && e.__ob__) {
+        e.__ob__.dep.depend();
+      }
+      if (isArray(e)) {
+        dependArray(e);
+      }
+    }
+  }
+  function shallowReactive(target2) {
+    makeReactive(target2, true);
+    def(target2, "__v_isShallow", true);
+    return target2;
+  }
+  function makeReactive(target2, shallow) {
+    if (!isReadonly(target2)) {
+      observe(
+        target2,
+        shallow,
+        isServerRendering()
+        /* ssr mock reactivity */
+      );
+    }
+  }
+  function isReadonly(value) {
+    return !!(value && value.__v_isReadonly);
+  }
+  function isRef(r) {
+    return !!(r && r.__v_isRef === true);
+  }
+  function proxyWithRefUnwrap(target2, source, key) {
+    Object.defineProperty(target2, key, {
+      enumerable: true,
+      configurable: true,
+      get: function() {
+        var val = source[key];
+        if (isRef(val)) {
+          return val.value;
+        } else {
+          var ob = val && val.__ob__;
+          if (ob)
+            ob.dep.depend();
+          return val;
+        }
+      },
+      set: function(value) {
+        var oldValue = source[key];
+        if (isRef(oldValue) && !isRef(value)) {
+          oldValue.value = value;
+        } else {
+          source[key] = value;
+        }
+      }
+    });
+  }
+  var activeEffectScope;
+  var EffectScope = (
+    /** @class */
+    function() {
+      function EffectScope2(detached) {
+        if (detached === void 0) {
+          detached = false;
+        }
+        this.detached = detached;
+        this.active = true;
+        this.effects = [];
+        this.cleanups = [];
+        this.parent = activeEffectScope;
+        if (!detached && activeEffectScope) {
+          this.index = (activeEffectScope.scopes || (activeEffectScope.scopes = [])).push(this) - 1;
+        }
+      }
+      EffectScope2.prototype.run = function(fn) {
+        if (this.active) {
+          var currentEffectScope = activeEffectScope;
+          try {
+            activeEffectScope = this;
+            return fn();
+          } finally {
+            activeEffectScope = currentEffectScope;
+          }
+        }
+      };
+      EffectScope2.prototype.on = function() {
+        activeEffectScope = this;
+      };
+      EffectScope2.prototype.off = function() {
+        activeEffectScope = this.parent;
+      };
+      EffectScope2.prototype.stop = function(fromParent) {
+        if (this.active) {
+          var i = void 0, l = void 0;
+          for (i = 0, l = this.effects.length; i < l; i++) {
+            this.effects[i].teardown();
+          }
+          for (i = 0, l = this.cleanups.length; i < l; i++) {
+            this.cleanups[i]();
+          }
+          if (this.scopes) {
+            for (i = 0, l = this.scopes.length; i < l; i++) {
+              this.scopes[i].stop(true);
+            }
+          }
+          if (!this.detached && this.parent && !fromParent) {
+            var last = this.parent.scopes.pop();
+            if (last && last !== this) {
+              this.parent.scopes[this.index] = last;
+              last.index = this.index;
+            }
+          }
+          this.parent = void 0;
+          this.active = false;
+        }
+      };
+      return EffectScope2;
+    }()
+  );
+  function recordEffectScope(effect, scope) {
+    if (scope === void 0) {
+      scope = activeEffectScope;
+    }
+    if (scope && scope.active) {
+      scope.effects.push(effect);
+    }
+  }
+  function getCurrentScope() {
+    return activeEffectScope;
+  }
+  function resolveProvided(vm) {
+    var existing = vm._provided;
+    var parentProvides = vm.$parent && vm.$parent._provided;
+    if (parentProvides === existing) {
+      return vm._provided = Object.create(parentProvides);
+    } else {
+      return existing;
+    }
+  }
+  var normalizeEvent = cached(function(name) {
+    var passive = name.charAt(0) === "&";
+    name = passive ? name.slice(1) : name;
+    var once2 = name.charAt(0) === "~";
+    name = once2 ? name.slice(1) : name;
+    var capture = name.charAt(0) === "!";
+    name = capture ? name.slice(1) : name;
+    return {
+      name,
+      once: once2,
+      capture,
+      passive
+    };
+  });
+  function createFnInvoker(fns, vm) {
+    function invoker() {
+      var fns2 = invoker.fns;
+      if (isArray(fns2)) {
+        var cloned = fns2.slice();
+        for (var i = 0; i < cloned.length; i++) {
+          invokeWithErrorHandling(cloned[i], null, arguments, vm, "v-on handler");
+        }
+      } else {
+        return invokeWithErrorHandling(fns2, null, arguments, vm, "v-on handler");
+      }
+    }
+    invoker.fns = fns;
+    return invoker;
+  }
+  function updateListeners(on, oldOn, add2, remove2, createOnceHandler2, vm) {
+    var name, cur, old, event;
+    for (name in on) {
+      cur = on[name];
+      old = oldOn[name];
+      event = normalizeEvent(name);
+      if (isUndef(cur)) ;
+      else if (isUndef(old)) {
+        if (isUndef(cur.fns)) {
+          cur = on[name] = createFnInvoker(cur, vm);
+        }
+        if (isTrue(event.once)) {
+          cur = on[name] = createOnceHandler2(event.name, cur, event.capture);
+        }
+        add2(event.name, cur, event.capture, event.passive, event.params);
+      } else if (cur !== old) {
+        old.fns = cur;
+        on[name] = old;
+      }
+    }
+    for (name in oldOn) {
+      if (isUndef(on[name])) {
+        event = normalizeEvent(name);
+        remove2(event.name, oldOn[name], event.capture);
+      }
+    }
+  }
+  function mergeVNodeHook(def2, hookKey, hook) {
+    if (def2 instanceof VNode) {
+      def2 = def2.data.hook || (def2.data.hook = {});
+    }
+    var invoker;
+    var oldHook = def2[hookKey];
+    function wrappedHook() {
+      hook.apply(this, arguments);
+      remove$2(invoker.fns, wrappedHook);
+    }
+    if (isUndef(oldHook)) {
+      invoker = createFnInvoker([wrappedHook]);
+    } else {
+      if (isDef(oldHook.fns) && isTrue(oldHook.merged)) {
+        invoker = oldHook;
+        invoker.fns.push(wrappedHook);
+      } else {
+        invoker = createFnInvoker([oldHook, wrappedHook]);
+      }
+    }
+    invoker.merged = true;
+    def2[hookKey] = invoker;
+  }
+  function extractPropsFromVNodeData(data, Ctor, tag) {
+    var propOptions = Ctor.options.props;
+    if (isUndef(propOptions)) {
+      return;
+    }
+    var res = {};
+    var attrs2 = data.attrs, props2 = data.props;
+    if (isDef(attrs2) || isDef(props2)) {
+      for (var key in propOptions) {
+        var altKey = hyphenate(key);
+        checkProp(res, props2, key, altKey, true) || checkProp(res, attrs2, key, altKey, false);
+      }
+    }
+    return res;
+  }
+  function checkProp(res, hash, key, altKey, preserve) {
+    if (isDef(hash)) {
+      if (hasOwn(hash, key)) {
+        res[key] = hash[key];
+        if (!preserve) {
+          delete hash[key];
+        }
+        return true;
+      } else if (hasOwn(hash, altKey)) {
+        res[key] = hash[altKey];
+        if (!preserve) {
+          delete hash[altKey];
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+  function simpleNormalizeChildren(children) {
+    for (var i = 0; i < children.length; i++) {
+      if (isArray(children[i])) {
+        return Array.prototype.concat.apply([], children);
+      }
+    }
+    return children;
+  }
+  function normalizeChildren(children) {
+    return isPrimitive(children) ? [createTextVNode(children)] : isArray(children) ? normalizeArrayChildren(children) : void 0;
+  }
+  function isTextNode(node) {
+    return isDef(node) && isDef(node.text) && isFalse(node.isComment);
+  }
+  function normalizeArrayChildren(children, nestedIndex) {
+    var res = [];
+    var i, c, lastIndex, last;
+    for (i = 0; i < children.length; i++) {
+      c = children[i];
+      if (isUndef(c) || typeof c === "boolean")
+        continue;
+      lastIndex = res.length - 1;
+      last = res[lastIndex];
+      if (isArray(c)) {
+        if (c.length > 0) {
+          c = normalizeArrayChildren(c, "".concat(nestedIndex || "", "_").concat(i));
+          if (isTextNode(c[0]) && isTextNode(last)) {
+            res[lastIndex] = createTextVNode(last.text + c[0].text);
+            c.shift();
+          }
+          res.push.apply(res, c);
+        }
+      } else if (isPrimitive(c)) {
+        if (isTextNode(last)) {
+          res[lastIndex] = createTextVNode(last.text + c);
+        } else if (c !== "") {
+          res.push(createTextVNode(c));
+        }
+      } else {
+        if (isTextNode(c) && isTextNode(last)) {
+          res[lastIndex] = createTextVNode(last.text + c.text);
+        } else {
+          if (isTrue(children._isVList) && isDef(c.tag) && isUndef(c.key) && isDef(nestedIndex)) {
+            c.key = "__vlist".concat(nestedIndex, "_").concat(i, "__");
+          }
+          res.push(c);
+        }
+      }
+    }
+    return res;
+  }
+  function renderList(val, render) {
+    var ret = null, i, l, keys, key;
+    if (isArray(val) || typeof val === "string") {
+      ret = new Array(val.length);
+      for (i = 0, l = val.length; i < l; i++) {
+        ret[i] = render(val[i], i);
+      }
+    } else if (typeof val === "number") {
+      ret = new Array(val);
+      for (i = 0; i < val; i++) {
+        ret[i] = render(i + 1, i);
+      }
+    } else if (isObject(val)) {
+      if (hasSymbol && val[Symbol.iterator]) {
+        ret = [];
+        var iterator = val[Symbol.iterator]();
+        var result = iterator.next();
+        while (!result.done) {
+          ret.push(render(result.value, ret.length));
+          result = iterator.next();
+        }
+      } else {
+        keys = Object.keys(val);
+        ret = new Array(keys.length);
+        for (i = 0, l = keys.length; i < l; i++) {
+          key = keys[i];
+          ret[i] = render(val[key], key, i);
+        }
+      }
+    }
+    if (!isDef(ret)) {
+      ret = [];
+    }
+    ret._isVList = true;
+    return ret;
+  }
+  function renderSlot(name, fallbackRender, props2, bindObject) {
+    var scopedSlotFn = this.$scopedSlots[name];
+    var nodes;
+    if (scopedSlotFn) {
+      props2 = props2 || {};
+      if (bindObject) {
+        props2 = extend(extend({}, bindObject), props2);
+      }
+      nodes = scopedSlotFn(props2) || (isFunction(fallbackRender) ? fallbackRender() : fallbackRender);
+    } else {
+      nodes = this.$slots[name] || (isFunction(fallbackRender) ? fallbackRender() : fallbackRender);
+    }
+    var target2 = props2 && props2.slot;
+    if (target2) {
+      return this.$createElement("template", { slot: target2 }, nodes);
+    } else {
+      return nodes;
+    }
+  }
+  function resolveFilter(id) {
+    return resolveAsset(this.$options, "filters", id) || identity;
+  }
+  function isKeyNotMatch(expect, actual) {
+    if (isArray(expect)) {
+      return expect.indexOf(actual) === -1;
+    } else {
+      return expect !== actual;
+    }
+  }
+  function checkKeyCodes(eventKeyCode, key, builtInKeyCode, eventKeyName, builtInKeyName) {
+    var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
+    if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
+      return isKeyNotMatch(builtInKeyName, eventKeyName);
+    } else if (mappedKeyCode) {
+      return isKeyNotMatch(mappedKeyCode, eventKeyCode);
+    } else if (eventKeyName) {
+      return hyphenate(eventKeyName) !== key;
+    }
+    return eventKeyCode === void 0;
+  }
+  function bindObjectProps(data, tag, value, asProp, isSync) {
+    if (value) {
+      if (!isObject(value)) ;
+      else {
+        if (isArray(value)) {
+          value = toObject(value);
+        }
+        var hash = void 0;
+        var _loop_1 = function(key2) {
+          if (key2 === "class" || key2 === "style" || isReservedAttribute(key2)) {
+            hash = data;
+          } else {
+            var type = data.attrs && data.attrs.type;
+            hash = asProp || config.mustUseProp(tag, type, key2) ? data.domProps || (data.domProps = {}) : data.attrs || (data.attrs = {});
+          }
+          var camelizedKey = camelize(key2);
+          var hyphenatedKey = hyphenate(key2);
+          if (!(camelizedKey in hash) && !(hyphenatedKey in hash)) {
+            hash[key2] = value[key2];
+            if (isSync) {
+              var on = data.on || (data.on = {});
+              on["update:".concat(key2)] = function($event) {
+                value[key2] = $event;
+              };
+            }
+          }
+        };
+        for (var key in value) {
+          _loop_1(key);
+        }
+      }
+    }
+    return data;
+  }
+  function renderStatic(index2, isInFor) {
+    var cached2 = this._staticTrees || (this._staticTrees = []);
+    var tree = cached2[index2];
+    if (tree && !isInFor) {
+      return tree;
+    }
+    tree = cached2[index2] = this.$options.staticRenderFns[index2].call(
+      this._renderProxy,
+      this._c,
+      this
+      // for render fns generated for functional component templates
+    );
+    markStatic(tree, "__static__".concat(index2), false);
+    return tree;
+  }
+  function markOnce(tree, index2, key) {
+    markStatic(tree, "__once__".concat(index2).concat(key ? "_".concat(key) : ""), true);
+    return tree;
+  }
+  function markStatic(tree, key, isOnce) {
+    if (isArray(tree)) {
+      for (var i = 0; i < tree.length; i++) {
+        if (tree[i] && typeof tree[i] !== "string") {
+          markStaticNode(tree[i], "".concat(key, "_").concat(i), isOnce);
+        }
+      }
+    } else {
+      markStaticNode(tree, key, isOnce);
+    }
+  }
+  function markStaticNode(node, key, isOnce) {
+    node.isStatic = true;
+    node.key = key;
+    node.isOnce = isOnce;
+  }
+  function bindObjectListeners(data, value) {
+    if (value) {
+      if (!isPlainObject(value)) ;
+      else {
+        var on = data.on = data.on ? extend({}, data.on) : {};
+        for (var key in value) {
+          var existing = on[key];
+          var ours = value[key];
+          on[key] = existing ? [].concat(existing, ours) : ours;
+        }
+      }
+    }
+    return data;
+  }
+  function resolveScopedSlots(fns, res, hasDynamicKeys, contentHashKey) {
+    res = res || { $stable: !hasDynamicKeys };
+    for (var i = 0; i < fns.length; i++) {
+      var slot = fns[i];
+      if (isArray(slot)) {
+        resolveScopedSlots(slot, res, hasDynamicKeys);
+      } else if (slot) {
+        if (slot.proxy) {
+          slot.fn.proxy = true;
+        }
+        res[slot.key] = slot.fn;
+      }
+    }
+    if (contentHashKey) {
+      res.$key = contentHashKey;
+    }
+    return res;
+  }
+  function bindDynamicKeys(baseObj, values) {
+    for (var i = 0; i < values.length; i += 2) {
+      var key = values[i];
+      if (typeof key === "string" && key) {
+        baseObj[values[i]] = values[i + 1];
+      }
+    }
+    return baseObj;
+  }
+  function prependModifier(value, symbol) {
+    return typeof value === "string" ? symbol + value : value;
+  }
+  function installRenderHelpers(target2) {
+    target2._o = markOnce;
+    target2._n = toNumber;
+    target2._s = toString;
+    target2._l = renderList;
+    target2._t = renderSlot;
+    target2._q = looseEqual;
+    target2._i = looseIndexOf;
+    target2._m = renderStatic;
+    target2._f = resolveFilter;
+    target2._k = checkKeyCodes;
+    target2._b = bindObjectProps;
+    target2._v = createTextVNode;
+    target2._e = createEmptyVNode;
+    target2._u = resolveScopedSlots;
+    target2._g = bindObjectListeners;
+    target2._d = bindDynamicKeys;
+    target2._p = prependModifier;
+  }
+  function resolveSlots(children, context) {
+    if (!children || !children.length) {
+      return {};
+    }
+    var slots = {};
+    for (var i = 0, l = children.length; i < l; i++) {
+      var child = children[i];
+      var data = child.data;
+      if (data && data.attrs && data.attrs.slot) {
+        delete data.attrs.slot;
+      }
+      if ((child.context === context || child.fnContext === context) && data && data.slot != null) {
+        var name_1 = data.slot;
+        var slot = slots[name_1] || (slots[name_1] = []);
+        if (child.tag === "template") {
+          slot.push.apply(slot, child.children || []);
+        } else {
+          slot.push(child);
+        }
+      } else {
+        (slots.default || (slots.default = [])).push(child);
+      }
+    }
+    for (var name_2 in slots) {
+      if (slots[name_2].every(isWhitespace)) {
+        delete slots[name_2];
+      }
+    }
+    return slots;
+  }
+  function isWhitespace(node) {
+    return node.isComment && !node.asyncFactory || node.text === " ";
+  }
+  function isAsyncPlaceholder(node) {
+    return node.isComment && node.asyncFactory;
+  }
+  function normalizeScopedSlots(ownerVm, scopedSlots, normalSlots, prevScopedSlots) {
+    var res;
+    var hasNormalSlots = Object.keys(normalSlots).length > 0;
+    var isStable = scopedSlots ? !!scopedSlots.$stable : !hasNormalSlots;
+    var key = scopedSlots && scopedSlots.$key;
+    if (!scopedSlots) {
+      res = {};
+    } else if (scopedSlots._normalized) {
+      return scopedSlots._normalized;
+    } else if (isStable && prevScopedSlots && prevScopedSlots !== emptyObject && key === prevScopedSlots.$key && !hasNormalSlots && !prevScopedSlots.$hasNormal) {
+      return prevScopedSlots;
+    } else {
+      res = {};
+      for (var key_1 in scopedSlots) {
+        if (scopedSlots[key_1] && key_1[0] !== "$") {
+          res[key_1] = normalizeScopedSlot(ownerVm, normalSlots, key_1, scopedSlots[key_1]);
+        }
+      }
+    }
+    for (var key_2 in normalSlots) {
+      if (!(key_2 in res)) {
+        res[key_2] = proxyNormalSlot(normalSlots, key_2);
+      }
+    }
+    if (scopedSlots && Object.isExtensible(scopedSlots)) {
+      scopedSlots._normalized = res;
+    }
+    def(res, "$stable", isStable);
+    def(res, "$key", key);
+    def(res, "$hasNormal", hasNormalSlots);
+    return res;
+  }
+  function normalizeScopedSlot(vm, normalSlots, key, fn) {
+    var normalized = function() {
+      var cur = currentInstance;
+      setCurrentInstance(vm);
+      var res = arguments.length ? fn.apply(null, arguments) : fn({});
+      res = res && typeof res === "object" && !isArray(res) ? [res] : normalizeChildren(res);
+      var vnode = res && res[0];
+      setCurrentInstance(cur);
+      return res && (!vnode || res.length === 1 && vnode.isComment && !isAsyncPlaceholder(vnode)) ? void 0 : res;
+    };
+    if (fn.proxy) {
+      Object.defineProperty(normalSlots, key, {
+        get: normalized,
+        enumerable: true,
+        configurable: true
+      });
+    }
+    return normalized;
+  }
+  function proxyNormalSlot(slots, key) {
+    return function() {
+      return slots[key];
+    };
+  }
+  function initSetup(vm) {
+    var options = vm.$options;
+    var setup = options.setup;
+    if (setup) {
+      var ctx = vm._setupContext = createSetupContext(vm);
+      setCurrentInstance(vm);
+      pushTarget();
+      var setupResult = invokeWithErrorHandling(setup, null, [vm._props || shallowReactive({}), ctx], vm, "setup");
+      popTarget();
+      setCurrentInstance();
+      if (isFunction(setupResult)) {
+        options.render = setupResult;
+      } else if (isObject(setupResult)) {
+        vm._setupState = setupResult;
+        if (!setupResult.__sfc) {
+          for (var key in setupResult) {
+            if (!isReserved(key)) {
+              proxyWithRefUnwrap(vm, setupResult, key);
+            }
+          }
+        } else {
+          var proxy2 = vm._setupProxy = {};
+          for (var key in setupResult) {
+            if (key !== "__sfc") {
+              proxyWithRefUnwrap(proxy2, setupResult, key);
+            }
+          }
+        }
+      } else ;
+    }
+  }
+  function createSetupContext(vm) {
+    return {
+      get attrs() {
+        if (!vm._attrsProxy) {
+          var proxy2 = vm._attrsProxy = {};
+          def(proxy2, "_v_attr_proxy", true);
+          syncSetupProxy(proxy2, vm.$attrs, emptyObject, vm, "$attrs");
+        }
+        return vm._attrsProxy;
+      },
+      get listeners() {
+        if (!vm._listenersProxy) {
+          var proxy2 = vm._listenersProxy = {};
+          syncSetupProxy(proxy2, vm.$listeners, emptyObject, vm, "$listeners");
+        }
+        return vm._listenersProxy;
+      },
+      get slots() {
+        return initSlotsProxy(vm);
+      },
+      emit: bind(vm.$emit, vm),
+      expose: function(exposed) {
+        if (exposed) {
+          Object.keys(exposed).forEach(function(key) {
+            return proxyWithRefUnwrap(vm, exposed, key);
+          });
+        }
+      }
+    };
+  }
+  function syncSetupProxy(to, from, prev, instance, type) {
+    var changed = false;
+    for (var key in from) {
+      if (!(key in to)) {
+        changed = true;
+        defineProxyAttr(to, key, instance, type);
+      } else if (from[key] !== prev[key]) {
+        changed = true;
+      }
+    }
+    for (var key in to) {
+      if (!(key in from)) {
+        changed = true;
+        delete to[key];
+      }
+    }
+    return changed;
+  }
+  function defineProxyAttr(proxy2, key, instance, type) {
+    Object.defineProperty(proxy2, key, {
+      enumerable: true,
+      configurable: true,
+      get: function() {
+        return instance[type][key];
+      }
+    });
+  }
+  function initSlotsProxy(vm) {
+    if (!vm._slotsProxy) {
+      syncSetupSlots(vm._slotsProxy = {}, vm.$scopedSlots);
+    }
+    return vm._slotsProxy;
+  }
+  function syncSetupSlots(to, from) {
+    for (var key in from) {
+      to[key] = from[key];
+    }
+    for (var key in to) {
+      if (!(key in from)) {
+        delete to[key];
+      }
+    }
+  }
+  function initRender(vm) {
+    vm._vnode = null;
+    vm._staticTrees = null;
+    var options = vm.$options;
+    var parentVnode = vm.$vnode = options._parentVnode;
+    var renderContext = parentVnode && parentVnode.context;
+    vm.$slots = resolveSlots(options._renderChildren, renderContext);
+    vm.$scopedSlots = parentVnode ? normalizeScopedSlots(vm.$parent, parentVnode.data.scopedSlots, vm.$slots) : emptyObject;
+    vm._c = function(a, b, c, d) {
+      return createElement$1(vm, a, b, c, d, false);
+    };
+    vm.$createElement = function(a, b, c, d) {
+      return createElement$1(vm, a, b, c, d, true);
+    };
+    var parentData = parentVnode && parentVnode.data;
+    {
+      defineReactive(vm, "$attrs", parentData && parentData.attrs || emptyObject, null, true);
+      defineReactive(vm, "$listeners", options._parentListeners || emptyObject, null, true);
+    }
+  }
+  var currentRenderingInstance = null;
+  function renderMixin(Vue2) {
+    installRenderHelpers(Vue2.prototype);
+    Vue2.prototype.$nextTick = function(fn) {
+      return nextTick(fn, this);
+    };
+    Vue2.prototype._render = function() {
+      var vm = this;
+      var _a = vm.$options, render = _a.render, _parentVnode = _a._parentVnode;
+      if (_parentVnode && vm._isMounted) {
+        vm.$scopedSlots = normalizeScopedSlots(vm.$parent, _parentVnode.data.scopedSlots, vm.$slots, vm.$scopedSlots);
+        if (vm._slotsProxy) {
+          syncSetupSlots(vm._slotsProxy, vm.$scopedSlots);
+        }
+      }
+      vm.$vnode = _parentVnode;
+      var prevInst = currentInstance;
+      var prevRenderInst = currentRenderingInstance;
+      var vnode;
+      try {
+        setCurrentInstance(vm);
+        currentRenderingInstance = vm;
+        vnode = render.call(vm._renderProxy, vm.$createElement);
+      } catch (e) {
+        handleError(e, vm, "render");
+        {
+          vnode = vm._vnode;
+        }
+      } finally {
+        currentRenderingInstance = prevRenderInst;
+        setCurrentInstance(prevInst);
+      }
+      if (isArray(vnode) && vnode.length === 1) {
+        vnode = vnode[0];
+      }
+      if (!(vnode instanceof VNode)) {
+        vnode = createEmptyVNode();
+      }
+      vnode.parent = _parentVnode;
+      return vnode;
+    };
+  }
+  function ensureCtor(comp, base) {
+    if (comp.__esModule || hasSymbol && comp[Symbol.toStringTag] === "Module") {
+      comp = comp.default;
+    }
+    return isObject(comp) ? base.extend(comp) : comp;
+  }
+  function createAsyncPlaceholder(factory, data, context, children, tag) {
+    var node = createEmptyVNode();
+    node.asyncFactory = factory;
+    node.asyncMeta = { data, context, children, tag };
+    return node;
+  }
+  function resolveAsyncComponent(factory, baseCtor) {
+    if (isTrue(factory.error) && isDef(factory.errorComp)) {
+      return factory.errorComp;
+    }
+    if (isDef(factory.resolved)) {
+      return factory.resolved;
+    }
+    var owner = currentRenderingInstance;
+    if (owner && isDef(factory.owners) && factory.owners.indexOf(owner) === -1) {
+      factory.owners.push(owner);
+    }
+    if (isTrue(factory.loading) && isDef(factory.loadingComp)) {
+      return factory.loadingComp;
+    }
+    if (owner && !isDef(factory.owners)) {
+      var owners_1 = factory.owners = [owner];
+      var sync_1 = true;
+      var timerLoading_1 = null;
+      var timerTimeout_1 = null;
+      owner.$on("hook:destroyed", function() {
+        return remove$2(owners_1, owner);
+      });
+      var forceRender_1 = function(renderCompleted) {
+        for (var i = 0, l = owners_1.length; i < l; i++) {
+          owners_1[i].$forceUpdate();
+        }
+        if (renderCompleted) {
+          owners_1.length = 0;
+          if (timerLoading_1 !== null) {
+            clearTimeout(timerLoading_1);
+            timerLoading_1 = null;
+          }
+          if (timerTimeout_1 !== null) {
+            clearTimeout(timerTimeout_1);
+            timerTimeout_1 = null;
+          }
+        }
+      };
+      var resolve = once(function(res) {
+        factory.resolved = ensureCtor(res, baseCtor);
+        if (!sync_1) {
+          forceRender_1(true);
+        } else {
+          owners_1.length = 0;
+        }
+      });
+      var reject_1 = once(function(reason) {
+        if (isDef(factory.errorComp)) {
+          factory.error = true;
+          forceRender_1(true);
+        }
+      });
+      var res_1 = factory(resolve, reject_1);
+      if (isObject(res_1)) {
+        if (isPromise(res_1)) {
+          if (isUndef(factory.resolved)) {
+            res_1.then(resolve, reject_1);
+          }
+        } else if (isPromise(res_1.component)) {
+          res_1.component.then(resolve, reject_1);
+          if (isDef(res_1.error)) {
+            factory.errorComp = ensureCtor(res_1.error, baseCtor);
+          }
+          if (isDef(res_1.loading)) {
+            factory.loadingComp = ensureCtor(res_1.loading, baseCtor);
+            if (res_1.delay === 0) {
+              factory.loading = true;
+            } else {
+              timerLoading_1 = setTimeout(function() {
+                timerLoading_1 = null;
+                if (isUndef(factory.resolved) && isUndef(factory.error)) {
+                  factory.loading = true;
+                  forceRender_1(false);
+                }
+              }, res_1.delay || 200);
+            }
+          }
+          if (isDef(res_1.timeout)) {
+            timerTimeout_1 = setTimeout(function() {
+              timerTimeout_1 = null;
+              if (isUndef(factory.resolved)) {
+                reject_1(null);
+              }
+            }, res_1.timeout);
+          }
+        }
+      }
+      sync_1 = false;
+      return factory.loading ? factory.loadingComp : factory.resolved;
+    }
+  }
+  function getFirstComponentChild(children) {
+    if (isArray(children)) {
+      for (var i = 0; i < children.length; i++) {
+        var c = children[i];
+        if (isDef(c) && (isDef(c.componentOptions) || isAsyncPlaceholder(c))) {
+          return c;
+        }
+      }
+    }
+  }
+  var SIMPLE_NORMALIZE = 1;
+  var ALWAYS_NORMALIZE = 2;
+  function createElement$1(context, tag, data, children, normalizationType, alwaysNormalize) {
+    if (isArray(data) || isPrimitive(data)) {
+      normalizationType = children;
+      children = data;
+      data = void 0;
+    }
+    if (isTrue(alwaysNormalize)) {
+      normalizationType = ALWAYS_NORMALIZE;
+    }
+    return _createElement(context, tag, data, children, normalizationType);
+  }
+  function _createElement(context, tag, data, children, normalizationType) {
+    if (isDef(data) && isDef(data.__ob__)) {
+      return createEmptyVNode();
+    }
+    if (isDef(data) && isDef(data.is)) {
+      tag = data.is;
+    }
+    if (!tag) {
+      return createEmptyVNode();
+    }
+    if (isArray(children) && isFunction(children[0])) {
+      data = data || {};
+      data.scopedSlots = { default: children[0] };
+      children.length = 0;
+    }
+    if (normalizationType === ALWAYS_NORMALIZE) {
+      children = normalizeChildren(children);
+    } else if (normalizationType === SIMPLE_NORMALIZE) {
+      children = simpleNormalizeChildren(children);
+    }
+    var vnode, ns;
+    if (typeof tag === "string") {
+      var Ctor = void 0;
+      ns = context.$vnode && context.$vnode.ns || config.getTagNamespace(tag);
+      if (config.isReservedTag(tag)) {
+        vnode = new VNode(config.parsePlatformTagName(tag), data, children, void 0, void 0, context);
+      } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, "components", tag))) {
+        vnode = createComponent(Ctor, data, context, children, tag);
+      } else {
+        vnode = new VNode(tag, data, children, void 0, void 0, context);
+      }
+    } else {
+      vnode = createComponent(tag, data, context, children);
+    }
+    if (isArray(vnode)) {
+      return vnode;
+    } else if (isDef(vnode)) {
+      if (isDef(ns))
+        applyNS(vnode, ns);
+      if (isDef(data))
+        registerDeepBindings(data);
+      return vnode;
+    } else {
+      return createEmptyVNode();
+    }
+  }
+  function applyNS(vnode, ns, force) {
+    vnode.ns = ns;
+    if (vnode.tag === "foreignObject") {
+      ns = void 0;
+      force = true;
+    }
+    if (isDef(vnode.children)) {
+      for (var i = 0, l = vnode.children.length; i < l; i++) {
+        var child = vnode.children[i];
+        if (isDef(child.tag) && (isUndef(child.ns) || isTrue(force) && child.tag !== "svg")) {
+          applyNS(child, ns, force);
+        }
+      }
+    }
+  }
+  function registerDeepBindings(data) {
+    if (isObject(data.style)) {
+      traverse(data.style);
+    }
+    if (isObject(data.class)) {
+      traverse(data.class);
+    }
+  }
+  function handleError(err, vm, info) {
+    pushTarget();
+    try {
+      if (vm) {
+        var cur = vm;
+        while (cur = cur.$parent) {
+          var hooks2 = cur.$options.errorCaptured;
+          if (hooks2) {
+            for (var i = 0; i < hooks2.length; i++) {
+              try {
+                var capture = hooks2[i].call(cur, err, vm, info) === false;
+                if (capture)
+                  return;
+              } catch (e) {
+                globalHandleError(e, cur, "errorCaptured hook");
+              }
+            }
+          }
+        }
+      }
+      globalHandleError(err, vm, info);
+    } finally {
+      popTarget();
+    }
+  }
+  function invokeWithErrorHandling(handler, context, args, vm, info) {
+    var res;
+    try {
+      res = args ? handler.apply(context, args) : handler.call(context);
+      if (res && !res._isVue && isPromise(res) && !res._handled) {
+        res.catch(function(e) {
+          return handleError(e, vm, info + " (Promise/async)");
+        });
+        res._handled = true;
+      }
+    } catch (e) {
+      handleError(e, vm, info);
+    }
+    return res;
+  }
+  function globalHandleError(err, vm, info) {
+    if (config.errorHandler) {
+      try {
+        return config.errorHandler.call(null, err, vm, info);
+      } catch (e) {
+        if (e !== err) {
+          logError(e);
+        }
+      }
+    }
+    logError(err);
+  }
+  function logError(err, vm, info) {
+    if (inBrowser && typeof console !== "undefined") {
+      console.error(err);
+    } else {
+      throw err;
+    }
+  }
+  var isUsingMicroTask = false;
+  var callbacks = [];
+  var pending = false;
+  function flushCallbacks() {
+    pending = false;
+    var copies = callbacks.slice(0);
+    callbacks.length = 0;
+    for (var i = 0; i < copies.length; i++) {
+      copies[i]();
+    }
+  }
+  var timerFunc;
+  if (typeof Promise !== "undefined" && isNative(Promise)) {
+    var p_1 = Promise.resolve();
+    timerFunc = function() {
+      p_1.then(flushCallbacks);
+      if (isIOS)
+        setTimeout(noop);
+    };
+    isUsingMicroTask = true;
+  } else if (!isIE && typeof MutationObserver !== "undefined" && (isNative(MutationObserver) || // PhantomJS and iOS 7.x
+  MutationObserver.toString() === "[object MutationObserverConstructor]")) {
+    var counter_1 = 1;
+    var observer = new MutationObserver(flushCallbacks);
+    var textNode_1 = document.createTextNode(String(counter_1));
+    observer.observe(textNode_1, {
+      characterData: true
+    });
+    timerFunc = function() {
+      counter_1 = (counter_1 + 1) % 2;
+      textNode_1.data = String(counter_1);
+    };
+    isUsingMicroTask = true;
+  } else if (typeof setImmediate !== "undefined" && isNative(setImmediate)) {
+    timerFunc = function() {
+      setImmediate(flushCallbacks);
+    };
+  } else {
+    timerFunc = function() {
+      setTimeout(flushCallbacks, 0);
+    };
+  }
+  function nextTick(cb, ctx) {
+    var _resolve;
+    callbacks.push(function() {
+      if (cb) {
+        try {
+          cb.call(ctx);
+        } catch (e) {
+          handleError(e, ctx, "nextTick");
+        }
+      } else if (_resolve) {
+        _resolve(ctx);
+      }
+    });
+    if (!pending) {
+      pending = true;
+      timerFunc();
+    }
+    if (!cb && typeof Promise !== "undefined") {
+      return new Promise(function(resolve) {
+        _resolve = resolve;
+      });
+    }
+  }
+  var version = "2.7.16";
+  var seenObjects = new _Set();
+  function traverse(val) {
+    _traverse(val, seenObjects);
+    seenObjects.clear();
+    return val;
+  }
+  function _traverse(val, seen) {
+    var i, keys;
+    var isA = isArray(val);
+    if (!isA && !isObject(val) || val.__v_skip || Object.isFrozen(val) || val instanceof VNode) {
+      return;
+    }
+    if (val.__ob__) {
+      var depId = val.__ob__.dep.id;
+      if (seen.has(depId)) {
+        return;
+      }
+      seen.add(depId);
+    }
+    if (isA) {
+      i = val.length;
+      while (i--)
+        _traverse(val[i], seen);
+    } else if (isRef(val)) {
+      _traverse(val.value, seen);
+    } else {
+      keys = Object.keys(val);
+      i = keys.length;
+      while (i--)
+        _traverse(val[keys[i]], seen);
+    }
+  }
+  var uid$1 = 0;
+  var Watcher = (
+    /** @class */
+    function() {
+      function Watcher2(vm, expOrFn, cb, options, isRenderWatcher) {
+        recordEffectScope(
+          this,
+          // if the active effect scope is manually created (not a component scope),
+          // prioritize it
+          activeEffectScope && !activeEffectScope._vm ? activeEffectScope : vm ? vm._scope : void 0
+        );
+        if ((this.vm = vm) && isRenderWatcher) {
+          vm._watcher = this;
+        }
+        if (options) {
+          this.deep = !!options.deep;
+          this.user = !!options.user;
+          this.lazy = !!options.lazy;
+          this.sync = !!options.sync;
+          this.before = options.before;
+        } else {
+          this.deep = this.user = this.lazy = this.sync = false;
+        }
+        this.cb = cb;
+        this.id = ++uid$1;
+        this.active = true;
+        this.post = false;
+        this.dirty = this.lazy;
+        this.deps = [];
+        this.newDeps = [];
+        this.depIds = new _Set();
+        this.newDepIds = new _Set();
+        this.expression = "";
+        if (isFunction(expOrFn)) {
+          this.getter = expOrFn;
+        } else {
+          this.getter = parsePath(expOrFn);
+          if (!this.getter) {
+            this.getter = noop;
+          }
+        }
+        this.value = this.lazy ? void 0 : this.get();
+      }
+      Watcher2.prototype.get = function() {
+        pushTarget(this);
+        var value;
+        var vm = this.vm;
+        try {
+          value = this.getter.call(vm, vm);
+        } catch (e) {
+          if (this.user) {
+            handleError(e, vm, 'getter for watcher "'.concat(this.expression, '"'));
+          } else {
+            throw e;
+          }
+        } finally {
+          if (this.deep) {
+            traverse(value);
+          }
+          popTarget();
+          this.cleanupDeps();
+        }
+        return value;
+      };
+      Watcher2.prototype.addDep = function(dep) {
+        var id = dep.id;
+        if (!this.newDepIds.has(id)) {
+          this.newDepIds.add(id);
+          this.newDeps.push(dep);
+          if (!this.depIds.has(id)) {
+            dep.addSub(this);
+          }
+        }
+      };
+      Watcher2.prototype.cleanupDeps = function() {
+        var i = this.deps.length;
+        while (i--) {
+          var dep = this.deps[i];
+          if (!this.newDepIds.has(dep.id)) {
+            dep.removeSub(this);
+          }
+        }
+        var tmp = this.depIds;
+        this.depIds = this.newDepIds;
+        this.newDepIds = tmp;
+        this.newDepIds.clear();
+        tmp = this.deps;
+        this.deps = this.newDeps;
+        this.newDeps = tmp;
+        this.newDeps.length = 0;
+      };
+      Watcher2.prototype.update = function() {
+        if (this.lazy) {
+          this.dirty = true;
+        } else if (this.sync) {
+          this.run();
+        } else {
+          queueWatcher(this);
+        }
+      };
+      Watcher2.prototype.run = function() {
+        if (this.active) {
+          var value = this.get();
+          if (value !== this.value || // Deep watchers and watchers on Object/Arrays should fire even
+          // when the value is the same, because the value may
+          // have mutated.
+          isObject(value) || this.deep) {
+            var oldValue = this.value;
+            this.value = value;
+            if (this.user) {
+              var info = 'callback for watcher "'.concat(this.expression, '"');
+              invokeWithErrorHandling(this.cb, this.vm, [value, oldValue], this.vm, info);
+            } else {
+              this.cb.call(this.vm, value, oldValue);
+            }
+          }
+        }
+      };
+      Watcher2.prototype.evaluate = function() {
+        this.value = this.get();
+        this.dirty = false;
+      };
+      Watcher2.prototype.depend = function() {
+        var i = this.deps.length;
+        while (i--) {
+          this.deps[i].depend();
+        }
+      };
+      Watcher2.prototype.teardown = function() {
+        if (this.vm && !this.vm._isBeingDestroyed) {
+          remove$2(this.vm._scope.effects, this);
+        }
+        if (this.active) {
+          var i = this.deps.length;
+          while (i--) {
+            this.deps[i].removeSub(this);
+          }
+          this.active = false;
+          if (this.onStop) {
+            this.onStop();
+          }
+        }
+      };
+      return Watcher2;
+    }()
+  );
+  function initEvents(vm) {
+    vm._events = /* @__PURE__ */ Object.create(null);
+    vm._hasHookEvent = false;
+    var listeners = vm.$options._parentListeners;
+    if (listeners) {
+      updateComponentListeners(vm, listeners);
+    }
+  }
+  var target$1;
+  function add$1(event, fn) {
+    target$1.$on(event, fn);
+  }
+  function remove$1(event, fn) {
+    target$1.$off(event, fn);
+  }
+  function createOnceHandler$1(event, fn) {
+    var _target = target$1;
+    return function onceHandler() {
+      var res = fn.apply(null, arguments);
+      if (res !== null) {
+        _target.$off(event, onceHandler);
+      }
+    };
+  }
+  function updateComponentListeners(vm, listeners, oldListeners) {
+    target$1 = vm;
+    updateListeners(listeners, oldListeners || {}, add$1, remove$1, createOnceHandler$1, vm);
+    target$1 = void 0;
+  }
+  function eventsMixin(Vue2) {
+    var hookRE = /^hook:/;
+    Vue2.prototype.$on = function(event, fn) {
+      var vm = this;
+      if (isArray(event)) {
+        for (var i = 0, l = event.length; i < l; i++) {
+          vm.$on(event[i], fn);
+        }
+      } else {
+        (vm._events[event] || (vm._events[event] = [])).push(fn);
+        if (hookRE.test(event)) {
+          vm._hasHookEvent = true;
+        }
+      }
+      return vm;
+    };
+    Vue2.prototype.$once = function(event, fn) {
+      var vm = this;
+      function on() {
+        vm.$off(event, on);
+        fn.apply(vm, arguments);
+      }
+      on.fn = fn;
+      vm.$on(event, on);
+      return vm;
+    };
+    Vue2.prototype.$off = function(event, fn) {
+      var vm = this;
+      if (!arguments.length) {
+        vm._events = /* @__PURE__ */ Object.create(null);
+        return vm;
+      }
+      if (isArray(event)) {
+        for (var i_1 = 0, l = event.length; i_1 < l; i_1++) {
+          vm.$off(event[i_1], fn);
+        }
+        return vm;
+      }
+      var cbs = vm._events[event];
+      if (!cbs) {
+        return vm;
+      }
+      if (!fn) {
+        vm._events[event] = null;
+        return vm;
+      }
+      var cb;
+      var i = cbs.length;
+      while (i--) {
+        cb = cbs[i];
+        if (cb === fn || cb.fn === fn) {
+          cbs.splice(i, 1);
+          break;
+        }
+      }
+      return vm;
+    };
+    Vue2.prototype.$emit = function(event) {
+      var vm = this;
+      var cbs = vm._events[event];
+      if (cbs) {
+        cbs = cbs.length > 1 ? toArray(cbs) : cbs;
+        var args = toArray(arguments, 1);
+        var info = 'event handler for "'.concat(event, '"');
+        for (var i = 0, l = cbs.length; i < l; i++) {
+          invokeWithErrorHandling(cbs[i], vm, args, vm, info);
+        }
+      }
+      return vm;
+    };
+  }
+  var activeInstance = null;
+  function setActiveInstance(vm) {
+    var prevActiveInstance = activeInstance;
+    activeInstance = vm;
+    return function() {
+      activeInstance = prevActiveInstance;
+    };
+  }
+  function initLifecycle(vm) {
+    var options = vm.$options;
+    var parent = options.parent;
+    if (parent && !options.abstract) {
+      while (parent.$options.abstract && parent.$parent) {
+        parent = parent.$parent;
+      }
+      parent.$children.push(vm);
+    }
+    vm.$parent = parent;
+    vm.$root = parent ? parent.$root : vm;
+    vm.$children = [];
+    vm.$refs = {};
+    vm._provided = parent ? parent._provided : /* @__PURE__ */ Object.create(null);
+    vm._watcher = null;
+    vm._inactive = null;
+    vm._directInactive = false;
+    vm._isMounted = false;
+    vm._isDestroyed = false;
+    vm._isBeingDestroyed = false;
+  }
+  function lifecycleMixin(Vue2) {
+    Vue2.prototype._update = function(vnode, hydrating) {
+      var vm = this;
+      var prevEl = vm.$el;
+      var prevVnode = vm._vnode;
+      var restoreActiveInstance = setActiveInstance(vm);
+      vm._vnode = vnode;
+      if (!prevVnode) {
+        vm.$el = vm.__patch__(
+          vm.$el,
+          vnode,
+          hydrating,
+          false
+          /* removeOnly */
+        );
+      } else {
+        vm.$el = vm.__patch__(prevVnode, vnode);
+      }
+      restoreActiveInstance();
+      if (prevEl) {
+        prevEl.__vue__ = null;
+      }
+      if (vm.$el) {
+        vm.$el.__vue__ = vm;
+      }
+      var wrapper = vm;
+      while (wrapper && wrapper.$vnode && wrapper.$parent && wrapper.$vnode === wrapper.$parent._vnode) {
+        wrapper.$parent.$el = wrapper.$el;
+        wrapper = wrapper.$parent;
+      }
+    };
+    Vue2.prototype.$forceUpdate = function() {
+      var vm = this;
+      if (vm._watcher) {
+        vm._watcher.update();
+      }
+    };
+    Vue2.prototype.$destroy = function() {
+      var vm = this;
+      if (vm._isBeingDestroyed) {
+        return;
+      }
+      callHook$1(vm, "beforeDestroy");
+      vm._isBeingDestroyed = true;
+      var parent = vm.$parent;
+      if (parent && !parent._isBeingDestroyed && !vm.$options.abstract) {
+        remove$2(parent.$children, vm);
+      }
+      vm._scope.stop();
+      if (vm._data.__ob__) {
+        vm._data.__ob__.vmCount--;
+      }
+      vm._isDestroyed = true;
+      vm.__patch__(vm._vnode, null);
+      callHook$1(vm, "destroyed");
+      vm.$off();
+      if (vm.$el) {
+        vm.$el.__vue__ = null;
+      }
+      if (vm.$vnode) {
+        vm.$vnode.parent = null;
+      }
+    };
+  }
+  function mountComponent(vm, el, hydrating) {
+    vm.$el = el;
+    if (!vm.$options.render) {
+      vm.$options.render = createEmptyVNode;
+    }
+    callHook$1(vm, "beforeMount");
+    var updateComponent;
+    {
+      updateComponent = function() {
+        vm._update(vm._render(), hydrating);
+      };
+    }
+    var watcherOptions = {
+      before: function() {
+        if (vm._isMounted && !vm._isDestroyed) {
+          callHook$1(vm, "beforeUpdate");
+        }
+      }
+    };
+    new Watcher(
+      vm,
+      updateComponent,
+      noop,
+      watcherOptions,
+      true
+      /* isRenderWatcher */
+    );
+    hydrating = false;
+    var preWatchers = vm._preWatchers;
+    if (preWatchers) {
+      for (var i = 0; i < preWatchers.length; i++) {
+        preWatchers[i].run();
+      }
+    }
+    if (vm.$vnode == null) {
+      vm._isMounted = true;
+      callHook$1(vm, "mounted");
+    }
+    return vm;
+  }
+  function updateChildComponent(vm, propsData, listeners, parentVnode, renderChildren) {
+    var newScopedSlots = parentVnode.data.scopedSlots;
+    var oldScopedSlots = vm.$scopedSlots;
+    var hasDynamicScopedSlot = !!(newScopedSlots && !newScopedSlots.$stable || oldScopedSlots !== emptyObject && !oldScopedSlots.$stable || newScopedSlots && vm.$scopedSlots.$key !== newScopedSlots.$key || !newScopedSlots && vm.$scopedSlots.$key);
+    var needsForceUpdate = !!(renderChildren || // has new static slots
+    vm.$options._renderChildren || // has old static slots
+    hasDynamicScopedSlot);
+    var prevVNode = vm.$vnode;
+    vm.$options._parentVnode = parentVnode;
+    vm.$vnode = parentVnode;
+    if (vm._vnode) {
+      vm._vnode.parent = parentVnode;
+    }
+    vm.$options._renderChildren = renderChildren;
+    var attrs2 = parentVnode.data.attrs || emptyObject;
+    if (vm._attrsProxy) {
+      if (syncSetupProxy(vm._attrsProxy, attrs2, prevVNode.data && prevVNode.data.attrs || emptyObject, vm, "$attrs")) {
+        needsForceUpdate = true;
+      }
+    }
+    vm.$attrs = attrs2;
+    listeners = listeners || emptyObject;
+    var prevListeners = vm.$options._parentListeners;
+    if (vm._listenersProxy) {
+      syncSetupProxy(vm._listenersProxy, listeners, prevListeners || emptyObject, vm, "$listeners");
+    }
+    vm.$listeners = vm.$options._parentListeners = listeners;
+    updateComponentListeners(vm, listeners, prevListeners);
+    if (propsData && vm.$options.props) {
+      toggleObserving(false);
+      var props2 = vm._props;
+      var propKeys = vm.$options._propKeys || [];
+      for (var i = 0; i < propKeys.length; i++) {
+        var key = propKeys[i];
+        var propOptions = vm.$options.props;
+        props2[key] = validateProp(key, propOptions, propsData, vm);
+      }
+      toggleObserving(true);
+      vm.$options.propsData = propsData;
+    }
+    if (needsForceUpdate) {
+      vm.$slots = resolveSlots(renderChildren, parentVnode.context);
+      vm.$forceUpdate();
+    }
+  }
+  function isInInactiveTree(vm) {
+    while (vm && (vm = vm.$parent)) {
+      if (vm._inactive)
+        return true;
+    }
+    return false;
+  }
+  function activateChildComponent(vm, direct) {
+    if (direct) {
+      vm._directInactive = false;
+      if (isInInactiveTree(vm)) {
+        return;
+      }
+    } else if (vm._directInactive) {
+      return;
+    }
+    if (vm._inactive || vm._inactive === null) {
+      vm._inactive = false;
+      for (var i = 0; i < vm.$children.length; i++) {
+        activateChildComponent(vm.$children[i]);
+      }
+      callHook$1(vm, "activated");
+    }
+  }
+  function deactivateChildComponent(vm, direct) {
+    if (direct) {
+      vm._directInactive = true;
+      if (isInInactiveTree(vm)) {
+        return;
+      }
+    }
+    if (!vm._inactive) {
+      vm._inactive = true;
+      for (var i = 0; i < vm.$children.length; i++) {
+        deactivateChildComponent(vm.$children[i]);
+      }
+      callHook$1(vm, "deactivated");
+    }
+  }
+  function callHook$1(vm, hook, args, setContext) {
+    if (setContext === void 0) {
+      setContext = true;
+    }
+    pushTarget();
+    var prevInst = currentInstance;
+    var prevScope = getCurrentScope();
+    setContext && setCurrentInstance(vm);
+    var handlers = vm.$options[hook];
+    var info = "".concat(hook, " hook");
+    if (handlers) {
+      for (var i = 0, j = handlers.length; i < j; i++) {
+        invokeWithErrorHandling(handlers[i], vm, null, vm, info);
+      }
+    }
+    if (vm._hasHookEvent) {
+      vm.$emit("hook:" + hook);
+    }
+    if (setContext) {
+      setCurrentInstance(prevInst);
+      prevScope && prevScope.on();
+    }
+    popTarget();
+  }
+  var queue = [];
+  var activatedChildren = [];
+  var has = {};
+  var waiting = false;
+  var flushing = false;
+  var index = 0;
+  function resetSchedulerState() {
+    index = queue.length = activatedChildren.length = 0;
+    has = {};
+    waiting = flushing = false;
+  }
+  var currentFlushTimestamp = 0;
+  var getNow = Date.now;
+  if (inBrowser && !isIE) {
+    var performance_1 = window.performance;
+    if (performance_1 && typeof performance_1.now === "function" && getNow() > document.createEvent("Event").timeStamp) {
+      getNow = function() {
+        return performance_1.now();
+      };
+    }
+  }
+  var sortCompareFn = function(a, b) {
+    if (a.post) {
+      if (!b.post)
+        return 1;
+    } else if (b.post) {
+      return -1;
+    }
+    return a.id - b.id;
+  };
+  function flushSchedulerQueue() {
+    currentFlushTimestamp = getNow();
+    flushing = true;
+    var watcher, id;
+    queue.sort(sortCompareFn);
+    for (index = 0; index < queue.length; index++) {
+      watcher = queue[index];
+      if (watcher.before) {
+        watcher.before();
+      }
+      id = watcher.id;
+      has[id] = null;
+      watcher.run();
+    }
+    var activatedQueue = activatedChildren.slice();
+    var updatedQueue = queue.slice();
+    resetSchedulerState();
+    callActivatedHooks(activatedQueue);
+    callUpdatedHooks(updatedQueue);
+    cleanupDeps();
+    if (devtools && config.devtools) {
+      devtools.emit("flush");
+    }
+  }
+  function callUpdatedHooks(queue2) {
+    var i = queue2.length;
+    while (i--) {
+      var watcher = queue2[i];
+      var vm = watcher.vm;
+      if (vm && vm._watcher === watcher && vm._isMounted && !vm._isDestroyed) {
+        callHook$1(vm, "updated");
+      }
+    }
+  }
+  function queueActivatedComponent(vm) {
+    vm._inactive = false;
+    activatedChildren.push(vm);
+  }
+  function callActivatedHooks(queue2) {
+    for (var i = 0; i < queue2.length; i++) {
+      queue2[i]._inactive = true;
+      activateChildComponent(
+        queue2[i],
+        true
+        /* true */
+      );
+    }
+  }
+  function queueWatcher(watcher) {
+    var id = watcher.id;
+    if (has[id] != null) {
+      return;
+    }
+    if (watcher === Dep.target && watcher.noRecurse) {
+      return;
+    }
+    has[id] = true;
+    if (!flushing) {
+      queue.push(watcher);
+    } else {
+      var i = queue.length - 1;
+      while (i > index && queue[i].id > watcher.id) {
+        i--;
+      }
+      queue.splice(i + 1, 0, watcher);
+    }
+    if (!waiting) {
+      waiting = true;
+      nextTick(flushSchedulerQueue);
+    }
+  }
+  function initProvide(vm) {
+    var provideOption = vm.$options.provide;
+    if (provideOption) {
+      var provided = isFunction(provideOption) ? provideOption.call(vm) : provideOption;
+      if (!isObject(provided)) {
+        return;
+      }
+      var source = resolveProvided(vm);
+      var keys = hasSymbol ? Reflect.ownKeys(provided) : Object.keys(provided);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        Object.defineProperty(source, key, Object.getOwnPropertyDescriptor(provided, key));
+      }
+    }
+  }
+  function initInjections(vm) {
+    var result = resolveInject(vm.$options.inject, vm);
+    if (result) {
+      toggleObserving(false);
+      Object.keys(result).forEach(function(key) {
+        {
+          defineReactive(vm, key, result[key]);
+        }
+      });
+      toggleObserving(true);
+    }
+  }
+  function resolveInject(inject2, vm) {
+    if (inject2) {
+      var result = /* @__PURE__ */ Object.create(null);
+      var keys = hasSymbol ? Reflect.ownKeys(inject2) : Object.keys(inject2);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        if (key === "__ob__")
+          continue;
+        var provideKey = inject2[key].from;
+        if (provideKey in vm._provided) {
+          result[key] = vm._provided[provideKey];
+        } else if ("default" in inject2[key]) {
+          var provideDefault = inject2[key].default;
+          result[key] = isFunction(provideDefault) ? provideDefault.call(vm) : provideDefault;
+        } else ;
+      }
+      return result;
+    }
+  }
+  function FunctionalRenderContext(data, props2, children, parent, Ctor) {
+    var _this = this;
+    var options = Ctor.options;
+    var contextVm;
+    if (hasOwn(parent, "_uid")) {
+      contextVm = Object.create(parent);
+      contextVm._original = parent;
+    } else {
+      contextVm = parent;
+      parent = parent._original;
+    }
+    var isCompiled = isTrue(options._compiled);
+    var needNormalization = !isCompiled;
+    this.data = data;
+    this.props = props2;
+    this.children = children;
+    this.parent = parent;
+    this.listeners = data.on || emptyObject;
+    this.injections = resolveInject(options.inject, parent);
+    this.slots = function() {
+      if (!_this.$slots) {
+        normalizeScopedSlots(parent, data.scopedSlots, _this.$slots = resolveSlots(children, parent));
+      }
+      return _this.$slots;
+    };
+    Object.defineProperty(this, "scopedSlots", {
+      enumerable: true,
+      get: function() {
+        return normalizeScopedSlots(parent, data.scopedSlots, this.slots());
+      }
+    });
+    if (isCompiled) {
+      this.$options = options;
+      this.$slots = this.slots();
+      this.$scopedSlots = normalizeScopedSlots(parent, data.scopedSlots, this.$slots);
+    }
+    if (options._scopeId) {
+      this._c = function(a, b, c, d) {
+        var vnode = createElement$1(contextVm, a, b, c, d, needNormalization);
+        if (vnode && !isArray(vnode)) {
+          vnode.fnScopeId = options._scopeId;
+          vnode.fnContext = parent;
+        }
+        return vnode;
+      };
+    } else {
+      this._c = function(a, b, c, d) {
+        return createElement$1(contextVm, a, b, c, d, needNormalization);
+      };
+    }
+  }
+  installRenderHelpers(FunctionalRenderContext.prototype);
+  function createFunctionalComponent(Ctor, propsData, data, contextVm, children) {
+    var options = Ctor.options;
+    var props2 = {};
+    var propOptions = options.props;
+    if (isDef(propOptions)) {
+      for (var key in propOptions) {
+        props2[key] = validateProp(key, propOptions, propsData || emptyObject);
+      }
+    } else {
+      if (isDef(data.attrs))
+        mergeProps(props2, data.attrs);
+      if (isDef(data.props))
+        mergeProps(props2, data.props);
+    }
+    var renderContext = new FunctionalRenderContext(data, props2, children, contextVm, Ctor);
+    var vnode = options.render.call(null, renderContext._c, renderContext);
+    if (vnode instanceof VNode) {
+      return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options);
+    } else if (isArray(vnode)) {
+      var vnodes = normalizeChildren(vnode) || [];
+      var res = new Array(vnodes.length);
+      for (var i = 0; i < vnodes.length; i++) {
+        res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options);
+      }
+      return res;
+    }
+  }
+  function cloneAndMarkFunctionalResult(vnode, data, contextVm, options, renderContext) {
+    var clone = cloneVNode(vnode);
+    clone.fnContext = contextVm;
+    clone.fnOptions = options;
+    if (data.slot) {
+      (clone.data || (clone.data = {})).slot = data.slot;
+    }
+    return clone;
+  }
+  function mergeProps(to, from) {
+    for (var key in from) {
+      to[camelize(key)] = from[key];
+    }
+  }
+  function getComponentName(options) {
+    return options.name || options.__name || options._componentTag;
+  }
+  var componentVNodeHooks = {
+    init: function(vnode, hydrating) {
+      if (vnode.componentInstance && !vnode.componentInstance._isDestroyed && vnode.data.keepAlive) {
+        var mountedNode = vnode;
+        componentVNodeHooks.prepatch(mountedNode, mountedNode);
+      } else {
+        var child = vnode.componentInstance = createComponentInstanceForVnode(vnode, activeInstance);
+        child.$mount(hydrating ? vnode.elm : void 0, hydrating);
+      }
+    },
+    prepatch: function(oldVnode, vnode) {
+      var options = vnode.componentOptions;
+      var child = vnode.componentInstance = oldVnode.componentInstance;
+      updateChildComponent(
+        child,
+        options.propsData,
+        // updated props
+        options.listeners,
+        // updated listeners
+        vnode,
+        // new parent vnode
+        options.children
+        // new children
+      );
+    },
+    insert: function(vnode) {
+      var context = vnode.context, componentInstance = vnode.componentInstance;
+      if (!componentInstance._isMounted) {
+        componentInstance._isMounted = true;
+        callHook$1(componentInstance, "mounted");
+      }
+      if (vnode.data.keepAlive) {
+        if (context._isMounted) {
+          queueActivatedComponent(componentInstance);
+        } else {
+          activateChildComponent(
+            componentInstance,
+            true
+            /* direct */
+          );
+        }
+      }
+    },
+    destroy: function(vnode) {
+      var componentInstance = vnode.componentInstance;
+      if (!componentInstance._isDestroyed) {
+        if (!vnode.data.keepAlive) {
+          componentInstance.$destroy();
+        } else {
+          deactivateChildComponent(
+            componentInstance,
+            true
+            /* direct */
+          );
+        }
+      }
+    }
+  };
+  var hooksToMerge = Object.keys(componentVNodeHooks);
+  function createComponent(Ctor, data, context, children, tag) {
+    if (isUndef(Ctor)) {
+      return;
+    }
+    var baseCtor = context.$options._base;
+    if (isObject(Ctor)) {
+      Ctor = baseCtor.extend(Ctor);
+    }
+    if (typeof Ctor !== "function") {
+      return;
+    }
+    var asyncFactory;
+    if (isUndef(Ctor.cid)) {
+      asyncFactory = Ctor;
+      Ctor = resolveAsyncComponent(asyncFactory, baseCtor);
+      if (Ctor === void 0) {
+        return createAsyncPlaceholder(asyncFactory, data, context, children, tag);
+      }
+    }
+    data = data || {};
+    resolveConstructorOptions(Ctor);
+    if (isDef(data.model)) {
+      transformModel(Ctor.options, data);
+    }
+    var propsData = extractPropsFromVNodeData(data, Ctor);
+    if (isTrue(Ctor.options.functional)) {
+      return createFunctionalComponent(Ctor, propsData, data, context, children);
+    }
+    var listeners = data.on;
+    data.on = data.nativeOn;
+    if (isTrue(Ctor.options.abstract)) {
+      var slot = data.slot;
+      data = {};
+      if (slot) {
+        data.slot = slot;
+      }
+    }
+    installComponentHooks(data);
+    var name = getComponentName(Ctor.options) || tag;
+    var vnode = new VNode(
+      // @ts-expect-error
+      "vue-component-".concat(Ctor.cid).concat(name ? "-".concat(name) : ""),
+      data,
+      void 0,
+      void 0,
+      void 0,
+      context,
+      // @ts-expect-error
+      { Ctor, propsData, listeners, tag, children },
+      asyncFactory
+    );
+    return vnode;
+  }
+  function createComponentInstanceForVnode(vnode, parent) {
+    var options = {
+      _isComponent: true,
+      _parentVnode: vnode,
+      parent
+    };
+    var inlineTemplate = vnode.data.inlineTemplate;
+    if (isDef(inlineTemplate)) {
+      options.render = inlineTemplate.render;
+      options.staticRenderFns = inlineTemplate.staticRenderFns;
+    }
+    return new vnode.componentOptions.Ctor(options);
+  }
+  function installComponentHooks(data) {
+    var hooks2 = data.hook || (data.hook = {});
+    for (var i = 0; i < hooksToMerge.length; i++) {
+      var key = hooksToMerge[i];
+      var existing = hooks2[key];
+      var toMerge = componentVNodeHooks[key];
+      if (existing !== toMerge && !(existing && existing._merged)) {
+        hooks2[key] = existing ? mergeHook(toMerge, existing) : toMerge;
+      }
+    }
+  }
+  function mergeHook(f1, f2) {
+    var merged = function(a, b) {
+      f1(a, b);
+      f2(a, b);
+    };
+    merged._merged = true;
+    return merged;
+  }
+  function transformModel(options, data) {
+    var prop = options.model && options.model.prop || "value";
+    var event = options.model && options.model.event || "input";
+    (data.attrs || (data.attrs = {}))[prop] = data.model.value;
+    var on = data.on || (data.on = {});
+    var existing = on[event];
+    var callback = data.model.callback;
+    if (isDef(existing)) {
+      if (isArray(existing) ? existing.indexOf(callback) === -1 : existing !== callback) {
+        on[event] = [callback].concat(existing);
+      }
+    } else {
+      on[event] = callback;
+    }
+  }
+  var warn = noop;
+  var strats = config.optionMergeStrategies;
+  function mergeData(to, from, recursive) {
+    if (recursive === void 0) {
+      recursive = true;
+    }
+    if (!from)
+      return to;
+    var key, toVal, fromVal;
+    var keys = hasSymbol ? Reflect.ownKeys(from) : Object.keys(from);
+    for (var i = 0; i < keys.length; i++) {
+      key = keys[i];
+      if (key === "__ob__")
+        continue;
+      toVal = to[key];
+      fromVal = from[key];
+      if (!recursive || !hasOwn(to, key)) {
+        set(to, key, fromVal);
+      } else if (toVal !== fromVal && isPlainObject(toVal) && isPlainObject(fromVal)) {
+        mergeData(toVal, fromVal);
+      }
+    }
+    return to;
+  }
+  function mergeDataOrFn(parentVal, childVal, vm) {
+    if (!vm) {
+      if (!childVal) {
+        return parentVal;
+      }
+      if (!parentVal) {
+        return childVal;
+      }
+      return function mergedDataFn() {
+        return mergeData(isFunction(childVal) ? childVal.call(this, this) : childVal, isFunction(parentVal) ? parentVal.call(this, this) : parentVal);
+      };
+    } else {
+      return function mergedInstanceDataFn() {
+        var instanceData = isFunction(childVal) ? childVal.call(vm, vm) : childVal;
+        var defaultData = isFunction(parentVal) ? parentVal.call(vm, vm) : parentVal;
+        if (instanceData) {
+          return mergeData(instanceData, defaultData);
+        } else {
+          return defaultData;
+        }
+      };
+    }
+  }
+  strats.data = function(parentVal, childVal, vm) {
+    if (!vm) {
+      if (childVal && typeof childVal !== "function") {
+        return parentVal;
+      }
+      return mergeDataOrFn(parentVal, childVal);
+    }
+    return mergeDataOrFn(parentVal, childVal, vm);
+  };
+  function mergeLifecycleHook(parentVal, childVal) {
+    var res = childVal ? parentVal ? parentVal.concat(childVal) : isArray(childVal) ? childVal : [childVal] : parentVal;
+    return res ? dedupeHooks(res) : res;
+  }
+  function dedupeHooks(hooks2) {
+    var res = [];
+    for (var i = 0; i < hooks2.length; i++) {
+      if (res.indexOf(hooks2[i]) === -1) {
+        res.push(hooks2[i]);
+      }
+    }
+    return res;
+  }
+  LIFECYCLE_HOOKS.forEach(function(hook) {
+    strats[hook] = mergeLifecycleHook;
+  });
+  function mergeAssets(parentVal, childVal, vm, key) {
+    var res = Object.create(parentVal || null);
+    if (childVal) {
+      return extend(res, childVal);
+    } else {
+      return res;
+    }
+  }
+  ASSET_TYPES.forEach(function(type) {
+    strats[type + "s"] = mergeAssets;
+  });
+  strats.watch = function(parentVal, childVal, vm, key) {
+    if (parentVal === nativeWatch)
+      parentVal = void 0;
+    if (childVal === nativeWatch)
+      childVal = void 0;
+    if (!childVal)
+      return Object.create(parentVal || null);
+    if (!parentVal)
+      return childVal;
+    var ret = {};
+    extend(ret, parentVal);
+    for (var key_1 in childVal) {
+      var parent_1 = ret[key_1];
+      var child = childVal[key_1];
+      if (parent_1 && !isArray(parent_1)) {
+        parent_1 = [parent_1];
+      }
+      ret[key_1] = parent_1 ? parent_1.concat(child) : isArray(child) ? child : [child];
+    }
+    return ret;
+  };
+  strats.props = strats.methods = strats.inject = strats.computed = function(parentVal, childVal, vm, key) {
+    if (!parentVal)
+      return childVal;
+    var ret = /* @__PURE__ */ Object.create(null);
+    extend(ret, parentVal);
+    if (childVal)
+      extend(ret, childVal);
+    return ret;
+  };
+  strats.provide = function(parentVal, childVal) {
+    if (!parentVal)
+      return childVal;
+    return function() {
+      var ret = /* @__PURE__ */ Object.create(null);
+      mergeData(ret, isFunction(parentVal) ? parentVal.call(this) : parentVal);
+      if (childVal) {
+        mergeData(
+          ret,
+          isFunction(childVal) ? childVal.call(this) : childVal,
+          false
+          // non-recursive
+        );
+      }
+      return ret;
+    };
+  };
+  var defaultStrat = function(parentVal, childVal) {
+    return childVal === void 0 ? parentVal : childVal;
+  };
+  function normalizeProps(options, vm) {
+    var props2 = options.props;
+    if (!props2)
+      return;
+    var res = {};
+    var i, val, name;
+    if (isArray(props2)) {
+      i = props2.length;
+      while (i--) {
+        val = props2[i];
+        if (typeof val === "string") {
+          name = camelize(val);
+          res[name] = { type: null };
+        }
+      }
+    } else if (isPlainObject(props2)) {
+      for (var key in props2) {
+        val = props2[key];
+        name = camelize(key);
+        res[name] = isPlainObject(val) ? val : { type: val };
+      }
+    } else ;
+    options.props = res;
+  }
+  function normalizeInject(options, vm) {
+    var inject2 = options.inject;
+    if (!inject2)
+      return;
+    var normalized = options.inject = {};
+    if (isArray(inject2)) {
+      for (var i = 0; i < inject2.length; i++) {
+        normalized[inject2[i]] = { from: inject2[i] };
+      }
+    } else if (isPlainObject(inject2)) {
+      for (var key in inject2) {
+        var val = inject2[key];
+        normalized[key] = isPlainObject(val) ? extend({ from: key }, val) : { from: val };
+      }
+    } else ;
+  }
+  function normalizeDirectives$1(options) {
+    var dirs = options.directives;
+    if (dirs) {
+      for (var key in dirs) {
+        var def2 = dirs[key];
+        if (isFunction(def2)) {
+          dirs[key] = { bind: def2, update: def2 };
+        }
+      }
+    }
+  }
+  function mergeOptions(parent, child, vm) {
+    if (isFunction(child)) {
+      child = child.options;
+    }
+    normalizeProps(child);
+    normalizeInject(child);
+    normalizeDirectives$1(child);
+    if (!child._base) {
+      if (child.extends) {
+        parent = mergeOptions(parent, child.extends, vm);
+      }
+      if (child.mixins) {
+        for (var i = 0, l = child.mixins.length; i < l; i++) {
+          parent = mergeOptions(parent, child.mixins[i], vm);
+        }
+      }
+    }
+    var options = {};
+    var key;
+    for (key in parent) {
+      mergeField(key);
+    }
+    for (key in child) {
+      if (!hasOwn(parent, key)) {
+        mergeField(key);
+      }
+    }
+    function mergeField(key2) {
+      var strat = strats[key2] || defaultStrat;
+      options[key2] = strat(parent[key2], child[key2], vm, key2);
+    }
+    return options;
+  }
+  function resolveAsset(options, type, id, warnMissing) {
+    if (typeof id !== "string") {
+      return;
+    }
+    var assets = options[type];
+    if (hasOwn(assets, id))
+      return assets[id];
+    var camelizedId = camelize(id);
+    if (hasOwn(assets, camelizedId))
+      return assets[camelizedId];
+    var PascalCaseId = capitalize(camelizedId);
+    if (hasOwn(assets, PascalCaseId))
+      return assets[PascalCaseId];
+    var res = assets[id] || assets[camelizedId] || assets[PascalCaseId];
+    return res;
+  }
+  function validateProp(key, propOptions, propsData, vm) {
+    var prop = propOptions[key];
+    var absent = !hasOwn(propsData, key);
+    var value = propsData[key];
+    var booleanIndex = getTypeIndex(Boolean, prop.type);
+    if (booleanIndex > -1) {
+      if (absent && !hasOwn(prop, "default")) {
+        value = false;
+      } else if (value === "" || value === hyphenate(key)) {
+        var stringIndex = getTypeIndex(String, prop.type);
+        if (stringIndex < 0 || booleanIndex < stringIndex) {
+          value = true;
+        }
+      }
+    }
+    if (value === void 0) {
+      value = getPropDefaultValue(vm, prop, key);
+      var prevShouldObserve = shouldObserve;
+      toggleObserving(true);
+      observe(value);
+      toggleObserving(prevShouldObserve);
+    }
+    return value;
+  }
+  function getPropDefaultValue(vm, prop, key) {
+    if (!hasOwn(prop, "default")) {
+      return void 0;
+    }
+    var def2 = prop.default;
+    if (vm && vm.$options.propsData && vm.$options.propsData[key] === void 0 && vm._props[key] !== void 0) {
+      return vm._props[key];
+    }
+    return isFunction(def2) && getType(prop.type) !== "Function" ? def2.call(vm) : def2;
+  }
+  var functionTypeCheckRE = /^\s*function (\w+)/;
+  function getType(fn) {
+    var match = fn && fn.toString().match(functionTypeCheckRE);
+    return match ? match[1] : "";
+  }
+  function isSameType(a, b) {
+    return getType(a) === getType(b);
+  }
+  function getTypeIndex(type, expectedTypes) {
+    if (!isArray(expectedTypes)) {
+      return isSameType(expectedTypes, type) ? 0 : -1;
+    }
+    for (var i = 0, len = expectedTypes.length; i < len; i++) {
+      if (isSameType(expectedTypes[i], type)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  var sharedPropertyDefinition = {
+    enumerable: true,
+    configurable: true,
+    get: noop,
+    set: noop
+  };
+  function proxy(target2, sourceKey, key) {
+    sharedPropertyDefinition.get = function proxyGetter() {
+      return this[sourceKey][key];
+    };
+    sharedPropertyDefinition.set = function proxySetter(val) {
+      this[sourceKey][key] = val;
+    };
+    Object.defineProperty(target2, key, sharedPropertyDefinition);
+  }
+  function initState(vm) {
+    var opts2 = vm.$options;
+    if (opts2.props)
+      initProps$1(vm, opts2.props);
+    initSetup(vm);
+    if (opts2.methods)
+      initMethods(vm, opts2.methods);
+    if (opts2.data) {
+      initData(vm);
+    } else {
+      var ob = observe(vm._data = {});
+      ob && ob.vmCount++;
+    }
+    if (opts2.computed)
+      initComputed$1(vm, opts2.computed);
+    if (opts2.watch && opts2.watch !== nativeWatch) {
+      initWatch(vm, opts2.watch);
+    }
+  }
+  function initProps$1(vm, propsOptions) {
+    var propsData = vm.$options.propsData || {};
+    var props2 = vm._props = shallowReactive({});
+    var keys = vm.$options._propKeys = [];
+    var isRoot = !vm.$parent;
+    if (!isRoot) {
+      toggleObserving(false);
+    }
+    var _loop_1 = function(key2) {
+      keys.push(key2);
+      var value = validateProp(key2, propsOptions, propsData, vm);
+      {
+        defineReactive(
+          props2,
+          key2,
+          value,
+          void 0,
+          true
+          /* shallow */
+        );
+      }
+      if (!(key2 in vm)) {
+        proxy(vm, "_props", key2);
+      }
+    };
+    for (var key in propsOptions) {
+      _loop_1(key);
+    }
+    toggleObserving(true);
+  }
+  function initData(vm) {
+    var data = vm.$options.data;
+    data = vm._data = isFunction(data) ? getData(data, vm) : data || {};
+    if (!isPlainObject(data)) {
+      data = {};
+    }
+    var keys = Object.keys(data);
+    var props2 = vm.$options.props;
+    vm.$options.methods;
+    var i = keys.length;
+    while (i--) {
+      var key = keys[i];
+      if (props2 && hasOwn(props2, key)) ;
+      else if (!isReserved(key)) {
+        proxy(vm, "_data", key);
+      }
+    }
+    var ob = observe(data);
+    ob && ob.vmCount++;
+  }
+  function getData(data, vm) {
+    pushTarget();
+    try {
+      return data.call(vm, vm);
+    } catch (e) {
+      handleError(e, vm, "data()");
+      return {};
+    } finally {
+      popTarget();
+    }
+  }
+  var computedWatcherOptions = { lazy: true };
+  function initComputed$1(vm, computed2) {
+    var watchers = vm._computedWatchers = /* @__PURE__ */ Object.create(null);
+    var isSSR = isServerRendering();
+    for (var key in computed2) {
+      var userDef = computed2[key];
+      var getter = isFunction(userDef) ? userDef : userDef.get;
+      if (!isSSR) {
+        watchers[key] = new Watcher(vm, getter || noop, noop, computedWatcherOptions);
+      }
+      if (!(key in vm)) {
+        defineComputed(vm, key, userDef);
+      }
+    }
+  }
+  function defineComputed(target2, key, userDef) {
+    var shouldCache = !isServerRendering();
+    if (isFunction(userDef)) {
+      sharedPropertyDefinition.get = shouldCache ? createComputedGetter(key) : createGetterInvoker(userDef);
+      sharedPropertyDefinition.set = noop;
+    } else {
+      sharedPropertyDefinition.get = userDef.get ? shouldCache && userDef.cache !== false ? createComputedGetter(key) : createGetterInvoker(userDef.get) : noop;
+      sharedPropertyDefinition.set = userDef.set || noop;
+    }
+    Object.defineProperty(target2, key, sharedPropertyDefinition);
+  }
+  function createComputedGetter(key) {
+    return function computedGetter() {
+      var watcher = this._computedWatchers && this._computedWatchers[key];
+      if (watcher) {
+        if (watcher.dirty) {
+          watcher.evaluate();
+        }
+        if (Dep.target) {
+          watcher.depend();
+        }
+        return watcher.value;
+      }
+    };
+  }
+  function createGetterInvoker(fn) {
+    return function computedGetter() {
+      return fn.call(this, this);
+    };
+  }
+  function initMethods(vm, methods) {
+    vm.$options.props;
+    for (var key in methods) {
+      vm[key] = typeof methods[key] !== "function" ? noop : bind(methods[key], vm);
+    }
+  }
+  function initWatch(vm, watch2) {
+    for (var key in watch2) {
+      var handler = watch2[key];
+      if (isArray(handler)) {
+        for (var i = 0; i < handler.length; i++) {
+          createWatcher(vm, key, handler[i]);
+        }
+      } else {
+        createWatcher(vm, key, handler);
+      }
+    }
+  }
+  function createWatcher(vm, expOrFn, handler, options) {
+    if (isPlainObject(handler)) {
+      options = handler;
+      handler = handler.handler;
+    }
+    if (typeof handler === "string") {
+      handler = vm[handler];
+    }
+    return vm.$watch(expOrFn, handler, options);
+  }
+  function stateMixin(Vue2) {
+    var dataDef = {};
+    dataDef.get = function() {
+      return this._data;
+    };
+    var propsDef = {};
+    propsDef.get = function() {
+      return this._props;
+    };
+    Object.defineProperty(Vue2.prototype, "$data", dataDef);
+    Object.defineProperty(Vue2.prototype, "$props", propsDef);
+    Vue2.prototype.$set = set;
+    Vue2.prototype.$delete = del;
+    Vue2.prototype.$watch = function(expOrFn, cb, options) {
+      var vm = this;
+      if (isPlainObject(cb)) {
+        return createWatcher(vm, expOrFn, cb, options);
+      }
+      options = options || {};
+      options.user = true;
+      var watcher = new Watcher(vm, expOrFn, cb, options);
+      if (options.immediate) {
+        var info = 'callback for immediate watcher "'.concat(watcher.expression, '"');
+        pushTarget();
+        invokeWithErrorHandling(cb, vm, [watcher.value], vm, info);
+        popTarget();
+      }
+      return function unwatchFn() {
+        watcher.teardown();
+      };
+    };
+  }
+  var uid = 0;
+  function initMixin$1(Vue2) {
+    Vue2.prototype._init = function(options) {
+      var vm = this;
+      vm._uid = uid++;
+      vm._isVue = true;
+      vm.__v_skip = true;
+      vm._scope = new EffectScope(
+        true
+        /* detached */
+      );
+      vm._scope.parent = void 0;
+      vm._scope._vm = true;
+      if (options && options._isComponent) {
+        initInternalComponent(vm, options);
+      } else {
+        vm.$options = mergeOptions(resolveConstructorOptions(vm.constructor), options || {}, vm);
+      }
+      {
+        vm._renderProxy = vm;
+      }
+      vm._self = vm;
+      initLifecycle(vm);
+      initEvents(vm);
+      initRender(vm);
+      callHook$1(
+        vm,
+        "beforeCreate",
+        void 0,
+        false
+        /* setContext */
+      );
+      initInjections(vm);
+      initState(vm);
+      initProvide(vm);
+      callHook$1(vm, "created");
+      if (vm.$options.el) {
+        vm.$mount(vm.$options.el);
+      }
+    };
+  }
+  function initInternalComponent(vm, options) {
+    var opts2 = vm.$options = Object.create(vm.constructor.options);
+    var parentVnode = options._parentVnode;
+    opts2.parent = options.parent;
+    opts2._parentVnode = parentVnode;
+    var vnodeComponentOptions = parentVnode.componentOptions;
+    opts2.propsData = vnodeComponentOptions.propsData;
+    opts2._parentListeners = vnodeComponentOptions.listeners;
+    opts2._renderChildren = vnodeComponentOptions.children;
+    opts2._componentTag = vnodeComponentOptions.tag;
+    if (options.render) {
+      opts2.render = options.render;
+      opts2.staticRenderFns = options.staticRenderFns;
+    }
+  }
+  function resolveConstructorOptions(Ctor) {
+    var options = Ctor.options;
+    if (Ctor.super) {
+      var superOptions = resolveConstructorOptions(Ctor.super);
+      var cachedSuperOptions = Ctor.superOptions;
+      if (superOptions !== cachedSuperOptions) {
+        Ctor.superOptions = superOptions;
+        var modifiedOptions = resolveModifiedOptions(Ctor);
+        if (modifiedOptions) {
+          extend(Ctor.extendOptions, modifiedOptions);
+        }
+        options = Ctor.options = mergeOptions(superOptions, Ctor.extendOptions);
+        if (options.name) {
+          options.components[options.name] = Ctor;
+        }
+      }
+    }
+    return options;
+  }
+  function resolveModifiedOptions(Ctor) {
+    var modified;
+    var latest = Ctor.options;
+    var sealed = Ctor.sealedOptions;
+    for (var key in latest) {
+      if (latest[key] !== sealed[key]) {
+        if (!modified)
+          modified = {};
+        modified[key] = latest[key];
+      }
+    }
+    return modified;
+  }
+  function Vue(options) {
+    this._init(options);
+  }
+  initMixin$1(Vue);
+  stateMixin(Vue);
+  eventsMixin(Vue);
+  lifecycleMixin(Vue);
+  renderMixin(Vue);
+  function initUse(Vue2) {
+    Vue2.use = function(plugin) {
+      var installedPlugins = this._installedPlugins || (this._installedPlugins = []);
+      if (installedPlugins.indexOf(plugin) > -1) {
+        return this;
+      }
+      var args = toArray(arguments, 1);
+      args.unshift(this);
+      if (isFunction(plugin.install)) {
+        plugin.install.apply(plugin, args);
+      } else if (isFunction(plugin)) {
+        plugin.apply(null, args);
+      }
+      installedPlugins.push(plugin);
+      return this;
+    };
+  }
+  function initMixin(Vue2) {
+    Vue2.mixin = function(mixin) {
+      this.options = mergeOptions(this.options, mixin);
+      return this;
+    };
+  }
+  function initExtend(Vue2) {
+    Vue2.cid = 0;
+    var cid = 1;
+    Vue2.extend = function(extendOptions) {
+      extendOptions = extendOptions || {};
+      var Super = this;
+      var SuperId = Super.cid;
+      var cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {});
+      if (cachedCtors[SuperId]) {
+        return cachedCtors[SuperId];
+      }
+      var name = getComponentName(extendOptions) || getComponentName(Super.options);
+      var Sub = function VueComponent(options) {
+        this._init(options);
+      };
+      Sub.prototype = Object.create(Super.prototype);
+      Sub.prototype.constructor = Sub;
+      Sub.cid = cid++;
+      Sub.options = mergeOptions(Super.options, extendOptions);
+      Sub["super"] = Super;
+      if (Sub.options.props) {
+        initProps(Sub);
+      }
+      if (Sub.options.computed) {
+        initComputed(Sub);
+      }
+      Sub.extend = Super.extend;
+      Sub.mixin = Super.mixin;
+      Sub.use = Super.use;
+      ASSET_TYPES.forEach(function(type) {
+        Sub[type] = Super[type];
+      });
+      if (name) {
+        Sub.options.components[name] = Sub;
+      }
+      Sub.superOptions = Super.options;
+      Sub.extendOptions = extendOptions;
+      Sub.sealedOptions = extend({}, Sub.options);
+      cachedCtors[SuperId] = Sub;
+      return Sub;
+    };
+  }
+  function initProps(Comp) {
+    var props2 = Comp.options.props;
+    for (var key in props2) {
+      proxy(Comp.prototype, "_props", key);
+    }
+  }
+  function initComputed(Comp) {
+    var computed2 = Comp.options.computed;
+    for (var key in computed2) {
+      defineComputed(Comp.prototype, key, computed2[key]);
+    }
+  }
+  function initAssetRegisters(Vue2) {
+    ASSET_TYPES.forEach(function(type) {
+      Vue2[type] = function(id, definition) {
+        if (!definition) {
+          return this.options[type + "s"][id];
+        } else {
+          if (type === "component" && isPlainObject(definition)) {
+            definition.name = definition.name || id;
+            definition = this.options._base.extend(definition);
+          }
+          if (type === "directive" && isFunction(definition)) {
+            definition = { bind: definition, update: definition };
+          }
+          this.options[type + "s"][id] = definition;
+          return definition;
+        }
+      };
+    });
+  }
+  function _getComponentName(opts2) {
+    return opts2 && (getComponentName(opts2.Ctor.options) || opts2.tag);
+  }
+  function matches(pattern, name) {
+    if (isArray(pattern)) {
+      return pattern.indexOf(name) > -1;
+    } else if (typeof pattern === "string") {
+      return pattern.split(",").indexOf(name) > -1;
+    } else if (isRegExp(pattern)) {
+      return pattern.test(name);
+    }
+    return false;
+  }
+  function pruneCache(keepAliveInstance, filter) {
+    var cache = keepAliveInstance.cache, keys = keepAliveInstance.keys, _vnode = keepAliveInstance._vnode, $vnode = keepAliveInstance.$vnode;
+    for (var key in cache) {
+      var entry = cache[key];
+      if (entry) {
+        var name_1 = entry.name;
+        if (name_1 && !filter(name_1)) {
+          pruneCacheEntry(cache, key, keys, _vnode);
+        }
+      }
+    }
+    $vnode.componentOptions.children = void 0;
+  }
+  function pruneCacheEntry(cache, key, keys, current) {
+    var entry = cache[key];
+    if (entry && (!current || entry.tag !== current.tag)) {
+      entry.componentInstance.$destroy();
+    }
+    cache[key] = null;
+    remove$2(keys, key);
+  }
+  var patternTypes = [String, RegExp, Array];
+  var KeepAlive = {
+    name: "keep-alive",
+    abstract: true,
+    props: {
+      include: patternTypes,
+      exclude: patternTypes,
+      max: [String, Number]
+    },
+    methods: {
+      cacheVNode: function() {
+        var _a = this, cache = _a.cache, keys = _a.keys, vnodeToCache = _a.vnodeToCache, keyToCache = _a.keyToCache;
+        if (vnodeToCache) {
+          var tag = vnodeToCache.tag, componentInstance = vnodeToCache.componentInstance, componentOptions = vnodeToCache.componentOptions;
+          cache[keyToCache] = {
+            name: _getComponentName(componentOptions),
+            tag,
+            componentInstance
+          };
+          keys.push(keyToCache);
+          if (this.max && keys.length > parseInt(this.max)) {
+            pruneCacheEntry(cache, keys[0], keys, this._vnode);
+          }
+          this.vnodeToCache = null;
+        }
+      }
+    },
+    created: function() {
+      this.cache = /* @__PURE__ */ Object.create(null);
+      this.keys = [];
+    },
+    destroyed: function() {
+      for (var key in this.cache) {
+        pruneCacheEntry(this.cache, key, this.keys);
+      }
+    },
+    mounted: function() {
+      var _this = this;
+      this.cacheVNode();
+      this.$watch("include", function(val) {
+        pruneCache(_this, function(name) {
+          return matches(val, name);
+        });
+      });
+      this.$watch("exclude", function(val) {
+        pruneCache(_this, function(name) {
+          return !matches(val, name);
+        });
+      });
+    },
+    updated: function() {
+      this.cacheVNode();
+    },
+    render: function() {
+      var slot = this.$slots.default;
+      var vnode = getFirstComponentChild(slot);
+      var componentOptions = vnode && vnode.componentOptions;
+      if (componentOptions) {
+        var name_2 = _getComponentName(componentOptions);
+        var _a = this, include = _a.include, exclude = _a.exclude;
+        if (
+          // not included
+          include && (!name_2 || !matches(include, name_2)) || // excluded
+          exclude && name_2 && matches(exclude, name_2)
+        ) {
+          return vnode;
+        }
+        var _b = this, cache = _b.cache, keys = _b.keys;
+        var key = vnode.key == null ? (
+          // same constructor may get registered as different local components
+          // so cid alone is not enough (#3269)
+          componentOptions.Ctor.cid + (componentOptions.tag ? "::".concat(componentOptions.tag) : "")
+        ) : vnode.key;
+        if (cache[key]) {
+          vnode.componentInstance = cache[key].componentInstance;
+          remove$2(keys, key);
+          keys.push(key);
+        } else {
+          this.vnodeToCache = vnode;
+          this.keyToCache = key;
+        }
+        vnode.data.keepAlive = true;
+      }
+      return vnode || slot && slot[0];
+    }
+  };
+  var builtInComponents = {
+    KeepAlive
+  };
+  function initGlobalAPI(Vue2) {
+    var configDef = {};
+    configDef.get = function() {
+      return config;
+    };
+    Object.defineProperty(Vue2, "config", configDef);
+    Vue2.util = {
+      warn,
+      extend,
+      mergeOptions,
+      defineReactive
+    };
+    Vue2.set = set;
+    Vue2.delete = del;
+    Vue2.nextTick = nextTick;
+    Vue2.observable = function(obj) {
+      observe(obj);
+      return obj;
+    };
+    Vue2.options = /* @__PURE__ */ Object.create(null);
+    ASSET_TYPES.forEach(function(type) {
+      Vue2.options[type + "s"] = /* @__PURE__ */ Object.create(null);
+    });
+    Vue2.options._base = Vue2;
+    extend(Vue2.options.components, builtInComponents);
+    initUse(Vue2);
+    initMixin(Vue2);
+    initExtend(Vue2);
+    initAssetRegisters(Vue2);
+  }
+  initGlobalAPI(Vue);
+  Object.defineProperty(Vue.prototype, "$isServer", {
+    get: isServerRendering
+  });
+  Object.defineProperty(Vue.prototype, "$ssrContext", {
+    get: function() {
+      return this.$vnode && this.$vnode.ssrContext;
+    }
+  });
+  Object.defineProperty(Vue, "FunctionalRenderContext", {
+    value: FunctionalRenderContext
+  });
+  Vue.version = version;
+  var isReservedAttr = makeMap("style,class");
+  var acceptValue = makeMap("input,textarea,option,select,progress");
+  var mustUseProp = function(tag, type, attr) {
+    return attr === "value" && acceptValue(tag) && type !== "button" || attr === "selected" && tag === "option" || attr === "checked" && tag === "input" || attr === "muted" && tag === "video";
+  };
+  var isEnumeratedAttr = makeMap("contenteditable,draggable,spellcheck");
+  var isValidContentEditableValue = makeMap("events,caret,typing,plaintext-only");
+  var convertEnumeratedValue = function(key, value) {
+    return isFalsyAttrValue(value) || value === "false" ? "false" : (
+      // allow arbitrary string value for contenteditable
+      key === "contenteditable" && isValidContentEditableValue(value) ? value : "true"
+    );
+  };
+  var isBooleanAttr = makeMap("allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,default,defaultchecked,defaultmuted,defaultselected,defer,disabled,enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,required,reversed,scoped,seamless,selected,sortable,truespeed,typemustmatch,visible");
+  var xlinkNS = "http://www.w3.org/1999/xlink";
+  var isXlink = function(name) {
+    return name.charAt(5) === ":" && name.slice(0, 5) === "xlink";
+  };
+  var getXlinkProp = function(name) {
+    return isXlink(name) ? name.slice(6, name.length) : "";
+  };
+  var isFalsyAttrValue = function(val) {
+    return val == null || val === false;
+  };
+  function genClassForVnode(vnode) {
+    var data = vnode.data;
+    var parentNode2 = vnode;
+    var childNode = vnode;
+    while (isDef(childNode.componentInstance)) {
+      childNode = childNode.componentInstance._vnode;
+      if (childNode && childNode.data) {
+        data = mergeClassData(childNode.data, data);
+      }
+    }
+    while (isDef(parentNode2 = parentNode2.parent)) {
+      if (parentNode2 && parentNode2.data) {
+        data = mergeClassData(data, parentNode2.data);
+      }
+    }
+    return renderClass(data.staticClass, data.class);
+  }
+  function mergeClassData(child, parent) {
+    return {
+      staticClass: concat(child.staticClass, parent.staticClass),
+      class: isDef(child.class) ? [child.class, parent.class] : parent.class
+    };
+  }
+  function renderClass(staticClass, dynamicClass) {
+    if (isDef(staticClass) || isDef(dynamicClass)) {
+      return concat(staticClass, stringifyClass(dynamicClass));
+    }
+    return "";
+  }
+  function concat(a, b) {
+    return a ? b ? a + " " + b : a : b || "";
+  }
+  function stringifyClass(value) {
+    if (Array.isArray(value)) {
+      return stringifyArray(value);
+    }
+    if (isObject(value)) {
+      return stringifyObject(value);
+    }
+    if (typeof value === "string") {
+      return value;
+    }
+    return "";
+  }
+  function stringifyArray(value) {
+    var res = "";
+    var stringified;
+    for (var i = 0, l = value.length; i < l; i++) {
+      if (isDef(stringified = stringifyClass(value[i])) && stringified !== "") {
+        if (res)
+          res += " ";
+        res += stringified;
+      }
+    }
+    return res;
+  }
+  function stringifyObject(value) {
+    var res = "";
+    for (var key in value) {
+      if (value[key]) {
+        if (res)
+          res += " ";
+        res += key;
+      }
+    }
+    return res;
+  }
+  var namespaceMap = {
+    svg: "http://www.w3.org/2000/svg",
+    math: "http://www.w3.org/1998/Math/MathML"
+  };
+  var isHTMLTag = makeMap("html,body,base,head,link,meta,style,title,address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,s,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,map,track,video,embed,object,param,source,canvas,script,noscript,del,ins,caption,col,colgroup,table,thead,tbody,td,th,tr,button,datalist,fieldset,form,input,label,legend,meter,optgroup,option,output,progress,select,textarea,details,dialog,menu,menuitem,summary,content,element,shadow,template,blockquote,iframe,tfoot");
+  var isSVG = makeMap("svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,foreignobject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view", true);
+  var isReservedTag = function(tag) {
+    return isHTMLTag(tag) || isSVG(tag);
+  };
+  function getTagNamespace(tag) {
+    if (isSVG(tag)) {
+      return "svg";
+    }
+    if (tag === "math") {
+      return "math";
+    }
+  }
+  var unknownElementCache = /* @__PURE__ */ Object.create(null);
+  function isUnknownElement(tag) {
+    if (!inBrowser) {
+      return true;
+    }
+    if (isReservedTag(tag)) {
+      return false;
+    }
+    tag = tag.toLowerCase();
+    if (unknownElementCache[tag] != null) {
+      return unknownElementCache[tag];
+    }
+    var el = document.createElement(tag);
+    if (tag.indexOf("-") > -1) {
+      return unknownElementCache[tag] = el.constructor === window.HTMLUnknownElement || el.constructor === window.HTMLElement;
+    } else {
+      return unknownElementCache[tag] = /HTMLUnknownElement/.test(el.toString());
+    }
+  }
+  var isTextInputType = makeMap("text,number,password,search,email,tel,url");
+  function query(el) {
+    if (typeof el === "string") {
+      var selected = document.querySelector(el);
+      if (!selected) {
+        return document.createElement("div");
+      }
+      return selected;
+    } else {
+      return el;
+    }
+  }
+  function createElement(tagName2, vnode) {
+    var elm = document.createElement(tagName2);
+    if (tagName2 !== "select") {
+      return elm;
+    }
+    if (vnode.data && vnode.data.attrs && vnode.data.attrs.multiple !== void 0) {
+      elm.setAttribute("multiple", "multiple");
+    }
+    return elm;
+  }
+  function createElementNS(namespace, tagName2) {
+    return document.createElementNS(namespaceMap[namespace], tagName2);
+  }
+  function createTextNode(text) {
+    return document.createTextNode(text);
+  }
+  function createComment(text) {
+    return document.createComment(text);
+  }
+  function insertBefore(parentNode2, newNode, referenceNode) {
+    parentNode2.insertBefore(newNode, referenceNode);
+  }
+  function removeChild(node, child) {
+    node.removeChild(child);
+  }
+  function appendChild(node, child) {
+    node.appendChild(child);
+  }
+  function parentNode(node) {
+    return node.parentNode;
+  }
+  function nextSibling(node) {
+    return node.nextSibling;
+  }
+  function tagName(node) {
+    return node.tagName;
+  }
+  function setTextContent(node, text) {
+    node.textContent = text;
+  }
+  function setStyleScope(node, scopeId) {
+    node.setAttribute(scopeId, "");
+  }
+  var nodeOps = /* @__PURE__ */ Object.freeze({
+    __proto__: null,
+    createElement,
+    createElementNS,
+    createTextNode,
+    createComment,
+    insertBefore,
+    removeChild,
+    appendChild,
+    parentNode,
+    nextSibling,
+    tagName,
+    setTextContent,
+    setStyleScope
+  });
+  var ref = {
+    create: function(_, vnode) {
+      registerRef(vnode);
+    },
+    update: function(oldVnode, vnode) {
+      if (oldVnode.data.ref !== vnode.data.ref) {
+        registerRef(oldVnode, true);
+        registerRef(vnode);
+      }
+    },
+    destroy: function(vnode) {
+      registerRef(vnode, true);
+    }
+  };
+  function registerRef(vnode, isRemoval) {
+    var ref2 = vnode.data.ref;
+    if (!isDef(ref2))
+      return;
+    var vm = vnode.context;
+    var refValue = vnode.componentInstance || vnode.elm;
+    var value = isRemoval ? null : refValue;
+    var $refsValue = isRemoval ? void 0 : refValue;
+    if (isFunction(ref2)) {
+      invokeWithErrorHandling(ref2, vm, [value], vm, "template ref function");
+      return;
+    }
+    var isFor = vnode.data.refInFor;
+    var _isString = typeof ref2 === "string" || typeof ref2 === "number";
+    var _isRef = isRef(ref2);
+    var refs = vm.$refs;
+    if (_isString || _isRef) {
+      if (isFor) {
+        var existing = _isString ? refs[ref2] : ref2.value;
+        if (isRemoval) {
+          isArray(existing) && remove$2(existing, refValue);
+        } else {
+          if (!isArray(existing)) {
+            if (_isString) {
+              refs[ref2] = [refValue];
+              setSetupRef(vm, ref2, refs[ref2]);
+            } else {
+              ref2.value = [refValue];
+            }
+          } else if (!existing.includes(refValue)) {
+            existing.push(refValue);
+          }
+        }
+      } else if (_isString) {
+        if (isRemoval && refs[ref2] !== refValue) {
+          return;
+        }
+        refs[ref2] = $refsValue;
+        setSetupRef(vm, ref2, value);
+      } else if (_isRef) {
+        if (isRemoval && ref2.value !== refValue) {
+          return;
+        }
+        ref2.value = value;
+      } else ;
+    }
+  }
+  function setSetupRef(_a, key, val) {
+    var _setupState = _a._setupState;
+    if (_setupState && hasOwn(_setupState, key)) {
+      if (isRef(_setupState[key])) {
+        _setupState[key].value = val;
+      } else {
+        _setupState[key] = val;
+      }
+    }
+  }
+  var emptyNode = new VNode("", {}, []);
+  var hooks = ["create", "activate", "update", "remove", "destroy"];
+  function sameVnode(a, b) {
+    return a.key === b.key && a.asyncFactory === b.asyncFactory && (a.tag === b.tag && a.isComment === b.isComment && isDef(a.data) === isDef(b.data) && sameInputType(a, b) || isTrue(a.isAsyncPlaceholder) && isUndef(b.asyncFactory.error));
+  }
+  function sameInputType(a, b) {
+    if (a.tag !== "input")
+      return true;
+    var i;
+    var typeA = isDef(i = a.data) && isDef(i = i.attrs) && i.type;
+    var typeB = isDef(i = b.data) && isDef(i = i.attrs) && i.type;
+    return typeA === typeB || isTextInputType(typeA) && isTextInputType(typeB);
+  }
+  function createKeyToOldIdx(children, beginIdx, endIdx) {
+    var i, key;
+    var map = {};
+    for (i = beginIdx; i <= endIdx; ++i) {
+      key = children[i].key;
+      if (isDef(key))
+        map[key] = i;
+    }
+    return map;
+  }
+  function createPatchFunction(backend) {
+    var i, j;
+    var cbs = {};
+    var modules2 = backend.modules, nodeOps2 = backend.nodeOps;
+    for (i = 0; i < hooks.length; ++i) {
+      cbs[hooks[i]] = [];
+      for (j = 0; j < modules2.length; ++j) {
+        if (isDef(modules2[j][hooks[i]])) {
+          cbs[hooks[i]].push(modules2[j][hooks[i]]);
+        }
+      }
+    }
+    function emptyNodeAt(elm) {
+      return new VNode(nodeOps2.tagName(elm).toLowerCase(), {}, [], void 0, elm);
+    }
+    function createRmCb(childElm, listeners) {
+      function remove2() {
+        if (--remove2.listeners === 0) {
+          removeNode(childElm);
+        }
+      }
+      remove2.listeners = listeners;
+      return remove2;
+    }
+    function removeNode(el) {
+      var parent = nodeOps2.parentNode(el);
+      if (isDef(parent)) {
+        nodeOps2.removeChild(parent, el);
+      }
+    }
+    function createElm(vnode, insertedVnodeQueue, parentElm, refElm, nested, ownerArray, index2) {
+      if (isDef(vnode.elm) && isDef(ownerArray)) {
+        vnode = ownerArray[index2] = cloneVNode(vnode);
+      }
+      vnode.isRootInsert = !nested;
+      if (createComponent2(vnode, insertedVnodeQueue, parentElm, refElm)) {
+        return;
+      }
+      var data = vnode.data;
+      var children = vnode.children;
+      var tag = vnode.tag;
+      if (isDef(tag)) {
+        vnode.elm = vnode.ns ? nodeOps2.createElementNS(vnode.ns, tag) : nodeOps2.createElement(tag, vnode);
+        setScope(vnode);
+        createChildren(vnode, children, insertedVnodeQueue);
+        if (isDef(data)) {
+          invokeCreateHooks(vnode, insertedVnodeQueue);
+        }
+        insert(parentElm, vnode.elm, refElm);
+      } else if (isTrue(vnode.isComment)) {
+        vnode.elm = nodeOps2.createComment(vnode.text);
+        insert(parentElm, vnode.elm, refElm);
+      } else {
+        vnode.elm = nodeOps2.createTextNode(vnode.text);
+        insert(parentElm, vnode.elm, refElm);
+      }
+    }
+    function createComponent2(vnode, insertedVnodeQueue, parentElm, refElm) {
+      var i2 = vnode.data;
+      if (isDef(i2)) {
+        var isReactivated = isDef(vnode.componentInstance) && i2.keepAlive;
+        if (isDef(i2 = i2.hook) && isDef(i2 = i2.init)) {
+          i2(
+            vnode,
+            false
+            /* hydrating */
+          );
+        }
+        if (isDef(vnode.componentInstance)) {
+          initComponent(vnode, insertedVnodeQueue);
+          insert(parentElm, vnode.elm, refElm);
+          if (isTrue(isReactivated)) {
+            reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm);
+          }
+          return true;
+        }
+      }
+    }
+    function initComponent(vnode, insertedVnodeQueue) {
+      if (isDef(vnode.data.pendingInsert)) {
+        insertedVnodeQueue.push.apply(insertedVnodeQueue, vnode.data.pendingInsert);
+        vnode.data.pendingInsert = null;
+      }
+      vnode.elm = vnode.componentInstance.$el;
+      if (isPatchable(vnode)) {
+        invokeCreateHooks(vnode, insertedVnodeQueue);
+        setScope(vnode);
+      } else {
+        registerRef(vnode);
+        insertedVnodeQueue.push(vnode);
+      }
+    }
+    function reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm) {
+      var i2;
+      var innerNode = vnode;
+      while (innerNode.componentInstance) {
+        innerNode = innerNode.componentInstance._vnode;
+        if (isDef(i2 = innerNode.data) && isDef(i2 = i2.transition)) {
+          for (i2 = 0; i2 < cbs.activate.length; ++i2) {
+            cbs.activate[i2](emptyNode, innerNode);
+          }
+          insertedVnodeQueue.push(innerNode);
+          break;
+        }
+      }
+      insert(parentElm, vnode.elm, refElm);
+    }
+    function insert(parent, elm, ref2) {
+      if (isDef(parent)) {
+        if (isDef(ref2)) {
+          if (nodeOps2.parentNode(ref2) === parent) {
+            nodeOps2.insertBefore(parent, elm, ref2);
+          }
+        } else {
+          nodeOps2.appendChild(parent, elm);
+        }
+      }
+    }
+    function createChildren(vnode, children, insertedVnodeQueue) {
+      if (isArray(children)) {
+        for (var i_1 = 0; i_1 < children.length; ++i_1) {
+          createElm(children[i_1], insertedVnodeQueue, vnode.elm, null, true, children, i_1);
+        }
+      } else if (isPrimitive(vnode.text)) {
+        nodeOps2.appendChild(vnode.elm, nodeOps2.createTextNode(String(vnode.text)));
+      }
+    }
+    function isPatchable(vnode) {
+      while (vnode.componentInstance) {
+        vnode = vnode.componentInstance._vnode;
+      }
+      return isDef(vnode.tag);
+    }
+    function invokeCreateHooks(vnode, insertedVnodeQueue) {
+      for (var i_2 = 0; i_2 < cbs.create.length; ++i_2) {
+        cbs.create[i_2](emptyNode, vnode);
+      }
+      i = vnode.data.hook;
+      if (isDef(i)) {
+        if (isDef(i.create))
+          i.create(emptyNode, vnode);
+        if (isDef(i.insert))
+          insertedVnodeQueue.push(vnode);
+      }
+    }
+    function setScope(vnode) {
+      var i2;
+      if (isDef(i2 = vnode.fnScopeId)) {
+        nodeOps2.setStyleScope(vnode.elm, i2);
+      } else {
+        var ancestor = vnode;
+        while (ancestor) {
+          if (isDef(i2 = ancestor.context) && isDef(i2 = i2.$options._scopeId)) {
+            nodeOps2.setStyleScope(vnode.elm, i2);
+          }
+          ancestor = ancestor.parent;
+        }
+      }
+      if (isDef(i2 = activeInstance) && i2 !== vnode.context && i2 !== vnode.fnContext && isDef(i2 = i2.$options._scopeId)) {
+        nodeOps2.setStyleScope(vnode.elm, i2);
+      }
+    }
+    function addVnodes(parentElm, refElm, vnodes, startIdx, endIdx, insertedVnodeQueue) {
+      for (; startIdx <= endIdx; ++startIdx) {
+        createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm, false, vnodes, startIdx);
+      }
+    }
+    function invokeDestroyHook(vnode) {
+      var i2, j2;
+      var data = vnode.data;
+      if (isDef(data)) {
+        if (isDef(i2 = data.hook) && isDef(i2 = i2.destroy))
+          i2(vnode);
+        for (i2 = 0; i2 < cbs.destroy.length; ++i2)
+          cbs.destroy[i2](vnode);
+      }
+      if (isDef(i2 = vnode.children)) {
+        for (j2 = 0; j2 < vnode.children.length; ++j2) {
+          invokeDestroyHook(vnode.children[j2]);
+        }
+      }
+    }
+    function removeVnodes(vnodes, startIdx, endIdx) {
+      for (; startIdx <= endIdx; ++startIdx) {
+        var ch = vnodes[startIdx];
+        if (isDef(ch)) {
+          if (isDef(ch.tag)) {
+            removeAndInvokeRemoveHook(ch);
+            invokeDestroyHook(ch);
+          } else {
+            removeNode(ch.elm);
+          }
+        }
+      }
+    }
+    function removeAndInvokeRemoveHook(vnode, rm) {
+      if (isDef(rm) || isDef(vnode.data)) {
+        var i_3;
+        var listeners = cbs.remove.length + 1;
+        if (isDef(rm)) {
+          rm.listeners += listeners;
+        } else {
+          rm = createRmCb(vnode.elm, listeners);
+        }
+        if (isDef(i_3 = vnode.componentInstance) && isDef(i_3 = i_3._vnode) && isDef(i_3.data)) {
+          removeAndInvokeRemoveHook(i_3, rm);
+        }
+        for (i_3 = 0; i_3 < cbs.remove.length; ++i_3) {
+          cbs.remove[i_3](vnode, rm);
+        }
+        if (isDef(i_3 = vnode.data.hook) && isDef(i_3 = i_3.remove)) {
+          i_3(vnode, rm);
+        } else {
+          rm();
+        }
+      } else {
+        removeNode(vnode.elm);
+      }
+    }
+    function updateChildren(parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
+      var oldStartIdx = 0;
+      var newStartIdx = 0;
+      var oldEndIdx = oldCh.length - 1;
+      var oldStartVnode = oldCh[0];
+      var oldEndVnode = oldCh[oldEndIdx];
+      var newEndIdx = newCh.length - 1;
+      var newStartVnode = newCh[0];
+      var newEndVnode = newCh[newEndIdx];
+      var oldKeyToIdx, idxInOld, vnodeToMove, refElm;
+      var canMove = !removeOnly;
+      while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+        if (isUndef(oldStartVnode)) {
+          oldStartVnode = oldCh[++oldStartIdx];
+        } else if (isUndef(oldEndVnode)) {
+          oldEndVnode = oldCh[--oldEndIdx];
+        } else if (sameVnode(oldStartVnode, newStartVnode)) {
+          patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
+          oldStartVnode = oldCh[++oldStartIdx];
+          newStartVnode = newCh[++newStartIdx];
+        } else if (sameVnode(oldEndVnode, newEndVnode)) {
+          patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
+          oldEndVnode = oldCh[--oldEndIdx];
+          newEndVnode = newCh[--newEndIdx];
+        } else if (sameVnode(oldStartVnode, newEndVnode)) {
+          patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
+          canMove && nodeOps2.insertBefore(parentElm, oldStartVnode.elm, nodeOps2.nextSibling(oldEndVnode.elm));
+          oldStartVnode = oldCh[++oldStartIdx];
+          newEndVnode = newCh[--newEndIdx];
+        } else if (sameVnode(oldEndVnode, newStartVnode)) {
+          patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
+          canMove && nodeOps2.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm);
+          oldEndVnode = oldCh[--oldEndIdx];
+          newStartVnode = newCh[++newStartIdx];
+        } else {
+          if (isUndef(oldKeyToIdx))
+            oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
+          idxInOld = isDef(newStartVnode.key) ? oldKeyToIdx[newStartVnode.key] : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx);
+          if (isUndef(idxInOld)) {
+            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
+          } else {
+            vnodeToMove = oldCh[idxInOld];
+            if (sameVnode(vnodeToMove, newStartVnode)) {
+              patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
+              oldCh[idxInOld] = void 0;
+              canMove && nodeOps2.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm);
+            } else {
+              createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
+            }
+          }
+          newStartVnode = newCh[++newStartIdx];
+        }
+      }
+      if (oldStartIdx > oldEndIdx) {
+        refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
+        addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
+      } else if (newStartIdx > newEndIdx) {
+        removeVnodes(oldCh, oldStartIdx, oldEndIdx);
+      }
+    }
+    function findIdxInOld(node, oldCh, start, end) {
+      for (var i_5 = start; i_5 < end; i_5++) {
+        var c = oldCh[i_5];
+        if (isDef(c) && sameVnode(node, c))
+          return i_5;
+      }
+    }
+    function patchVnode(oldVnode, vnode, insertedVnodeQueue, ownerArray, index2, removeOnly) {
+      if (oldVnode === vnode) {
+        return;
+      }
+      if (isDef(vnode.elm) && isDef(ownerArray)) {
+        vnode = ownerArray[index2] = cloneVNode(vnode);
+      }
+      var elm = vnode.elm = oldVnode.elm;
+      if (isTrue(oldVnode.isAsyncPlaceholder)) {
+        if (isDef(vnode.asyncFactory.resolved)) {
+          hydrate(oldVnode.elm, vnode, insertedVnodeQueue);
+        } else {
+          vnode.isAsyncPlaceholder = true;
+        }
+        return;
+      }
+      if (isTrue(vnode.isStatic) && isTrue(oldVnode.isStatic) && vnode.key === oldVnode.key && (isTrue(vnode.isCloned) || isTrue(vnode.isOnce))) {
+        vnode.componentInstance = oldVnode.componentInstance;
+        return;
+      }
+      var i2;
+      var data = vnode.data;
+      if (isDef(data) && isDef(i2 = data.hook) && isDef(i2 = i2.prepatch)) {
+        i2(oldVnode, vnode);
+      }
+      var oldCh = oldVnode.children;
+      var ch = vnode.children;
+      if (isDef(data) && isPatchable(vnode)) {
+        for (i2 = 0; i2 < cbs.update.length; ++i2)
+          cbs.update[i2](oldVnode, vnode);
+        if (isDef(i2 = data.hook) && isDef(i2 = i2.update))
+          i2(oldVnode, vnode);
+      }
+      if (isUndef(vnode.text)) {
+        if (isDef(oldCh) && isDef(ch)) {
+          if (oldCh !== ch)
+            updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly);
+        } else if (isDef(ch)) {
+          if (isDef(oldVnode.text))
+            nodeOps2.setTextContent(elm, "");
+          addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
+        } else if (isDef(oldCh)) {
+          removeVnodes(oldCh, 0, oldCh.length - 1);
+        } else if (isDef(oldVnode.text)) {
+          nodeOps2.setTextContent(elm, "");
+        }
+      } else if (oldVnode.text !== vnode.text) {
+        nodeOps2.setTextContent(elm, vnode.text);
+      }
+      if (isDef(data)) {
+        if (isDef(i2 = data.hook) && isDef(i2 = i2.postpatch))
+          i2(oldVnode, vnode);
+      }
+    }
+    function invokeInsertHook(vnode, queue2, initial) {
+      if (isTrue(initial) && isDef(vnode.parent)) {
+        vnode.parent.data.pendingInsert = queue2;
+      } else {
+        for (var i_6 = 0; i_6 < queue2.length; ++i_6) {
+          queue2[i_6].data.hook.insert(queue2[i_6]);
+        }
+      }
+    }
+    var isRenderedModule = makeMap("attrs,class,staticClass,staticStyle,key");
+    function hydrate(elm, vnode, insertedVnodeQueue, inVPre) {
+      var i2;
+      var tag = vnode.tag, data = vnode.data, children = vnode.children;
+      inVPre = inVPre || data && data.pre;
+      vnode.elm = elm;
+      if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
+        vnode.isAsyncPlaceholder = true;
+        return true;
+      }
+      if (isDef(data)) {
+        if (isDef(i2 = data.hook) && isDef(i2 = i2.init))
+          i2(
+            vnode,
+            true
+            /* hydrating */
+          );
+        if (isDef(i2 = vnode.componentInstance)) {
+          initComponent(vnode, insertedVnodeQueue);
+          return true;
+        }
+      }
+      if (isDef(tag)) {
+        if (isDef(children)) {
+          if (!elm.hasChildNodes()) {
+            createChildren(vnode, children, insertedVnodeQueue);
+          } else {
+            if (isDef(i2 = data) && isDef(i2 = i2.domProps) && isDef(i2 = i2.innerHTML)) {
+              if (i2 !== elm.innerHTML) {
+                return false;
+              }
+            } else {
+              var childrenMatch = true;
+              var childNode = elm.firstChild;
+              for (var i_7 = 0; i_7 < children.length; i_7++) {
+                if (!childNode || !hydrate(childNode, children[i_7], insertedVnodeQueue, inVPre)) {
+                  childrenMatch = false;
+                  break;
+                }
+                childNode = childNode.nextSibling;
+              }
+              if (!childrenMatch || childNode) {
+                return false;
+              }
+            }
+          }
+        }
+        if (isDef(data)) {
+          var fullInvoke = false;
+          for (var key in data) {
+            if (!isRenderedModule(key)) {
+              fullInvoke = true;
+              invokeCreateHooks(vnode, insertedVnodeQueue);
+              break;
+            }
+          }
+          if (!fullInvoke && data["class"]) {
+            traverse(data["class"]);
+          }
+        }
+      } else if (elm.data !== vnode.text) {
+        elm.data = vnode.text;
+      }
+      return true;
+    }
+    return function patch2(oldVnode, vnode, hydrating, removeOnly) {
+      if (isUndef(vnode)) {
+        if (isDef(oldVnode))
+          invokeDestroyHook(oldVnode);
+        return;
+      }
+      var isInitialPatch = false;
+      var insertedVnodeQueue = [];
+      if (isUndef(oldVnode)) {
+        isInitialPatch = true;
+        createElm(vnode, insertedVnodeQueue);
+      } else {
+        var isRealElement = isDef(oldVnode.nodeType);
+        if (!isRealElement && sameVnode(oldVnode, vnode)) {
+          patchVnode(oldVnode, vnode, insertedVnodeQueue, null, null, removeOnly);
+        } else {
+          if (isRealElement) {
+            if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
+              oldVnode.removeAttribute(SSR_ATTR);
+              hydrating = true;
+            }
+            if (isTrue(hydrating)) {
+              if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
+                invokeInsertHook(vnode, insertedVnodeQueue, true);
+                return oldVnode;
+              }
+            }
+            oldVnode = emptyNodeAt(oldVnode);
+          }
+          var oldElm = oldVnode.elm;
+          var parentElm = nodeOps2.parentNode(oldElm);
+          createElm(
+            vnode,
+            insertedVnodeQueue,
+            // extremely rare edge case: do not insert if old element is in a
+            // leaving transition. Only happens when combining transition +
+            // keep-alive + HOCs. (#4590)
+            oldElm._leaveCb ? null : parentElm,
+            nodeOps2.nextSibling(oldElm)
+          );
+          if (isDef(vnode.parent)) {
+            var ancestor = vnode.parent;
+            var patchable = isPatchable(vnode);
+            while (ancestor) {
+              for (var i_8 = 0; i_8 < cbs.destroy.length; ++i_8) {
+                cbs.destroy[i_8](ancestor);
+              }
+              ancestor.elm = vnode.elm;
+              if (patchable) {
+                for (var i_9 = 0; i_9 < cbs.create.length; ++i_9) {
+                  cbs.create[i_9](emptyNode, ancestor);
+                }
+                var insert_1 = ancestor.data.hook.insert;
+                if (insert_1.merged) {
+                  var cloned = insert_1.fns.slice(1);
+                  for (var i_10 = 0; i_10 < cloned.length; i_10++) {
+                    cloned[i_10]();
+                  }
+                }
+              } else {
+                registerRef(ancestor);
+              }
+              ancestor = ancestor.parent;
+            }
+          }
+          if (isDef(parentElm)) {
+            removeVnodes([oldVnode], 0, 0);
+          } else if (isDef(oldVnode.tag)) {
+            invokeDestroyHook(oldVnode);
+          }
+        }
+      }
+      invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch);
+      return vnode.elm;
+    };
+  }
+  var directives = {
+    create: updateDirectives,
+    update: updateDirectives,
+    destroy: function unbindDirectives(vnode) {
+      updateDirectives(vnode, emptyNode);
+    }
+  };
+  function updateDirectives(oldVnode, vnode) {
+    if (oldVnode.data.directives || vnode.data.directives) {
+      _update(oldVnode, vnode);
+    }
+  }
+  function _update(oldVnode, vnode) {
+    var isCreate = oldVnode === emptyNode;
+    var isDestroy = vnode === emptyNode;
+    var oldDirs = normalizeDirectives(oldVnode.data.directives, oldVnode.context);
+    var newDirs = normalizeDirectives(vnode.data.directives, vnode.context);
+    var dirsWithInsert = [];
+    var dirsWithPostpatch = [];
+    var key, oldDir, dir;
+    for (key in newDirs) {
+      oldDir = oldDirs[key];
+      dir = newDirs[key];
+      if (!oldDir) {
+        callHook(dir, "bind", vnode, oldVnode);
+        if (dir.def && dir.def.inserted) {
+          dirsWithInsert.push(dir);
+        }
+      } else {
+        dir.oldValue = oldDir.value;
+        dir.oldArg = oldDir.arg;
+        callHook(dir, "update", vnode, oldVnode);
+        if (dir.def && dir.def.componentUpdated) {
+          dirsWithPostpatch.push(dir);
+        }
+      }
+    }
+    if (dirsWithInsert.length) {
+      var callInsert = function() {
+        for (var i = 0; i < dirsWithInsert.length; i++) {
+          callHook(dirsWithInsert[i], "inserted", vnode, oldVnode);
+        }
+      };
+      if (isCreate) {
+        mergeVNodeHook(vnode, "insert", callInsert);
+      } else {
+        callInsert();
+      }
+    }
+    if (dirsWithPostpatch.length) {
+      mergeVNodeHook(vnode, "postpatch", function() {
+        for (var i = 0; i < dirsWithPostpatch.length; i++) {
+          callHook(dirsWithPostpatch[i], "componentUpdated", vnode, oldVnode);
+        }
+      });
+    }
+    if (!isCreate) {
+      for (key in oldDirs) {
+        if (!newDirs[key]) {
+          callHook(oldDirs[key], "unbind", oldVnode, oldVnode, isDestroy);
+        }
+      }
+    }
+  }
+  var emptyModifiers = /* @__PURE__ */ Object.create(null);
+  function normalizeDirectives(dirs, vm) {
+    var res = /* @__PURE__ */ Object.create(null);
+    if (!dirs) {
+      return res;
+    }
+    var i, dir;
+    for (i = 0; i < dirs.length; i++) {
+      dir = dirs[i];
+      if (!dir.modifiers) {
+        dir.modifiers = emptyModifiers;
+      }
+      res[getRawDirName(dir)] = dir;
+      if (vm._setupState && vm._setupState.__sfc) {
+        var setupDef = dir.def || resolveAsset(vm, "_setupState", "v-" + dir.name);
+        if (typeof setupDef === "function") {
+          dir.def = {
+            bind: setupDef,
+            update: setupDef
+          };
+        } else {
+          dir.def = setupDef;
+        }
+      }
+      dir.def = dir.def || resolveAsset(vm.$options, "directives", dir.name);
+    }
+    return res;
+  }
+  function getRawDirName(dir) {
+    return dir.rawName || "".concat(dir.name, ".").concat(Object.keys(dir.modifiers || {}).join("."));
+  }
+  function callHook(dir, hook, vnode, oldVnode, isDestroy) {
+    var fn = dir.def && dir.def[hook];
+    if (fn) {
+      try {
+        fn(vnode.elm, dir, vnode, oldVnode, isDestroy);
+      } catch (e) {
+        handleError(e, vnode.context, "directive ".concat(dir.name, " ").concat(hook, " hook"));
+      }
+    }
+  }
+  var baseModules = [ref, directives];
+  function updateAttrs(oldVnode, vnode) {
+    var opts2 = vnode.componentOptions;
+    if (isDef(opts2) && opts2.Ctor.options.inheritAttrs === false) {
+      return;
+    }
+    if (isUndef(oldVnode.data.attrs) && isUndef(vnode.data.attrs)) {
+      return;
+    }
+    var key, cur, old;
+    var elm = vnode.elm;
+    var oldAttrs = oldVnode.data.attrs || {};
+    var attrs2 = vnode.data.attrs || {};
+    if (isDef(attrs2.__ob__) || isTrue(attrs2._v_attr_proxy)) {
+      attrs2 = vnode.data.attrs = extend({}, attrs2);
+    }
+    for (key in attrs2) {
+      cur = attrs2[key];
+      old = oldAttrs[key];
+      if (old !== cur) {
+        setAttr(elm, key, cur, vnode.data.pre);
+      }
+    }
+    if ((isIE || isEdge) && attrs2.value !== oldAttrs.value) {
+      setAttr(elm, "value", attrs2.value);
+    }
+    for (key in oldAttrs) {
+      if (isUndef(attrs2[key])) {
+        if (isXlink(key)) {
+          elm.removeAttributeNS(xlinkNS, getXlinkProp(key));
+        } else if (!isEnumeratedAttr(key)) {
+          elm.removeAttribute(key);
+        }
+      }
+    }
+  }
+  function setAttr(el, key, value, isInPre) {
+    if (isInPre || el.tagName.indexOf("-") > -1) {
+      baseSetAttr(el, key, value);
+    } else if (isBooleanAttr(key)) {
+      if (isFalsyAttrValue(value)) {
+        el.removeAttribute(key);
+      } else {
+        value = key === "allowfullscreen" && el.tagName === "EMBED" ? "true" : key;
+        el.setAttribute(key, value);
+      }
+    } else if (isEnumeratedAttr(key)) {
+      el.setAttribute(key, convertEnumeratedValue(key, value));
+    } else if (isXlink(key)) {
+      if (isFalsyAttrValue(value)) {
+        el.removeAttributeNS(xlinkNS, getXlinkProp(key));
+      } else {
+        el.setAttributeNS(xlinkNS, key, value);
+      }
+    } else {
+      baseSetAttr(el, key, value);
+    }
+  }
+  function baseSetAttr(el, key, value) {
+    if (isFalsyAttrValue(value)) {
+      el.removeAttribute(key);
+    } else {
+      if (isIE && !isIE9 && el.tagName === "TEXTAREA" && key === "placeholder" && value !== "" && !el.__ieph) {
+        var blocker_1 = function(e) {
+          e.stopImmediatePropagation();
+          el.removeEventListener("input", blocker_1);
+        };
+        el.addEventListener("input", blocker_1);
+        el.__ieph = true;
+      }
+      el.setAttribute(key, value);
+    }
+  }
+  var attrs = {
+    create: updateAttrs,
+    update: updateAttrs
+  };
+  function updateClass(oldVnode, vnode) {
+    var el = vnode.elm;
+    var data = vnode.data;
+    var oldData = oldVnode.data;
+    if (isUndef(data.staticClass) && isUndef(data.class) && (isUndef(oldData) || isUndef(oldData.staticClass) && isUndef(oldData.class))) {
+      return;
+    }
+    var cls = genClassForVnode(vnode);
+    var transitionClass = el._transitionClasses;
+    if (isDef(transitionClass)) {
+      cls = concat(cls, stringifyClass(transitionClass));
+    }
+    if (cls !== el._prevClass) {
+      el.setAttribute("class", cls);
+      el._prevClass = cls;
+    }
+  }
+  var klass = {
+    create: updateClass,
+    update: updateClass
+  };
+  var RANGE_TOKEN = "__r";
+  var CHECKBOX_RADIO_TOKEN = "__c";
+  function normalizeEvents(on) {
+    if (isDef(on[RANGE_TOKEN])) {
+      var event_1 = isIE ? "change" : "input";
+      on[event_1] = [].concat(on[RANGE_TOKEN], on[event_1] || []);
+      delete on[RANGE_TOKEN];
+    }
+    if (isDef(on[CHECKBOX_RADIO_TOKEN])) {
+      on.change = [].concat(on[CHECKBOX_RADIO_TOKEN], on.change || []);
+      delete on[CHECKBOX_RADIO_TOKEN];
+    }
+  }
+  var target;
+  function createOnceHandler(event, handler, capture) {
+    var _target = target;
+    return function onceHandler() {
+      var res = handler.apply(null, arguments);
+      if (res !== null) {
+        remove(event, onceHandler, capture, _target);
+      }
+    };
+  }
+  var useMicrotaskFix = isUsingMicroTask && !(isFF && Number(isFF[1]) <= 53);
+  function add(name, handler, capture, passive) {
+    if (useMicrotaskFix) {
+      var attachedTimestamp_1 = currentFlushTimestamp;
+      var original_1 = handler;
+      handler = original_1._wrapper = function(e) {
+        if (
+          // no bubbling, should always fire.
+          // this is just a safety net in case event.timeStamp is unreliable in
+          // certain weird environments...
+          e.target === e.currentTarget || // event is fired after handler attachment
+          e.timeStamp >= attachedTimestamp_1 || // bail for environments that have buggy event.timeStamp implementations
+          // #9462 iOS 9 bug: event.timeStamp is 0 after history.pushState
+          // #9681 QtWebEngine event.timeStamp is negative value
+          e.timeStamp <= 0 || // #9448 bail if event is fired in another document in a multi-page
+          // electron/nw.js app, since event.timeStamp will be using a different
+          // starting reference
+          e.target.ownerDocument !== document
+        ) {
+          return original_1.apply(this, arguments);
+        }
+      };
+    }
+    target.addEventListener(name, handler, supportsPassive ? { capture, passive } : capture);
+  }
+  function remove(name, handler, capture, _target) {
+    (_target || target).removeEventListener(
+      name,
+      //@ts-expect-error
+      handler._wrapper || handler,
+      capture
+    );
+  }
+  function updateDOMListeners(oldVnode, vnode) {
+    if (isUndef(oldVnode.data.on) && isUndef(vnode.data.on)) {
+      return;
+    }
+    var on = vnode.data.on || {};
+    var oldOn = oldVnode.data.on || {};
+    target = vnode.elm || oldVnode.elm;
+    normalizeEvents(on);
+    updateListeners(on, oldOn, add, remove, createOnceHandler, vnode.context);
+    target = void 0;
+  }
+  var events = {
+    create: updateDOMListeners,
+    update: updateDOMListeners,
+    // @ts-expect-error emptyNode has actually data
+    destroy: function(vnode) {
+      return updateDOMListeners(vnode, emptyNode);
+    }
+  };
+  var svgContainer;
+  function updateDOMProps(oldVnode, vnode) {
+    if (isUndef(oldVnode.data.domProps) && isUndef(vnode.data.domProps)) {
+      return;
+    }
+    var key, cur;
+    var elm = vnode.elm;
+    var oldProps = oldVnode.data.domProps || {};
+    var props2 = vnode.data.domProps || {};
+    if (isDef(props2.__ob__) || isTrue(props2._v_attr_proxy)) {
+      props2 = vnode.data.domProps = extend({}, props2);
+    }
+    for (key in oldProps) {
+      if (!(key in props2)) {
+        elm[key] = "";
+      }
+    }
+    for (key in props2) {
+      cur = props2[key];
+      if (key === "textContent" || key === "innerHTML") {
+        if (vnode.children)
+          vnode.children.length = 0;
+        if (cur === oldProps[key])
+          continue;
+        if (elm.childNodes.length === 1) {
+          elm.removeChild(elm.childNodes[0]);
+        }
+      }
+      if (key === "value" && elm.tagName !== "PROGRESS") {
+        elm._value = cur;
+        var strCur = isUndef(cur) ? "" : String(cur);
+        if (shouldUpdateValue(elm, strCur)) {
+          elm.value = strCur;
+        }
+      } else if (key === "innerHTML" && isSVG(elm.tagName) && isUndef(elm.innerHTML)) {
+        svgContainer = svgContainer || document.createElement("div");
+        svgContainer.innerHTML = "<svg>".concat(cur, "</svg>");
+        var svg = svgContainer.firstChild;
+        while (elm.firstChild) {
+          elm.removeChild(elm.firstChild);
+        }
+        while (svg.firstChild) {
+          elm.appendChild(svg.firstChild);
+        }
+      } else if (
+        // skip the update if old and new VDOM state is the same.
+        // `value` is handled separately because the DOM value may be temporarily
+        // out of sync with VDOM state due to focus, composition and modifiers.
+        // This  #4521 by skipping the unnecessary `checked` update.
+        cur !== oldProps[key]
+      ) {
+        try {
+          elm[key] = cur;
+        } catch (e) {
+        }
+      }
+    }
+  }
+  function shouldUpdateValue(elm, checkVal) {
+    return (
+      //@ts-expect-error
+      !elm.composing && (elm.tagName === "OPTION" || isNotInFocusAndDirty(elm, checkVal) || isDirtyWithModifiers(elm, checkVal))
+    );
+  }
+  function isNotInFocusAndDirty(elm, checkVal) {
+    var notInFocus = true;
+    try {
+      notInFocus = document.activeElement !== elm;
+    } catch (e) {
+    }
+    return notInFocus && elm.value !== checkVal;
+  }
+  function isDirtyWithModifiers(elm, newVal) {
+    var value = elm.value;
+    var modifiers = elm._vModifiers;
+    if (isDef(modifiers)) {
+      if (modifiers.number) {
+        return toNumber(value) !== toNumber(newVal);
+      }
+      if (modifiers.trim) {
+        return value.trim() !== newVal.trim();
+      }
+    }
+    return value !== newVal;
+  }
+  var domProps = {
+    create: updateDOMProps,
+    update: updateDOMProps
+  };
+  var parseStyleText = cached(function(cssText) {
+    var res = {};
+    var listDelimiter = /;(?![^(]*\))/g;
+    var propertyDelimiter = /:(.+)/;
+    cssText.split(listDelimiter).forEach(function(item) {
+      if (item) {
+        var tmp = item.split(propertyDelimiter);
+        tmp.length > 1 && (res[tmp[0].trim()] = tmp[1].trim());
+      }
+    });
+    return res;
+  });
+  function normalizeStyleData(data) {
+    var style2 = normalizeStyleBinding(data.style);
+    return data.staticStyle ? extend(data.staticStyle, style2) : style2;
+  }
+  function normalizeStyleBinding(bindingStyle) {
+    if (Array.isArray(bindingStyle)) {
+      return toObject(bindingStyle);
+    }
+    if (typeof bindingStyle === "string") {
+      return parseStyleText(bindingStyle);
+    }
+    return bindingStyle;
+  }
+  function getStyle(vnode, checkChild) {
+    var res = {};
+    var styleData;
+    {
+      var childNode = vnode;
+      while (childNode.componentInstance) {
+        childNode = childNode.componentInstance._vnode;
+        if (childNode && childNode.data && (styleData = normalizeStyleData(childNode.data))) {
+          extend(res, styleData);
+        }
+      }
+    }
+    if (styleData = normalizeStyleData(vnode.data)) {
+      extend(res, styleData);
+    }
+    var parentNode2 = vnode;
+    while (parentNode2 = parentNode2.parent) {
+      if (parentNode2.data && (styleData = normalizeStyleData(parentNode2.data))) {
+        extend(res, styleData);
+      }
+    }
+    return res;
+  }
+  var cssVarRE = /^--/;
+  var importantRE = /\s*!important$/;
+  var setProp = function(el, name, val) {
+    if (cssVarRE.test(name)) {
+      el.style.setProperty(name, val);
+    } else if (importantRE.test(val)) {
+      el.style.setProperty(hyphenate(name), val.replace(importantRE, ""), "important");
+    } else {
+      var normalizedName = normalize(name);
+      if (Array.isArray(val)) {
+        for (var i = 0, len = val.length; i < len; i++) {
+          el.style[normalizedName] = val[i];
+        }
+      } else {
+        el.style[normalizedName] = val;
+      }
+    }
+  };
+  var vendorNames = ["Webkit", "Moz", "ms"];
+  var emptyStyle;
+  var normalize = cached(function(prop) {
+    emptyStyle = emptyStyle || document.createElement("div").style;
+    prop = camelize(prop);
+    if (prop !== "filter" && prop in emptyStyle) {
+      return prop;
+    }
+    var capName = prop.charAt(0).toUpperCase() + prop.slice(1);
+    for (var i = 0; i < vendorNames.length; i++) {
+      var name_1 = vendorNames[i] + capName;
+      if (name_1 in emptyStyle) {
+        return name_1;
+      }
+    }
+  });
+  function updateStyle(oldVnode, vnode) {
+    var data = vnode.data;
+    var oldData = oldVnode.data;
+    if (isUndef(data.staticStyle) && isUndef(data.style) && isUndef(oldData.staticStyle) && isUndef(oldData.style)) {
+      return;
+    }
+    var cur, name;
+    var el = vnode.elm;
+    var oldStaticStyle = oldData.staticStyle;
+    var oldStyleBinding = oldData.normalizedStyle || oldData.style || {};
+    var oldStyle = oldStaticStyle || oldStyleBinding;
+    var style2 = normalizeStyleBinding(vnode.data.style) || {};
+    vnode.data.normalizedStyle = isDef(style2.__ob__) ? extend({}, style2) : style2;
+    var newStyle = getStyle(vnode);
+    for (name in oldStyle) {
+      if (isUndef(newStyle[name])) {
+        setProp(el, name, "");
+      }
+    }
+    for (name in newStyle) {
+      cur = newStyle[name];
+      setProp(el, name, cur == null ? "" : cur);
+    }
+  }
+  var style = {
+    create: updateStyle,
+    update: updateStyle
+  };
+  var whitespaceRE = /\s+/;
+  function addClass(el, cls) {
+    if (!cls || !(cls = cls.trim())) {
+      return;
+    }
+    if (el.classList) {
+      if (cls.indexOf(" ") > -1) {
+        cls.split(whitespaceRE).forEach(function(c) {
+          return el.classList.add(c);
+        });
+      } else {
+        el.classList.add(cls);
+      }
+    } else {
+      var cur = " ".concat(el.getAttribute("class") || "", " ");
+      if (cur.indexOf(" " + cls + " ") < 0) {
+        el.setAttribute("class", (cur + cls).trim());
+      }
+    }
+  }
+  function removeClass(el, cls) {
+    if (!cls || !(cls = cls.trim())) {
+      return;
+    }
+    if (el.classList) {
+      if (cls.indexOf(" ") > -1) {
+        cls.split(whitespaceRE).forEach(function(c) {
+          return el.classList.remove(c);
+        });
+      } else {
+        el.classList.remove(cls);
+      }
+      if (!el.classList.length) {
+        el.removeAttribute("class");
+      }
+    } else {
+      var cur = " ".concat(el.getAttribute("class") || "", " ");
+      var tar = " " + cls + " ";
+      while (cur.indexOf(tar) >= 0) {
+        cur = cur.replace(tar, " ");
+      }
+      cur = cur.trim();
+      if (cur) {
+        el.setAttribute("class", cur);
+      } else {
+        el.removeAttribute("class");
+      }
+    }
+  }
+  function resolveTransition(def2) {
+    if (!def2) {
+      return;
+    }
+    if (typeof def2 === "object") {
+      var res = {};
+      if (def2.css !== false) {
+        extend(res, autoCssTransition(def2.name || "v"));
+      }
+      extend(res, def2);
+      return res;
+    } else if (typeof def2 === "string") {
+      return autoCssTransition(def2);
+    }
+  }
+  var autoCssTransition = cached(function(name) {
+    return {
+      enterClass: "".concat(name, "-enter"),
+      enterToClass: "".concat(name, "-enter-to"),
+      enterActiveClass: "".concat(name, "-enter-active"),
+      leaveClass: "".concat(name, "-leave"),
+      leaveToClass: "".concat(name, "-leave-to"),
+      leaveActiveClass: "".concat(name, "-leave-active")
+    };
+  });
+  var hasTransition = inBrowser && !isIE9;
+  var TRANSITION = "transition";
+  var ANIMATION = "animation";
+  var transitionProp = "transition";
+  var transitionEndEvent = "transitionend";
+  var animationProp = "animation";
+  var animationEndEvent = "animationend";
+  if (hasTransition) {
+    if (window.ontransitionend === void 0 && window.onwebkittransitionend !== void 0) {
+      transitionProp = "WebkitTransition";
+      transitionEndEvent = "webkitTransitionEnd";
+    }
+    if (window.onanimationend === void 0 && window.onwebkitanimationend !== void 0) {
+      animationProp = "WebkitAnimation";
+      animationEndEvent = "webkitAnimationEnd";
+    }
+  }
+  var raf = inBrowser ? window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : setTimeout : (
+    /* istanbul ignore next */
+    function(fn) {
+      return fn();
+    }
+  );
+  function nextFrame(fn) {
+    raf(function() {
+      raf(fn);
+    });
+  }
+  function addTransitionClass(el, cls) {
+    var transitionClasses = el._transitionClasses || (el._transitionClasses = []);
+    if (transitionClasses.indexOf(cls) < 0) {
+      transitionClasses.push(cls);
+      addClass(el, cls);
+    }
+  }
+  function removeTransitionClass(el, cls) {
+    if (el._transitionClasses) {
+      remove$2(el._transitionClasses, cls);
+    }
+    removeClass(el, cls);
+  }
+  function whenTransitionEnds(el, expectedType, cb) {
+    var _a = getTransitionInfo(el, expectedType), type = _a.type, timeout = _a.timeout, propCount = _a.propCount;
+    if (!type)
+      return cb();
+    var event = type === TRANSITION ? transitionEndEvent : animationEndEvent;
+    var ended = 0;
+    var end = function() {
+      el.removeEventListener(event, onEnd);
+      cb();
+    };
+    var onEnd = function(e) {
+      if (e.target === el) {
+        if (++ended >= propCount) {
+          end();
+        }
+      }
+    };
+    setTimeout(function() {
+      if (ended < propCount) {
+        end();
+      }
+    }, timeout + 1);
+    el.addEventListener(event, onEnd);
+  }
+  var transformRE = /\b(transform|all)(,|$)/;
+  function getTransitionInfo(el, expectedType) {
+    var styles = window.getComputedStyle(el);
+    var transitionDelays = (styles[transitionProp + "Delay"] || "").split(", ");
+    var transitionDurations = (styles[transitionProp + "Duration"] || "").split(", ");
+    var transitionTimeout = getTimeout(transitionDelays, transitionDurations);
+    var animationDelays = (styles[animationProp + "Delay"] || "").split(", ");
+    var animationDurations = (styles[animationProp + "Duration"] || "").split(", ");
+    var animationTimeout = getTimeout(animationDelays, animationDurations);
+    var type;
+    var timeout = 0;
+    var propCount = 0;
+    if (expectedType === TRANSITION) {
+      if (transitionTimeout > 0) {
+        type = TRANSITION;
+        timeout = transitionTimeout;
+        propCount = transitionDurations.length;
+      }
+    } else if (expectedType === ANIMATION) {
+      if (animationTimeout > 0) {
+        type = ANIMATION;
+        timeout = animationTimeout;
+        propCount = animationDurations.length;
+      }
+    } else {
+      timeout = Math.max(transitionTimeout, animationTimeout);
+      type = timeout > 0 ? transitionTimeout > animationTimeout ? TRANSITION : ANIMATION : null;
+      propCount = type ? type === TRANSITION ? transitionDurations.length : animationDurations.length : 0;
+    }
+    var hasTransform = type === TRANSITION && transformRE.test(styles[transitionProp + "Property"]);
+    return {
+      type,
+      timeout,
+      propCount,
+      hasTransform
+    };
+  }
+  function getTimeout(delays, durations) {
+    while (delays.length < durations.length) {
+      delays = delays.concat(delays);
+    }
+    return Math.max.apply(null, durations.map(function(d, i) {
+      return toMs(d) + toMs(delays[i]);
+    }));
+  }
+  function toMs(s) {
+    return Number(s.slice(0, -1).replace(",", ".")) * 1e3;
+  }
+  function enter(vnode, toggleDisplay) {
+    var el = vnode.elm;
+    if (isDef(el._leaveCb)) {
+      el._leaveCb.cancelled = true;
+      el._leaveCb();
+    }
+    var data = resolveTransition(vnode.data.transition);
+    if (isUndef(data)) {
+      return;
+    }
+    if (isDef(el._enterCb) || el.nodeType !== 1) {
+      return;
+    }
+    var css = data.css, type = data.type, enterClass = data.enterClass, enterToClass = data.enterToClass, enterActiveClass = data.enterActiveClass, appearClass = data.appearClass, appearToClass = data.appearToClass, appearActiveClass = data.appearActiveClass, beforeEnter = data.beforeEnter, enter2 = data.enter, afterEnter = data.afterEnter, enterCancelled = data.enterCancelled, beforeAppear = data.beforeAppear, appear = data.appear, afterAppear = data.afterAppear, appearCancelled = data.appearCancelled, duration = data.duration;
+    var context = activeInstance;
+    var transitionNode = activeInstance.$vnode;
+    while (transitionNode && transitionNode.parent) {
+      context = transitionNode.context;
+      transitionNode = transitionNode.parent;
+    }
+    var isAppear = !context._isMounted || !vnode.isRootInsert;
+    if (isAppear && !appear && appear !== "") {
+      return;
+    }
+    var startClass = isAppear && appearClass ? appearClass : enterClass;
+    var activeClass = isAppear && appearActiveClass ? appearActiveClass : enterActiveClass;
+    var toClass = isAppear && appearToClass ? appearToClass : enterToClass;
+    var beforeEnterHook = isAppear ? beforeAppear || beforeEnter : beforeEnter;
+    var enterHook = isAppear ? isFunction(appear) ? appear : enter2 : enter2;
+    var afterEnterHook = isAppear ? afterAppear || afterEnter : afterEnter;
+    var enterCancelledHook = isAppear ? appearCancelled || enterCancelled : enterCancelled;
+    var explicitEnterDuration = toNumber(isObject(duration) ? duration.enter : duration);
+    var expectsCSS = css !== false && !isIE9;
+    var userWantsControl = getHookArgumentsLength(enterHook);
+    var cb = el._enterCb = once(function() {
+      if (expectsCSS) {
+        removeTransitionClass(el, toClass);
+        removeTransitionClass(el, activeClass);
+      }
+      if (cb.cancelled) {
+        if (expectsCSS) {
+          removeTransitionClass(el, startClass);
+        }
+        enterCancelledHook && enterCancelledHook(el);
+      } else {
+        afterEnterHook && afterEnterHook(el);
+      }
+      el._enterCb = null;
+    });
+    if (!vnode.data.show) {
+      mergeVNodeHook(vnode, "insert", function() {
+        var parent = el.parentNode;
+        var pendingNode = parent && parent._pending && parent._pending[vnode.key];
+        if (pendingNode && pendingNode.tag === vnode.tag && pendingNode.elm._leaveCb) {
+          pendingNode.elm._leaveCb();
+        }
+        enterHook && enterHook(el, cb);
+      });
+    }
+    beforeEnterHook && beforeEnterHook(el);
+    if (expectsCSS) {
+      addTransitionClass(el, startClass);
+      addTransitionClass(el, activeClass);
+      nextFrame(function() {
+        removeTransitionClass(el, startClass);
+        if (!cb.cancelled) {
+          addTransitionClass(el, toClass);
+          if (!userWantsControl) {
+            if (isValidDuration(explicitEnterDuration)) {
+              setTimeout(cb, explicitEnterDuration);
+            } else {
+              whenTransitionEnds(el, type, cb);
+            }
+          }
+        }
+      });
+    }
+    if (vnode.data.show) {
+      toggleDisplay && toggleDisplay();
+      enterHook && enterHook(el, cb);
+    }
+    if (!expectsCSS && !userWantsControl) {
+      cb();
+    }
+  }
+  function leave(vnode, rm) {
+    var el = vnode.elm;
+    if (isDef(el._enterCb)) {
+      el._enterCb.cancelled = true;
+      el._enterCb();
+    }
+    var data = resolveTransition(vnode.data.transition);
+    if (isUndef(data) || el.nodeType !== 1) {
+      return rm();
+    }
+    if (isDef(el._leaveCb)) {
+      return;
+    }
+    var css = data.css, type = data.type, leaveClass = data.leaveClass, leaveToClass = data.leaveToClass, leaveActiveClass = data.leaveActiveClass, beforeLeave = data.beforeLeave, leave2 = data.leave, afterLeave = data.afterLeave, leaveCancelled = data.leaveCancelled, delayLeave = data.delayLeave, duration = data.duration;
+    var expectsCSS = css !== false && !isIE9;
+    var userWantsControl = getHookArgumentsLength(leave2);
+    var explicitLeaveDuration = toNumber(isObject(duration) ? duration.leave : duration);
+    var cb = el._leaveCb = once(function() {
+      if (el.parentNode && el.parentNode._pending) {
+        el.parentNode._pending[vnode.key] = null;
+      }
+      if (expectsCSS) {
+        removeTransitionClass(el, leaveToClass);
+        removeTransitionClass(el, leaveActiveClass);
+      }
+      if (cb.cancelled) {
+        if (expectsCSS) {
+          removeTransitionClass(el, leaveClass);
+        }
+        leaveCancelled && leaveCancelled(el);
+      } else {
+        rm();
+        afterLeave && afterLeave(el);
+      }
+      el._leaveCb = null;
+    });
+    if (delayLeave) {
+      delayLeave(performLeave);
+    } else {
+      performLeave();
+    }
+    function performLeave() {
+      if (cb.cancelled) {
+        return;
+      }
+      if (!vnode.data.show && el.parentNode) {
+        (el.parentNode._pending || (el.parentNode._pending = {}))[vnode.key] = vnode;
+      }
+      beforeLeave && beforeLeave(el);
+      if (expectsCSS) {
+        addTransitionClass(el, leaveClass);
+        addTransitionClass(el, leaveActiveClass);
+        nextFrame(function() {
+          removeTransitionClass(el, leaveClass);
+          if (!cb.cancelled) {
+            addTransitionClass(el, leaveToClass);
+            if (!userWantsControl) {
+              if (isValidDuration(explicitLeaveDuration)) {
+                setTimeout(cb, explicitLeaveDuration);
+              } else {
+                whenTransitionEnds(el, type, cb);
+              }
+            }
+          }
+        });
+      }
+      leave2 && leave2(el, cb);
+      if (!expectsCSS && !userWantsControl) {
+        cb();
+      }
+    }
+  }
+  function isValidDuration(val) {
+    return typeof val === "number" && !isNaN(val);
+  }
+  function getHookArgumentsLength(fn) {
+    if (isUndef(fn)) {
+      return false;
+    }
+    var invokerFns = fn.fns;
+    if (isDef(invokerFns)) {
+      return getHookArgumentsLength(Array.isArray(invokerFns) ? invokerFns[0] : invokerFns);
+    } else {
+      return (fn._length || fn.length) > 1;
+    }
+  }
+  function _enter(_, vnode) {
+    if (vnode.data.show !== true) {
+      enter(vnode);
+    }
+  }
+  var transition = inBrowser ? {
+    create: _enter,
+    activate: _enter,
+    remove: function(vnode, rm) {
+      if (vnode.data.show !== true) {
+        leave(vnode, rm);
+      } else {
+        rm();
+      }
+    }
+  } : {};
+  var platformModules = [attrs, klass, events, domProps, style, transition];
+  var modules = platformModules.concat(baseModules);
+  var patch = createPatchFunction({ nodeOps, modules });
+  if (isIE9) {
+    document.addEventListener("selectionchange", function() {
+      var el = document.activeElement;
+      if (el && el.vmodel) {
+        trigger(el, "input");
+      }
+    });
+  }
+  var directive = {
+    inserted: function(el, binding, vnode, oldVnode) {
+      if (vnode.tag === "select") {
+        if (oldVnode.elm && !oldVnode.elm._vOptions) {
+          mergeVNodeHook(vnode, "postpatch", function() {
+            directive.componentUpdated(el, binding, vnode);
+          });
+        } else {
+          setSelected(el, binding, vnode.context);
+        }
+        el._vOptions = [].map.call(el.options, getValue);
+      } else if (vnode.tag === "textarea" || isTextInputType(el.type)) {
+        el._vModifiers = binding.modifiers;
+        if (!binding.modifiers.lazy) {
+          el.addEventListener("compositionstart", onCompositionStart);
+          el.addEventListener("compositionend", onCompositionEnd);
+          el.addEventListener("change", onCompositionEnd);
+          if (isIE9) {
+            el.vmodel = true;
+          }
+        }
+      }
+    },
+    componentUpdated: function(el, binding, vnode) {
+      if (vnode.tag === "select") {
+        setSelected(el, binding, vnode.context);
+        var prevOptions_1 = el._vOptions;
+        var curOptions_1 = el._vOptions = [].map.call(el.options, getValue);
+        if (curOptions_1.some(function(o, i) {
+          return !looseEqual(o, prevOptions_1[i]);
+        })) {
+          var needReset = el.multiple ? binding.value.some(function(v2) {
+            return hasNoMatchingOption(v2, curOptions_1);
+          }) : binding.value !== binding.oldValue && hasNoMatchingOption(binding.value, curOptions_1);
+          if (needReset) {
+            trigger(el, "change");
+          }
+        }
+      }
+    }
+  };
+  function setSelected(el, binding, vm) {
+    actuallySetSelected(el, binding);
+    if (isIE || isEdge) {
+      setTimeout(function() {
+        actuallySetSelected(el, binding);
+      }, 0);
+    }
+  }
+  function actuallySetSelected(el, binding, vm) {
+    var value = binding.value;
+    var isMultiple = el.multiple;
+    if (isMultiple && !Array.isArray(value)) {
+      return;
+    }
+    var selected, option;
+    for (var i = 0, l = el.options.length; i < l; i++) {
+      option = el.options[i];
+      if (isMultiple) {
+        selected = looseIndexOf(value, getValue(option)) > -1;
+        if (option.selected !== selected) {
+          option.selected = selected;
+        }
+      } else {
+        if (looseEqual(getValue(option), value)) {
+          if (el.selectedIndex !== i) {
+            el.selectedIndex = i;
+          }
+          return;
+        }
+      }
+    }
+    if (!isMultiple) {
+      el.selectedIndex = -1;
+    }
+  }
+  function hasNoMatchingOption(value, options) {
+    return options.every(function(o) {
+      return !looseEqual(o, value);
+    });
+  }
+  function getValue(option) {
+    return "_value" in option ? option._value : option.value;
+  }
+  function onCompositionStart(e) {
+    e.target.composing = true;
+  }
+  function onCompositionEnd(e) {
+    if (!e.target.composing)
+      return;
+    e.target.composing = false;
+    trigger(e.target, "input");
+  }
+  function trigger(el, type) {
+    var e = document.createEvent("HTMLEvents");
+    e.initEvent(type, true, true);
+    el.dispatchEvent(e);
+  }
+  function locateNode(vnode) {
+    return vnode.componentInstance && (!vnode.data || !vnode.data.transition) ? locateNode(vnode.componentInstance._vnode) : vnode;
+  }
+  var show = {
+    bind: function(el, _a, vnode) {
+      var value = _a.value;
+      vnode = locateNode(vnode);
+      var transition2 = vnode.data && vnode.data.transition;
+      var originalDisplay = el.__vOriginalDisplay = el.style.display === "none" ? "" : el.style.display;
+      if (value && transition2) {
+        vnode.data.show = true;
+        enter(vnode, function() {
+          el.style.display = originalDisplay;
+        });
+      } else {
+        el.style.display = value ? originalDisplay : "none";
+      }
+    },
+    update: function(el, _a, vnode) {
+      var value = _a.value, oldValue = _a.oldValue;
+      if (!value === !oldValue)
+        return;
+      vnode = locateNode(vnode);
+      var transition2 = vnode.data && vnode.data.transition;
+      if (transition2) {
+        vnode.data.show = true;
+        if (value) {
+          enter(vnode, function() {
+            el.style.display = el.__vOriginalDisplay;
+          });
+        } else {
+          leave(vnode, function() {
+            el.style.display = "none";
+          });
+        }
+      } else {
+        el.style.display = value ? el.__vOriginalDisplay : "none";
+      }
+    },
+    unbind: function(el, binding, vnode, oldVnode, isDestroy) {
+      if (!isDestroy) {
+        el.style.display = el.__vOriginalDisplay;
+      }
+    }
+  };
+  var platformDirectives = {
+    model: directive,
+    show
+  };
+  var transitionProps = {
+    name: String,
+    appear: Boolean,
+    css: Boolean,
+    mode: String,
+    type: String,
+    enterClass: String,
+    leaveClass: String,
+    enterToClass: String,
+    leaveToClass: String,
+    enterActiveClass: String,
+    leaveActiveClass: String,
+    appearClass: String,
+    appearActiveClass: String,
+    appearToClass: String,
+    duration: [Number, String, Object]
+  };
+  function getRealChild(vnode) {
+    var compOptions = vnode && vnode.componentOptions;
+    if (compOptions && compOptions.Ctor.options.abstract) {
+      return getRealChild(getFirstComponentChild(compOptions.children));
+    } else {
+      return vnode;
+    }
+  }
+  function extractTransitionData(comp) {
+    var data = {};
+    var options = comp.$options;
+    for (var key in options.propsData) {
+      data[key] = comp[key];
+    }
+    var listeners = options._parentListeners;
+    for (var key in listeners) {
+      data[camelize(key)] = listeners[key];
+    }
+    return data;
+  }
+  function placeholder(h2, rawChild) {
+    if (/\d-keep-alive$/.test(rawChild.tag)) {
+      return h2("keep-alive", {
+        props: rawChild.componentOptions.propsData
+      });
+    }
+  }
+  function hasParentTransition(vnode) {
+    while (vnode = vnode.parent) {
+      if (vnode.data.transition) {
+        return true;
+      }
+    }
+  }
+  function isSameChild(child, oldChild) {
+    return oldChild.key === child.key && oldChild.tag === child.tag;
+  }
+  var isNotTextNode = function(c) {
+    return c.tag || isAsyncPlaceholder(c);
+  };
+  var isVShowDirective = function(d) {
+    return d.name === "show";
+  };
+  var Transition = {
+    name: "transition",
+    props: transitionProps,
+    abstract: true,
+    render: function(h2) {
+      var _this = this;
+      var children = this.$slots.default;
+      if (!children) {
+        return;
+      }
+      children = children.filter(isNotTextNode);
+      if (!children.length) {
+        return;
+      }
+      var mode = this.mode;
+      var rawChild = children[0];
+      if (hasParentTransition(this.$vnode)) {
+        return rawChild;
+      }
+      var child = getRealChild(rawChild);
+      if (!child) {
+        return rawChild;
+      }
+      if (this._leaving) {
+        return placeholder(h2, rawChild);
+      }
+      var id = "__transition-".concat(this._uid, "-");
+      child.key = child.key == null ? child.isComment ? id + "comment" : id + child.tag : isPrimitive(child.key) ? String(child.key).indexOf(id) === 0 ? child.key : id + child.key : child.key;
+      var data = (child.data || (child.data = {})).transition = extractTransitionData(this);
+      var oldRawChild = this._vnode;
+      var oldChild = getRealChild(oldRawChild);
+      if (child.data.directives && child.data.directives.some(isVShowDirective)) {
+        child.data.show = true;
+      }
+      if (oldChild && oldChild.data && !isSameChild(child, oldChild) && !isAsyncPlaceholder(oldChild) && // #6687 component root is a comment node
+      !(oldChild.componentInstance && oldChild.componentInstance._vnode.isComment)) {
+        var oldData = oldChild.data.transition = extend({}, data);
+        if (mode === "out-in") {
+          this._leaving = true;
+          mergeVNodeHook(oldData, "afterLeave", function() {
+            _this._leaving = false;
+            _this.$forceUpdate();
+          });
+          return placeholder(h2, rawChild);
+        } else if (mode === "in-out") {
+          if (isAsyncPlaceholder(child)) {
+            return oldRawChild;
+          }
+          var delayedLeave_1;
+          var performLeave = function() {
+            delayedLeave_1();
+          };
+          mergeVNodeHook(data, "afterEnter", performLeave);
+          mergeVNodeHook(data, "enterCancelled", performLeave);
+          mergeVNodeHook(oldData, "delayLeave", function(leave2) {
+            delayedLeave_1 = leave2;
+          });
+        }
+      }
+      return rawChild;
+    }
+  };
+  var props = extend({
+    tag: String,
+    moveClass: String
+  }, transitionProps);
+  delete props.mode;
+  var TransitionGroup = {
+    props,
+    beforeMount: function() {
+      var _this = this;
+      var update = this._update;
+      this._update = function(vnode, hydrating) {
+        var restoreActiveInstance = setActiveInstance(_this);
+        _this.__patch__(
+          _this._vnode,
+          _this.kept,
+          false,
+          // hydrating
+          true
+          // removeOnly (!important, avoids unnecessary moves)
+        );
+        _this._vnode = _this.kept;
+        restoreActiveInstance();
+        update.call(_this, vnode, hydrating);
+      };
+    },
+    render: function(h2) {
+      var tag = this.tag || this.$vnode.data.tag || "span";
+      var map = /* @__PURE__ */ Object.create(null);
+      var prevChildren = this.prevChildren = this.children;
+      var rawChildren = this.$slots.default || [];
+      var children = this.children = [];
+      var transitionData = extractTransitionData(this);
+      for (var i = 0; i < rawChildren.length; i++) {
+        var c = rawChildren[i];
+        if (c.tag) {
+          if (c.key != null && String(c.key).indexOf("__vlist") !== 0) {
+            children.push(c);
+            map[c.key] = c;
+            (c.data || (c.data = {})).transition = transitionData;
+          }
+        }
+      }
+      if (prevChildren) {
+        var kept = [];
+        var removed = [];
+        for (var i = 0; i < prevChildren.length; i++) {
+          var c = prevChildren[i];
+          c.data.transition = transitionData;
+          c.data.pos = c.elm.getBoundingClientRect();
+          if (map[c.key]) {
+            kept.push(c);
+          } else {
+            removed.push(c);
+          }
+        }
+        this.kept = h2(tag, null, kept);
+        this.removed = removed;
+      }
+      return h2(tag, null, children);
+    },
+    updated: function() {
+      var children = this.prevChildren;
+      var moveClass = this.moveClass || (this.name || "v") + "-move";
+      if (!children.length || !this.hasMove(children[0].elm, moveClass)) {
+        return;
+      }
+      children.forEach(callPendingCbs);
+      children.forEach(recordPosition);
+      children.forEach(applyTranslation);
+      this._reflow = document.body.offsetHeight;
+      children.forEach(function(c) {
+        if (c.data.moved) {
+          var el_1 = c.elm;
+          var s = el_1.style;
+          addTransitionClass(el_1, moveClass);
+          s.transform = s.WebkitTransform = s.transitionDuration = "";
+          el_1.addEventListener(transitionEndEvent, el_1._moveCb = function cb(e) {
+            if (e && e.target !== el_1) {
+              return;
+            }
+            if (!e || /transform$/.test(e.propertyName)) {
+              el_1.removeEventListener(transitionEndEvent, cb);
+              el_1._moveCb = null;
+              removeTransitionClass(el_1, moveClass);
+            }
+          });
+        }
+      });
+    },
+    methods: {
+      hasMove: function(el, moveClass) {
+        if (!hasTransition) {
+          return false;
+        }
+        if (this._hasMove) {
+          return this._hasMove;
+        }
+        var clone = el.cloneNode();
+        if (el._transitionClasses) {
+          el._transitionClasses.forEach(function(cls) {
+            removeClass(clone, cls);
+          });
+        }
+        addClass(clone, moveClass);
+        clone.style.display = "none";
+        this.$el.appendChild(clone);
+        var info = getTransitionInfo(clone);
+        this.$el.removeChild(clone);
+        return this._hasMove = info.hasTransform;
+      }
+    }
+  };
+  function callPendingCbs(c) {
+    if (c.elm._moveCb) {
+      c.elm._moveCb();
+    }
+    if (c.elm._enterCb) {
+      c.elm._enterCb();
+    }
+  }
+  function recordPosition(c) {
+    c.data.newPos = c.elm.getBoundingClientRect();
+  }
+  function applyTranslation(c) {
+    var oldPos = c.data.pos;
+    var newPos = c.data.newPos;
+    var dx = oldPos.left - newPos.left;
+    var dy = oldPos.top - newPos.top;
+    if (dx || dy) {
+      c.data.moved = true;
+      var s = c.elm.style;
+      s.transform = s.WebkitTransform = "translate(".concat(dx, "px,").concat(dy, "px)");
+      s.transitionDuration = "0s";
+    }
+  }
+  var platformComponents = {
+    Transition,
+    TransitionGroup
+  };
+  Vue.config.mustUseProp = mustUseProp;
+  Vue.config.isReservedTag = isReservedTag;
+  Vue.config.isReservedAttr = isReservedAttr;
+  Vue.config.getTagNamespace = getTagNamespace;
+  Vue.config.isUnknownElement = isUnknownElement;
+  extend(Vue.options.directives, platformDirectives);
+  extend(Vue.options.components, platformComponents);
+  Vue.prototype.__patch__ = inBrowser ? patch : noop;
+  Vue.prototype.$mount = function(el, hydrating) {
+    el = el && inBrowser ? query(el) : void 0;
+    return mountComponent(this, el, hydrating);
+  };
+  if (inBrowser) {
+    setTimeout(function() {
+      if (config.devtools) {
+        if (devtools) {
+          devtools.emit("init", Vue);
+        }
+      }
+    }, 0);
+  }
+  function normalizeComponent(scriptExports, render, staticRenderFns, functionalTemplate, injectStyles, scopeId, moduleIdentifier, shadowMode) {
+    var options = typeof scriptExports === "function" ? scriptExports.options : scriptExports;
+    if (render) {
+      options.render = render;
+      options.staticRenderFns = staticRenderFns;
+      options._compiled = true;
+    }
+    if (scopeId) {
+      options._scopeId = "data-v-" + scopeId;
+    }
+    return {
+      exports: scriptExports,
+      options
+    };
+  }
+  const _sfc_main$7 = {
+    name: "stackedComponent",
+    mounted: function() {
+      if ("sticky" in wcsvi.options && this.boolEval(wcsvi.options.sticky) && this.windowType == "desktop") {
+        this.buildSticky();
+      }
+      this.$bus.$on("vidPlayerStack_" + this.$root.$children[0].pid, (index2) => {
+        let $li = $jq(this.$el).find("li:eq(" + index2 + ")").closest("li");
+        let $class = ".svi-player_" + this.list[index2].id + "_" + this.list[index2].idk + "_" + this.$el.className;
+        $li.find($class).remove();
+        $li.find("img,.sviicon-play").show();
+        this.$bus.$emit("sviEmit", "pos_vidPlayerStack");
+      });
+      this.$bus.$on(
+        "thumbImages_static_" + this.$root.$children[0].pid,
+        (imgObj) => {
+          if ("status" in imgObj) imgObj = imgObj.gal;
+          if (!this.isEquivalent(this.list, imgObj)) {
+            this.list = [];
+            setTimeout(() => {
+              this.list = imgObj;
+              if ("sticky" in wcsvi.options && this.boolEval(wcsvi.options.sticky) && this.windowType == "desktop") {
+                this.goSticky();
+              }
+            }, 200);
+          }
+          this.$bus.$emit("sviEmit", "pos_thumbImages_static");
+        }
+      );
+      this.$nextTick(function() {
+        window.addEventListener("resize", () => {
+          this.getWindowWidth();
+        });
+        this.getWindowWidth();
+      });
+    },
+    data() {
+      let $cols = "stacked_columns" in wcsvi.options && wcsvi.options.stacked_columns ? wcsvi.options.stacked_columns : 1;
+      return {
+        columns: $cols,
+        columns_original: $cols,
+        list: [],
+        windowType: this.getWindowWidth(true),
+        activateTitle: "imagecaption" in wcsvi.options && this.boolEval(wcsvi.options.imagecaption) ? true : false,
+        imagecaption_option: "imagecaption_option" in wcsvi.options && wcsvi.options.imagecaption_option ? wcsvi.options.imagecaption_option : "",
+        thumbtype: "svimainthumb"
+      };
+    },
+    methods: {
+      buildSticky() {
+        if ("sa_element" in wcsvi.options) {
+          if ($jq(wcsvi.options.sa_element).length > 0) {
+            $jq(wcsvi.options.sa_element).wrapInner(function() {
+              return '<div class="stickysvi" style="top:' + wcsvi.options.sticky_margin + 'px;"></div>';
+            });
+          }
+        }
+      },
+      goSticky() {
+        if ($jq(".stickysvi").length > 0) {
+          $jq(".stickysvi").stickThis({
+            top: "sticky_margin" in wcsvi.options && wcsvi.options.sticky_margin ? wcsvi.options.sticky_margin : 0,
+            pushup: "sa_pushup" in wcsvi.options && wcsvi.options.sa_pushup ? wcsvi.options.sa_pushup : ""
+          });
+        }
+      }
+    }
+  };
+  var _sfc_render$7 = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "svi-stackedsection" }, [_c("ul", { staticClass: "svistacked svithumbnails", class: ["columns-" + _vm.columns] }, _vm._l(_vm.list, function(item, index2) {
+      return _c("li", { directives: [{ name: "ezPlusStacked", rawName: "v-ezPlusStacked" }, { name: "playVideo", rawName: "v-playVideo", value: item, expression: "item" }], key: item.id + "_" + index2, class: _vm.colposition(index2), domProps: { "innerHTML": _vm._s(_vm.imgEl(item, "stack")) }, on: { "click": function($event) {
+        return _vm.photo(item, $event, "stack");
+      } } });
+    }), 0)]);
+  };
+  var _sfc_staticRenderFns$7 = [];
+  var __component__$7 = /* @__PURE__ */ normalizeComponent(
+    _sfc_main$7,
+    _sfc_render$7,
+    _sfc_staticRenderFns$7,
+    false,
+    null,
+    null
+  );
+  const stackedComponent = __component__$7.exports;
+  const _sfc_main$6 = {
+    components: {},
+    name: "SliderComponent",
+    mounted: function() {
+      if (!this.disable_thumb) this.galleryThumbs = this.sliderThumbs();
+      this.galleryTop = this.sliderMain();
+      this.thumbImages_static();
+      this.mainImage_slider_thumbadd();
+    },
+    data() {
+      return {
+        statusThumbs: false,
+        originalCount: 0,
+        imgTitle: "",
+        mainTitle: "imagecaption" in wcsvi.options && this.boolEval(wcsvi.options.imagecaption) ? true : false,
+        thumbTitle: "thumb_imagecaption" in wcsvi.options && this.boolEval(wcsvi.options.thumb_imagecaption) ? true : false,
+        slides: [],
+        disable_thumb: "disable_thumb" in wcsvi.options && this.boolEval(wcsvi.options.disable_thumb) ? true : false,
+        galleryThumbs: false,
+        galleryTop: false,
+        thumbAppend: false,
+        slider_pagination: "slider_pagination" in wcsvi.options && this.boolEval(wcsvi.options.slider_pagination) ? true : false,
+        slider_pagination_color: {
+          "--paginationColor": "slider_pagination_color" in wcsvi.options && wcsvi.options.slider_pagination_color ? wcsvi.options.slider_pagination_color : ""
+        },
+        slider_navigation: "slider_navigation" in wcsvi.options && this.boolEval(wcsvi.options.slider_navigation) ? true : false,
+        slider_navigation_thumb: "slider_navigation_thumb" in wcsvi.options && this.boolEval(wcsvi.options.slider_navigation_thumb) ? true : false,
+        slider_navigation_color: {
+          "--sviproslider_navcolor": "slider_navigation_color" in wcsvi.options && wcsvi.options.slider_navigation_color ? wcsvi.options.slider_navigation_color : ""
+        },
+        slider_navcolor: "slider_navcolor" in wcsvi.options && wcsvi.options.slider_navcolor ? wcsvi.options.slider_navcolor : "",
+        lazyLoadHtml: "slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload) ? '<div class="swiper-lazy-preloader" style="--lazyloadColor:' + wcsvi.options.slider_lazyload_color + '"></div>' : ""
+      };
+    },
+    methods: {
+      thumbImages_static() {
+        this.$bus.$on(
+          "vidPlayerSlider_" + this.$root.$children[0].pid,
+          (index2) => {
+            this.vidRun(index2, this.slides);
+            this.$bus.$emit("sviEmit", "vidPlayerSlider");
+          }
+        );
+        this.$bus.$on(
+          "thumbImages_static_" + this.$root.$children[0].pid,
+          (imgObj) => {
+            if (this.thumbAppend) {
+              this.galleryTop.removeSlide(0);
+              if (!this.disable_thumb) this.galleryThumbs.removeSlide(0);
+              this.thumbAppend = false;
+            }
+            if (!this.isEquivalent(this.slides, imgObj.gal)) {
+              let start = "";
+              this.originalCount = this.slides.length;
+              this.statusThumbs = imgObj.status;
+              this.slides = imgObj.gal;
+              $jq.each(imgObj.gal, (i, v2) => {
+                v2.sviid = v2.id;
+                let img = this.imgEl(v2, "slider");
+                let ratio = this.calculateAspectRatioFit(v2);
+                let hH = 'style="min-height:' + ratio.height + 'px"';
+                this.galleryTop.appendSlide(
+                  '<div class="swiper-slide' + start + '" ' + (!v2.video ? hH : "") + ">" + img + (!v2.video ? this.lazyLoadHtml : "") + "</div>"
+                );
+                this.galleryTop.update();
+                if (!this.disable_thumb) {
+                  let img_thumb = this.imgEl(v2, "sliderthumb");
+                  let thumbTitle = "";
+                  if (this.thumbTitle)
+                    thumbTitle = '<div class="svititleimg">' + this.returnTitle(
+                      wcsvi.options.thumb_imagecaption_option,
+                      v2
+                    ) + "</div>";
+                  this.galleryThumbs.appendSlide(
+                    '<div class="swiper-slide' + start + '">' + img_thumb + this.lazyLoadHtml + thumbTitle + "</div>"
+                  );
+                  this.galleryThumbs.update();
+                  if (i == 0) this.runOpacity();
+                }
+              });
+              if ("slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload))
+                this.completeLoad();
+              else this.waitload(".svi-gallery-top");
+            } else {
+              if ("skip_equivalent" in wcsvi.options && this.boolEval(wcsvi.options.skip_equivalent))
+                this.galleryTop.slideTo(0);
+              if (this.$root.$children[0].originalAttributes && "skip_equivalent" in wcsvi.options && !this.boolEval(wcsvi.options.skip_equivalent)) {
+                this.runKeepThumbnailsImageChange(
+                  this.$root.$children[0].originalAttributes,
+                  true
+                );
+              }
+            }
+            this.$bus.$emit("sviEmit", "pos_thumbImages_static");
+          }
+        );
+      },
+      mainImage_slider_thumbadd() {
+        this.$bus.$on(
+          "mainImage_slider_thumbadd_" + this.$root.$children[0].pid,
+          (imgObj) => {
+            if (this.thumbAppend) {
+              this.galleryTop.removeSlide(0);
+              if (!this.disable_thumb) this.galleryThumbs.removeSlide(0);
+            }
+            let isImgInSlider = this.isImgInSlider(imgObj);
+            if (isImgInSlider != "false") {
+              this.galleryTop.slideTo(isImgInSlider);
+              this.thumbAppend = false;
+              return;
+            }
+            v.class = "swiper-lazy";
+            v.sviid = imgObj.id;
+            let img = this.imgEl(imgObj, "slider");
+            this.galleryTop.appendSlide(
+              '<div class="swiper-slide">' + img + this.lazyLoadHtml + "</div>"
+            );
+            this.galleryTop.update();
+            if (!this.disable_thumb) {
+              v.class = "swiper-lazy";
+              v.sviid = imgObj.id;
+              let img_thumb = this.imgEl(imgObj, "sliderthumb");
+              this.galleryThumbs.appendSlide(
+                '<div class="swiper-slide">' + img_thumb + this.lazyLoadHtml + "</div>"
+              );
+              this.galleryThumbs.update();
+            }
+            this.galleryTop.slideTo(0);
+            this.thumbAppend = true;
+            this.$bus.$emit("sviEmit", "pos_mainImage_slider_thumbadd");
+          }
+        );
+      },
+      isImgInSlider(imgObj) {
+        let imgID = imgObj.id;
+        let result = $jq.map(this.galleryTop.slides, ($slide, i) => {
+          let slideImgId = $jq($slide).find("img").data("sviid");
+          if (slideImgId == imgID) return i;
+        });
+        if (result.length > 0) return result[0];
+        else return "false";
+      },
+      setHeight() {
+        if (!this.disable_thumb && !this.statusThumbs && parseInt(wcsvi.options.slider_position) != 0) {
+          setTimeout(() => {
+            this.galleryThumbs.updateAutoHeight();
+            this.galleryThumbs.updateSlides();
+          }, 100);
+        }
+      },
+      waitload($class) {
+        let _this = this;
+        $jq($class).imagesLoaded().done(function(instance) {
+          _this.completeLoad();
+        });
+      },
+      completeLoad() {
+        if (this.originalCount > 0) {
+          this.removeSlides();
+        } else {
+          this.handleUpdate();
+        }
+      },
+      removeSlides() {
+        var i;
+        var remove2 = [];
+        for (i = 0; i < this.originalCount; i++) {
+          remove2.push(i);
+        }
+        this.galleryTop.removeSlide(remove2);
+        if (!this.disable_thumb) this.galleryThumbs.removeSlide(remove2);
+        setTimeout(() => {
+          this.handleUpdate();
+        }, 50);
+      },
+      handleUpdate() {
+        if ("slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload)) {
+          this.galleryTop.update();
+          if (!this.disable_thumb) {
+            this.galleryThumbs.update();
+          }
+        }
+        this.vidRun(0, this.slides);
+        this.setHeight();
+        this.$forceUpdate();
+        if (this.mainTitle) this.runInsertTitle(this.galleryTop.realIndex);
+        if (this.$root.$children[0].originalAttributes && "skip_equivalent" in wcsvi.options && !this.boolEval(wcsvi.options.skip_equivalent)) {
+          this.runKeepThumbnailsImageChange(
+            this.$root.$children[0].originalAttributes,
+            true
+          );
+        } else this.galleryTop.slideTo(0, 500);
+      }
+    }
+  };
+  var _sfc_render$6 = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "sviproslider" }, [_c("div", { staticClass: "swiper svi-gallery-top" }, [_c("div", { directives: [{ name: "ezPlusSlider", rawName: "v-ezPlusSlider" }], staticClass: "swiper-wrapper" }), _vm.slider_pagination ? _c("div", { staticClass: "swiper-pagination sviswiper-pagination", style: _vm.slider_pagination_color }) : _vm._e(), _vm.slider_navigation ? _c("div", { staticClass: "swiper-button-next swiperTop-swiper-button-next", class: ["swiper-button" + _vm.slider_navcolor], style: [
+      _vm.slider_navcolor == "custom" ? _vm.slider_navigation_color : ""
+    ], attrs: { "slot": "button-next" }, slot: "button-next" }) : _vm._e(), _vm.slider_navigation ? _c("div", { staticClass: "swiper-button-prev swiperTop-swiper-button-prev", class: ["swiper-button" + _vm.slider_navcolor], style: [
+      _vm.slider_navcolor == "custom" ? _vm.slider_navigation_color : ""
+    ], attrs: { "slot": "button-prev" }, slot: "button-prev" }) : _vm._e()]), _vm.mainTitle ? _c("div", { staticClass: "svititleimg gallery-top-title", domProps: { "innerHTML": _vm._s(_vm.imgTitle) } }) : _vm._e(), !_vm.disable_thumb ? _c("div", { directives: [{ name: "show", rawName: "v-show", value: !_vm.statusThumbs, expression: "!statusThumbs" }], staticClass: "swiper svi-gallery-thumbs" }, [_c("div", { staticClass: "swiper-wrapper" }), _vm.slider_navigation_thumb ? _c("div", { staticClass: "swiper-button-next swiperThumbs-swiper-button-next", class: "swiper-button" + _vm.slider_navcolor, style: [
+      _vm.slider_navcolor == "custom" ? _vm.slider_navigation_color : ""
+    ] }) : _vm._e(), _vm.slider_navigation_thumb ? _c("div", { staticClass: "swiper-button-prev swiperThumbs-swiper-button-prev", class: "swiper-button" + _vm.slider_navcolor, style: [
+      _vm.slider_navcolor == "custom" ? _vm.slider_navigation_color : ""
+    ] }) : _vm._e()]) : _vm._e()]);
+  };
+  var _sfc_staticRenderFns$6 = [];
+  var __component__$6 = /* @__PURE__ */ normalizeComponent(
+    _sfc_main$6,
+    _sfc_render$6,
+    _sfc_staticRenderFns$6,
+    false,
+    null,
+    null
+  );
+  const sliderComponent = __component__$6.exports;
+  const _sfc_main$5 = {
+    name: "imageComponent",
+    watch: {
+      image: function(val) {
+        setTimeout(() => {
+          if ("video" in wcsvi.options) this.plyr(val);
+        }, 100);
+      }
+    },
+    mounted: function() {
+      this.$bus.$on(
+        "mainImage_static_" + this.$root.$children[0].pid,
+        (imgObj) => {
+          if (!this.isEquivalent(this.gallery, imgObj)) {
+            this.gallery = imgObj;
+            this.image = imgObj[0];
+            if (this.image.video == "") {
+              this.ratio = this.calculateAspectRatioFit();
+              this.imgStyle = {
+                "min-height": this.ratio.height + "px"
+              };
+            } else {
+              this.imgStyle = {
+                "min-height": "auto"
+              };
+            }
+            this.$bus.$emit("sviEmit", "pos_mainImage_static");
+          }
+          this.$bus.$emit("sviEmit", "mainImage_complete");
+        }
+      );
+      this.$bus.$on(
+        "mainImage_static_change_" + this.$root.$children[0].pid,
+        (imgObj) => {
+          this.image = imgObj;
+          if (this.image.video == "") {
+            this.ratio = this.calculateAspectRatioFit();
+            this.imgStyle = {
+              "min-height": this.ratio.height + "px"
+            };
+          } else {
+            this.imgStyle = {
+              "min-height": "auto"
+            };
+          }
+          this.$bus.$emit("sviEmit", "pos_mainImage_static_change");
+        }
+      );
+      this.$bus.$on(
+        "mainImage_static_changeRestore_" + this.$root.$children[0].pid,
+        (imgObj) => {
+          if (!imgObj && !this.notPresent()) {
+            this.image = this.gallery[0];
+            this.$bus.$emit("sviEmit", "pos_mainImage_static_changeRestore");
+          }
+        }
+      );
+      if (this.$root.$children[0].form) {
+        this.$root.$children[0].form.on("click", ".reset_variations", () => {
+          this.image = this.gallery[0];
+        });
+      }
+    },
+    data: function() {
+      return {
+        gallery: [],
+        image: "",
+        imgStyle: {},
+        pic: false,
+        ratio: {},
+        activateTitle: "imagecaption" in wcsvi.options && this.boolEval(wcsvi.options.imagecaption) ? true : false
+      };
+    },
+    updated: function() {
+      this.sviLog("Gallery", "mainImageGal DOM Updated (Render Complete)", { time: performance.now() });
+    },
+    methods: {
+      notPresent() {
+        let result = false;
+        $jq.each(this.gallery, (i, $image) => {
+          if (this.isEquivalent(this.image, $image)) {
+            result = true;
+          }
+        });
+        return result;
+      },
+      waitload($class) {
+        $jq(this.$el).imagesLoaded().done(function(instance) {
+          $jq(this.$el).removeAttr("style");
+        });
+      }
+    }
+  };
+  var _sfc_render$5 = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { directives: [{ name: "ezPlus", rawName: "v-ezPlus" }], staticClass: "svi-mainsection", style: _vm.imgStyle, domProps: { "innerHTML": _vm._s(_vm.imgEl(_vm.image, "static")) }, on: { "click": function($event) {
+      return _vm.photo(_vm.image, $event, "static");
+    } } });
+  };
+  var _sfc_staticRenderFns$5 = [];
+  var __component__$5 = /* @__PURE__ */ normalizeComponent(
+    _sfc_main$5,
+    _sfc_render$5,
+    _sfc_staticRenderFns$5,
+    false,
+    null,
+    null
+  );
+  const mainImageGalComponent = __component__$5.exports;
+  const _sfc_main$4 = {
+    name: "ThumbnailComponent",
+    mounted: function() {
+      this.$bus.$on(
+        this.cbus_event + "_" + this.$root.$children[0].pid,
+        (imgObj) => {
+          if (!this.isEquivalent(this.list, imgObj)) {
+            this.list = imgObj;
+            this.$bus.$emit("sviEmit", "pos_" + this.cbus_event);
+            if (this.$root.$children[0].originalAttributes) {
+              this.runKeepThumbnailsImageChange(
+                this.$root.$children[0].originalAttributes
+              );
+            }
+          } else {
+            if (this.$root.$children[0].originalAttributes) {
+              this.runKeepThumbnailsImageChange(
+                this.$root.$children[0].originalAttributes
+              );
+            }
+          }
+        }
+      );
+    },
+    data() {
+      let $cols = parseInt(wcsvi.options.columns);
+      let $cols_showcase = "columns_showcase" in wcsvi.options && parseInt(wcsvi.options.columns_showcase) ? parseInt(wcsvi.options.columns_showcase) : 4;
+      if ("slider_position" in wcsvi.options) {
+        if (this.$root.$children[0].$options.name == "main-svi" && parseInt(wcsvi.options.slider_position) != 0) {
+          $cols = 1;
+        }
+      }
+      let thumbtype = this.$root.$children[0].$options.name == "main-svi" ? "svimainthumb" : "svivariationsthumb";
+      let cbus_event = thumbtype == "svimainthumb" ? "thumbImages_static" : "variationThumbImages_static";
+      return {
+        columns: thumbtype == "svimainthumb" ? $cols : $cols_showcase,
+        list: [],
+        cbus_event,
+        thumbtype,
+        activateTitle: "thumb_imagecaption" in wcsvi.options && this.boolEval(wcsvi.options.thumb_imagecaption) ? true : false
+      };
+    },
+    updated: function() {
+      this.sviLog("Thumbnails", "thumbnails DOM Updated (Render Complete)", { time: performance.now() });
+    },
+    methods: {
+      triggerChange: function(item, $event) {
+        if (this.thumbtype == "svimainthumb") {
+          this.runOpacity($event);
+          this.$bus.$emit(
+            "mainImage_static_change_" + this.$root.$children[0].pid,
+            item
+          );
+          if ("slider" in wcsvi.options) {
+            if (this.boolEval(wcsvi.options.slider))
+              this.$bus.$emit(
+                "mainImage_slider_thumbadd_" + this.$root.$children[0].pid,
+                item
+              );
+          }
+          if ("variation_swap" in wcsvi.options) {
+            if (this.boolEval(wcsvi.options.variation_swap))
+              this.ThumbClickSwap(item);
+          }
+        } else {
+          if ("variation_thumbnails_lb" in wcsvi.options) {
+            if (this.boolEval(wcsvi.options.variation_thumbnails_lb) || item.video)
+              this.photo(item, $event, "variationThumbImages");
+            else {
+              if ($jq(this.$el).find("video,.plyr").length > 0) {
+                $jq(this.$el).find("video,.plyr").remove();
+                $jq(this.$el).find(".sviicon-play").show();
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+  var _sfc_render$4 = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "svi-thumbsection", class: _vm.thumbtype }, [_c("ul", { key: "svithumbnails", staticClass: "svithumbnails", class: [
+      "columns-" + _vm.columns,
+      _vm.list.length < 1 ? "svi100" : "",
+      _vm.list.length > 0 ? "svishow" : ""
+    ] }, _vm._l(_vm.list, function(item, index2) {
+      return _c("li", { key: item.id + "_" + index2, class: _vm.colposition(index2), domProps: { "innerHTML": _vm._s(_vm.imgEl(item, _vm.thumbtype)) }, on: { "click": function($event) {
+        return _vm.triggerChange(item, $event);
+      } } });
+    }), 0)]);
+  };
+  var _sfc_staticRenderFns$4 = [];
+  var __component__$4 = /* @__PURE__ */ normalizeComponent(
+    _sfc_main$4,
+    _sfc_render$4,
+    _sfc_staticRenderFns$4,
+    false,
+    null,
+    "eca8d2b6"
+  );
+  const thumbnailsComponent = __component__$4.exports;
+  const _sfc_main$3 = {
+    components: {
+      mainImageGalComponent,
+      thumbnailsComponent
+    },
+    name: "StaticComponent",
+    mounted: function() {
+    },
+    data() {
+      return {
+        disabledThumbs: false in wcsvi.options || this.boolEval(wcsvi.options.disable_thumb) ? false : true
+      };
+    }
+  };
+  var _sfc_render$3 = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "svistatic" }, [_c("mainImageGalComponent"), _vm.disabledThumbs ? _c("thumbnailsComponent") : _vm._e()], 1);
+  };
+  var _sfc_staticRenderFns$3 = [];
+  var __component__$3 = /* @__PURE__ */ normalizeComponent(
+    _sfc_main$3,
+    _sfc_render$3,
+    _sfc_staticRenderFns$3,
+    false,
+    null,
+    null
+  );
+  const staticComponent = __component__$3.exports;
+  const _sfc_main$2 = {
+    components: {
+      stackedComponent,
+      sliderComponent,
+      staticComponent
+    },
+    props: ["pid", "form", "ptype", "wcsvi", "ajax"],
+    name: "main-svi",
+    watch: {
+      windowType: function(val) {
+        if (this.boolEval(this.options.stacked)) {
+          setTimeout(() => {
+            this.loadSviGalleries();
+          }, 150);
+        }
+      }
+    },
+    mounted: function() {
+      const wrapper = this.$el && this.$el.closest ? this.$el.closest(".svi_wrapper") : null;
+      if (wrapper) {
+        wrapper.classList.add("svi-app-mounted");
+        this.cleanupPlaceholder(wrapper);
+      }
+      if (this.form.length > 0 && parseInt(wcsvi.options.default_swatches)) {
+        this.form.addClass("swatches-support");
+        this.buildSwatches();
+      } else if (parseInt(wcsvi.options.default_swatches)) {
+        this.buildSwatches();
+      }
+      if (!this.hasImages) return;
+      if (this.ajax) this.loadSviGalleries();
+      if (this.ptype && (this.hasSVIdata || this.hasNativeVariationGalleries)) this.DetectChangesInForm();
+      else this.loadSviGalleries();
+      this.$nextTick(function() {
+        window.addEventListener("resize", () => {
+          this.getWindowWidth();
+        });
+        this.getWindowWidth();
+        if ($jq(".gallery-svi").css("opacity") == 0)
+          $jq(".gallery-svi").css("opacity", 1);
+        const wrapperEl = this.$el && this.$el.closest ? this.$el.closest(".svi_wrapper") : null;
+        if (wrapperEl) {
+          const markReady = () => {
+            wrapperEl.classList.add("svi-app-ready");
+            this.cleanupPlaceholder(wrapperEl);
+          };
+          if (typeof window.requestAnimationFrame === "function") {
+            window.requestAnimationFrame(() => {
+              window.requestAnimationFrame(markReady);
+            });
+          } else {
+            setTimeout(markReady, 50);
+          }
+        }
+      });
+      this.$bus.$on("vidPlayer_" + this.$root.$children[0].pid, (vidObj) => {
+        if (!this.curVideo) {
+          this.curVideo = vidObj;
+        } else {
+          if (this.curVideo.playing) {
+            this.curVideo.stop();
+            this.curVideo.destroy();
+            this.curVideo = false;
+          }
+          if (vidObj) {
+            this.curVideo = vidObj;
+          } else {
+            this.curVideo = false;
+          }
+        }
+        this.$bus.$emit("sviEmit", "pos_vidPlayer");
+      });
+    },
+    computed: {
+      variations_form: function() {
+        return this.form;
+      },
+      attributeFields: function() {
+        return this.variations_form.find(".variations select");
+      },
+      singleVariation: function() {
+        return this.variations_form.find(".single_variation");
+      },
+      resetVariations: function() {
+        return this.variations_form.find(".reset_variations");
+      },
+      variationData: function() {
+        return this.variations_form.data("product_variations");
+      },
+      sviflex() {
+        if ("slider_position" in wcsvi.options) {
+          var thumbpos;
+          if (wcsvi.options.slider_position == "1") thumbpos = " sviflex-l";
+          if (wcsvi.options.slider_position == "2") thumbpos = " sviflex-r";
+          return wcsvi.options.slider_position == "0" ? "svi-horizontal" : "sviflex" + thumbpos;
+        } else {
+          return "svi-horizontal";
+        }
+      }
+    },
+    data: function() {
+      window.wcsvislugs = "slugs" in this.wcsvi && Object.keys(this.wcsvi.slugs).length > 0 ? this.wcsvi.slugs : [];
+      return {
+        hasImages: "images" in this.wcsvi && this.wcsvi.images.length > 0 ? true : false,
+        type: "static",
+        options: wcsvi.options,
+        gallery: this.wcsvi,
+        attributes: false,
+        template: "svi-" + wcsvi.options.template,
+        windowType: this.getWindowWidth(true),
+        curVideo: false,
+        hasSVIdata: "slugs" in this.wcsvi && Object.keys(this.wcsvi.slugs).length > 0 ? true : false,
+        hasNativeVariationGalleries: "variation_galleries" in this.wcsvi && Object.keys(this.wcsvi.variation_galleries).length > 0 ? true : false,
+        currentVariationId: 0,
+        originalAttributes: "keep_thumbnails" in wcsvi.options && parseInt(wcsvi.options.keep_thumbnails) ? [] : false
+      };
+    },
+    methods: {
+      cleanupPlaceholder(wrapperEl) {
+        const holder = wrapperEl.querySelector(".svi-initial-holder");
+        if (holder) {
+          holder.remove();
+        }
+      }
+      /* async requestSviGalleries() {
+              // Submit the form.
+      
+              let res = await axios.post(wcsvi.call, {
+                action: "loadProduct",
+                id: this.pid,
+                //attribute: this.getChosenAttributes()
+              });
+      
+              this.gallery = res.data;
+      
+              this.requestSviGalleries();
+            },*/
+    }
+  };
+  var _sfc_render$2 = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "woosvi_strap", class: [
+      _vm.sviflex,
+      _vm.template,
+      _vm.boolEval(_vm.options.stacked) ? "svi-stacked-parent" : ""
+    ] }, [_vm.boolEval(_vm.options.stacked) ? [_vm.boolEval(_vm.options.force_stacked) ? _c("stackedComponent") : _vm._e(), !_vm.boolEval(_vm.options.force_stacked) && _vm.windowType == "desktop" ? _c("stackedComponent") : _vm._e(), !_vm.boolEval(_vm.options.force_stacked) && !_vm.boolEval(_vm.options.slider) && _vm.windowType == "mobile" ? [_c("staticComponent")] : _vm._e(), !_vm.boolEval(_vm.options.force_stacked) && _vm.boolEval(_vm.options.slider) && _vm.windowType == "mobile" ? [_c("sliderComponent")] : _vm._e()] : _vm._e(), !_vm.boolEval(_vm.options.slider) && !_vm.boolEval(_vm.options.stacked) ? [_c("staticComponent")] : _vm._e(), _vm.boolEval(_vm.options.slider) && !_vm.boolEval(_vm.options.stacked) ? [_c("sliderComponent")] : _vm._e()], 2);
+  };
+  var _sfc_staticRenderFns$2 = [];
+  var __component__$2 = /* @__PURE__ */ normalizeComponent(
+    _sfc_main$2,
+    _sfc_render$2,
+    _sfc_staticRenderFns$2,
+    false,
+    null,
+    null
+  );
+  const MAIN = __component__$2.exports;
+  const _sfc_main$1 = {
+    components: {
+      thumbnailsComponent
+    },
+    props: ["pid", "form", "ptype"],
+    name: "thumb-svi",
+    data: function() {
+      return {};
+    }
+  };
+  var _sfc_render$1 = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "svi-drop-gallery" }, [_c("thumbnailsComponent")], 1);
+  };
+  var _sfc_staticRenderFns$1 = [];
+  var __component__$1 = /* @__PURE__ */ normalizeComponent(
+    _sfc_main$1,
+    _sfc_render$1,
+    _sfc_staticRenderFns$1,
+    false,
+    null,
+    null
+  );
+  const THUMB = __component__$1.exports;
+  Vue.prototype.$bus = new Vue();
+  Vue.prototype.buildMainGallery = function(idx, v2, MAIN2, ajax) {
+    let $parent = $jq(v2).parent();
+    let $product_id = $parent.data("sviproduct_id");
+    let $svidata = $parent.data("wcsvi");
+    const $dataRef = $parent.data("wcsviRef");
+    const mountTarget = $parent.find("[data-svi-mount]").get(0) || v2;
+    if (!$svidata && typeof wcsvi !== "undefined" && wcsvi.products) {
+      const refId = $dataRef || $product_id;
+      if (refId && Object.prototype.hasOwnProperty.call(wcsvi.products, refId)) {
+        $svidata = wcsvi.products[refId];
+        $parent.data("wcsvi", $svidata);
+      }
+    }
+    if (!$svidata && typeof window.wcsviProducts !== "undefined") {
+      const refId = $dataRef || $product_id;
+      if (refId && Object.prototype.hasOwnProperty.call(window.wcsviProducts, refId)) {
+        $svidata = window.wcsviProducts[refId];
+        $parent.data("wcsvi", $svidata);
+      }
+    }
+    let $ptype = $parent.hasClass("svi-variable") ? true : false;
+    let $form = $ptype ? this.findVariationsForm($product_id) : false;
+    const startWithData = (svidata) => {
+      let dataObj = {
+        main: MAIN2,
+        v: mountTarget,
+        product_id: $product_id,
+        form: $form,
+        ptype: $ptype,
+        svidata: svidata ? svidata : false,
+        ajaxData: ajax
+      };
+      if ($form == "not_found") {
+        Vue.prototype.waitForEl(".variations_form", this.startMount, 100, 50, dataObj);
+      } else {
+        this.startMount(dataObj);
+      }
+    };
+    if ($svidata) {
+      startWithData($svidata);
+      return;
+    }
+    if (!$product_id) {
+      startWithData(false);
+      return;
+    }
+    this.loadProduct($product_id).then((response) => {
+      if (response) {
+        $parent.data("wcsvi", response);
+      }
+      startWithData(response);
+    }).catch(() => {
+      startWithData(false);
+    });
+  };
+  Vue.prototype.loadProduct = function($pid) {
+    return new Promise((resolve, reject) => {
+      jQuery.ajax({
+        url: wcsvi.call,
+        type: "POST",
+        data: {
+          action: "sviloadProduct",
+          id: $pid
+        }
+      }).done((response) => {
+        if (response && response.success && response.data) {
+          resolve(response.data);
+          return;
+        }
+        resolve(false);
+      }).fail((jqXHR, textStatus, errorThrown) => {
+        reject(errorThrown || textStatus);
+      });
+    });
+  };
+  Vue.prototype.startMount = function(dataObj) {
+    window.svi_method = new Vue({
+      render: (h) => h(dataObj.main, {
+        props: {
+          pid: dataObj.product_id,
+          form: dataObj.form,
+          ptype: dataObj.ptype,
+          wcsvi: dataObj.svidata,
+          ajax: dataObj.ajaxData
+        }
+      })
+    }).$mount(dataObj.v);
+  };
+  Vue.prototype.findVariationsForm = function(product_id) {
+    if ($jq(".variations_form[data-product_id='" + product_id + "']").length > 1)
+      return $jq(".variations_form[data-product_id='" + product_id + "']").first();
+    else {
+      if ($jq(".variations_form[data-product_id='" + product_id + "']").length > 0)
+        return $jq(".variations_form[data-product_id='" + product_id + "']");
+      else
+        return "not_found";
+    }
+  };
+  Vue.prototype.DetectChangesInForm = function() {
+    let $attr = {
+      data: false
+    };
+    this.form.on(
+      "check_variations",
+      () => {
+        wcsvi.options.nothumbs = false;
+        setTimeout(() => {
+          let $chosenAttr = this.getChosenAttributes();
+          if (this.isEquivalentAttributes($attr.data, $chosenAttr.data))
+            return;
+          $attr = $chosenAttr;
+          this.attributes = $chosenAttr;
+          if (!this.gallery)
+            this.requestSviGalleries();
+          else
+            this.loadSviGalleries();
+        }, 50);
+      }
+    );
+    this.form.on("found_variation.svi", (event, variation) => {
+      this.currentVariationId = variation && variation.variation_id ? parseInt(variation.variation_id, 10) : 0;
+      this.loadSviGalleries();
+    });
+    this.form.on("reset_data.svi hide_variation.svi", () => {
+      this.currentVariationId = 0;
+    });
+  };
+  Vue.prototype.isEquivalentAttributes = function(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
+  Vue.prototype.getChosenAttributes = function() {
+    var data = {};
+    var count = 0;
+    var chosen = 0;
+    this.attributeFields.each(function() {
+      var attribute_name = $jq(this).data("attribute_name") || $jq(this).attr("name");
+      var value = $jq(this).val() || "";
+      if (value.length > 0) {
+        chosen++;
+      }
+      count++;
+      data[attribute_name] = value;
+    });
+    return {
+      "count": count,
+      "chosenCount": chosen,
+      "data": data
+    };
+  };
+  Vue.prototype.loadSviGalleries = function() {
+    let $gal = this.gallery.images;
+    if (this.ptype)
+      $gal = this.RetrieveGalleryForDisplay();
+    let $status = this.boolEval(wcsvi.options.hide_thumbs) && $gal.length < 1 ? true : false;
+    if ($status) {
+      this.$bus.$emit("mainImage_" + this.type + "_" + this.pid, this.gallery.images);
+    } else {
+      this.$bus.$emit("mainImage_" + this.type + "_" + this.pid, $gal);
+    }
+    if ("slider" in wcsvi.options && this.boolEval(wcsvi.options.slider)) {
+      this.$bus.$emit("thumbImages_" + this.type + "_" + this.pid, {
+        gal: $status ? this.gallery.images : $gal,
+        status: $status
+      });
+    } else {
+      this.$bus.$emit("thumbImages_" + this.type + "_" + this.pid, $gal);
+    }
+    if (this.boolEval(wcsvi.options.variation_thumbnails)) {
+      let $gal_thumb = this.RetrieveGalleryForDisplay(true);
+      if ((!("status" in wcsvi.options) || !wcsvi.options.status) && $gal_thumb.length > 1)
+        $gal_thumb = $gal_thumb.slice(1, 2);
+      this.$bus.$emit("variationThumbImages_" + this.type + "_" + this.pid, $gal_thumb);
+    }
+  };
+  Vue.prototype.RetrieveGalleryForDisplay = function($isthumbGal = false) {
+    let $attributes = this.attributes;
+    this.sviLog("Gallery", "Matching Started (RetrieveGalleryForDisplay)", $attributes);
+    let $gal = this.removeDuplicatesID(this.RetrieveImagesAccordingToSelectedAttributes($attributes.data, $isthumbGal, false));
+    if ($gal.length < 1) {
+      $gal = this.RetrieveNativeVariationGallery();
+    }
+    if ($gal.length < 1) {
+      $gal = this.removeDuplicatesID(this.RetrieveImagesAccordingToSelectedAttributes($attributes.data, $isthumbGal));
+    }
+    this.sviLog("Gallery", "Final Match Result", { matchedImages: $gal, count: $gal.length });
+    if ("placeholder" in wcsvi.options && this.boolEval(wcsvi.options.placeholder) && $gal.length < 1 && this.attributes.chosenCount > 0) {
+      $gal.push(this.placeholder());
+    }
+    let result = [];
+    if ($isthumbGal) {
+      if ($gal.length > 0 && $attributes.chosenCount > 0)
+        result = $gal;
+      else
+        result = [];
+    } else {
+      if ($gal.length > 0)
+        result = $gal;
+      else {
+        if (this.boolEval(wcsvi.options.hide_thumbs)) {
+          wcsvi.options.nothumbs = true;
+          result = [];
+        } else {
+          const defaultGallery = this.gallery.images.filter((img) => !img.idk);
+          const source = defaultGallery.length > 0 ? defaultGallery : this.gallery.images;
+          const seen = {};
+          result = source.filter((img) => {
+            const key = img.id + "|" + (img.video ? "1" : "0");
+            if (seen[key]) return false;
+            seen[key] = true;
+            return true;
+          });
+        }
+      }
+    }
+    return result;
+  };
+  Vue.prototype.RetrieveImagesAccordingToSelectedAttributes = function($attributes, $isthumbGal, $allowDefault = true) {
+    this.sviLog("Gallery", "Evaluating Selected Attributes", { attributes: $attributes, gallery: this.gallery });
+    let $clean_attributes = $jq.map($attributes, ($attribute) => {
+      this.sviLog("Gallery", "Slugifying Attribute", $attribute);
+      if ($attribute)
+        return this.convertAttributesNames($attribute);
+    });
+    this.sviLog("Gallery", "Cleaned Attributes", $clean_attributes);
+    let $possible_combinations = this.RetrieveAttributesCombinations($clean_attributes, $isthumbGal);
+    this.sviLog("Gallery", "Generated Combinations", $possible_combinations);
+    let $img_ids = this.RetrieveTheImagesID($possible_combinations);
+    if ($allowDefault && $img_ids.length < 1) {
+      $possible_combinations = ["svidefault"];
+      $img_ids = this.RetrieveTheImagesID($possible_combinations);
+      this.sviLog("Gallery", "Fallback To Default (No valid combinations)", $possible_combinations);
+    }
+    this.sviLog("Gallery", "Extracting Image IDs", $img_ids);
+    return this.RetrieveTheImages($img_ids, $isthumbGal);
+  };
+  Vue.prototype.RetrieveNativeVariationGallery = function() {
+    const galleries = this.gallery.variation_galleries;
+    const imageIds = galleries && this.currentVariationId ? galleries[this.currentVariationId] : false;
+    if (!Array.isArray(imageIds) || imageIds.length < 1) {
+      return [];
+    }
+    return imageIds.reduce((images, imageId) => {
+      const image = this.gallery.images.find(
+        (candidate) => parseInt(candidate.id, 10) === parseInt(imageId, 10) && !candidate.idk
+      );
+      if (image) {
+        images.push(image);
+      }
+      return images;
+    }, []);
+  };
+  Vue.prototype.RetrieveImagesAccordingToSelectedOriginalAttributes = function(originalAttributes) {
+    let $img_ids = this.RetrieveTheImagesID(originalAttributes);
+    return this.RetrieveTheImages($img_ids);
+  };
+  Vue.prototype.RetrieveTheImages = function($img_ids, $isthumbGal) {
+    return $jq.map(this.gallery.images, ($images) => {
+      return $jq.map($img_ids, ($img_val, i) => {
+        if (parseInt($img_val.id) == parseInt($images.id) && parseInt($img_val.k) == parseInt($images.idk)) {
+          return $images;
+        }
+      });
+    });
+  };
+  Vue.prototype.RetrieveTheImagesID = function($combinations) {
+    return $jq.map(this.gallery.svi, (svi, i) => {
+      let find = "wc_svimainvideo";
+      if ("slugs" in svi)
+        find = svi.slugs.join("_svipro_");
+      this.sviLog("Gallery", "Searching For Combination", find);
+      if ($combinations.includes(find)) {
+        var $result = svi.imgs.map(function(x) {
+          return { id: parseInt(x), k: parseInt(i) };
+        });
+        this.sviLog("Gallery", "Found Images For Combination", $result);
+        return $result;
+      }
+    });
+  };
+  Vue.prototype.RetrieveAttributesCombinations = function($attributes, $isthumbGal) {
+    let $result = [];
+    this.sviLog("Gallery", "Attributes Processed", { attributes: $attributes, count: Object.keys($attributes).length });
+    if ("triger_match" in wcsvi.options && parseInt(wcsvi.options.triger_match) && $attributes.length > 1) {
+      var combo = $attributes.join("_svipro_");
+      $result.push(combo);
+    } else {
+      var f = function(prefix, $attributes2) {
+        for (var i = 0; i < $attributes2.length; i++) {
+          if (prefix) {
+            $result.push(prefix + "_svipro_" + $attributes2[i]);
+            f(prefix + "_svipro_" + $attributes2[i], $attributes2.slice(i + 1));
+          } else {
+            $result.push(prefix + $attributes2[i]);
+            f(prefix + $attributes2[i], $attributes2.slice(i + 1));
+          }
+        }
+      };
+      f("", $attributes);
+    }
+    if ("keep_thumbnails" in wcsvi.options && parseInt(wcsvi.options.keep_thumbnails))
+      this.originalAttributes = this.RetrieveImagesAccordingToSelectedOriginalAttributes(this.removeDuplicates($result));
+    if ($result.length < 1) {
+      $result.unshift("svidefault");
+    } else {
+      $result.push("sviproglobal");
+    }
+    if ("keep_thumbnails_option" in wcsvi.options && wcsvi.options.keep_thumbnails_option == "svidefault")
+      $result.unshift("svidefault");
+    if ((!("swselect" in wcsvi.options) || !parseInt(wcsvi.options.swselect)) && this.attributes.chosenCount < this.attributes.count || parseInt(wcsvi.options.keep_thumbnails)) {
+      $result = $jq.map($result, ($attribute) => {
+        if (wcsvi.options.keep_thumbnails_option == "svidefault" && $attribute == "svidefault")
+          return $attribute;
+      });
+    } else if ("swselect" in wcsvi.options && parseInt(wcsvi.options.swselect) && this.attributes.chosenCount > 0 || this.attributes.chosenCount > 0) {
+      $result = $jq.map($result, ($attribute) => {
+        if ($attribute != "svidefault")
+          return $attribute;
+      });
+    }
+    if ("variation_thumbnails" in wcsvi.options && this.boolEval(wcsvi.options.variation_thumbnails)) {
+      if (!$isthumbGal) {
+        $result = ["svidefault"];
+      } else {
+        $result = $jq.map($result, ($attribute) => {
+          if ($attribute != "svidefault")
+            return $attribute;
+        });
+      }
+    }
+    return this.removeDuplicates($result);
+  };
+  Vue.prototype.removeDuplicates = function(array) {
+    return array.filter((a, b) => array.indexOf(a) === b);
+  };
+  Vue.prototype.removeDuplicatesID = function(array) {
+    const uniqueArray = array.filter((thing, index2) => {
+      return index2 === array.findIndex((obj) => {
+        return obj.id === thing.id;
+      });
+    });
+    return uniqueArray;
+  };
+  Vue.prototype.removeDuplicatesByKeyID = function(array) {
+    const uniqueArray = array.filter((thing, index2) => {
+      const _thing = JSON.stringify(thing.id);
+      if ("video" in wcsvi.options && parseInt(wcsvi.options.video)) {
+        if (thing.video)
+          return true;
+      }
+      return index2 === array.findIndex((obj) => {
+        return JSON.stringify(obj.id) === _thing;
+      });
+    });
+    return uniqueArray;
+  };
+  Vue.prototype.convertAttributesNames = function($attribute) {
+    let $string = "tetste";
+    if ($attribute.match(/%[0-9a-f]{2}/i)) {
+      this.consoleLog("MATCH");
+      $string = $attribute;
+    } else {
+      $string = this.slugify($attribute);
+      this.consoleLog("SLUGIFY", [$string, $string.length]);
+    }
+    return $string;
+  };
+  Vue.prototype.slugify = function($attribute) {
+    let object = window.wcsvislugs;
+    let $result = Object.keys(object).find((key) => this.escapeHtml(object[key]) === $attribute.trim());
+    return $result ? $result : $attribute;
+  };
+  Vue.prototype.isEncoded = function(str) {
+    return typeof str == "string" && decodeURIComponent(str) !== str;
+  };
+  Vue.prototype.boolEval = function(opt) {
+    return parseInt(opt) || 0;
+  };
+  Vue.prototype.escapeHtml = function(string) {
+    return string.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#039;/g, "'");
+  };
+  Vue.prototype.sliderMain = function() {
+    let sliderOptions = {
+      effect: "slider_effect" in wcsvi.options && wcsvi.options.slider_effect ? wcsvi.options.slider_effect : "slide",
+      spaceBetween: 10,
+      loopedSlides: 1,
+      autoHeight: true,
+      updateOnImagesReady: true,
+      preloadImages: "slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload) ? false : true,
+      lazy: "slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload) ? {
+        loadPrevNext: true,
+        loadOnTransitionStart: true
+      } : false,
+      on: {
+        click: (swiper, event) => {
+          this.photo(this.slides[this.galleryTop.realIndex], event, "slider");
+        },
+        slideChange: () => {
+          const realIndex = this.galleryTop.realIndex;
+          if (this.galleryThumbs && typeof this.galleryThumbs.slideTo === "function") {
+            this.galleryThumbs.slideTo(realIndex);
+          }
+        },
+        slideChangeTransitionStart: () => {
+          this.stopVideos();
+          this.plyr(false);
+          if (this.mainTitle) this.runInsertTitle(this.galleryTop.realIndex);
+          this.vidRun(this.galleryTop.realIndex, this.slides);
+          this.$forceUpdate();
+        }
+      }
+    };
+    if ("slider_autoslide" in wcsvi.options && this.boolEval(wcsvi.options.slider_autoslide)) {
+      sliderOptions.autoplay = {
+        delay: wcsvi.options.slider_autoslide_ms || 5e3,
+        disableOnInteraction: this.boolEval(wcsvi.options.slider_autoslide_disableOnInteraction),
+        pauseOnMouseEnter: true
+      };
+    }
+    if (!("disable_thumb" in wcsvi.options) || !this.boolEval(wcsvi.options.disable_thumb)) {
+      sliderOptions.thumbs = {
+        swiper: this.galleryThumbs
+        // Official Swiper 11 way to sync with thumbnails
+      };
+    }
+    if ("slider_navigation" in wcsvi.options && this.boolEval(wcsvi.options.slider_navigation)) {
+      sliderOptions.navigation = {
+        nextEl: ".swiperTop-swiper-button-next",
+        prevEl: ".swiperTop-swiper-button-prev"
+      };
+    }
+    if ("slider_pagination" in wcsvi.options && this.boolEval(wcsvi.options.slider_pagination)) {
+      sliderOptions.pagination = {
+        el: ".sviswiper-pagination",
+        dynamicBullets: "slider_paginationDynamicBullets" in wcsvi.options && this.boolEval(wcsvi.options.slider_paginationDynamicBullets),
+        type: "slider_paginationType" in wcsvi.options && wcsvi.options.slider_paginationType ? wcsvi.options.slider_paginationType : "bullets",
+        clickable: "slider_paginationclickable" in wcsvi.options && this.boolEval(wcsvi.options.slider_paginationclickable)
+      };
+    }
+    return new Swiper(".svi-gallery-top", sliderOptions);
+  };
+  Vue.prototype.sliderThumbs = function() {
+    let sliderOptions = {
+      spaceBetween: 10,
+      direction: "slider_position" in wcsvi.options ? parseInt(wcsvi.options.slider_position) === 0 ? "horizontal" : "vertical" : "horizontal",
+      slidesPerView: "slider_position" in wcsvi.options ? parseInt(wcsvi.options.slider_position) === 0 ? parseFloat(wcsvi.options.columns) : 4.8 : parseInt(wcsvi.options.columns),
+      loopedSlides: 1,
+      watchSlidesVisibility: true,
+      watchSlidesProgress: true,
+      centeredSlides: false,
+      // Set to false for a left-aligned behavior
+      slideToClickedSlide: true,
+      // Allows clicking on a thumbnail to center it in the main swiper
+      preloadImages: "slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload) ? false : true,
+      lazy: "slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload) ? {
+        loadPrevNext: true
+      } : false,
+      watchOverflow: true,
+      threshold: 2,
+      on: {
+        click: (swiper) => {
+          this.runOpacity(swiper);
+          if ("variation_swap" in wcsvi.options && this.boolEval(wcsvi.options.variation_swap)) {
+            let $item = this.slides[this.galleryTop.realIndex];
+            this.ThumbClickSwap($item);
+          }
+        }
+      }
+    };
+    if ("slider_navigation_thumb" in wcsvi.options && this.boolEval(wcsvi.options.slider_navigation_thumb)) {
+      sliderOptions.navigation = {
+        nextEl: ".swiperThumbs-swiper-button-next",
+        prevEl: ".swiperThumbs-swiper-button-prev"
+      };
+    }
+    return new Swiper(".svi-gallery-thumbs", sliderOptions);
+  };
+  Vue.prototype.isEquivalent = function(aOriginal, bOriginal) {
+    let a = JSON.parse(JSON.stringify(aOriginal)).map(function(i3, obj) {
+      return i3["id"];
+    });
+    let b = JSON.parse(JSON.stringify(bOriginal)).map(function(i3, obj) {
+      return i3["id"];
+    });
+    if ("skip_equivalent" in wcsvi.options && this.boolEval(wcsvi.options.skip_equivalent) && "slider" in wcsvi.options && !this.boolEval(wcsvi.options.slider))
+      return false;
+    if (JSON.stringify(a) === JSON.stringify(b))
+      return true;
+    else
+      return false;
+  };
+  Vue.prototype.imgEl = function($attr, $type = "static") {
+    if (typeof $attr != "object")
+      return "";
+    if (!("video" in wcsvi.options) || !parseInt(wcsvi.options.video)) {
+      $attr.video = "";
+    }
+    let $imgEl;
+    let $video = "";
+    let $lightbox = "";
+    let $theBuild = "";
+    let $activateTitle = "";
+    let $runActiveTitle = false;
+    if ($attr.video != "")
+      $video = '<div class="sviicon-play"><span class="dashicons dashicons-controls-play"></span></div>';
+    if ("lightbox" in wcsvi.options && parseInt(wcsvi.options.lightbox) && ("lightbox_icon" in wcsvi.options && parseInt(wcsvi.options.lightbox_icon))) {
+      $lightbox = '<span style="color:' + wcsvi.options.lightbox_iconcolor + '" class="sviLigthgallery"></span>';
+    }
+    switch ($type) {
+      case "static":
+        if ($attr.video != "") {
+          $theBuild = this.plyr_video($attr);
+          $video = "";
+        } else
+          $theBuild = this.imgElstatic($attr);
+        $imgEl = $lightbox + $video + $theBuild;
+        $runActiveTitle = "main";
+        break;
+      case "slider":
+        if ($attr.video != "") {
+          $theBuild = this.plyr_video($attr);
+          $video = "";
+        } else
+          $theBuild = this.imgElslider($attr);
+        $imgEl = $lightbox + $video + $theBuild;
+        break;
+      case "sliderthumb":
+        $theBuild = this.imgElslider($attr, true);
+        $imgEl = $video + $theBuild;
+        break;
+      case "stack":
+        if ($attr.video != "") {
+          $theBuild = this.plyr_video($attr);
+          $video = "";
+        } else {
+          $theBuild = this.imgElstack($attr);
+        }
+        $imgEl = $lightbox + $video + $theBuild;
+        $runActiveTitle = "main";
+        break;
+      case "svimainthumb":
+        $theBuild = this.imgElstatic($attr, true);
+        $imgEl = $video + $theBuild;
+        $runActiveTitle = "thumb";
+        break;
+      case "svivariationsthumb":
+        if (!$video) {
+          if (false in wcsvi.options || !this.boolEval(wcsvi.options.variation_thumbnails_lb) || "variation_thumbnails_lb" in wcsvi.options && this.boolEval(wcsvi.options.variation_thumbnails_lb) && (false in wcsvi.options || !parseInt(wcsvi.options.lightbox_icon)))
+            $lightbox = "";
+        } else {
+          if (false in wcsvi.options || !parseInt(wcsvi.options.lightbox_icon))
+            $lightbox = "";
+        }
+        $theBuild = this.imgElstatic($attr, true);
+        $imgEl = $lightbox + $video + $theBuild;
+        $runActiveTitle = "thumb";
+        break;
+    }
+    if ("activateTitle" in this && this.activateTitle && $runActiveTitle != false) {
+      if ($runActiveTitle == "thumb")
+        $activateTitle = "thumb_imagecaption_option" in wcsvi.options ? this.returnTitle(wcsvi.options.thumb_imagecaption_option, $attr) : "";
+      if ($runActiveTitle == "main")
+        $activateTitle = "imagecaption_option" in wcsvi.options ? this.returnTitle(wcsvi.options.imagecaption_option, $attr) : "";
+      $imgEl = $imgEl + '<div class="svititleimg">' + $activateTitle + "</div>";
+    }
+    return $imgEl;
+  };
+  const checkAttrAndOption = (attr, optionKey, options) => optionKey in options && Number(options[optionKey]) && attr;
+  Vue.prototype.imgElstatic = function($attr, $thumb = false, $outerHTML = true) {
+    const {
+      src,
+      title,
+      alt,
+      id,
+      srcset,
+      height,
+      width,
+      class: classAttr,
+      // 'class' is a reserved keyword
+      thumb_class,
+      large_image_height,
+      thumb_image_height,
+      large_image_width,
+      thumb_image_width,
+      large_image,
+      thumb_image
+    } = $attr;
+    const { options } = wcsvi;
+    const img = document.createElement("img");
+    if (src) img.src = !$thumb ? large_image : thumb_image;
+    if (checkAttrAndOption(title, "svititleattr", options)) img.title = this.decodeEntities(title);
+    if (checkAttrAndOption(alt, "svialtattr", options)) img.alt = this.decodeEntities(alt);
+    if (id) img.dataset.sviid = id;
+    if (checkAttrAndOption(srcset, "sviesrcset", options)) img.dataset.srcset = srcset;
+    if ("lens" in options && Number(options.lens) && !$thumb) img.dataset.zoomImage = src;
+    if (height) img.height = !$thumb ? large_image_height : thumb_image_height;
+    if (width) img.width = !$thumb ? large_image_width : thumb_image_width;
+    if (classAttr && $outerHTML) img.className = !$thumb ? classAttr : `${thumb_class} svi-thumb-image`;
+    return $outerHTML ? img.outerHTML : img;
+  };
+  Vue.prototype.decodeEntities = function(encodedString) {
+    const textArea = document.createElement("textarea");
+    textArea.innerHTML = encodedString;
+    return textArea.value;
+  };
+  Vue.prototype.imgElslider = function($attr, $thumb = false) {
+    let img = this.imgElstatic($attr, $thumb, false);
+    if ("class" in $attr)
+      img.className = !$thumb ? $attr.class : $attr.thumb_class + " svi-thumb-image";
+    if ("slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload)) {
+      img.dataset.src = !$thumb ? $attr.large_image : $attr.thumb_image;
+      img.className += " swiper-lazy ";
+    }
+    img.className = img.className.trim();
+    return img.outerHTML;
+  };
+  Vue.prototype.imgElstack = function($attr) {
+    let img = this.imgElstatic($attr, false, false);
+    img.className += "svi-stack-image ";
+    img.className = img.className.trim();
+    return img.outerHTML;
+  };
+  Vue.prototype.runOpacity = function($item) {
+    if (!("thumbnails_showactive" in wcsvi.options) || !parseInt(wcsvi.options.thumbnails_showactive))
+      return;
+    if (typeof $item == "undefined") {
+      if ("slider" in wcsvi.options && this.boolEval(wcsvi.options.slider))
+        $jq(this.$el).find(".svi-gallery-thumbs .swiper-slide-active img").addClass("svi-opacity");
+      else
+        $jq(this.$el).find("ul>li:first-child img").addClass("svi-opacity");
+    } else {
+      $jq("img.svi-opacity").removeClass("svi-opacity");
+      if ("slider" in wcsvi.options && this.boolEval(wcsvi.options.slider))
+        $jq(this.$el).find(".svi-gallery-thumbs .swiper-slide-thumb-active img").addClass("svi-opacity");
+      else
+        $jq($item.target).addClass("svi-opacity");
+    }
+  };
+  Vue.prototype.placeholder = function() {
+    return {
+      alt: "",
+      caption: "",
+      class: wcsvi.options.placeholder_img.class,
+      full_image: wcsvi.options.placeholder_img.src,
+      full_image_height: wcsvi.options.placeholder_img.height,
+      full_image_width: wcsvi.options.placeholder_img.width,
+      height: wcsvi.options.placeholder_img.height,
+      id: "xPlaceholder",
+      large_image: wcsvi.options.placeholder_img.src,
+      large_image_height: wcsvi.options.placeholder_img.height,
+      large_image_width: wcsvi.options.placeholder_img.width,
+      product_img: true,
+      sizes: wcsvi.options.placeholder_img.sizes,
+      src: wcsvi.options.placeholder_img.src,
+      srcset: wcsvi.options.placeholder_img.srcset,
+      thumb_image: wcsvi.options.placeholder_img.src,
+      thumb_image_height: wcsvi.options.placeholder_img.height,
+      thumb_image_width: wcsvi.options.placeholder_img.width,
+      title: "",
+      width: wcsvi.options.placeholder_img.width,
+      video: ""
+    };
+  };
+  Vue.prototype.getWindowWidth = function($return = false) {
+    if (document.documentElement.clientWidth < 768) {
+      if ($return)
+        return "mobile";
+      else
+        this.windowType = "mobile";
+    }
+    if (document.documentElement.clientWidth >= 768) {
+      if ($return)
+        return "desktop";
+      else
+        this.windowType = "desktop";
+    }
+  };
+  Vue.prototype.runInsertTitle = function($index) {
+    let $img = this.slides[$index];
+    this.imgTitle = "imagecaption_option" in wcsvi.options ? this.returnTitle(wcsvi.options.imagecaption_option, $img) : "";
+  };
+  Vue.prototype.returnTitle = function($option, $img) {
+    return $option == "caption" ? $img.caption : $img.title;
+  };
+  Vue.prototype.ThumbClickSwap = function($item) {
+    let attributeFields = this.$root.$children[0].attributeFields;
+    let $slugs = this.RetrieveTheSlugs($item.id);
+    let _this = this;
+    attributeFields.map(function(i3, select) {
+      let $found = false;
+      let isPopulated = $jq(select).val() === "" ? false : true;
+      $jq.each($slugs[0], function(i2, v2) {
+        $jq(select).find("option").map(function(selIndex, option) {
+          if (_this.slugify(option.value) == v2 && !$jq(option).is(":selected")) {
+            $jq(select).val(option.value).trigger("change");
+            $found = true;
+            $jq(".swatches-support").trigger("click");
+          }
+          if (_this.slugify(option.value) == v2) {
+            $found = true;
+          }
+        });
+      });
+      if (!$found) {
+        if (!isPopulated)
+          $jq(select).prop("selectedIndex", 0);
+      }
+    });
+  };
+  Vue.prototype.RetrieveTheSlugs = function($imgID) {
+    let sviGal = this.$root.$children[0].gallery.svi;
+    return $jq.map(sviGal, (svi) => {
+      if (svi.imgs.includes($imgID.toString())) {
+        return [svi.slugs];
+      }
+    });
+  };
+  Vue.prototype.stopVideos = function() {
+    document.querySelectorAll("video").forEach((video) => {
+      video.pause();
+      video.currentTime = 0;
+    });
+    document.querySelectorAll(".plyr__video-wrapper.plyr__video-embed iframe").forEach((iframe) => {
+      iframe.src = iframe.src;
+    });
+  };
+  Vue.prototype.photo = function($item, $event, $type) {
+    if ($type == "variationThumbImages" && (!("lightbox" in wcsvi.options) || !this.boolEval(wcsvi.options.lightbox) || $event.target.localName != "span" && $event.target.localName != "img")) {
+      if ($jq(this.$el).find("video,.plyr").length > 0) {
+        $jq(this.$el).find("video,.plyr").remove();
+        $jq(this.$el).find(".sviicon-play").show();
+      }
+      $jq($event.target).closest("li").find(".sviicon-play").hide();
+      $jq($event.target).closest(".svivariationsthumb").append(this.plyr_video($item));
+      this.plyr($item);
+      return;
+    }
+    if (!("lightbox" in wcsvi.options) || !this.boolEval(wcsvi.options.lightbox) || $event.target.localName != "span" && $event.target.localName != "img" && ($event.target.className != "zoomLens" && $event.target.className != "zoomWindow"))
+      return;
+    if ($event.target.className.includes("play") && $type == "stack") {
+      $jq($event.target).closest("li").find("img,.sviicon-play").hide();
+      $jq($event.target).closest("li").append(this.plyr_video($item));
+      this.plyr($item);
+    } else {
+      if (!("lightbox_iconclick" in wcsvi.options) || !this.boolEval(wcsvi.options.lightbox_iconclick)) {
+        this.photoSwipeTrigger($item, $type);
+      } else if ("lightbox_iconclick" in wcsvi.options && this.boolEval(wcsvi.options.lightbox_iconclick) && $event.target.className == "sviLigthgallery") {
+        this.photoSwipeTrigger($item, $type);
+      }
+    }
+  };
+  Vue.prototype.photoSwipeTrigger = function($item, $type) {
+    if ($type == "slider")
+      this.$photoswipe.open($item, this.slides, this.$photoswipe, this.$root.$children[0].pid);
+    else if ($type == "static")
+      this.$photoswipe.open($item, this.gallery, this.$photoswipe, this.$root.$children[0].pid);
+    else if ($type == "stack" || $type == "variationThumbImages")
+      this.$photoswipe.open($item, this.list, this.$photoswipe, this.$root.$children[0].pid);
+  };
+  Vue.prototype.findIndex = function($item, $gallery) {
+    let $index = 0;
+    $jq.each($gallery, (i, v2) => {
+      if ($item.id == v2.id) {
+        $index = i;
+        return false;
+      }
+    });
+    return $index;
+  };
+  Vue.prototype.sviLog = function(namespace, action, data = null, level = "debug") {
+    const isProd = this.boolEval(wcsvi.prod);
+    const forceDebug = typeof window !== "undefined" && window.location.search.includes("svi_debug");
+    if (isProd && !forceDebug) return;
+    if (typeof console === "undefined") return;
+    const time = performance.now().toFixed(2);
+    const prefix = `%c[SVI:${namespace}]%c [${time}ms] %c${action}`;
+    let color = "#3498db";
+    if (namespace === "Plyr") color = "#e74c3c";
+    if (namespace === "Thumbnails") color = "#2ecc71";
+    if (namespace === "Legacy") color = "#95a5a6";
+    if (namespace === "Lightbox") color = "#9b59b6";
+    const s1 = `color: white; background: ${color}; font-weight: bold; padding: 2px 4px; border-radius: 3px;`;
+    const s2 = `color: #7f8c8d; font-size: 0.9em; margin-left: 4px;`;
+    const s3 = `color: ${color}; font-weight: bold; margin-left: 4px;`;
+    if (data !== null) {
+      if (level === "warn" || level === "error") {
+        console[level](prefix, s1, s2, s3, data);
+      } else {
+        console.log(prefix, s1, s2, s3, data);
+      }
+    } else {
+      console.log(prefix, s1, s2, s3);
+    }
+  };
+  Vue.prototype.consoleLog = function(...args) {
+    this.sviLog("Legacy", args[0] || "Log", args.length > 1 ? args.slice(1) : null);
+  };
+  Vue.prototype.plyr_video = function($img) {
+    if (!$img.video)
+      return;
+    let data = this.parseVideo($img.video);
+    let poster = "video_poster" in wcsvi.options && parseInt(wcsvi.options.video_poster) ? $img.large_image : "";
+    let UIcolor = "";
+    if ("video_maincolor" in wcsvi.options && wcsvi.options.video_maincolor)
+      UIcolor = 'style="--plyr-color-main: ' + wcsvi.options.video_maincolor + ';"';
+    const isTrue2 = (val) => val === 1 || val === "1" || val === "yes" || val === "on" || val === true;
+    const shouldAutoplay = isTrue2(wcsvi.options.video_autoplay);
+    const shouldMute = isTrue2(wcsvi.options.video_muted);
+    let nativeAttrs = ' playsinline="playsinline" ';
+    if (shouldAutoplay) {
+      nativeAttrs += ' autoplay="autoplay" muted="muted" ';
+    } else if (shouldMute) {
+      nativeAttrs += ' muted="muted" ';
+    }
+    if (isTrue2(wcsvi.options.video_loop ?? 0)) {
+      nativeAttrs += ' loop="loop" ';
+    }
+    this.consoleLog("DEBUG PLYR_VIDEO HTML GENERATION", { wcsviAutoplay: wcsvi.options.video_autoplay, shouldAutoplay, nativeAttrs, isLightbox: this.$el.classList.contains("pswp") });
+    if (data.type == "youtube" || data.type == "vimeo")
+      return '<div class="svi-player_' + $img.id + "_" + $img.idk + "_" + this.$el.className + '" data-plyr-provider="' + data.type + '" data-plyr-embed-id="' + data.id + '" data-poster="' + poster + '" ' + UIcolor + "></div>";
+    else {
+      return "<video " + nativeAttrs + ' class="svi-player_' + $img.id + "_" + $img.idk + "_" + this.$el.className + '" data-poster="' + poster + '" ' + UIcolor + ' preload="auto"><source src="' + $img.video + '" type="video/mp4" /></video>';
+    }
+  };
+  Vue.prototype.plyr = function($data, $pid = false) {
+    var _a, _b;
+    let player = false;
+    if ((_a = wcsvi.options) == null ? void 0 : _a.video) {
+      if (!$data || $data.video === "") {
+        this.$bus.$emit("vidPlayer_" + $pid, player);
+        return;
+      }
+      let _this = this;
+      let $controls = typeof wcsvi.options.video_controls === "object" ? wcsvi.options.video_controls : false;
+      let $el = this.$el.className.split(" ");
+      let $class = `.svi-player_${$data.id}_${$data.idk}_${$el[0]}`;
+      const isSviproslider = _this.$el.className === "sviproslider";
+      const pswp = _this.$el.classList.contains("pswp");
+      const isTrue2 = (val) => val === 1 || val === "1" || val === "yes" || val === "on" || val === true;
+      const shouldAutoplay = isTrue2(wcsvi.options.video_autoplay);
+      const shouldMute = isTrue2(wcsvi.options.video_muted);
+      this.consoleLog("DEBUG PLYR INITIALIZATION", { wcsviAutoplay: wcsvi.options.video_autoplay, shouldAutoplay, pswp, class: $class });
+      const videoElements = document.querySelectorAll($class);
+      videoElements.forEach((el) => {
+        if (el.tagName === "VIDEO") {
+          if (shouldAutoplay || shouldMute) {
+            el.muted = true;
+            el.defaultMuted = true;
+          }
+        }
+      });
+      player = new Plyr($class, {
+        autoplay: shouldAutoplay,
+        muted: shouldAutoplay ? true : shouldMute,
+        clickToPlay: isTrue2(wcsvi.options.video_clickToPlay ?? 1),
+        hideControls: isTrue2(wcsvi.options.video_hideControls ?? 1),
+        fullscreen: { enabled: isTrue2(wcsvi.options.video_fullscreen ?? 1) },
+        controls: $controls,
+        ratio: wcsvi.options.video_ratio === "auto" || pswp ? "" : wcsvi.options.video_ratio ?? "",
+        loop: { active: isTrue2(wcsvi.options.video_loop ?? 0) },
+        storage: { enabled: false }
+      });
+      this.$bus.$emit("vidPlayer_" + $pid, player);
+      let ratio = (_b = wcsvi.options) == null ? void 0 : _b.video_ratio;
+      if (ratio && ratio !== "auto" && ratio.includes(":") && !pswp) {
+        const [width, height] = ratio.split(":").map(Number);
+        const aspectRatio = width / height;
+        const plyrElements = _this.$el.querySelectorAll(".plyr");
+        plyrElements.forEach((plyrEl) => {
+          plyrEl.style.aspectRatio = `${aspectRatio}`;
+        });
+        if (isSviproslider) {
+          _this.galleryTop.update();
+        }
+      }
+    }
+  };
+  Vue.prototype.vidRun = function(curIndex = 0, $gallery, $pid = false) {
+    if ($gallery[curIndex].video) {
+      this.plyr($gallery[curIndex], $pid);
+    } else {
+      this.plyr(false, $pid);
+    }
+  };
+  Vue.prototype.parseVideo = function($url) {
+    let type = "html5";
+    if ($url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/)) {
+      if (RegExp.$3.indexOf("youtu") > -1) {
+        type = "youtube";
+      } else if (RegExp.$3.indexOf("vimeo") > -1) {
+        type = "vimeo";
+      }
+    } else {
+      type = "html5";
+    }
+    return {
+      type,
+      id: RegExp.$6
+    };
+  };
+  Vue.prototype.colposition = function(index2) {
+    var skey = Number(index2);
+    var $classes = [""];
+    if (skey === 0 || skey % this.columns === 0) {
+      $classes.push("first");
+    }
+    if ((skey + 1) % this.columns === 0) {
+      $classes.push("last");
+    }
+    if (index2 == 0 && this.thumbtype == "svimainthumb") this.runOpacity();
+    return $classes.join(" ");
+  };
+  Vue.prototype.calculateAspectRatioFit = function($img = false) {
+    let maxWidth = $jq(this.$el).outerWidth();
+    let srcWidth, srcHeight, maxHeight;
+    if ($img && $img.width && $img.height && $img.full_image_height) {
+      srcWidth = $img.width;
+      srcHeight = $img.height;
+      maxHeight = $img.full_image_height;
+    } else if (this.image && this.image.width && this.image.height && this.image.full_image_height) {
+      srcWidth = this.image.width;
+      srcHeight = this.image.height;
+      maxHeight = this.image.full_image_height;
+    } else {
+      return { width: 0, height: 0 };
+    }
+    let ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+    return { width: srcWidth * ratio, height: srcHeight * ratio };
+  };
+  Vue.prototype.runKeepThumbnailsImageChange = function($imgs, $isSlider) {
+    let _this = this;
+    let list = false;
+    if ($isSlider)
+      list = this.slides;
+    else
+      list = this.list;
+    if (!list || $imgs.length < 1)
+      return;
+    $jq.each(list, (i, v2) => {
+      $jq.each($imgs, (i2, v22) => {
+        if ("id" in v22 && v2.id == v22.id) {
+          if ($isSlider)
+            _this.galleryTop.slideTo(i);
+          else
+            $jq(_this.$el).find("[data-sviid='" + v2.id + "']").click();
+        }
+      });
+    });
+  };
+  Vue.prototype.waitForEl = function(selector, callback, maxtries = false, interval = 100, dataObj = false) {
+    const poller = setInterval(() => {
+      const el = jQuery(selector);
+      const retry = maxtries === false || maxtries-- > 0;
+      if (retry && el.length < 1) return;
+      clearInterval(poller);
+      if (dataObj) {
+        dataObj.form = $jq(".variations_form[data-product_id='" + dataObj.product_id + "']");
+        callback(dataObj);
+      } else
+        callback(el || null);
+    }, interval);
+  };
+  Vue.prototype.buildSwatches = function() {
+    let $form = this.form ? this.form : $jq("div.wcsvfs-swatches").first().closest("form");
+    $form.on("click", ".swatch", function(e) {
+      e.preventDefault();
+      var $el = $jq(this), $select = $el.closest(".value").find("select"), value = $el.attr("data-value");
+      if ($el.hasClass("disabled")) {
+        return;
+      }
+      $select.trigger("focusin");
+      if (!$select.find('option[value="' + value + '"]').length) {
+        $el.siblings(".swatch").removeClass("selected");
+        $select.val("").change();
+        $form.trigger("wcsvfs_no_matching_variations", [$el]);
+        return;
+      }
+      if ($el.hasClass("selected")) {
+        $select.val("");
+        $el.removeClass("selected");
+      } else {
+        $el.addClass("selected").siblings(".selected").removeClass("selected");
+        $select.val(value);
+      }
+      $select.change();
+    }).on("click", ".reset_variations", function() {
+      $form.find(".swatch.selected").removeClass("selected");
+      $form.find(".swatch.disabled").removeClass("disabled");
+    }).on("woocommerce_update_variation_values", function() {
+      setTimeout(function() {
+        $form.find("tbody tr").each(function() {
+          var $variationRow = $jq(this), $options = $variationRow.find("select").find("option"), $selected = $options.filter(":selected"), values = [];
+          $options.each(function(index2, option) {
+            if (option.value !== "") {
+              values.push(option.value);
+            }
+          });
+          $variationRow.find(".swatch").each(function() {
+            var $swatch = $jq(this), value = $swatch.attr("data-value");
+            if (values.indexOf(value) > -1) {
+              $swatch.removeClass("disabled");
+              if ($selected.length && value === $selected.val()) {
+                $swatch.addClass("selected");
+              }
+            } else {
+              $swatch.addClass("disabled");
+              if ($selected.length && value === $selected.val()) {
+                $swatch.removeClass("selected");
+              }
+            }
+          });
+        });
+      }, 150);
+    }).on("wcsvfs_no_matching_variations", function() {
+      window.alert(wc_add_to_cart_variation_params.i18n_no_matching_variations_text);
+    });
+  };
+  var lensoptions = {
+    zoomContainerAppendTo: ".woosvi_strap",
+    container: "sviZoomContainer",
+    cursor: "pointer",
+    attrImageZoomSrc: "zoom-image",
+    galleryActiveClass: "active",
+    containLensZoom: true,
+    borderColour: "lens_border" in wcsvi.options && wcsvi.options.lens_border ? wcsvi.options.lens_border : "#888",
+    lensBorderSize: "lens_lensBorder" in wcsvi.options && wcsvi.options.lens_lensBorder ? wcsvi.options.lens_lensBorder : 1,
+    lensShape: "lens_type" in wcsvi.options && wcsvi.options.lens_type ? wcsvi.options.lens_type : "round",
+    lensSize: "lens_size" in wcsvi.options && wcsvi.options.lens_size ? wcsvi.options.lens_size : 125,
+    zoomType: "lens_zoomtype" in wcsvi.options && wcsvi.options.lens_zoomtype ? wcsvi.options.lens_zoomtype : "lens",
+    easing: "lens_easing" in wcsvi.options && parseInt(wcsvi.options.lens_easing) ? true : false,
+    scrollZoom: "lens_scrollzoom" in wcsvi.options && wcsvi.options.lens_scrollzoom ? true : false,
+    lensFadeIn: "lens_lensFadeIn" in wcsvi.options && parseInt(wcsvi.options.lens_lensFadeIn) ? wcsvi.options.lens_lensFadeIn : false,
+    zoomWindowFadeIn: "lens_zoomWindowFadeIn" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowFadeIn) ? wcsvi.options.lens_zoomWindowFadeIn : false,
+    zIndex: "lens_zIndex" in wcsvi.options && wcsvi.options.lens_zIndex ? wcsvi.options.lens_zIndex : 1e3,
+    zoomWindowWidth: "lens_zoomWindowWidth" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowWidth) ? wcsvi.options.lens_zoomWindowWidth : 400,
+    zoomWindowHeight: "lens_zoomWindowHeight" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowHeight) ? wcsvi.options.lens_zoomWindowHeight : 400,
+    zoomWindowPosition: "rtl" in wcsvi.options && parseInt(wcsvi.options.rtl) ? 11 : 1
+  };
+  Vue.directive("ezPlus", {
+    update: function(el, binding, vnode) {
+      let Mobile = false;
+      if (!parseInt(wcsvi.options.lens))
+        return;
+      if (document.documentElement.clientWidth < 768) {
+        Mobile = true;
+      }
+      if (Mobile && !parseInt(wcsvi.options.lens_mobiledisabled))
+        return;
+      let img = $jq(el).find("img");
+      $jq("div.sviZoomContainer").remove();
+      $jq(img).ezPlus(lensoptions);
+    }
+  });
+  Vue.directive("ezPlusStacked", {
+    bind: function(el, binding, vnode) {
+      let Mobile = false;
+      if (!parseInt(wcsvi.options.lens))
+        return;
+      if (document.documentElement.clientWidth < 768) {
+        Mobile = true;
+      }
+      if (Mobile && (false in wcsvi.options || !parseInt(wcsvi.options.lens_mobiledisabled)))
+        return;
+      if ($jq(el).find(".sviicon-play").length > 0)
+        return;
+      let img = $jq(el).find("img");
+      let stacklensoptions = lensoptions;
+      stacklensoptions.container = "sviStackedZoomContainer";
+      var handle = setInterval(() => {
+        $jq(img).mouseover(function() {
+          $jq(img).ezPlus(stacklensoptions);
+        });
+        clearInterval(handle);
+      }, 15);
+    }
+  });
+  Vue.directive("ezPlusSlider", {
+    componentUpdated: function(el, binding, vnode) {
+      let Mobile = false;
+      if (!parseInt(wcsvi.options.lens))
+        return;
+      if (document.documentElement.clientWidth < 768) {
+        Mobile = true;
+      }
+      if (Mobile && (false in wcsvi.options || !parseInt(wcsvi.options.lens_mobiledisabled)))
+        return;
+      let $img = $jq(el).find(".swiper-slide-active img");
+      lensoptions.zoomContainerAppendTo = ".woosvi_strap .svi-gallery-top .swiper-slide-active";
+      lensoptions.zIndex = 9;
+      $jq("div.zoomContainer,div.zoomWindowContainer").remove();
+      $jq($img).ezPlus(lensoptions);
+      if (lensoptions.zoomType == "window") {
+        var refreshId = setInterval(function() {
+          if ($jq("div.sviZoomContainer div.zoomWindowContainer").length > 0) {
+            $jq("div.sviZoomContainer div.zoomWindowContainer").detach().appendTo(".woosvi_strap");
+            clearInterval(refreshId);
+          }
+        }, 10);
+      }
+    }
+  });
+  Vue.directive("playVideo", {
+    bind: function(el, binding, vnode) {
+      setTimeout(() => {
+        vnode.context.plyr(binding.value);
+      }, 500);
+    }
+  });
+  const _sfc_main = {
+    name: "pswp",
+    data: function() {
+      return {
+        options: {
+          closeEl: parseInt(wcsvi.options.lightbox_close) ? true : false,
+          captionEl: "lightbox_title" in wcsvi.options && parseInt(wcsvi.options.lightbox_title) ? true : false,
+          fullscreenEl: parseInt(wcsvi.options.lightbox_fullScreen) ? true : false,
+          zoomEl: parseInt(wcsvi.options.lightbox_zoom) ? true : false,
+          shareEl: parseInt(wcsvi.options.lightbox_share) ? true : false,
+          counterEl: parseInt(wcsvi.options.lightbox_counter) ? true : false,
+          arrowEl: parseInt(wcsvi.options.lightbox_controls) ? true : false,
+          preloaderEl: true,
+          index: 0
+        },
+        thumbnails: "lightbox_thumbnails" in wcsvi.options && parseInt(wcsvi.options.lightbox_thumbnails) ? true : false,
+        gallery: false,
+        photoEl: false,
+        photoswipe: false,
+        toggleCheck: true,
+        pid: 0
+      };
+    },
+    mounted: function() {
+      this.$nextTick(function() {
+      });
+    },
+    watch: {
+      photoswipe: function(val) {
+        let _this = this;
+        this.photoswipe.listen("afterChange", function() {
+          let curIndex = val.getCurrentIndex();
+          _this.vidRun(curIndex, _this.gallery, _this.pid);
+        });
+        this.photoswipe.listen("close", function() {
+          let curIndex = val.getCurrentIndex();
+          _this.plyr(false, _this.pid);
+          _this.$bus.$emit("vidPlayerSlider_" + _this.pid, curIndex);
+          _this.$bus.$emit("vidPlayerStack_" + _this.pid, curIndex);
+        });
+      }
+    },
+    methods: {
+      open($item, $gallery, $photoEl, $pid) {
+        this.pid = $pid;
+        this.plyr(false, this.pid);
+        this.gallery = $gallery;
+        this.options.index = this.findIndex($item, this.gallery);
+        this.photoEl = $photoEl;
+        this.photoswipe = new PhotoSwipe(
+          this.$el,
+          //.pswp element
+          PhotoSwipeUI_Default,
+          // PhotoSwipe UI class
+          this.lightbox_prep(),
+          // Array with objects (slides).
+          this.options
+          //PhotoSwipe Options
+        );
+        if (this.thumbnails && !wcsvi.options.nothumbs) this.photoswipePreviews(this.photoswipe);
+        this.photoswipe.init();
+        setTimeout(() => {
+          this.vidRun(this.options.index, this.gallery, this.pid);
+        }, 100);
+      },
+      lightbox_prep() {
+        var items = [];
+        $jq.each(this.gallery, (i, v2) => {
+          if ("video" in wcsvi.options && v2.video && parseInt(wcsvi.options.video)) {
+            let vidPlayer = this.plyr_video(v2);
+            items.push({
+              html: vidPlayer,
+              // optional alt attribute for thumbnail image
+              msrc: v2.thumb_image
+            });
+          } else {
+            items.push({
+              src: v2.full_image,
+              msrc: v2.thumb_image,
+              w: v2.full_image_width,
+              h: v2.full_image_height,
+              title: v2.title
+              // optional alt attribute for thumbnail image
+            });
+          }
+        });
+        return items;
+      },
+      photoswipePreviews(gallery) {
+        let added = false;
+        const props2 = {
+          gallery,
+          selector: "[data-previews]"
+        };
+        gallery.listen("gettingData", () => {
+          if (added) return;
+          added = true;
+          this.addPreviews(props2);
+        });
+        gallery.listen("close", () => {
+          this.removePreviews(props2);
+        });
+        gallery.listen("afterChange", () => {
+          this.setActivePreview(props2);
+        });
+      },
+      addPreviews({ gallery, selector }) {
+        const { scrollWrap, items } = gallery;
+        const place = scrollWrap.querySelector(selector);
+        for (const item of items) {
+          const { msrc: preview } = item;
+          const element = document.createElement("img");
+          element.setAttribute("src", preview);
+          element.addEventListener("click", () => {
+            gallery.goTo(items.indexOf(item));
+          });
+          place.appendChild(element);
+        }
+      },
+      removePreviews({ gallery, selector }) {
+        const { scrollWrap } = gallery;
+        const place = scrollWrap.querySelector(selector);
+        place.innerHTML = "";
+      },
+      setActivePreview({ gallery, selector }) {
+        const { scrollWrap, currItem } = gallery;
+        const { msrc: preview } = currItem;
+        const place = scrollWrap.querySelector(selector);
+        const previewElements = place.querySelectorAll("img");
+        for (const element of previewElements) {
+          const src = element.getAttribute("src");
+          const className = "is-active";
+          if (src === preview) {
+            element.classList.add(className);
+            element.scrollIntoView({ behavior: "smooth" });
+          } else element.classList.remove(className);
+        }
+      },
+      togglePreview() {
+        this.toggleCheck = !this.toggleCheck;
+        if (this.toggleCheck == true) {
+          $jq(".pswp__previews").slideDown();
+        } else {
+          $jq(".pswp__previews").slideUp();
+        }
+      }
+    }
+  };
+  var _sfc_render = function render() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "pswp", attrs: { "tabindex": "-1", "role": "dialog", "aria-hidden": "true" } }, [_c("div", { staticClass: "pswp__bg" }), _c("div", { staticClass: "pswp__scroll-wrap" }, [_vm._m(0), _c("div", { staticClass: "pswp__ui pswp__ui--hidden" }, [_c("div", { staticClass: "pswp__top-bar" }, [_c("div", { staticClass: "pswp__counter" }), _c("button", { staticClass: "pswp__button pswp__button--close", attrs: { "title": "Close (Esc)" } }), _c("button", { staticClass: "pswp__button pswp__button--share", attrs: { "title": "Share" } }), _c("button", { staticClass: "pswp__button pswp__button--fs", attrs: { "title": "Toggle fullscreen" } }), _c("button", { staticClass: "pswp__button pswp__button--zoom", attrs: { "title": "Zoom in/out" } }), _vm.thumbnails ? _c("button", { staticClass: "pswp__button pswp__button--thumb", attrs: { "title": "Thumbnails Show/hide" }, on: { "click": _vm.togglePreview } }, [_c("span", { staticClass: "dashicons dashicons-screenoptions" })]) : _vm._e(), _vm._m(1)]), _vm._m(2), _c("button", { staticClass: "pswp__button pswp__button--arrow--left", attrs: { "title": "Previous (arrow left)" } }), _c("button", { staticClass: "pswp__button pswp__button--arrow--right", attrs: { "title": "Next (arrow right)" } }), _c("div", { staticClass: "pswp__previews", attrs: { "data-previews": "data-previews" } }), _vm._m(3)])])]);
+  };
+  var _sfc_staticRenderFns = [function() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "pswp__container" }, [_c("div", { staticClass: "pswp__item" }), _c("div", { staticClass: "pswp__item" }), _c("div", { staticClass: "pswp__item" })]);
+  }, function() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "pswp__preloader" }, [_c("div", { staticClass: "pswp__preloader__icn" }, [_c("div", { staticClass: "pswp__preloader__cut" }, [_c("div", { staticClass: "pswp__preloader__donut" })])])]);
+  }, function() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "pswp__share-modal pswp__share-modal--hidden pswp__single-tap" }, [_c("div", { staticClass: "pswp__share-tooltip" })]);
+  }, function() {
+    var _vm = this, _c = _vm._self._c;
+    return _c("div", { staticClass: "pswp__caption" }, [_c("div", { staticClass: "pswp__caption__center" })]);
+  }];
+  var __component__ = /* @__PURE__ */ normalizeComponent(
+    _sfc_main,
+    _sfc_render,
+    _sfc_staticRenderFns,
+    false,
+    null,
+    null
+  );
+  const PhotoSwipeComponent = __component__.exports;
+  if ("lightbox" in wcsvi.options && parseInt(wcsvi.options.lightbox)) {
+    let $vm;
+    const PhotoSwipe2 = Vue.extend(PhotoSwipeComponent);
+    if (!$vm) {
+      $vm = new PhotoSwipe2({
+        el: document.createElement("div")
+      });
+    }
+    Vue.$photoswipe = {
+      open($item, $gallery, $photoEl, $pid) {
+        document.body.appendChild($vm.$el);
+        $vm.open($item, $gallery, $photoEl, $pid);
+      },
+      close() {
+        $jq($vm.$el).remove();
+      }
+    };
+    Vue.mixin({
+      created() {
+        this.$photoswipe = Vue.$photoswipe;
+      }
+    });
+  }
+  Vue.config.productionTip = false;
+  window.Vue = Vue;
+  window.jQuery = window.$jq = jQuery;
+  const portoCheck = () => {
+    return wcsvi.options.template === "porto" && "use_skeleton_screen" in js_porto_vars && (js_porto_vars.use_skeleton_screen.includes("product") || js_porto_vars.use_skeleton_screen.includes("quickview"));
+  };
+  const initializeSVIGalleries = ($ajax) => {
+    if ($jq(".svi_wrapper").length > 0) {
+      $jq.each($jq(".svi_wrapper"), (index2, element) => {
+        if (wcsvi.options.template === "Divi") {
+          $jq(element).closest(".woocommerce-product-gallery").removeClass("woocommerce-product-gallery");
+        }
+        Vue.prototype.buildMainGallery(index2, element, MAIN, $ajax);
+      });
+    }
+    if ($jq(".svi_wrapper_drop").length > 0) {
+      $jq.each($jq(".svi_wrapper_drop"), (index2, element) => {
+        Vue.prototype.buildMainGallery(index2, element, THUMB, $ajax);
+      });
+    }
+  };
+  const setupQuickView = () => {
+    if (!("quick_view" in wcsvi.options) || !parseInt(wcsvi.options.quick_view)) return;
+    $jq(document).ajaxComplete((event, xhr, settings) => {
+      if (settings.data && settings.data.indexOf("loadProduct") > 0) return;
+      let productId = false;
+      if ($jq(".svi_wrapper").length > 0 && settings.url.indexOf("admin-ajax.php") > -1) {
+        if (wcsvi.options.template === "flatsome") {
+          $jq(".product-lightbox .product-gallery-slider").remove();
+        }
+        initializeSVIGalleries(true);
+      } else if (settings.url.indexOf("admin-ajax.php") > -1 && $jq(".woosvi_strap").length < 1) {
+        if (wcsvi.options.quick_view_target.trim() !== "") {
+          const $target = $jq(event.currentTarget.body);
+          const $loadedTarget = $target.find('[id^="product-"],[data-product-id]');
+          if ($loadedTarget.length > 0) {
+            productId = $loadedTarget.attr("id").replace(/\D/g, "") || $loadedTarget.data("product-id");
+            const $targetParent = $target.find(wcsvi.options.quick_view_target).parent();
+            if (wcsvi.options.template === "shopkeeper") {
+              $jq(".cd-quick-view").addClass("shopkeeper-svi");
+            }
+            $target.find(wcsvi.options.quick_view_target).remove();
+            if (parseInt(productId)) {
+              jQuery.ajax({
+                url: wcsvi.call,
+                type: "POST",
+                data: {
+                  action: "loadProduct",
+                  id: productId
+                }
+              }).done(() => {
+                productId = false;
+              }).complete((response) => {
+                $targetParent.prepend(response);
+                initializeSVIGalleries(true);
+              });
+            }
+          }
+        }
+      }
+    });
+  };
+  const setupLoopShowcase = () => {
+    if (!parseInt(wcsvi.options.loop_showcase)) return;
+    const $loopEl = "loop_showcase_wrapper_el" in wcsvi.options && wcsvi.options.loop_showcase_wrapper_el ? wcsvi.options.loop_showcase_wrapper_el : ".product";
+    const $loopImg = "loop_showcase_wrapper_el_img" in wcsvi.options && wcsvi.options.loop_showcase_wrapper_el_img ? wcsvi.options.loop_showcase_wrapper_el_img : "img";
+    $jq($loopEl).each(function() {
+      const $imageContainer = $jq(this).find($loopImg).first().parent();
+      $imageContainer.attr("data-default-background", $imageContainer.css("background") || "none");
+    });
+    if (!("status" in wcsvi.options) || !wcsvi.options.status) {
+      if ($jq(".svitn_img").length > 0) {
+        $jq($loopEl).each(function() {
+          if ($jq(this).find(".svitn_img").length > 0) {
+            $jq(this).find(".svitn_img").eq(1).nextAll().remove();
+          }
+        });
+      }
+    }
+    if ($jq(".svitn_img").length > 0) {
+      const handleImageInteraction = function() {
+        const $parentProduct = $jq(this).closest($loopEl);
+        let $imageContainer = $parentProduct.find($loopImg).first().parent();
+        if ($imageContainer.is("li")) {
+          $imageContainer = $imageContainer.closest("ul").parent();
+        }
+        $jq(".svitn_current_img").removeClass("svitn_current_img");
+        $jq(this).addClass("svitn_current_img");
+        loadImage($imageContainer, this, $jq(this).index());
+      };
+      $jq(".svitn_img").on("mouseenter", handleImageInteraction);
+      $jq(".svitn_img").on("click", handleImageInteraction);
+      $jq(".svitn_img").on("mouseleave", function() {
+        const $parentProduct = $jq(this).closest($loopEl);
+        let $imageContainer = $parentProduct.find($loopImg).first().parent();
+        if ($imageContainer.is("li")) {
+          $imageContainer = $imageContainer.closest("ul").parent();
+        }
+        const $accordionContainer = $parentProduct.find(".svi-image-compare");
+        $jq(".svitn_current_img").removeClass("svitn_current_img");
+        if ($accordionContainer.length > 0) {
+          const defaultBackground = $imageContainer.attr("data-default-background") || "none";
+          $imageContainer.css("background", defaultBackground);
+          $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").css({ opacity: "" });
+        } else {
+          const defaultBackground = $imageContainer.attr("data-default-background") || "none";
+          $imageContainer.css("background", defaultBackground);
+          $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").removeAttr("style");
+        }
+      });
+      const loadImage = ($imageContainer, imgElement, index2) => {
+        const imageSrc = $jq(imgElement).data("large_image");
+        if (!imageSrc || typeof imageSrc !== "string" || !imageSrc.trim()) {
+          console.error("SVI: Loop showcase - Invalid image URL:", imageSrc);
+          return;
+        }
+        $imageContainer.css({
+          background: `url(${imageSrc}) no-repeat center center`,
+          "background-size": "cover",
+          display: "block"
+        });
+        $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").css({ opacity: "0" });
+      };
+    }
+  };
+  const setupFilterAttributeAccordion = () => {
+    if (!("filter_attribute" in wcsvi.options) || !parseInt(wcsvi.options.filter_attribute)) return;
+    const initializeAccordion = ($elements) => {
+      $elements.each(function() {
+        const $container = $jq(this);
+        if ($container.hasClass("svi-initialized")) return;
+        const $items = $container.find("> li");
+        const layoutType = $container.data("cut") || "diagonal";
+        const enableAnimation = wcsvi.options.filter_attribute_animation === "1";
+        let referenceHeight = 0;
+        const $productItem = $container.closest("li.wc-block-product, li.product");
+        const $nonAccordionProductItem = $productItem.siblings("li.wc-block-product, li.product").not(":has(.svi-image-compare)").first();
+        const $nonAccordionProduct = $nonAccordionProductItem.find("img").first();
+        if ($nonAccordionProduct.length > 0) {
+          referenceHeight = $nonAccordionProduct.height();
+          Vue.prototype.consoleLog("referenceHeight", referenceHeight);
+        }
+        const $parentLink = $container.closest("li.wc-block-product, li.product");
+        const parentHeight = $parentLink.length > 0 ? $parentLink.outerHeight(true) : 0;
+        const defaultHeight = 231;
+        const containerHeight = referenceHeight > 0 ? referenceHeight : parentHeight > 0 ? parentHeight : defaultHeight;
+        $container.css("height", `${containerHeight}px`);
+        $container.data("initial-height", containerHeight);
+        $container.css({
+          "--count": $items.length,
+          "--width": $container.width() + "px"
+        });
+        const numImages = $items.length;
+        const initialWidth = 100 / numImages;
+        const reducedWidth = 10;
+        const expandedWidth = 100 - (numImages - 1) * reducedWidth;
+        $items.each(function(index2) {
+          const $item = $jq(this);
+          const imageUrl = $item.data("image");
+          $item.css({
+            "background-image": `url("${imageUrl}")`,
+            "background-position": "center center",
+            "background-size": "cover",
+            "background-repeat": "no-repeat"
+          });
+          if (layoutType === "vertical") {
+            $item.css({
+              "width": "100%",
+              "height": `${containerHeight / numImages}px`,
+              // Explicitly set pixel height based on container height
+              "position": "static"
+            });
+            if (enableAnimation) {
+              $item.on("mouseenter", function() {
+                $items.each(function(i) {
+                  const $currentItem = $jq(this);
+                  if (i === index2) {
+                    $currentItem.css({
+                      "height": "85%",
+                      // Expand to 85% height
+                      "z-index": 2
+                      // Bring to top on hover
+                    });
+                  } else {
+                    const remainingSpace = 15;
+                    const nonHoveredHeight = remainingSpace / (numImages - 1);
+                    $currentItem.css({
+                      "height": `${nonHoveredHeight}%`,
+                      // Split the remaining 15% space evenly
+                      "z-index": 1
+                      // Maintain lower z-index for non-hovered images
+                    });
+                    if (i < index2) {
+                      $currentItem.css("top", `${i * nonHoveredHeight}%`);
+                    } else {
+                      const topPosition = 85 + (i - index2) * nonHoveredHeight;
+                      $currentItem.css("top", `${topPosition}%`);
+                    }
+                  }
+                });
+              });
+              $item.on("mouseleave", function() {
+                $items.each(function(i) {
+                  const $currentItem = $jq(this);
+                  $currentItem.css({
+                    "height": `${containerHeight / numImages}px`,
+                    // Restore default height
+                    "top": "auto",
+                    // Reset top position
+                    "z-index": 1
+                    // Reset z-index
+                  });
+                });
+              });
+            }
+          } else if (layoutType === "horizontal") {
+            const leftPosition = index2 * initialWidth;
+            $item.css({
+              "width": `${initialWidth}%`,
+              "left": `${leftPosition}%`
+            });
+            if (enableAnimation) {
+              $item.on("mouseenter", function() {
+                $items.each(function(i) {
+                  const $currentItem = $jq(this);
+                  if (i === index2) {
+                    $currentItem.css({
+                      "width": `${expandedWidth}%`,
+                      "z-index": 2
+                    });
+                    if (i === 0) {
+                      $currentItem.css("left", "0%");
+                    } else if (i === numImages - 1) {
+                      $currentItem.css("left", `${100 - expandedWidth}%`);
+                    } else {
+                      const totalReducedWidthBefore = i * reducedWidth;
+                      const leftPosition2 = totalReducedWidthBefore;
+                      $currentItem.css("left", `${leftPosition2}%`);
+                    }
+                  } else {
+                    $currentItem.css({
+                      "width": `${reducedWidth}%`,
+                      "z-index": 1
+                    });
+                    if (i < index2) {
+                      $currentItem.css("left", `${i * reducedWidth}%`);
+                    } else {
+                      const leftPosition2 = expandedWidth + (i - index2 - 1) * reducedWidth + index2 * reducedWidth;
+                      $currentItem.css("left", `${leftPosition2}%`);
+                    }
+                  }
+                });
+              });
+              $item.on("mouseleave", function() {
+                $items.each(function(i) {
+                  const $currentItem = $jq(this);
+                  const leftPosition2 = i * initialWidth;
+                  $currentItem.css({
+                    "width": `${initialWidth}%`,
+                    "left": `${leftPosition2}%`,
+                    "z-index": 1
+                  });
+                });
+              });
+            }
+          } else {
+            Vue.prototype.consoleLog(`SVI: Processing diagonal layout with ${numImages} images`);
+            let cutPercentage;
+            if (numImages === 2) {
+              cutPercentage = 90;
+            } else if (numImages === 3) {
+              cutPercentage = 80;
+            } else {
+              cutPercentage = 70;
+            }
+            $container.css("--cut-percentage", `${cutPercentage}%`);
+            const leftPosition = index2 * initialWidth;
+            $item.css({
+              "width": `${initialWidth + 10}%`,
+              // Increase width to overlap and fill gaps
+              "left": `${leftPosition}%`,
+              "z-index": numImages - index2
+              // Higher index gets lower z-index
+            });
+            if (enableAnimation) {
+              $item.on("mouseenter", function() {
+                $items.each(function(i) {
+                  const $currentItem = $jq(this);
+                  if (i === index2) {
+                    $currentItem.css({
+                      "width": "85%",
+                      // Expand to 85% width
+                      "z-index": numImages + 1,
+                      // Bring to top on hover
+                      "clip-path": "none",
+                      // Remove diagonal cut on hover
+                      "left": "7.5%"
+                      // Center the expanded image (15% remaining space, split as 7.5% on each side)
+                    });
+                  } else {
+                    $currentItem.css({
+                      "width": `${7.5}%`,
+                      // Split the remaining 15% space (7.5% each side)
+                      "z-index": numImages - i,
+                      // Maintain original z-index for non-hovered images
+                      "clip-path": "none",
+                      // Remove diagonal cut on non-hovered images during hover
+                      "visibility": "visible"
+                      // Ensure non-hovered images remain visible
+                    });
+                    if (i < index2) {
+                      $currentItem.css("left", `${i * 7.5}%`);
+                    } else {
+                      const leftPosition2 = 85 + 7.5 + (i - index2 - 1) * 7.5;
+                      $currentItem.css("left", `${leftPosition2}%`);
+                    }
+                  }
+                });
+              });
+              $item.on("mouseleave", function() {
+                $items.each(function(i) {
+                  const $currentItem = $jq(this);
+                  const leftPosition2 = i * initialWidth;
+                  $currentItem.css({
+                    "width": `${initialWidth + 10}%`,
+                    "left": `${leftPosition2}%`,
+                    "z-index": numImages - i,
+                    "visibility": "visible"
+                    // Ensure all images remain visible
+                  });
+                  if (i === numImages - 1) {
+                    $currentItem.css("clip-path", "none");
+                  } else {
+                    $currentItem.css("clip-path", `polygon(0 0, 100% 0, ${cutPercentage}% 100%, 0 100%)`);
+                  }
+                });
+              });
+            }
+          }
+        });
+        $container.addClass("svi-initialized");
+      });
+    };
+    initializeAccordion($jq(".svi-image-compare"));
+    const observer2 = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          const $newElements = $jq(mutation.addedNodes).find(".svi-image-compare").addBack(".svi-image-compare");
+          if ($newElements.length) {
+            initializeAccordion($newElements);
+          }
+        }
+      });
+    });
+    observer2.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    $jq(window).on("resize", function() {
+      setTimeout(() => {
+        $jq(".svi-image-compare").each(function() {
+          const $container = $jq(this);
+          $container.css({
+            "--width": $container.width() + "px"
+          });
+        });
+      }, 1);
+    });
+  };
+  const initializeSVI = () => {
+    if (portoCheck()) {
+      if ($jq("body").hasClass("single-product")) {
+        Vue.prototype.waitForEl(".svi_wrapper", initializeSVIGalleries, 100, 50);
+      } else {
+        initializeSVIGalleries();
+      }
+    } else {
+      initializeSVIGalleries();
+    }
+  };
+  const init = () => {
+    setupQuickView();
+    setupLoopShowcase();
+    setupFilterAttributeAccordion();
+    initializeSVI();
+  };
+  const relocateGalleryIntoGutenberg = () => {
+    const moveGallery = () => {
+      const gutenbergGalleryBlock = document.querySelector(
+        '[data-block-name="woocommerce/product-image-gallery"]'
+      );
+      const sviGallery = document.querySelector(".gallery-svi.woocommerce-product-gallery");
+      if (gutenbergGalleryBlock && sviGallery && !gutenbergGalleryBlock.contains(sviGallery)) {
+        gutenbergGalleryBlock.appendChild(sviGallery);
+      }
+    };
+    document.addEventListener("DOMContentLoaded", moveGallery);
+    const observer2 = new MutationObserver(() => moveGallery());
+    observer2.observe(document.body, { childList: true, subtree: true });
+  };
+  relocateGalleryIntoGutenberg();
+  init();
+})();
+//# sourceMappingURL=smart-variations-images-public.js.map

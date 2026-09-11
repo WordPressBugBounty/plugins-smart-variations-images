@@ -13,24 +13,24 @@
 
 defined('ABSPATH') || exit;
 
-$instance = Smart_Variations_Images_Public::get_current_instance();
-$context = Smart_Variations_Images_Public::pop_template_context();
+$smart_variations_images_instance = Smart_Variations_Images_Public::get_current_instance();
+$smart_variations_images_context = Smart_Variations_Images_Public::pop_template_context();
 
-if (!$instance instanceof Smart_Variations_Images_Public) {
+if (!$smart_variations_images_instance instanceof Smart_Variations_Images_Public) {
     Smart_Variations_Images_Public::clear_current_instance();
-    if (is_array($context) && !empty($context['located']) && file_exists($context['located'])) {
-        include $context['located'];
+    if (is_array($smart_variations_images_context) && !empty($smart_variations_images_context['located']) && file_exists($smart_variations_images_context['located'])) {
+        include $smart_variations_images_context['located'];
     }
     return;
 }
 
-$output = $instance->capture_frontend_template();
+$smart_variations_images_output = $smart_variations_images_instance->capture_frontend_template();
 
 Smart_Variations_Images_Public::clear_current_instance();
 
-if ('' === trim($output) && is_array($context) && !empty($context['located']) && file_exists($context['located'])) {
-    include $context['located'];
+if ('' === trim($smart_variations_images_output) && is_array($smart_variations_images_context) && !empty($smart_variations_images_context['located']) && file_exists($smart_variations_images_context['located'])) {
+    include $smart_variations_images_context['located'];
     return;
 }
 
-echo $output;
+echo wp_kses_post($smart_variations_images_output);

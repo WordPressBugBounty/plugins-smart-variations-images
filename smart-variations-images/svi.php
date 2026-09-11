@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Freemius and legacy plugin bootstrap APIs are public compatibility contracts.
 /**
  * Smart Variations Images & Swatches for WooCommerce
  *
@@ -16,14 +17,14 @@
  * Plugin Name:       Smart Variations Images & Swatches for WooCommerce
  * Plugin URI:        https://www.smart-variations.com/
  * Description:       Enhance your WooCommerce store by adding multiple images to the product gallery and using them as variable product variations images effortlessly.
- * Version:           5.2.29
- * WC requires at least: 5.0
- * WC tested up to:   10.7.0
+ * Version:           5.2.34
+ * WC requires at least: 8.2
+ * WC tested up to:   11.1.0
  * Author:            David Rosendo
  * Author URI:        https://www.rosendo.pt
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       wc_svi
+ * Text Domain:       smart-variations-images
  * Domain Path:       /languages
  */
 // If this file is called directly, abort.
@@ -33,7 +34,7 @@ if ( !defined( 'WPINC' ) ) {
 /**
  * Define plugin constants.
  */
-define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.2.29' );
+define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.2.34' );
 // Current plugin version.
 define( 'WCSVFS_VERSION', '1.0' );
 // Version for additional functionality.
@@ -158,7 +159,7 @@ if ( !function_exists( 'WC_SVFS' ) ) {
 if ( !function_exists( 'fs_dd' ) ) {
     function fs_dd(  $args  ) {
         if ( current_user_can( 'administrator' ) ) {
-            echo "<pre>" . print_r( $args, true ) . "</pre>";
+            // echo "<pre>" . var_export($args, true) . "</pre>";
             die;
         }
     }
@@ -172,7 +173,7 @@ if ( !function_exists( 'fs_dd' ) ) {
 if ( !function_exists( 'fs_ddd' ) ) {
     function fs_ddd(  $args  ) {
         if ( current_user_can( 'administrator' ) ) {
-            echo "<pre>" . print_r( $args, true ) . "</pre>";
+            // echo "<pre>" . var_export($args, true) . "</pre>";
         }
     }
 
@@ -225,15 +226,17 @@ function svi_plugin_review_notice() {
             border: none !important;
             padding: 0 !important;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
             margin: 20px 20px 20px 0 !important;
         }
+
         #svi-review-notice .svi-notice-content {
             background: #fff;
             margin: 3px;
             padding: 25px;
             border-radius: 2px;
         }
+
         #svi-review-notice .svi-header {
             display: flex;
             align-items: center;
@@ -241,28 +244,33 @@ function svi_plugin_review_notice() {
             padding-bottom: 20px;
             border-bottom: 2px solid #f0f0f1;
         }
+
         #svi-review-notice .svi-logo {
             flex-shrink: 0;
             width: 70px;
             height: 70px;
             margin-right: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         #svi-review-notice h2 {
             margin: 0 0 5px 0;
             font-size: 24px;
             color: #1e1e1e;
             font-weight: 600;
         }
+
         #svi-review-notice .svi-subtitle {
             margin: 0;
             color: #646970;
             font-size: 14px;
         }
+
         #svi-review-notice .svi-section {
             margin-bottom: 20px;
         }
+
         #svi-review-notice .svi-v6-badge {
             display: inline-block;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -273,12 +281,14 @@ function svi_plugin_review_notice() {
             font-size: 15px;
             margin-bottom: 15px;
         }
+
         #svi-review-notice .svi-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 12px;
             margin: 15px 0;
         }
+
         #svi-review-notice .svi-feature {
             display: flex;
             align-items: start;
@@ -287,21 +297,25 @@ function svi_plugin_review_notice() {
             border-radius: 6px;
             border-left: 3px solid #667eea;
         }
+
         #svi-review-notice .svi-feature-icon {
             font-size: 20px;
             margin-right: 10px;
             flex-shrink: 0;
         }
+
         #svi-review-notice .svi-feature-text strong {
             display: block;
             color: #1e1e1e;
             margin-bottom: 2px;
         }
+
         #svi-review-notice .svi-feature-text {
             font-size: 13px;
             color: #646970;
             line-height: 1.5;
         }
+
         #svi-review-notice .svi-cta-box {
             background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
             padding: 20px;
@@ -310,15 +324,18 @@ function svi_plugin_review_notice() {
             text-align: center;
             color: #fff;
         }
+
         #svi-review-notice .svi-cta-box h3 {
             margin: 0 0 10px 0;
             color: #fff;
             font-size: 20px;
         }
+
         #svi-review-notice .svi-cta-box p {
             margin: 10px 0;
             font-size: 15px;
         }
+
         #svi-review-notice .svi-btn {
             display: inline-block;
             padding: 12px 30px;
@@ -329,22 +346,27 @@ function svi_plugin_review_notice() {
             font-size: 15px;
             transition: all 0.3s ease;
         }
+
         #svi-review-notice .svi-btn-primary {
             background: #fff;
             color: #19547b;
         }
+
         #svi-review-notice .svi-btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
         }
+
         #svi-review-notice .svi-btn-secondary {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: #fff;
             border: 2px solid #fff;
         }
+
         #svi-review-notice .svi-btn-secondary:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
         }
+
         #svi-review-notice .svi-footer {
             text-align: center;
             padding-top: 15px;
@@ -352,14 +374,17 @@ function svi_plugin_review_notice() {
             color: #646970;
             font-size: 13px;
         }
+
         #svi-review-notice .svi-footer a {
             color: #667eea;
             text-decoration: none;
             font-weight: 500;
         }
+
         #svi-review-notice .svi-footer a:hover {
             text-decoration: underline;
         }
+
         #svi-review-notice .svi-pro-badge {
             display: inline-block;
             background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
@@ -373,23 +398,28 @@ function svi_plugin_review_notice() {
             transition: all 0.3s ease;
             border: none;
         }
+
         #svi-review-notice .svi-pro-badge:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(255,216,155,0.4);
+            box-shadow: 0 4px 12px rgba(255, 216, 155, 0.4);
         }
+
         #svi-review-notice .svi-pro-badge:after {
             content: ' ▼';
             font-size: 12px;
             margin-left: 5px;
         }
+
         #svi-review-notice .svi-pro-badge.expanded:after {
             content: ' ▲';
         }
+
         #svi-review-notice .svi-cta-details {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out;
         }
+
         #svi-review-notice .svi-cta-details.expanded {
             max-height: 1000px;
             transition: max-height 0.5s ease-in;
@@ -403,55 +433,63 @@ function svi_plugin_review_notice() {
     ?>" alt="Smart Variations Images & Swatches Logo" class="svi-logo">
                 <div>
                     <h2>Smart Variations Images & Swatches</h2>
-                    <p class="svi-subtitle">Thanks for using <strong>SVI</strong>! Since 2017, I've been working hard to make this plugin a powerful tool for your WooCommerce store.</p>
+                    <p class="svi-subtitle">Thanks for using <strong>SVI</strong>! Since 2017, I've been working hard to
+                        make this plugin a powerful tool for your WooCommerce store.</p>
                 </div>
             </div>
 
             <div class="svi-section">
                 <span class="svi-v6-badge">🚀 Version 6 is Coming Soon!</span>
-                <p style="margin: 10px 0; font-size: 15px; color: #1e1e1e;">A complete rebuild from the ground up. Here's what's coming:</p>
-                
+                <p style="margin: 10px 0; font-size: 15px; color: #1e1e1e;">A complete rebuild from the ground up. Here's
+                    what's coming:</p>
+
                 <div class="svi-features">
                     <div class="svi-feature">
                         <span class="svi-feature-icon">✨</span>
                         <div class="svi-feature-text">
                             <strong>AI-Powered Options</strong>
-                            Powered by WordPress 7.0 AI Client - smart automation features to save you time and effort. Stay tuned for the reveal!
+                            Powered by WordPress 7.0 AI Client - smart automation features to save you time and effort. Stay
+                            tuned for the reveal!
                         </div>
                     </div>
                     <div class="svi-feature">
                         <span class="svi-feature-icon">🧩</span>
                         <div class="svi-feature-text">
                             <strong>Modular Addon Architecture</strong>
-                            Choose only the features you need: Sliders (Splide/Swiper), Lightbox, Magnifier Lens, Video Support, Quick View, Swatches - all as independent modules
+                            Choose only the features you need: Sliders (Splide/Swiper), Lightbox, Magnifier Lens, Video
+                            Support, Quick View, Swatches - all as independent modules
                         </div>
                     </div>
                     <div class="svi-feature">
                         <span class="svi-feature-icon">⚡</span>
                         <div class="svi-feature-text">
                             <strong>Zero Build Step Frontend</strong>
-                            Modern vanilla JavaScript architecture - no webpack, no build tools. Faster loading, easier debugging, and better compatibility
+                            Modern vanilla JavaScript architecture - no webpack, no build tools. Faster loading, easier
+                            debugging, and better compatibility
                         </div>
                     </div>
                     <div class="svi-feature">
                         <span class="svi-feature-icon">🎨</span>
                         <div class="svi-feature-text">
                             <strong>Enhanced Gallery System</strong>
-                            New data model with attribute-term galleries, variation-specific galleries, and global fallbacks for more flexible product displays
+                            New data model with attribute-term galleries, variation-specific galleries, and global fallbacks
+                            for more flexible product displays
                         </div>
                     </div>
                     <div class="svi-feature">
                         <span class="svi-feature-icon">🔧</span>
                         <div class="svi-feature-text">
                             <strong>Professional Options Framework</strong>
-                            Modern settings interface with per-addon configuration tabs, live validation, and dynamic CSS generation
+                            Modern settings interface with per-addon configuration tabs, live validation, and dynamic CSS
+                            generation
                         </div>
                     </div>
                     <div class="svi-feature">
                         <span class="svi-feature-icon">🔄</span>
                         <div class="svi-feature-text">
                             <strong>Seamless Migration</strong>
-                            Automatic migration from v5 with data backup - your existing galleries and settings transfer safely to the new architecture
+                            Automatic migration from v5 with data backup - your existing galleries and settings transfer
+                            safely to the new architecture
                         </div>
                     </div>
                 </div>
@@ -460,63 +498,73 @@ function svi_plugin_review_notice() {
             <?php 
     if ( $is_free_user ) {
         ?>
-            <div class="svi-section" style="text-align: center;">
-                <button class="svi-pro-badge" id="svi-toggle-pro">⚡ Unlock PRO Features — Limited Time Offer!</button>
-                <div class="svi-cta-details" id="svi-cta-details">
-                    <div class="svi-cta-box">
-                        <p style="font-size: 16px; margin: 10px 0;"><strong>You're missing out on powerful PRO features:</strong></p>
-                        <ul style="text-align: left; max-width: 600px; margin: 15px auto; font-size: 14px; line-height: 1.8;">
-                            <li>✅ <strong>Video Support</strong> in variation galleries</li>
-                            <li>✅ <strong>Advanced Sliders</strong> with custom controls & layouts</li>
-                            <li>✅ <strong>Premium Lightbox</strong> & Magnifier options</li>
-                            <li>✅ <strong>Variation Images in Cart</strong>, emails, and orders</li>
-                            <li>✅ <strong>Import/Export</strong> galleries across products</li>
-                            <li>✅ <strong>Priority Support</strong> & early access to updates</li>
-                        </ul>
-                        <p style="font-size: 17px; margin: 20px 0 10px 0;"><strong>🚀 Plus: Get V6 features at NO extra cost when you upgrade now!</strong></p>
-                        <p style="font-size: 15px; margin: 10px 0;">V6 will launch at a <strong>higher price</strong> to reflect the massive improvements. Upgrade today and get access to all V6 features including AI-powered options when they launch!</p>
-                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 20px 0;">
-                            <p style="font-size: 16px; margin: 5px 0;">💰 <strong>Special Discount Code:</strong></p>
-                            <p style="font-size: 22px; margin: 10px 0;"><strong style="background: rgba(255,255,255,0.4); padding: 8px 20px; border-radius: 5px; letter-spacing: 1px;">superthanks25</strong></p>
-                            <p style="font-size: 15px; margin: 5px 0;"><strong>Save 25% OFF</strong> on annual plans!</p>
-                        </div>
-                        <a href="<?php 
+                <div class="svi-section" style="text-align: center;">
+                    <button class="svi-pro-badge" id="svi-toggle-pro">⚡ Unlock PRO Features — Limited Time Offer!</button>
+                    <div class="svi-cta-details" id="svi-cta-details">
+                        <div class="svi-cta-box">
+                            <p style="font-size: 16px; margin: 10px 0;"><strong>You're missing out on powerful PRO
+                                    features:</strong></p>
+                            <ul
+                                style="text-align: left; max-width: 600px; margin: 15px auto; font-size: 14px; line-height: 1.8;">
+                                <li>✅ <strong>Video Support</strong> in variation galleries</li>
+                                <li>✅ <strong>Advanced Sliders</strong> with custom controls & layouts</li>
+                                <li>✅ <strong>Premium Lightbox</strong> & Magnifier options</li>
+                                <li>✅ <strong>Variation Images in Cart</strong>, emails, and orders</li>
+                                <li>✅ <strong>Import/Export</strong> galleries across products</li>
+                                <li>✅ <strong>Priority Support</strong> & early access to updates</li>
+                            </ul>
+                            <p style="font-size: 17px; margin: 20px 0 10px 0;"><strong>🚀 Plus: Get V6 features at NO extra cost
+                                    when you upgrade now!</strong></p>
+                            <p style="font-size: 15px; margin: 10px 0;">V6 will launch at a <strong>higher price</strong> to
+                                reflect the massive improvements. Upgrade today and get access to all V6 features including
+                                AI-powered options when they launch!</p>
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                                <p style="font-size: 16px; margin: 5px 0;">💰 <strong>Special Discount Code:</strong></p>
+                                <p style="font-size: 22px; margin: 10px 0;"><strong
+                                        style="background: rgba(255,255,255,0.4); padding: 8px 20px; border-radius: 5px; letter-spacing: 1px;">superthanks25</strong>
+                                </p>
+                                <p style="font-size: 15px; margin: 5px 0;"><strong>Save 25% OFF</strong> on annual plans!</p>
+                            </div>
+                            <a href="<?php 
         echo esc_url( $upgrade_url );
-        ?>" class="svi-btn svi-btn-primary" style="font-size: 16px; padding: 14px 35px;">
-                            🔥 Upgrade to PRO Now & Save 25%
-                        </a>
-                        <a href="https://svi.rosendo.pt/pro" target="_blank" class="svi-btn svi-btn-secondary" style="margin-top: 10px;">
-                            View PRO Demo
-                        </a>
+        ?>" class="svi-btn svi-btn-primary"
+                                style="font-size: 16px; padding: 14px 35px;">
+                                🔥 Upgrade to PRO Now & Save 25%
+                            </a>
+                            <a href="https://svi.rosendo.pt/pro" target="_blank" class="svi-btn svi-btn-secondary"
+                                style="margin-top: 10px;">
+                                View PRO Demo
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
             <?php 
     }
     ?>
 
             <div class="svi-footer">
                 <p>
-                    ⭐ Enjoying the plugin? 
-                    <a href="https://wordpress.org/support/plugin/smart-variations-images/reviews/#new-post" target="_blank">Leave a review</a> 
+                    ⭐ Enjoying the plugin?
+                    <a href="https://wordpress.org/support/plugin/smart-variations-images/reviews/#new-post"
+                        target="_blank">Leave a review</a>
                     – it helps others discover SVI and motivates me to keep improving it!
                 </p>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $(document).on('click', '#svi-review-notice .notice-dismiss', function() {
-                $.post(ajaxurl, { action: 'svi_dismiss_notice' }, function(response) {
+        jQuery(document).ready(function ($) {
+            $(document).on('click', '#svi-review-notice .notice-dismiss', function () {
+                $.post(ajaxurl, { action: 'svi_dismiss_notice' }, function (response) {
                     console.log('Notice dismissed');
                 });
             });
-            
+
             // Toggle PRO features details
-            $('#svi-toggle-pro').on('click', function() {
+            $('#svi-toggle-pro').on('click', function () {
                 var badge = $(this);
                 var details = $('#svi-cta-details');
-                
+
                 badge.toggleClass('expanded');
                 details.toggleClass('expanded');
             });

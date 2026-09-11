@@ -1,5 +1,7 @@
 <?php
 
+// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Public read-only endpoints return only normalized data.
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- WooCommerce, WPML, and legacy SVI integration contracts.
 /**
  * The public-facing functionality of the plugin.
  *
@@ -209,6 +211,8 @@ class Smart_Variations_Images_Public {
         $this->enqueue_script( $this->plugin_name . '-vendor' );
         $this->enqueue_script( $this->plugin_name );
         $this->enqueue_style( $this->plugin_name );
+        wp_enqueue_style( 'dashicons' );
+        // Ensure Dashicons is loaded for the play button UI.
         $this->ensure_inline_styles();
         wp_localize_script( $this->plugin_name, 'wcsvi', [
             'prod'     => ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? false : true ),
@@ -346,15 +350,14 @@ class Smart_Variations_Images_Public {
      */
     public function register_scripts() : void {
         $version = $this->version;
-        $use_local = $this->options->use_local_cdn ?? true;
         $register_scripts = [
             'imagesloaded'                                => [
-                'src'     => ( $use_local ? self::get_asset_url( 'js/imagesloaded.pkgd' . SMART_SCRIPT_DEBUG . '.js' ) : '//unpkg.com/imagesloaded@4/imagesloaded.pkgd' . SMART_SCRIPT_DEBUG . '.js' ),
+                'src'     => self::get_asset_url( 'js/imagesloaded.pkgd' . SMART_SCRIPT_DEBUG . '.js' ),
                 'deps'    => [],
                 'version' => $version,
             ],
             $this->plugin_name . '-swiper'                => [
-                'src'     => ( $use_local ? self::get_asset_url( 'js/swiper-bundle' . SMART_SCRIPT_DEBUG . '.js' ) : '//cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js' ),
+                'src'     => self::get_asset_url( 'js/swiper-bundle' . SMART_SCRIPT_DEBUG . '.js' ),
                 'deps'    => [],
                 'version' => '11.0.0',
             ],
@@ -364,12 +367,12 @@ class Smart_Variations_Images_Public {
                 'version' => $version,
             ],
             $this->plugin_name . '-photoswipe'            => [
-                'src'     => ( $use_local ? self::get_asset_url( 'js/photoswipe' . SMART_SCRIPT_DEBUG . '.js' ) : '//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe' . SMART_SCRIPT_DEBUG . '.js' ),
+                'src'     => self::get_asset_url( 'js/photoswipe' . SMART_SCRIPT_DEBUG . '.js' ),
                 'deps'    => [],
                 'version' => '4.1.3',
             ],
             $this->plugin_name . '-photoswipe-ui-default' => [
-                'src'     => ( $use_local ? self::get_asset_url( 'js/photoswipe-ui-default' . SMART_SCRIPT_DEBUG . '.js' ) : '//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe-ui-default' . SMART_SCRIPT_DEBUG . '.js' ),
+                'src'     => self::get_asset_url( 'js/photoswipe-ui-default' . SMART_SCRIPT_DEBUG . '.js' ),
                 'deps'    => [$this->plugin_name . '-photoswipe'],
                 'version' => '4.1.3',
             ],
@@ -423,7 +426,6 @@ class Smart_Variations_Images_Public {
      */
     public function register_styles() : void {
         $version = $this->version;
-        $use_local = $this->options->use_local_cdn ?? true;
         $register_styles = [
             $this->plugin_name                              => [
                 'src'     => self::get_asset_url( 'css/smart-variations-images-public' . SMART_SCRIPT_DEBUG . '.css' ),
@@ -432,19 +434,19 @@ class Smart_Variations_Images_Public {
                 'has_rtl' => false,
             ],
             $this->plugin_name . '-swiper'                  => [
-                'src'     => ( $use_local ? self::get_asset_url( 'css/swiper-bundle' . SMART_SCRIPT_DEBUG . '.css' ) : '//cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css' ),
+                'src'     => self::get_asset_url( 'css/swiper-bundle' . SMART_SCRIPT_DEBUG . '.css' ),
                 'deps'    => [],
                 'version' => '11.0.0',
                 'has_rtl' => false,
             ],
             $this->plugin_name . '-photoswipe'              => [
-                'src'     => ( $use_local ? self::get_asset_url( 'css/photoswipe' . SMART_SCRIPT_DEBUG . '.css' ) : '//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe' . SMART_SCRIPT_DEBUG . '.css' ),
+                'src'     => self::get_asset_url( 'css/photoswipe' . SMART_SCRIPT_DEBUG . '.css' ),
                 'deps'    => [],
                 'version' => $version,
                 'has_rtl' => false,
             ],
             $this->plugin_name . '-photoswipe-default-skin' => [
-                'src'     => ( $use_local ? self::get_asset_url( 'css/default-skin/default-skin' . SMART_SCRIPT_DEBUG . '.css' ) : '//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/default-skin/default-skin' . SMART_SCRIPT_DEBUG . '.css' ),
+                'src'     => self::get_asset_url( 'css/default-skin/default-skin' . SMART_SCRIPT_DEBUG . '.css' ),
                 'deps'    => [$this->plugin_name . '-photoswipe'],
                 'version' => $version,
                 'has_rtl' => false,
@@ -452,7 +454,7 @@ class Smart_Variations_Images_Public {
         ];
         if ( svi_fs()->can_use_premium_code__premium_only() && $this->options->video ) {
             $register_styles['plyr'] = [
-                'src'     => ( $use_local ? self::get_asset_url( 'css/plyr' . SMART_SCRIPT_DEBUG . '.css' ) : '//cdnjs.cloudflare.com/ajax/libs/plyr/3.7.8/plyr.css' ),
+                'src'     => self::get_asset_url( 'css/plyr' . SMART_SCRIPT_DEBUG . '.css' ),
                 'deps'    => [],
                 'version' => $version,
                 'has_rtl' => false,
@@ -487,6 +489,7 @@ class Smart_Variations_Images_Public {
      * @since    1.1.1
      */
     public function remove_hooks() : void {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Required by the included WooCommerce-compatible template.
         global $product;
         $run = true;
         if ( $product instanceof WC_Product ) {
@@ -630,6 +633,21 @@ class Smart_Variations_Images_Public {
             return;
         }
         include plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/smart-variations-images-public-display.php';
+    }
+
+    /**
+     * Prevents WooCommerce 11.1.0+ from completely replacing the gallery DOM node 
+     * when variations are loaded inline (<= 30 variations).
+     *
+     * @since 5.2.32
+     * @param array $data Variation data array.
+     * @return array
+     */
+    public function filter_woocommerce_available_variation( $data ) {
+        if ( is_array( $data ) && array_key_exists( 'gallery_images_html', $data ) ) {
+            $data['gallery_images_html'] = '';
+        }
+        return $data;
     }
 
     /**
@@ -924,13 +942,19 @@ CSS;
      * @since    1.0.0
      */
     public function render_quick_view_frontend() : void {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $product_id = ( isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : 0 );
+        if ( $product_id <= 0 || get_post_status( $product_id ) !== 'publish' && !current_user_can( 'read_post', $product_id ) ) {
+            wp_die( 'Invalid product or insufficient permissions.' );
+        }
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Required by the included WooCommerce-compatible template.
         global $product;
-        $product = wc_get_product( ( isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0 ) );
+        $product = wc_get_product( $product_id );
         ob_start();
         include plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/smart-variations-images-public-display.php';
         $return = ob_get_clean();
         header( "Content-type: text/html" );
-        echo $return;
+        echo wp_kses_post( $return );
         wp_die();
     }
 
@@ -1005,12 +1029,16 @@ CSS;
      * @since    1.1.1
      */
     public function loadProductAjax() : void {
-        if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+        if ( !isset( $_SERVER['REQUEST_METHOD'] ) || $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
             wp_send_json_error( 'Invalid request method.' );
         }
-        $product_id = ( isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0 );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $product_id = ( isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : 0 );
         if ( $product_id <= 0 ) {
             wp_send_json_error( 'Invalid product ID.' );
+        }
+        if ( get_post_status( $product_id ) !== 'publish' && !current_user_can( 'read_post', $product_id ) ) {
+            wp_send_json_error( 'You do not have permission to access this product.' );
         }
         $product_data = $this->loadProduct( $product_id );
         if ( $product_data ) {
@@ -1030,36 +1058,56 @@ CSS;
      */
     public function loadProduct( $pid = false, bool $translateSlugs = false ) {
         $return = [];
+        // ─── 1. RESOLVE PRODUCT ID ────────────────────────────────────────────────
+        // When called internally (e.g. from enqueue_scripts) $pid is passed directly.
+        // When triggered via AJAX the ID arrives as JSON in the request body.
         if ( $pid ) {
             $this->pid = $pid;
         } else {
             $data = json_decode( file_get_contents( "php://input" ), true );
             $this->pid = intval( $data['id'] );
         }
+        // Keep a copy of the requested PID before any WPML translation.
         $original_pid = $this->pid;
+        // If WPML is active and the per-product override is off, resolve the
+        // original-language post ID so all meta lookups use the canonical product.
         if ( class_exists( 'SitePress' ) && !$this->runSitePress ) {
             $this->pid = $this->wpml_original( $this->pid );
         }
+        // ─── 3. BOOTSTRAP PRODUCT & DEFAULT IMAGE ─────────────────────────────────
         $product = wc_get_product( $this->pid );
         $default_img = $product->get_image_id();
+        // WooCommerce featured/main image ID.
         $attachment_ids = [$default_img];
+        // Seed the list with the main image.
+        // ─── 4. LOAD SVI SLUG DATA ────────────────────────────────────────────────
+        // `woosvi_slug` is the core SVI meta: an array of gallery entries, each
+        // describing a set of variation attribute slugs and the image IDs assigned
+        // to them. If the meta is missing we run the fallback to regenerate it.
         $woosvi_slug = get_post_meta( $this->pid, 'woosvi_slug', true );
         if ( empty( $woosvi_slug ) ) {
             $this->fallback();
             $woosvi_slug = get_post_meta( $this->pid, 'woosvi_slug', true );
         }
         if ( !is_array( $woosvi_slug ) ) {
+            // No SVI galleries configured — treat as empty.
             $woosvi_slug = [];
         } else {
+            // Build the human-readable slug map for the JS front-end
+            // (used to translate attribute values into URL-safe slugs).
             $attributes = get_post_meta( $this->pid, '_product_attributes' );
             $theslugs = $this->getAttributes( $attributes, $this->pid );
             $return['slugs'] = $theslugs;
+            // Remove any stale/invalid SVI entries that no longer match the
+            // current product variations.
             $woosvi_slug = $this->validateSlugs(
                 $woosvi_slug,
                 $product,
                 $this->pid,
                 $theslugs
             );
+            // WPML: when the translated product differs from the original, rebuild
+            // the slug map using the original-language variation IDs.
             if ( class_exists( 'SitePress' ) && !$this->runSitePress && $product->is_type( 'variable' ) && $original_pid !== $this->pid ) {
                 $return['slugs'] = $this->wpml( $original_pid, $product, $this->pid );
                 if ( $translateSlugs ) {
@@ -1067,14 +1115,34 @@ CSS;
                 }
             }
         }
+        // ─── 5. BUILD FULL ATTACHMENT LIST ───────────────────────────────────────
+        // Start with the default WC product gallery images.
         $attachment_ids = array_merge( $attachment_ids, $product->get_gallery_image_ids() );
         if ( !$product->is_type( 'variable' ) || empty( $woosvi_slug ) ) {
+            // Simple product or variable with no SVI galleries configured:
+            // just use the standard WC gallery, deduplicated.
             $attachment_ids = array_unique( $attachment_ids );
             $attachment_ids = array_values( array_filter( $attachment_ids ) );
         } else {
+            // Variable product with SVI galleries: append all variation-specific
+            // image IDs (formatted as "{id}k{gallery_index}" to track which SVI
+            // slot they belong to, with video URLs embedded when applicable).
             $attachment_ids = array_merge( $attachment_ids, $this->get_svigallery_image_ids( $woosvi_slug ) );
         }
+        if ( $product->is_type( 'variable' ) ) {
+            $variation_galleries = $this->get_variation_gallery_image_ids( $product );
+            foreach ( $variation_galleries as $variation_id => $image_ids ) {
+                foreach ( $image_ids as $image_id ) {
+                    $attachment_ids[] = $image_id;
+                }
+            }
+            $return['variation_galleries'] = $variation_galleries;
+        }
         $attachment_ids = array_filter( $attachment_ids );
+        // ─── 6. PREP SLUG DATA ────────────────────────────────────────────────────
+        // For 'svidefault' galleries, prepend the main product image so the
+        // default gallery always shows the featured image first.
+        // Also normalise all slugs to lowercase for consistent JS matching.
         foreach ( $woosvi_slug as $k => $v ) {
             if ( array_key_exists( 'slugs', $v ) ) {
                 if ( $v['slugs'][0] === 'svidefault' && $default_img ) {
@@ -1083,6 +1151,9 @@ CSS;
                 $woosvi_slug[$k]['slugs'] = array_map( 'strtolower', $v['slugs'] );
             }
         }
+        // ─── 7. SVIPROGLOBAL ORDERING (Premium) ──────────────────────────────────
+        // When the 'sviproglobal' option is set to 'end', the global gallery entry
+        // must appear last in the SVI list so per-variation galleries take priority.
         if ( svi_fs()->can_use_premium_code__premium_only() && property_exists( $this->options, 'sviproglobal' ) && $this->options->sviproglobal === 'end' ) {
             $sviproglobal = false;
             foreach ( $woosvi_slug as $k => $v ) {
@@ -1096,23 +1167,42 @@ CSS;
                 $woosvi_slug[] = $sviproglobal;
             }
         }
+        // ─── 8. ASSEMBLE IMAGE/VIDEO DATA FOR EACH ATTACHMENT ────────────────────
+        // Each entry in $return['images'] is consumed by the Vue front-end.
+        // Key fields:
+        //   id          – WP attachment post ID.
+        //   idk         – The SVI gallery index (the 'k' in "{id}k{k}"), or false
+        //                 for plain WC gallery images. Used by JS to distinguish
+        //                 default gallery images from variation-specific ones.
+        //   video       – Video URL string, or '' if none.
+        //   product_img – true when this image is the WC featured/main image.
+        $main_video_attached = false;
         if ( $attachment_ids ) {
             foreach ( $attachment_ids as $attachment_id ) {
                 $video = '';
+                // SVI variation images are passed as arrays: ['id' => '123k0', 'video' => '...']
+                // Extract the pre-resolved video URL before normalising the ID.
                 if ( is_array( $attachment_id ) ) {
                     $attachment_id = $attachment_id['id'];
                 }
-                // Normalize attachment id and optional suffix
+                // Normalise: split the "{id}k{gallery_index}" format.
+                // Plain WC gallery IDs have no 'k' suffix → $thek = false.
+                // SVI variation IDs have a suffix → $thek = gallery index string.
                 $attachment_id = (string) $attachment_id;
                 $attachment_id_parts = explode( 'k', $attachment_id );
                 $thek = ( count( $attachment_id_parts ) > 1 ? $attachment_id_parts[1] : false );
                 $attachment_id = ( isset( $attachment_id_parts[0] ) ? intval( $attachment_id_parts[0] ) : 0 );
-                // Skip invalid/empty IDs to avoid type errors downstream
+                // Skip invalid/empty IDs to avoid type errors downstream.
                 if ( $attachment_id <= 0 ) {
                     continue;
                 }
                 if ( $product->is_type( 'variable' ) ) {
-                    $gotvideo = ( svi_fs()->can_use_premium_code__premium_only() ? ( $default_img == $attachment_id && $thek === '' ? $this->getMainVideo__premium_only( $woosvi_slug, $default_img ) : $video ) : '' );
+                    // Variable product video resolution:
+                    // - Plain main image ($thek === false, no k-suffix): look up the
+                    //   video stored under the 'wc_svimainvideo' SVI slot.
+                    // - SVI variation image ($thek is set): video was already extracted
+                    //   above from the array format returned by get_svigallery_image_ids().
+                    $gotvideo = '';
                     $img_data = array_merge( [
                         'id'          => intval( $attachment_id ),
                         'idk'         => $thek,
@@ -1120,7 +1210,10 @@ CSS;
                         'product_img' => $default_img == $attachment_id,
                     ], $this->getMainImage( $attachment_id ) );
                 } else {
-                    $gotvideo = ( svi_fs()->can_use_premium_code__premium_only() ? $this->getMainVideo__premium_only( $woosvi_slug, $attachment_id, ( $default_img == $attachment_id ? 'wc_svimainvideo' : $attachment_id ) ) : '' );
+                    // Simple product video resolution:
+                    // - Main image: look up video under 'wc_svimainvideo' slot (only for first instance).
+                    // - Other gallery images: look up video keyed by the image ID itself.
+                    $gotvideo = '';
                     $img_data = array_merge( [
                         'id'          => intval( $attachment_id ),
                         'idk'         => $thek,
@@ -1128,10 +1221,15 @@ CSS;
                         'product_img' => $default_img == $attachment_id,
                     ], $this->getMainImage( $attachment_id ) );
                 }
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public SVI extension hook.
                 $return['images'][] = apply_filters( 'svi_image', $img_data );
             }
         }
+        // ─── 9. FINALISE & RETURN ─────────────────────────────────────────────────
+        // Pass the full SVI slug map to the JS front-end as gallery.svi.
         $return['svi'] = $woosvi_slug;
+        // When called internally ($pid provided) return the array directly.
+        // When called via AJAX output JSON and terminate.
         if ( $pid ) {
             return $return;
         }
@@ -1185,6 +1283,32 @@ CSS;
     }
 
     /**
+     * Return native WooCommerce variation gallery image IDs keyed by variation ID.
+     *
+     * WooCommerce 11.1 stores these galleries on the variation itself. Keeping the
+     * IDs in the existing SVI payload lets the client retain its gallery mount while
+     * using core galleries whenever no SVI attribute gallery matches.
+     *
+     * @since 5.2.33
+     * @param WC_Product_Variable $product Variable product instance.
+     * @return array<int, array<int, int>>
+     */
+    private function get_variation_gallery_image_ids( WC_Product_Variable $product ) : array {
+        $galleries = [];
+        foreach ( $product->get_children() as $variation_id ) {
+            $variation = wc_get_product( $variation_id );
+            if ( !$variation instanceof WC_Product_Variation || !is_callable( [$variation, 'get_gallery_image_ids'] ) ) {
+                continue;
+            }
+            $image_ids = array_values( array_filter( array_map( 'absint', $variation->get_gallery_image_ids() ) ) );
+            if ( !empty( $image_ids ) ) {
+                $galleries[$variation->get_id()] = $image_ids;
+            }
+        }
+        return $galleries;
+    }
+
+    /**
      * Runs the fallback and saves the data if SVI slugs are missing.
      *
      * @since    1.0.0
@@ -1194,7 +1318,7 @@ CSS;
         if ( metadata_exists( 'post', $this->pid, '_product_image_gallery' ) ) {
             $product_image_gallery = explode( ',', get_post_meta( $this->pid, '_product_image_gallery', true ) );
         } else {
-            $attachment_ids = get_posts( [
+            $attachment_ids = get_children( [
                 'post_parent'    => $this->pid,
                 'numberposts'    => -1,
                 'post_type'      => 'attachment',
@@ -1202,9 +1326,10 @@ CSS;
                 'order'          => 'ASC',
                 'post_mime_type' => 'image',
                 'fields'         => 'ids',
-                'meta_key'       => '_woocommerce_exclude_image',
-                'meta_value'     => '0',
             ] );
+            $attachment_ids = array_filter( $attachment_ids, static function ( $attachment_id ) {
+                return '1' !== get_post_meta( $attachment_id, '_woocommerce_exclude_image', true );
+            } );
             $attachment_ids = array_diff( $attachment_ids, [get_post_thumbnail_id()] );
             if ( is_array( $attachment_ids ) && count( $attachment_ids ) > 0 ) {
                 $product_image_gallery = $attachment_ids;
@@ -1266,9 +1391,13 @@ CSS;
      * @return   array The image data.
      */
     public function getMainImage( int $attachment_id ) : array {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce image-size compatibility hooks.
         $full_size = apply_filters( 'woocommerce_gallery_full_size', apply_filters( 'woocommerce_product_thumbnails_large_size', 'full' ) );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce image-size compatibility hooks.
         $thumb_size = apply_filters( 'woocommerce_gallery_thumbnail_size', apply_filters( 'woocommerce_thumbnail_size', 'shop_thumbnail' ) );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce image-size compatibility hook.
         $image_size = apply_filters( 'woocommerce_gallery_image_size', ( $this->options->main_imagesize ?: $full_size ) );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce image-size compatibility hook.
         $thumb_image = apply_filters( 'woocommerce_gallery_thumbnail_size', ( $this->options->thumb_imagesize ?: $thumb_size ) );
         // If ID is invalid or attachment is missing, gracefully fall back to a placeholder
         if ( $attachment_id <= 0 || !get_post( $attachment_id ) ) {
@@ -1321,7 +1450,9 @@ CSS;
      * @return   string The HTML for the image.
      */
     public function returnImage( int $attachment_id ) : string {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce image-size compatibility hook.
         $full_size = apply_filters( 'woocommerce_gallery_full_size', ( property_exists( $this->options, 'showcase_imagesize' ) && $this->options->showcase_imagesize ? $this->options->showcase_imagesize : (( $this->options->main_imagesize ?: $this->options->thumb_imagesize )) ) );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce image-size compatibility hook.
         $image_size = apply_filters( 'woocommerce_gallery_image_size', ( $this->options->main_imagesize ?: $full_size ) );
         $thumbnail_src = ( wp_get_attachment_image_src( $attachment_id, $this->options->thumb_imagesize ) ?: [null, 0, 0] );
         $large_image = ( wp_get_attachment_image_src( $attachment_id, $image_size ) ?: [null, 0, 0] );
@@ -1388,7 +1519,7 @@ CSS;
         if ( !empty( $get ) ) {
             echo '<div class="svitn_wrapper">';
             foreach ( $get as $img ) {
-                echo $this->returnImage( $img );
+                echo wp_kses_post( $this->returnImage( $img ) );
             }
             echo '</div>';
         }
@@ -1423,7 +1554,7 @@ CSS;
     public function strposX( string $haystack, string $needle, int $number ) : int {
         preg_match_all(
             "/{$needle}/",
-            utf8_decode( $haystack ),
+            $haystack,
             $matches,
             PREG_OFFSET_CAPTURE
         );
@@ -1490,9 +1621,10 @@ CSS;
         }
         if ( $html ) {
             list( $imgHeight, $imgWidth ) = $this->extract_image_dimensions_from_html( $img );
-            $img = '<div style="margin-bottom: 5px"><img src="' . (( $image_id ? current( wp_get_attachment_image_src( $image_id, 'thumbnail' ) ) : wc_placeholder_img_src() )) . '" alt="' . esc_attr__( 'Product image', 'woocommerce' ) . '" height="' . esc_attr( $imgHeight ) . '" width="' . esc_attr( $imgWidth ) . '" style="vertical-align:middle; margin-' . (( is_rtl() ? 'left' : 'right' )) . ': 10px;" /></div>';
+            $img = '<div style="margin-bottom: 5px"><img src="' . (( $image_id ? current( wp_get_attachment_image_src( $image_id, 'thumbnail' ) ) : wc_placeholder_img_src() )) . '" alt="' . esc_attr__( 'Product image', 'smart-variations-images' ) . '" height="' . esc_attr( $imgHeight ) . '" width="' . esc_attr( $imgWidth ) . '" style="vertical-align:middle; margin-' . (( is_rtl() ? 'left' : 'right' )) . ': 10px;" /></div>';
         } else {
             $image_title = $product->get_title();
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce thumbnail-size compatibility hook.
             $img = wp_get_attachment_image(
                 $image_id,
                 apply_filters( 'single_product_small_thumbnail_size', $this->options->thumb_imagesize ),
@@ -1585,8 +1717,9 @@ CSS;
      */
     public function replace_divi_module_output( $output, string $render_slug, $element ) {
         global $product;
+        $divi_builder_request = filter_input( INPUT_GET, 'et_fb', FILTER_UNSAFE_RAW );
         // Only replace et_pb_wc_images module, and not in the visual builder
-        if ( $render_slug !== 'et_pb_wc_images' || isset( $_REQUEST['et_fb'] ) ) {
+        if ( $render_slug !== 'et_pb_wc_images' || null !== $divi_builder_request ) {
             return $output;
         }
         // Return early if output is not a string (e.g., in admin/builder context)
@@ -1673,8 +1806,14 @@ CSS;
      */
     public function woosvi_slugify() : void {
         header( "Content-type: application/json" );
-        $data = ( isset( $_POST['data'] ) ? $_POST['data'] : '' );
-        $data = ( is_array( $data ) ? implode( '_svipro_', $data ) : (string) $data );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Authenticated, non-mutating endpoint that returns only sanitized input.
+        $data = ( isset( $_POST['data'] ) ? wp_unslash( $_POST['data'] ) : '' );
+        if ( is_array( $data ) ) {
+            $data = array_map( 'sanitize_text_field', $data );
+            $data = implode( '_svipro_', $data );
+        } else {
+            $data = sanitize_text_field( (string) $data );
+        }
         echo json_encode( sanitize_title( strtolower( $data ) ) );
         wp_die();
     }
@@ -1695,12 +1834,14 @@ CSS;
                     $terms = wp_get_post_terms( $pid, urldecode( $att ), 'all' );
                     if ( !empty( $terms ) ) {
                         foreach ( $terms as $term ) {
+                            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce variation-label compatibility hook.
                             $data[strtolower( esc_attr( $term->slug ) )] = trim( esc_html( apply_filters( 'woocommerce_variation_option_name', $term->name ) ) );
                         }
                     }
                 } elseif ( !$attribute['is_taxonomy'] && $attribute['is_variation'] ) {
                     $terms = explode( '|', $attribute['value'] );
                     foreach ( $terms as $term ) {
+                        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce variation-label compatibility hook.
                         $data[sanitize_title( $term )] = trim( esc_html( apply_filters( 'woocommerce_variation_option_name', $term ) ) );
                     }
                 }
@@ -1717,9 +1858,29 @@ CSS;
      * @return   int The original language ID, or the input ID if not found.
      */
     public function wpml_original( int $id ) : int {
-        global $wpdb;
-        $orig_lang_id = $wpdb->get_var( "SELECT trans2.element_id FROM {$wpdb->prefix}icl_translations AS trans1 INNER JOIN {$wpdb->prefix}icl_translations AS trans2 ON trans2.trid = trans1.trid WHERE trans1.element_id = " . $id . " AND trans2.source_language_code IS NULL" );
-        return ( is_null( $orig_lang_id ) ? $id : (int) $orig_lang_id );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WPML compatibility filter.
+        $trid = apply_filters(
+            'wpml_element_trid',
+            null,
+            $id,
+            'post_product'
+        );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WPML compatibility filter.
+        $translations = ( $trid ? apply_filters(
+            'wpml_get_element_translations',
+            null,
+            $trid,
+            'post_product'
+        ) : array() );
+        if ( !is_array( $translations ) ) {
+            return $id;
+        }
+        foreach ( $translations as $translation ) {
+            if ( empty( $translation->source_language_code ) ) {
+                return (int) $translation->element_id;
+            }
+        }
+        return $id;
     }
 
     /**
@@ -1799,19 +1960,31 @@ CSS;
      * @return   array|bool The translated IDs, or false if not found.
      */
     public function wpml_ids( int $id ) {
-        global $wpdb;
-        $trid = $wpdb->get_var( "SELECT trid FROM {$wpdb->prefix}icl_translations WHERE element_id = " . $id . " AND source_language_code IS NULL" );
-        if ( $trid > 0 ) {
-            $translations = $wpdb->get_results( "SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE trid = " . $trid . " AND source_language_code IS NOT NULL" );
-        } else {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WPML compatibility filter.
+        $trid = apply_filters(
+            'wpml_element_trid',
+            null,
+            $id,
+            'post_product'
+        );
+        if ( !$trid ) {
             return false;
         }
-        if ( $translations ) {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WPML compatibility filter.
+        $translations = apply_filters(
+            'wpml_get_element_translations',
+            null,
+            $trid,
+            'post_product'
+        );
+        if ( is_array( $translations ) ) {
             $ids = [];
-            foreach ( $translations as $v ) {
-                $ids[] = $v->element_id;
+            foreach ( $translations as $translation ) {
+                if ( !empty( $translation->source_language_code ) ) {
+                    $ids[] = (int) $translation->element_id;
+                }
             }
-            return $ids;
+            return ( !empty( $ids ) ? $ids : false );
         }
         return false;
     }
@@ -1857,7 +2030,7 @@ CSS;
         }
         global $product;
         $yith_badge = YITH_WCBM_Frontend();
-        echo $yith_badge->show_badge_on_product( ' ' );
+        echo wp_kses_post( $yith_badge->show_badge_on_product( ' ' ) );
     }
 
     /**
@@ -1868,10 +2041,11 @@ CSS;
      */
     public function get_filtered_attribute() : ?array {
         $filtered_attribute = null;
-        foreach ( $_GET as $key => $value ) {
-            if ( strpos( $key, 'filter_' ) === 0 && !empty( $value ) ) {
+        $query_arguments = filter_input_array( INPUT_GET, FILTER_UNSAFE_RAW );
+        foreach ( (array) $query_arguments as $key => $value ) {
+            if ( is_string( $key ) && is_string( $value ) && strpos( $key, 'filter_' ) === 0 && '' !== $value ) {
                 $attribute = str_replace( 'filter_', '', $key );
-                $values = array_map( 'sanitize_title', explode( ',', $value ) );
+                $values = array_map( 'sanitize_title', explode( ',', sanitize_text_field( wp_unslash( $value ) ) ) );
                 $filtered_attribute = [
                     'attribute' => $attribute,
                     'values'    => $values,
@@ -1905,27 +2079,27 @@ CSS;
         }
         $filtered_attribute = $this->get_filtered_attribute();
         if ( !$filtered_attribute ) {
-            error_log( 'SVI: No filter applied for product ' . $product->get_id() );
+            // error_log('SVI: No filter applied for product ' . $product->get_id());
             return $image;
         }
         if ( !isset( $filtered_attribute['values'] ) || empty( $filtered_attribute['values'] ) ) {
-            error_log( 'SVI: Filter applied but no values for product ' . $product->get_id() . ': ' . print_r( $filtered_attribute, true ) );
+            // error_log('SVI: Filter applied but no values for product ' . $product->get_id() . ': ' . print_r($filtered_attribute, true));
             return $image;
         }
-        error_log( 'SVI: Filter applied for product ' . $product->get_id() . ': ' . print_r( $filtered_attribute, true ) );
+        // error_log('SVI: Filter applied for product ' . $product->get_id() . ': ' . print_r($filtered_attribute, true));
         $data = $this->get_cached_product_data( $product->get_id(), true );
         if ( !isset( $data['svi'] ) || empty( $data['svi'] ) ) {
-            error_log( 'SVI: No SVI gallery data for product ' . $product->get_id() );
+            // error_log('SVI: No SVI gallery data for product ' . $product->get_id());
             return $image;
         }
-        error_log( 'SVI: SVI gallery data for product ' . $product->get_id() . ': ' . print_r( $data['svi'], true ) );
+        // error_log('SVI: SVI gallery data for product ' . $product->get_id() . ': ' . print_r($data['svi'], true));
         $filtered_values = $filtered_attribute['values'];
         $matching_images = [];
         foreach ( $filtered_values as $filtered_value ) {
             $found = false;
             foreach ( $data['svi'] as $variation ) {
                 if ( !isset( $variation['slugs'] ) || empty( $variation['slugs'] ) || !isset( $variation['imgs'] ) || empty( $variation['imgs'] ) ) {
-                    error_log( 'SVI: Skipping variation with missing slugs or images for product ' . $product->get_id() . ': ' . print_r( $variation, true ) );
+                    // error_log('SVI: Skipping variation with missing slugs or images for product ' . $product->get_id() . ': ' . print_r($variation, true));
                     continue;
                 }
                 $slugs = array_map( 'sanitize_title', $variation['slugs'] );
@@ -1935,25 +2109,25 @@ CSS;
                         'image_id' => $image_id,
                         'slug'     => $filtered_value,
                     ];
-                    error_log( 'SVI: Found matching variation for ' . $filtered_value . ' in product ' . $product->get_id() . ': Image ID ' . $image_id );
+                    // error_log('SVI: Found matching variation for ' . $filtered_value . ' in product ' . $product->get_id() . ': Image ID ' . $image_id);
                     $found = true;
                     break;
                 }
             }
             if ( !$found ) {
-                error_log( 'SVI: Variation ' . $filtered_value . ' not found for product ' . $product->get_id() . ', skipping.' );
+                // error_log('SVI: Variation ' . $filtered_value . ' not found for product ' . $product->get_id() . ', skipping.');
             }
         }
-        error_log( 'SVI: Matching images for product ' . $product->get_id() . ': ' . print_r( $matching_images, true ) );
+        // error_log('SVI: Matching images for product ' . $product->get_id() . ': ' . print_r($matching_images, true));
         if ( empty( $matching_images ) ) {
-            error_log( 'SVI: No matching variation images found for product ' . $product->get_id() );
+            // error_log('SVI: No matching variation images found for product ' . $product->get_id());
             return $image;
         }
         if ( count( $matching_images ) === 1 ) {
             $first_match = reset( $matching_images );
             $image_id = $first_match['image_id'];
             $slug = $first_match['slug'];
-            error_log( 'SVI: Only one matching image found for product ' . $product->get_id() . ': Image ID ' . $image_id );
+            // error_log('SVI: Only one matching image found for product ' . $product->get_id() . ': Image ID ' . $image_id);
             $image = wp_get_attachment_image(
                 $image_id,
                 $size,
@@ -1987,10 +2161,10 @@ CSS;
                 // Add slug to aria labels
                 $image_url = wp_get_attachment_image_url( $image_id, $size );
                 if ( !$image_url ) {
-                    error_log( 'SVI: Failed to retrieve image URL for image ID ' . $image_id . ' in product ' . $product->get_id() );
+                    // error_log('SVI: Failed to retrieve image URL for image ID ' . $image_id . ' in product ' . $product->get_id());
                     continue;
                 }
-                error_log( 'SVI: Rendering image for ' . $slug . ' with URL ' . $image_url );
+                // error_log('SVI: Rendering image for ' . $slug . ' with URL ' . $image_url);
                 $image_html .= '<li data-image="' . esc_url( $image_url ) . '" style="width: 100%; height: ' . 100 / $num_images . '%;">';
                 $image_html .= '<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $product->get_name() . ' - ' . $slug ) . '" />';
                 $image_html .= '</li>';
@@ -2007,10 +2181,10 @@ CSS;
                 $aria_labels[] = $slug;
                 $image_url = wp_get_attachment_image_url( $image_id, $size );
                 if ( !$image_url ) {
-                    error_log( 'SVI: Failed to retrieve image URL for image ID ' . $image_id . ' in product ' . $product->get_id() );
+                    // error_log('SVI: Failed to retrieve image URL for image ID ' . $image_id . ' in product ' . $product->get_id());
                     continue;
                 }
-                error_log( 'SVI: Rendering image for ' . $slug . ' with URL ' . $image_url );
+                // error_log('SVI: Rendering image for ' . $slug . ' with URL ' . $image_url);
                 $left_position = $index * $initial_width;
                 $style = "width: {$initial_width}%; left: {$left_position}%;";
                 $image_html .= '<li data-image="' . esc_url( $image_url ) . '" style="' . $style . '">';
@@ -2027,10 +2201,10 @@ CSS;
                 $aria_labels[] = $slug;
                 $image_url = wp_get_attachment_image_url( $image_id, $size );
                 if ( !$image_url ) {
-                    error_log( 'SVI: Failed to retrieve image URL for image ID ' . $image_id . ' in product ' . $product->get_id() );
+                    // error_log('SVI: Failed to retrieve image URL for image ID ' . $image_id . ' in product ' . $product->get_id());
                     continue;
                 }
-                error_log( 'SVI: Rendering image for ' . $slug . ' with URL ' . $image_url );
+                // error_log('SVI: Rendering image for ' . $slug . ' with URL ' . $image_url);
                 // Add a class to indicate the position of the image (first, middle, last)
                 $position_class = '';
                 if ( $index === 0 ) {
@@ -2047,7 +2221,7 @@ CSS;
             }
         }
         if ( empty( $image_html ) ) {
-            error_log( 'SVI: No valid images found for accordion layout in product ' . $product->get_id() );
+            // error_log('SVI: No valid images found for accordion layout in product ' . $product->get_id());
             return $image;
         }
         // Add the layout type as a data attribute for CSS/JS to use

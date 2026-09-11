@@ -1,4 +1,6 @@
 <?php
+// phpcs:disable WordPress.Security.NonceVerification.Missing -- Term-save nonce checks are performed in save_term_meta().
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Legacy WCSVFS class and WooCommerce/WCSVFS compatibility hooks.
 
 /**
  * The admin-specific functionality of the plugin.
@@ -131,8 +133,8 @@ class Wcsvfs_Admin
             'wcsvfs',
             array(
                 'i18n' => array(
-                    'mediaTitle' => esc_html__('Choose an image', 'wcvs'),
-                    'mediaButton' => esc_html__('Use image', 'wcvs'),
+                    'mediaTitle' => esc_html__('Choose an image', 'smart-variations-images'),
+                    'mediaButton' => esc_html__('Use image', 'smart-variations-images'),
                 ),
                 'placeholder' => WC()->plugin_url() . '/assets/images/placeholder.png',
             )
@@ -145,7 +147,11 @@ class Wcsvfs_Admin
     public function missing_wc_notice()
     {
         echo '<div class="error">';
-        echo '<p>' . esc_html_e(WCVFS_NAME . ' is enabled but not effective. It requires WooCommerce in order to work.', 'wcsvfs') . '</p>';
+        echo '<p>' . sprintf(
+            /* translators: %s: plugin name. */
+            esc_html__('%s is enabled but not effective. It requires WooCommerce in order to work.', 'smart-variations-images'),
+            esc_html(WCVFS_NAME)
+        ) . '</p>';
         echo '</div>';
     }
 
@@ -164,12 +170,13 @@ class Wcsvfs_Admin
         $taxonomy_name = wc_attribute_taxonomy_name($taxonomy->attribute_name);
         global $thepostid;
 
-        $product_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : $thepostid;
+        $product_id = isset($_POST['post_id']) ? absint(wp_unslash($_POST['post_id'])) : $thepostid; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 ?>
-        <select multiple="multiple" data-placeholder="<?php esc_attr_e('Select terms', 'wcsvfs'); ?>" class="multiselect attribute_values wc-enhanced-select" name="attribute_values[<?php echo $index; ?>][]">
+        <select multiple="multiple" data-placeholder="<?php esc_attr_e('Select terms', 'smart-variations-images'); ?>" class="multiselect attribute_values wc-enhanced-select" name="attribute_values[<?php echo esc_attr(absint($index)); ?>][]">
             <?php
 
-            $all_terms = get_terms($taxonomy_name, apply_filters('woocommerce_product_attribute_terms', array('orderby' => 'name', 'hide_empty' => false)));
+            $args = apply_filters('woocommerce_product_attribute_terms', array('taxonomy' => $taxonomy_name, 'orderby' => 'name', 'hide_empty' => false));
+            $all_terms = get_terms($args);
             if ($all_terms) {
                 foreach ($all_terms as $term) {
                     echo '<option value="' . esc_attr($term->term_id) . '" ' . selected(has_term(absint($term->term_id), $taxonomy_name, $product_id), true, false) . '>' . esc_attr(apply_filters('woocommerce_product_attribute_term_name', $term->name, $term)) . '</option>';
@@ -178,9 +185,9 @@ class Wcsvfs_Admin
             ?>
         </select>
 
-        <button class="button plus select_all_attributes"><?php esc_html_e('Select all', 'woocommerce'); ?></button>
-        <button class="button minus select_no_attributes"><?php esc_html_e('Select none', 'woocommerce'); ?></button>
-        <button class="button fr plus wcsvfs_add_new_attribute" data-type="<?php echo $taxonomy->attribute_type ?>"><?php esc_html_e('Add new', 'woocommerce'); ?></button>
+        <button class="button plus select_all_attributes"><?php esc_html_e('Select all', 'smart-variations-images'); ?></button>
+        <button class="button minus select_no_attributes"><?php esc_html_e('Select none', 'smart-variations-images'); ?></button>
+        <button class="button fr plus wcsvfs_add_new_attribute" data-type="<?php echo esc_attr($taxonomy->attribute_type); ?>"><?php esc_html_e('Add new', 'smart-variations-images'); ?></button>
     <?php
     }
 
@@ -189,27 +196,27 @@ class Wcsvfs_Admin
      */
     public function add_new_attribute_ajax()
     {
-        $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
-        $tax = isset($_POST['taxonomy']) ? $_POST['taxonomy'] : '';
-        $type = isset($_POST['type']) ? $_POST['type'] : '';
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
-        $slug = isset($_POST['slug']) ? $_POST['slug'] : '';
-        $swatch = isset($_POST['swatch']) ? $_POST['swatch'] : '';
+        $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+        $tax = isset($_POST['taxonomy']) ? sanitize_text_field(wp_unslash($_POST['taxonomy'])) : '';
+        $type = isset($_POST['type']) ? sanitize_text_field(wp_unslash($_POST['type'])) : '';
+        $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
+        $slug = isset($_POST['slug']) ? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
+        $swatch = isset($_POST['swatch']) ? sanitize_text_field(wp_unslash($_POST['swatch'])) : '';
 
         if (!wp_verify_nonce($nonce, '_wcsvfs_create_attribute')) {
-            wp_send_json_error(esc_html__('Wrong request', 'wcsvfs'));
+            wp_send_json_error(esc_html__('Wrong request', 'smart-variations-images'));
         }
 
         if (empty($name) || empty($swatch) || empty($tax) || empty($type)) {
-            wp_send_json_error(esc_html__('Not enough data', 'wcsvfs'));
+            wp_send_json_error(esc_html__('Not enough data', 'smart-variations-images'));
         }
 
         if (!taxonomy_exists($tax)) {
-            wp_send_json_error(esc_html__('Taxonomy is not exists', 'wcsvfs'));
+            wp_send_json_error(esc_html__('Taxonomy is not exists', 'smart-variations-images'));
         }
 
-        if (term_exists($_POST['name'], $_POST['tax'])) {
-            wp_send_json_error(esc_html__('This term is exists', 'wcsvfs'));
+        if (term_exists($name, $tax)) {
+            wp_send_json_error(esc_html__('This term is exists', 'smart-variations-images'));
         }
 
         $term = wp_insert_term($name, $tax, array('slug' => $slug));
@@ -223,7 +230,7 @@ class Wcsvfs_Admin
 
         wp_send_json_success(
             array(
-                'msg' => esc_html__('Added successfully', 'wcsvfs'),
+                'msg' => esc_html__('Added successfully', 'smart-variations-images'),
                 'id' => $term->term_id,
                 'slug' => $term->slug,
                 'name' => $term->name,
@@ -248,18 +255,18 @@ class Wcsvfs_Admin
                 <button type="button" class="button-link media-modal-close wcsvfs-modal-close">
                     <span class="media-modal-icon"></span></button>
                 <div class="wcsvfs-modal-header">
-                    <h2><?php esc_html_e('Add new term', 'wcsvfs') ?></h2>
+                    <h2><?php esc_html_e('Add new term', 'smart-variations-images') ?></h2>
                 </div>
                 <div class="wcsvfs-modal-content">
                     <p class="wcsvfs-term-name">
                         <label>
-                            <?php esc_html_e('Name', 'wcsvfs') ?>
+                            <?php esc_html_e('Name', 'smart-variations-images') ?>
                             <input type="text" class="widefat wcsvfs-input" name="name">
                         </label>
                     </p>
                     <p class="wcsvfs-term-slug">
                         <label>
-                            <?php esc_html_e('Slug', 'wcsvfs') ?>
+                            <?php esc_html_e('Slug', 'smart-variations-images') ?>
                             <input type="text" class="widefat wcsvfs-input" name="slug">
                         </label>
                     </p>
@@ -268,11 +275,11 @@ class Wcsvfs_Admin
                     </div>
                     <div class="hidden wcsvfs-term-tax"></div>
 
-                    <input type="hidden" class="wcsvfs-input" name="nonce" value="<?php echo wp_create_nonce('_wcsvfs_create_attribute') ?>">
+                    <input type="hidden" class="wcsvfs-input" name="nonce" value="<?php echo esc_attr(wp_create_nonce('_wcsvfs_create_attribute')); ?>">
                 </div>
                 <div class="wcsvfs-modal-footer">
-                    <button class="button button-secondary wcsvfs-modal-close"><?php esc_html_e('Cancel', 'wcsvfs') ?></button>
-                    <button class="button button-primary wcsvfs-new-attribute-submit"><?php esc_html_e('Add New', 'wcsvfs') ?></button>
+                    <button class="button button-secondary wcsvfs-modal-close"><?php esc_html_e('Cancel', 'smart-variations-images') ?></button>
+                    <button class="button button-primary wcsvfs-new-attribute-submit"><?php esc_html_e('Add New', 'smart-variations-images') ?></button>
                     <span class="message"></span>
                     <span class="spinner"></span>
                 </div>
@@ -282,21 +289,21 @@ class Wcsvfs_Admin
 
         <script type="text/template" id="tmpl-wcsvfs-input-color">
 
-            <label><?php esc_html_e('Color', 'wcsvfs') ?></label><br>
+            <label><?php esc_html_e('Color', 'smart-variations-images') ?></label><br>
 			<input type="text" class="wcsvfs-input wcsvfs-input-color" name="swatch">
 
 		</script>
 
         <script type="text/template" id="tmpl-wcsvfs-input-image">
 
-            <label><?php esc_html_e('Image', 'wcsvfs') ?></label><br>
+            <label><?php esc_html_e('Image', 'smart-variations-images') ?></label><br>
 			<div class="wcsvfs-term-image-thumbnail" style="float:left;margin-right:10px;">
 				<img src="<?php echo esc_url(WC()->plugin_url() . '/assets/images/placeholder.png') ?>" width="60px" height="60px" />
 			</div>
 			<div style="line-height:60px;">
 				<input type="hidden" class="wcsvfs-input wcsvfs-input-image wcsvfs-term-image" name="swatch" value="" />
-				<button type="button" class="wcsvfs-upload-image-button button"><?php esc_html_e('Upload/Add image', 'wcsvfs'); ?></button>
-				<button type="button" class="wcsvfs-remove-image-button button hidden"><?php esc_html_e('Remove image', 'wcsvfs'); ?></button>
+				<button type="button" class="wcsvfs-upload-image-button button"><?php esc_html_e('Upload/Add image', 'smart-variations-images'); ?></button>
+				<button type="button" class="wcsvfs-remove-image-button button hidden"><?php esc_html_e('Remove image', 'smart-variations-images'); ?></button>
 			</div>
 
 		</script>
@@ -304,7 +311,7 @@ class Wcsvfs_Admin
         <script type="text/template" id="tmpl-wcsvfs-input-label">
 
             <label>
-				<?php esc_html_e('Label', 'wcsvfs') ?>
+				<?php esc_html_e('Label', 'smart-variations-images') ?>
 				<input type="text" class="widefat wcsvfs-input wcsvfs-input-label" name="swatch">
 			</label>
 
@@ -353,9 +360,16 @@ class Wcsvfs_Admin
      */
     public function save_term_meta($term_id, $tt_id)
     {
+        $nonce = isset($_POST['_wpnonce']) ? sanitize_text_field(wp_unslash($_POST['_wpnonce'])) : '';
+        $action = isset($_POST['action']) && 'editedtag' === sanitize_text_field(wp_unslash($_POST['action'])) ? 'update-tag_' . $term_id : 'add-tag';
+
+        if (!$nonce || !wp_verify_nonce($nonce, $action)) {
+            return;
+        }
+
         foreach (WC_SVFS()->types as $type => $label) {
             if (isset($_POST[$type])) {
-                update_term_meta($term_id, $type, $_POST[$type]);
+                update_term_meta($term_id, $type, sanitize_text_field(wp_unslash($_POST[$type])));
             }
         }
     }
@@ -413,7 +427,9 @@ class Wcsvfs_Admin
      */
     public function add_attribute_column_content($columns, $column, $term_id)
     {
-        $attr = WC_SVFS()->get_tax_attribute($_REQUEST['taxonomy']);
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $taxonomy = isset($_REQUEST['taxonomy']) ? sanitize_text_field(wp_unslash($_REQUEST['taxonomy'])) : '';
+        $attr = WC_SVFS()->get_tax_attribute($taxonomy);
         $value = get_term_meta($term_id, $attr->attribute_type, true);
 
         switch ($attr->attribute_type) {
@@ -454,7 +470,7 @@ class Wcsvfs_Admin
             'edit' == $form ? 'tr' : 'div',
             'edit' == $form ? '<th>' : '',
             esc_attr($type),
-            WC_SVFS()->types[$type],
+            esc_html(WC_SVFS()->types[$type]),
             'edit' == $form ? '</th><td>' : ''
         );
 
@@ -468,8 +484,8 @@ class Wcsvfs_Admin
                 </div>
                 <div style="line-height:60px;">
                     <input type="hidden" class="wcsvfs-term-image" name="image" value="<?php echo esc_attr($value) ?>" />
-                    <button type="button" class="wcsvfs-upload-image-button button"><?php esc_html_e('Upload/Add image', 'wcsvfs'); ?></button>
-                    <button type="button" class="wcsvfs-remove-image-button button <?php echo $value ? '' : 'hidden' ?>"><?php esc_html_e('Remove image', 'wcsvfs'); ?></button>
+                    <button type="button" class="wcsvfs-upload-image-button button"><?php esc_html_e('Upload/Add image', 'smart-variations-images'); ?></button>
+                    <button type="button" class="wcsvfs-remove-image-button button <?php echo $value ? '' : 'hidden' ?>"><?php esc_html_e('Remove image', 'smart-variations-images'); ?></button>
                 </div>
             <?php
                 break;

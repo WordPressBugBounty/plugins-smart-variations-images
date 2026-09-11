@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Bundled framework class and dynamic option hook retain their legacy public API.
 
 /**
  * WordPress Settings Framework
@@ -112,7 +114,8 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 				add_action('admin_init', array($this, 'admin_init'));
 				add_action('wpsfsvi_do_settings_sections_' . $this->option_group, array($this, 'do_tabless_settings_sections'), 10);
 
-				if (isset($_GET['page']) && $_GET['page'] === $this->settings_page['slug']) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				if (isset($_GET['page']) && sanitize_text_field(wp_unslash($_GET['page'])) === $this->settings_page['slug']) {
 					if ($pagenow !== 'options-general.php') {
 						add_action('admin_notices', array($this, 'admin_notices'));
 					}
@@ -139,7 +142,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			$this->settings_wrapper = apply_filters('wpsfsvi_register_settings_clean_' . $this->option_group, apply_filters('wpsfsvi_register_settings_' . $this->option_group, array()));
 
 			if (!is_array($this->settings_wrapper)) {
-				return new WP_Error('broke', esc_html__('wpsfsvi settings must be an array', 'wpsfsvi'));
+				return new WP_Error('broke', esc_html__('wpsfsvi settings must be an array', 'smart-variations-images'));
 			}
 
 			// If "sections" is set, this settings group probably has tabs
@@ -222,7 +225,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		public function settings_page_content()
 		{
 			if (!current_user_can($this->settings_page['capability'])) {
-				wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'wpsfsvi'));
+				wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'smart-variations-images'));
 			}
 ?>
 			<div class="wpsfsvi-settings wpsfsvi-settings--<?php echo esc_attr($this->option_group); ?>">
@@ -241,7 +244,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 		?>
 			<div class="wpsfsvi-settings__header">
-				<h2><?php echo apply_filters('wpsfsvi_title_' . $this->option_group, $this->settings_page['title']); ?></h2>
+				<h2><?php echo wp_kses_post(apply_filters('wpsfsvi_title_' . $this->option_group, $this->settings_page['title'])); ?></h2>
 				<?php do_action('wpsfsvi_after_title_' . $this->option_group); ?>
 			</div>
 		<?php
@@ -260,9 +263,11 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		 */
 		public function admin_enqueue_scripts()
 		{
+			$assets_version = defined('SMART_VARIATIONS_IMAGES_VERSION') ? SMART_VARIATIONS_IMAGES_VERSION : '1.0.0';
+
 			// scripts
-			wp_register_script('jquery-ui-timepicker', $this->options_url . 'assets/vendor/jquery-timepicker/jquery.ui.timepicker.js', array('jquery', 'jquery-ui-core'), false, true);
-			wp_register_script('wpsfsvi', $this->options_url . 'assets/js/main.js', array('jquery'), false, true);
+			wp_register_script('jquery-ui-timepicker', $this->options_url . 'assets/vendor/jquery-timepicker/jquery.ui.timepicker.js', array('jquery', 'jquery-ui-core'), $assets_version, true);
+			wp_register_script('smart-variations-images', $this->options_url . 'assets/js/main.js', array('jquery'), $assets_version, true);
 
 			wp_enqueue_script('jquery');
 			wp_enqueue_script('farbtastic');
@@ -271,25 +276,23 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			wp_enqueue_script('jquery-ui-core');
 			wp_enqueue_script('jquery-ui-datepicker');
 			wp_enqueue_script('jquery-ui-timepicker');
-			wp_enqueue_script('wpsfsvi');
+			wp_enqueue_script('smart-variations-images');
 
 			$data = array(
-				'select_file'          => esc_html__('Please select a file to import', 'wpsfsvi'),
-				'invalid_file'         => esc_html__('Invalid file', 'wpsfsvi'),
-				'something_went_wrong' => esc_html__('Something went wrong', 'wpsfsvi'),
+				'select_file'          => esc_html__('Please select a file to import', 'smart-variations-images'),
+				'invalid_file'         => esc_html__('Invalid file', 'smart-variations-images'),
+				'something_went_wrong' => esc_html__('Something went wrong', 'smart-variations-images'),
 			);
-			wp_localize_script('wpsfsvi', 'wpsfsvi_vars', $data);
+			wp_localize_script('smart-variations-images', 'wpsfsvi_vars', $data);
 
 			// styles
-			wp_register_style('jquery-ui-timepicker', $this->options_url . 'assets/vendor/jquery-timepicker/jquery.ui.timepicker.css');
-			wp_register_style('wpsfsvi', $this->options_url . 'assets/css/main.css');
-			wp_register_style('jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/ui-darkness/jquery-ui.css');
+			wp_register_style('jquery-ui-timepicker', $this->options_url . 'assets/vendor/jquery-timepicker/jquery.ui.timepicker.css', array(), $assets_version);
+			wp_register_style('smart-variations-images', $this->options_url . 'assets/css/main.css', array(), $assets_version);
 
 			wp_enqueue_style('farbtastic');
 			wp_enqueue_style('thickbox');
 			wp_enqueue_style('jquery-ui-timepicker');
-			wp_enqueue_style('jquery-ui-css');
-			wp_enqueue_style('wpsfsvi');
+			wp_enqueue_style('smart-variations-images');
 		}
 
 		/**
@@ -322,7 +325,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 							echo '<span class="' . esc_attr($renderClass) . '"></span>';
 						}
 						if (isset($section['section_description']) && $section['section_description']) {
-							echo '<div class="wpsfsvi-section-description wpsfsvi-section-description--' . esc_attr($section['section_id']) . '">' . $section['section_description'] . '</div>';
+							echo '<div class="wpsfsvi-section-description wpsfsvi-section-description--' . esc_attr($section['section_id']) . '">' . wp_kses_post($section['section_description']) . '</div>';
 						}
 						break;
 					}
@@ -350,8 +353,8 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 									$tooltip     = '';
 
 									if (isset($field['link']) && is_array($field['link'])) {
-										$link_url      = (isset($field['link']['url'])) ? esc_html($field['link']['url']) : '';
-										$link_text     = (isset($field['link']['text'])) ? esc_html($field['link']['text']) : esc_html__('Learn More', 'wpsfsvi');
+										$link_url      = (isset($field['link']['url'])) ? esc_url($field['link']['url']) : '';
+										$link_text     = (isset($field['link']['text'])) ? esc_html($field['link']['text']) : esc_html__('Learn More', 'smart-variations-images');
 										$link_external = (isset($field['link']['external'])) ? (bool) $field['link']['external'] : true;
 										$link_type     = (isset($field['link']['type'])) ? esc_attr($field['link']['type']) : 'tooltip';
 										$link_target   = ($link_external) ? ' target="_blank"' : '';
@@ -459,7 +462,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
 
-			echo '<input type="text" name="' . $args['name'] . '" id="' . $args['id'] . '" value="' . $args['value'] . '" placeholder="' . $args['placeholder'] . '" class="regular-text ' . $args['class'] . '" />';
+			echo '<input type="text" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '" placeholder="' . esc_attr($args['placeholder']) . '" class="regular-text ' . esc_attr($args['class']) . '" />';
 
 			$this->generate_description($args['desc']);
 		}
@@ -473,7 +476,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
 
-			echo '<input type="hidden" name="' . $args['name'] . '" id="' . $args['id'] . '" value="' . $args['value'] . '"  class="hidden-field ' . $args['class'] . '" />';
+			echo '<input type="hidden" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '"  class="hidden-field ' . esc_attr($args['class']) . '" />';
 		}
 
 		/**
@@ -485,7 +488,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
 
-			echo '<input type="number" name="' . $args['name'] . '" id="' . $args['id'] . '" value="' . $args['value'] . '" placeholder="' . $args['placeholder'] . '" class="regular-text ' . $args['class'] . '" />';
+			echo '<input type="number" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '" placeholder="' . esc_attr($args['placeholder']) . '" class="regular-text ' . esc_attr($args['class']) . '" />';
 
 			$this->generate_description($args['desc']);
 		}
@@ -499,9 +502,9 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
 
-			$timepicker = (!empty($args['timepicker'])) ? htmlentities(json_encode($args['timepicker'])) : null;
+			$timepicker = (!empty($args['timepicker'])) ? esc_attr(wp_json_encode($args['timepicker'])) : '';
 
-			echo '<input type="text" name="' . $args['name'] . '" id="' . $args['id'] . '" value="' . $args['value'] . '" class="timepicker regular-text ' . $args['class'] . '" data-timepicker="' . $timepicker . '" />';
+			echo '<input type="text" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '" class="timepicker regular-text ' . esc_attr($args['class']) . '" data-timepicker="' . esc_attr($timepicker) . '" />';
 
 			$this->generate_description($args['desc']);
 		}
@@ -515,9 +518,9 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
 
-			$datepicker = (!empty($args['datepicker'])) ? htmlentities(json_encode($args['datepicker'])) : null;
+			$datepicker = (!empty($args['datepicker'])) ? esc_attr(wp_json_encode($args['datepicker'])) : '';
 
-			echo '<input type="text" name="' . $args['name'] . '" id="' . $args['id'] . '" value="' . $args['value'] . '" class="datepicker regular-text ' . $args['class'] . '" data-datepicker="' . $datepicker . '" />';
+			echo '<input type="text" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '" class="datepicker regular-text ' . esc_attr($args['class']) . '" data-datepicker="' . esc_attr($datepicker) . '" />';
 
 			$this->generate_description($args['desc']);
 		}
@@ -530,11 +533,11 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		public function generate_export_field($args)
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
-			$args['value'] = empty($args['value']) ? esc_html__('Export Settings', 'wpsfsvi') : $args['value'];
+			$args['value'] = empty($args['value']) ? esc_html__('Export Settings', 'smart-variations-images') : $args['value'];
 			$option_group  = $this->option_group;
 			$export_url    = site_url() . '/wp-admin/admin-ajax.php?action=wpsfsvi_export_settings&_wpnonce=' . wp_create_nonce('wpsfsvi_export_settings') . '&option_group=' . $option_group;
 
-			echo '<a target=_blank href="' . $export_url . '" class="button" name="' . $args['name'] . '" id="' . $args['id'] . '">' . $args['value'] . '</a>';
+			echo '<a target="_blank" href="' . esc_url($export_url) . '" class="button" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '">' . esc_html($args['value']) . '</a>';
 
 			$options = get_option($option_group . '_settings');
 			$this->generate_description($args['desc']);
@@ -548,7 +551,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		public function generate_import_field($args)
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
-			$args['value'] = empty($args['value']) ? esc_html__('Import Settings', 'wpsfsvi') : $args['value'];
+			$args['value'] = empty($args['value']) ? esc_html__('Import Settings', 'smart-variations-images') : $args['value'];
 			$option_group  = $this->option_group;
 
 			echo sprintf(
@@ -589,14 +592,14 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			echo '<tbody>';
 
 			for ($row = 0; $row < $row_count; $row++) {
-				echo $this->generate_group_row_template($args, false, $row);
+				echo wp_kses_post($this->generate_group_row_template($args, false, $row));
 			}
 
 			echo '</tbody>';
 
 			echo '</table>';
 
-			printf('<script type="text/html" id="%s_template">%s</script>', $args['id'], $this->generate_group_row_template($args, true));
+			printf('<script type="text/html" id="%s_template">%s</script>', esc_attr($args['id']), wp_kses_post($this->generate_group_row_template($args, true)));
 
 			$this->generate_description($args['desc']);
 		}
@@ -702,7 +705,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 			$args['value'] = esc_attr(stripslashes($args['value']));
 
-			echo '<input type="password" name="' . $args['name'] . '" id="' . $args['id'] . '" value="' . $args['value'] . '" placeholder="' . $args['placeholder'] . '" class="regular-text ' . $args['class'] . '" />';
+				echo '<input type="password" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '" placeholder="' . esc_attr($args['placeholder']) . '" class="regular-text ' . esc_attr($args['class']) . '" />';
 
 			$this->generate_description($args['desc']);
 		}
@@ -714,9 +717,9 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		 */
 		public function generate_textarea_field($args)
 		{
-			$args['value'] = esc_html(esc_attr($args['value']));
+			$args['value'] = esc_textarea(stripslashes((string) $args['value']));
 
-			echo '<textarea name="' . $args['name'] . '" id="' . $args['id'] . '" placeholder="' . $args['placeholder'] . '" rows="5" cols="60" class="' . $args['class'] . '">' . $args['value'] . '</textarea>';
+			echo '<textarea name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" placeholder="' . esc_attr($args['placeholder']) . '" rows="5" cols="60" class="' . esc_attr($args['class']) . '">' . esc_textarea($args['value']) . '</textarea>';
 
 			$this->generate_description($args['desc']);
 		}
@@ -734,7 +737,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 				$field_id = sprintf('%s_%s', $args['id'], $value);
 				$checked  = ($value == $args['value']) ? 'checked="checked"' : '';
 
-				echo sprintf('<label><input type="radio" name="%s" id="%s" value="%s" class="%s" %s> %s</label><br />', $args['name'], $field_id, $value, $args['class'], $checked, $text);
+				echo sprintf('<label><input type="radio" name="%s" id="%s" value="%s" class="%s" %s> %s</label><br />', esc_attr($args['name']), esc_attr($field_id), esc_attr($value), esc_attr($args['class']), esc_attr($checked), esc_html($text));
 			}
 
 			$this->generate_description($args['desc']);
@@ -750,8 +753,8 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			$args['value'] = esc_attr(stripslashes($args['value']));
 			$checked       = ($args['value']) ? 'checked="checked"' : '';
 
-			echo '<input type="hidden" name="' . $args['name'] . '" value="0" />';
-			echo '<label><input type="checkbox" name="' . $args['name'] . '" id="' . $args['id'] . '" value="1" class="' . $args['class'] . '" ' . $checked . '> ' . $args['desc'] . '</label>';
+			echo '<input type="hidden" name="' . esc_attr($args['name']) . '" value="0" />';
+			echo '<label><input type="checkbox" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="1" class="' . esc_attr($args['class']) . '" ' . esc_attr($checked) . '> ' . wp_kses_post($args['desc']) . '</label>';
 		}
 
 		/**
@@ -764,8 +767,8 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			$args['value'] = esc_attr(stripslashes($args['value']));
 			$checked       = ($args['value']) ? 'checked="checked"' : '';
 
-			echo '<input type="hidden" name="' . $args['name'] . '" value="0" />';
-			echo '<label class="switch"><input type="checkbox" name="' . $args['name'] . '" id="' . $args['id'] . '" value="1" class="' . $args['class'] . '" ' . $checked . '> <span class="slider"></span></label>';
+			echo '<input type="hidden" name="' . esc_attr($args['name']) . '" value="0" />';
+			echo '<label class="switch"><input type="checkbox" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="1" class="' . esc_attr($args['class']) . '" ' . esc_attr($checked) . '> <span class="slider"></span></label>';
 			$this->generate_description($args['desc']);
 		}
 
@@ -776,7 +779,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		 */
 		public function generate_checkboxes_field($args)
 		{
-			echo '<input type="hidden" name="' . $args['name'] . '" value="0" />';
+			echo '<input type="hidden" name="' . esc_attr($args['name']) . '" value="0" />';
 
 			echo '<ul class="wpsfsvi-list wpsfsvi-list--checkboxes">';
 
@@ -784,7 +787,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 				$checked  = (is_array($args['value']) && in_array(strval($value), array_map('strval', $args['value']), true)) ? 'checked="checked"' : '';
 				$field_id = sprintf('%s_%s', $args['id'], $value);
 
-				echo sprintf('<li><label><input type="checkbox" name="%s[]" id="%s" value="%s" class="%s" %s> %s</label></li>', $args['name'], $field_id, $value, $args['class'], $checked, $text);
+				echo sprintf('<li><label><input type="checkbox" name="%s[]" id="%s" value="%s" class="%s" %s> %s</label></li>', esc_attr($args['name']), esc_attr($field_id), esc_attr($value), esc_attr($args['class']), esc_attr($checked), esc_html($text));
 			}
 
 			echo '</ul>';
@@ -804,21 +807,21 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 
 			echo '<div class="wpsfsvi-color" style="position:relative;">';
 
-			echo sprintf('<input type="text" name="%s" id="%s" value="%s" class="%s">', $args['name'], $args['id'], $args['value'], $args['class']);
+			echo sprintf('<input type="text" name="%s" id="%s" value="%s" class="%s">', esc_attr($args['name']), esc_attr($args['id']), esc_attr($args['value']), esc_attr($args['class']));
 
-			echo sprintf('<div id="%s" style="position:absolute;top:0;left:190px;background:#fff;z-index:9999;"></div>', $color_picker_id);
+			echo sprintf('<div id="%s" style="position:absolute;top:0;left:190px;background:#fff;z-index:9999;"></div>', esc_attr($color_picker_id));
 
 			$this->generate_description($args['desc']);
 
 			echo '<script type="text/javascript">
                 jQuery(document).ready(function($){
-                    var colorPicker = $("#' . $color_picker_id . '");
-                    colorPicker.farbtastic("#' . $args['id'] . '");
+					var colorPicker = $("#' . esc_js($color_picker_id) . '");
+					colorPicker.farbtastic("#' . esc_js($args['id']) . '");
                     colorPicker.hide();
-                    $("#' . $args['id'] . '").on("focus", function(){
+					$("#' . esc_js($args['id']) . '").on("focus", function(){
                         colorPicker.show();
                     });
-                    $("#' . $args['id'] . '").on("blur", function(){
+					$("#' . esc_js($args['id']) . '").on("blur", function(){
                         colorPicker.hide();
                         if($(this).val() == "") $(this).val("#");
                     });
@@ -838,9 +841,9 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			$args['value'] = esc_attr($args['value']);
 			$button_id     = sprintf('%s_button', $args['id']);
 
-			echo sprintf('<input type="text" name="%s" id="%s" value="%s" class="regular-text %s"> ', $args['name'], $args['id'], $args['value'], $args['class']);
+			echo sprintf('<input type="text" name="%s" id="%s" value="%s" class="regular-text %s"> ', esc_attr($args['name']), esc_attr($args['id']), esc_attr($args['value']), esc_attr($args['class']));
 
-			echo sprintf('<input type="button" class="button wpsfsvi-browse" id="%s" value="Browse" />', $button_id);
+			echo sprintf('<input type="button" class="button wpsfsvi-browse" id="%s" value="Browse" />', esc_attr($button_id));
 
 		?>
 			<script type='text/javascript'>
@@ -869,9 +872,9 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 
 						// Create the media frame.
 						file_frame = wp.media.frames.file_frame = wp.media({
-							title: '<?php echo esc_html__('Select a image to upload', 'wpsfsvi'); ?>',
+							title: '<?php echo esc_html__('Select a image to upload', 'smart-variations-images'); ?>',
 							button: {
-								text: '<?php echo esc_html__('Use this image', 'wpsfsvi'); ?>',
+								text: '<?php echo esc_html__('Use this image', 'smart-variations-images'); ?>',
 							},
 							multiple: false // Set to true to allow multiple files to be selected
 						});
@@ -964,7 +967,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 				return;
 			}
 
-			echo (isset($args['output'])) ? $args['output'] : $args['default'];
+			echo wp_kses_post(isset($args['output']) ? $args['output'] : $args['default']);
 		}
 
 		/**
@@ -986,8 +989,8 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 				$value    = esc_attr(stripslashes($values[$i]));
 
 				echo '<div class="wpsfsvi-multifields__field">';
-				echo '<input type="text" name="' . $args['name'] . '[]" id="' . $field_id . '" value="' . $value . '" class="regular-text ' . $args['class'] . '" placeholder="' . $args['placeholder'] . '" />';
-				echo '<br><span>' . $field_titles[$i] . '</span>';
+				echo '<input type="text" name="' . esc_attr($args['name']) . '[]" id="' . esc_attr($field_id) . '" value="' . esc_attr($value) . '" class="regular-text ' . esc_attr($args['class']) . '" placeholder="' . esc_attr($args['placeholder']) . '" />';
+				echo '<br><span>' . esc_html($field_titles[$i]) . '</span>';
 				echo '</div>';
 
 				$i++;
@@ -1018,7 +1021,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		public function generate_description($description)
 		{
 			if ($description && $description !== '') {
-				echo '<p class="description">' . $description . '</p>';
+				echo '<p class="description">' . wp_kses_post($description) . '</p>';
 			}
 		}
 
@@ -1037,7 +1040,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 
 				<?php if (apply_filters('wpsfsvi_show_save_changes_button_' . $this->option_group, true)) { ?>
 					<p class="submit">
-						<input type="submit" class="button-primary" value="<?php _e('Save Changes'); ?>" />
+						<input type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes', 'smart-variations-images'); ?>" />
 					</p>
 				<?php } ?>
 			</form>
@@ -1111,7 +1114,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			$i = 0;
 			foreach ($this->tabs as $tab_data) {
 			?>
-				<div id="tab-<?php echo $tab_data['id']; ?>" class="wpsfsvi-section wpsfsvi-tab wpsfsvi-tab--<?php echo $tab_data['id']; ?> <?php
+				<div id="tab-<?php echo esc_attr($tab_data['id']); ?>" class="wpsfsvi-section wpsfsvi-tab wpsfsvi-tab--<?php echo esc_attr($tab_data['id']); ?> <?php
 																																			if ($i == 0) {
 																																				echo 'wpsfsvi-tab--active';
 																																			}
@@ -1153,15 +1156,15 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 
 					$active = ($i == 0) ? 'wpsfsvi-nav__item--active' : '';
 				?>
-					<li class="wpsfsvi-nav__item <?php echo $active; ?>">
-						<a class="wpsfsvi-nav__item-link <?php echo esc_attr($tab_data['class']); ?>" href="#tab-<?php echo $tab_data['id']; ?>"><?php echo $tab_data['title']; ?></a>
+					<li class="wpsfsvi-nav__item <?php echo esc_attr($active); ?>">
+						<a class="wpsfsvi-nav__item-link <?php echo esc_attr($tab_data['class']); ?>" href="#tab-<?php echo esc_attr($tab_data['id']); ?>"><?php echo esc_html($tab_data['title']); ?></a>
 					</li>
 				<?php
 					$i++;
 				}
 				?>
 				<li class="wpsfsvi-nav__item wpsfsvi-nav__item--last">
-					<input type="submit" class="button-primary wpsfsvi-button-submit" value="<?php esc_attr_e('Save Changes'); ?>">
+					<input type="submit" class="button-primary wpsfsvi-button-submit" value="<?php esc_attr_e('Save Changes', 'smart-variations-images'); ?>">
 				</li>
 			</ul>
 
@@ -1280,20 +1283,19 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			$option_group = filter_input(INPUT_GET, 'option_group');
 
 			if (empty($_wpnonce) || !wp_verify_nonce($_wpnonce, 'wpsfsvi_export_settings')) {
-				wp_die(esc_html__('Action failed.', 'wpsfsvi'));
+				wp_die(esc_html__('Action failed.', 'smart-variations-images'));
 			}
 
 			if (empty($option_group)) {
-				wp_die(esc_html__('No option group specified.', 'wpsfsvi'));
+				wp_die(esc_html__('No option group specified.', 'smart-variations-images'));
 			}
 
 			$options = get_option($option_group . '_settings');
-			$options = wp_json_encode($options);
 
 			// output the file contents to the browser.
 			header('Content-Type: text/json; charset=utf-8');
 			header('Content-Disposition: attachment; filename=wpsfsvi-settings-' . $option_group . '.json');
-			echo $options;
+			echo wp_json_encode($options);
 			exit;
 		}
 

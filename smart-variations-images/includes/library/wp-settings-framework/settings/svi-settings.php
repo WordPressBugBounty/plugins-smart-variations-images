@@ -1,5 +1,9 @@
 <?php
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy settings callback used by existing configuration.
+if ( !defined( 'ABSPATH' ) ) {
+    exit;
+}
 add_filter( 'wpsfsvi_register_settings_woosvi_options', 'wpsfsvi_svi_tabbed_settings' );
 add_filter( 'wpsfsvi_register_settings_clean_woosvi_options', 'wpsfsvi_svi_tabbed_settings_clean' );
 /**
@@ -12,39 +16,39 @@ function wpsfsvi_svi_tabbed_settings(  $wpsfsvi_settings  ) {
     $wpsfsvi_settings['sections'] = ( isset( $wpsfsvi_settings['sections'] ) ? $wpsfsvi_settings['sections'] : array() );
     $wpsfsvi_settings['tabs'][] = array(
         'id'       => 'main',
-        'title'    => esc_html__( 'Global', 'wc_svi' ),
+        'title'    => esc_html__( 'Global', 'smart-variations-images' ),
         'sections' => array(array(
             'id'    => 'section_variations',
-            'title' => esc_html__( 'Variation Select Options', 'wc_svi' ),
+            'title' => esc_html__( 'Variation Select Options', 'smart-variations-images' ),
         )),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'stacked',
-        'title' => esc_html__( 'Stacked Layout', 'wc_svi' ),
+        'title' => esc_html__( 'Stacked Layout', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'lightbox',
-        'title' => esc_html__( 'Lightbox', 'wc_svi' ),
+        'title' => esc_html__( 'Lightbox', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'slider',
-        'title' => esc_html__( 'Slider', 'wc_svi' ),
+        'title' => esc_html__( 'Slider', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'lens',
-        'title' => esc_html__( 'Magnifier Lens', 'wc_svi' ),
+        'title' => esc_html__( 'Magnifier Lens', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'video',
-        'title' => esc_html__( 'Video', 'wc_svi' ),
+        'title' => esc_html__( 'Video', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'thumbnails',
-        'title' => esc_html__( 'Thumbails', 'wc_svi' ),
+        'title' => esc_html__( 'Thumbails', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'fixes',
-        'title' => esc_html__( 'Layout Fixes', 'wc_svi' ),
+        'title' => esc_html__( 'Layout Fixes', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['sections'][] = wpsfsvi_svi_options_tab_main();
     $wpsfsvi_settings['sections'][] = wpsfsvi_svi_options_tab_main_variations();
@@ -60,7 +64,7 @@ function wpsfsvi_svi_tabbed_settings(  $wpsfsvi_settings  ) {
     $wpsfsvi_settings['sections'][] = wpsfsvi_svi_options_tab_fixes();
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'import_export',
-        'title' => esc_html__( 'Import / Export', 'wc_svi' ),
+        'title' => esc_html__( 'Import / Export', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['sections'][] = wpsfsvi_svi_options_tab_importexport();
     return $wpsfsvi_settings;
@@ -72,9 +76,13 @@ function wpsfsvi_svi_tabbed_settings(  $wpsfsvi_settings  ) {
  * @return void
  */
 function wpsfsvi_svi_options_tab_main() {
-    $variation_thumbdesc = __( '<b>Free Version limited to display 1 image, upgrade to PRO to display all.</b> Unlock all these features <a href="/wp-admin/admin.php?page=woocommerce_svi-pricing" target="_blank">here</a>.<br><br>This option will display the product variations images under the dropdowns/swatches of the product page.<br>All images or Images with no variations assigned will be displayed as default gallery under the main image.<br>Adds lightbox option to be activated or not on this images. <b>Thumbnails Keep visible</b> option should be set disabled because activating this options alraedy keeps the images visible.', 'wc_svi' );
+    $variation_thumbdesc = '<strong>' . esc_html__( 'Free Version limited to display 1 image, upgrade to PRO to display all.', 'smart-variations-images' ) . '</strong> ';
+    $variation_thumbdesc .= esc_html__( 'Unlock all these features', 'smart-variations-images' ) . ' <a href="/wp-admin/admin.php?page=woocommerce_svi-pricing" target="_blank">' . esc_html__( 'here', 'smart-variations-images' ) . '</a>.<br><br>';
+    $variation_thumbdesc .= esc_html__( 'This option will display the product variations images under the dropdowns/swatches of the product page.', 'smart-variations-images' ) . '<br>';
+    $variation_thumbdesc .= esc_html__( 'All images or Images with no variations assigned will be displayed as default gallery under the main image.', 'smart-variations-images' ) . '<br>';
+    $variation_thumbdesc .= esc_html__( 'Adds lightbox option to be activated or not on this images.', 'smart-variations-images' ) . ' <strong>' . esc_html__( 'Thumbnails Keep visible', 'smart-variations-images' ) . '</strong> ' . esc_html__( 'option should be set disabled because activating this options alraedy keeps the images visible.', 'smart-variations-images' );
     return array(
-        'section_title' => __( 'Global', 'wc_svi' ),
+        'section_title' => __( 'Global', 'smart-variations-images' ),
         'tab_id'        => 'main',
         'section_id'    => 'section_global',
         'section_order' => 10,
@@ -82,21 +90,21 @@ function wpsfsvi_svi_options_tab_main() {
             array(
                 'id'      => 'default',
                 'type'    => 'toggle',
-                'title'   => __( 'Enable SVI', 'wc_svi' ),
-                'desc'    => __( 'This setting allows you to activate or deactivate SVI from running on your site. If you deactivate SVI, it will not be displayed on any product pages.', 'wc_svi' ),
+                'title'   => __( 'Enable SVI', 'smart-variations-images' ),
+                'desc'    => __( 'This setting allows you to activate or deactivate SVI from running on your site. If you deactivate SVI, it will not be displayed on any product pages.', 'smart-variations-images' ),
                 'default' => true,
             ),
             array(
                 'id'      => 'default_swatches',
                 'type'    => 'toggle',
-                'title'   => __( 'Enable Swatches', 'wc_svi' ),
-                'desc'    => __( 'This setting allows you to activate or deactivate SVI swatches from running on your site. If you deactivate SVI swatches, they will not be displayed on any product pages.', 'wc_svi' ),
+                'title'   => __( 'Enable Swatches', 'smart-variations-images' ),
+                'desc'    => __( 'This setting allows you to activate or deactivate SVI swatches from running on your site. If you deactivate SVI swatches, they will not be displayed on any product pages.', 'smart-variations-images' ),
                 'default' => false,
             ),
             array(
                 'id'      => 'variation_thumbnails',
                 'type'    => 'toggle',
-                'title'   => __( 'Showcase Images under Variations', 'wc_svi' ),
+                'title'   => __( 'Showcase Images under Variations', 'smart-variations-images' ),
                 'desc'    => $variation_thumbdesc,
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
@@ -107,8 +115,8 @@ function wpsfsvi_svi_options_tab_main() {
             array(
                 'id'      => 'columns_showcase',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Showcase Thumbnail Items', 'wc_svi' ),
-                'desc'    => __( 'This setting allows you to set the number of thumbnails to be displayed by row. You can choose a value between 1 and 10. This setting is only applicable if you have enabled the Showcase Images under Variations setting.', 'wc_svi' ),
+                'title'   => __( 'Showcase Thumbnail Items', 'smart-variations-images' ),
+                'desc'    => __( 'This setting allows you to set the number of thumbnails to be displayed by row. You can choose a value between 1 and 10. This setting is only applicable if you have enabled the Showcase Images under Variations setting.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_variation_thumbnails',
                     'value' => array('1'),
@@ -119,7 +127,7 @@ function wpsfsvi_svi_options_tab_main() {
             array(
                 'id'      => 'svi_disabled_woosvislug',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Disable SVI display', 'wc_svi' ),
+                'title'   => __( 'Disable SVI display', 'smart-variations-images' ),
                 'desc'    => 'This setting allows you to disable SVI from running on products that have no SVI data configured and fallback to the default theme display. This means that if a product does not have any SVI data, it will be displayed using the default theme display instead of SVI.',
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
@@ -130,20 +138,13 @@ function wpsfsvi_svi_options_tab_main() {
             array(
                 'id'      => 'skip_equivalent',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Skip Gallery equivalence check', 'wc_svi' ),
+                'title'   => __( 'Skip Gallery equivalence check', 'smart-variations-images' ),
                 'desc'    => 'This setting allows you to skip the gallery equivalence check. Each time an attribute is selected, the plugin will jump to the first image of the gallery by default. If there are no changes made to the current gallery in display, there is no need to jump to the first image. This setting can be useful for products that have many variations or attributes.',
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
                 )),
                 'default' => false,
-            ),
-            array(
-                'id'      => 'use_local_cdn',
-                'type'    => 'toggle',
-                'title'   => __( 'Use Local Assets', 'wc_svi' ),
-                'desc'    => __( 'Load PhotoSwipe, Plyr, Swiper, and imagesLoaded from local copies instead of CDN. This ensures GDPR compliance by not exposing visitor IPs to external services like Cloudflare. Recommended for EU users.', 'wc_svi' ),
-                'default' => true,
             )
         ),
     );
@@ -151,7 +152,7 @@ function wpsfsvi_svi_options_tab_main() {
 
 function wpsfsvi_svi_options_tab_main_variations() {
     return array(
-        'section_title'       => __( 'Variation Select Options', 'wc_svi' ),
+        'section_title'       => __( 'Variation Select Options', 'smart-variations-images' ),
         'tab_id'              => 'main',
         'section_id'          => 'section_variations',
         'section_description' => 'On the frontend, when viewing a variable product, the user is presented with dropdown boxes or swatches to select variation options.<br>The following options will interact with the selected information.',
@@ -159,8 +160,8 @@ function wpsfsvi_svi_options_tab_main_variations() {
         'fields'              => array(array(
             'id'      => 'swselect',
             'type'    => 'toggle',
-            'title'   => __( 'Trigger on attribute change', 'wc_svi' ),
-            'desc'    => __( 'This setting allows you to trigger the image changing when an attribute is selected. All attributes/swatches will trigger the image changing, so customers don\'t have to wait for all attributes/swatches to be selected before the image changes.', 'wc_svi' ),
+            'title'   => __( 'Trigger on attribute change', 'smart-variations-images' ),
+            'desc'    => __( 'This setting allows you to trigger the image changing when an attribute is selected. All attributes/swatches will trigger the image changing, so customers don\'t have to wait for all attributes/swatches to be selected before the image changes.', 'smart-variations-images' ),
             'show_if' => array(array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -169,9 +170,9 @@ function wpsfsvi_svi_options_tab_main_variations() {
         ), array(
             'id'       => 'triger_match',
             'type'     => wpsfsvi_svi_pass( 't' ),
-            'title'    => __( 'Trigger Exact SVI Gallery Match', 'wc_svi' ),
-            'subtitle' => __( 'Only activate if you understand the effect', 'wc_svi' ),
-            'desc'     => __( 'This setting allows you to trigger/display the SVI gallery only when there is an exact match between the attributes selected and the SVI galleries created. This means that variation images will only be displayed when there is a gallery that exactly matches the attributes selected. Note that this setting should only be activated if you understand its effect.', 'wc_svi' ),
+            'title'    => __( 'Trigger Exact SVI Gallery Match', 'smart-variations-images' ),
+            'subtitle' => __( 'Only activate if you understand the effect', 'smart-variations-images' ),
+            'desc'     => __( 'This setting allows you to trigger/display the SVI gallery only when there is an exact match between the attributes selected and the SVI galleries created. This means that variation images will only be displayed when there is a gallery that exactly matches the attributes selected. Note that this setting should only be activated if you understand its effect.', 'smart-variations-images' ),
             'show_if'  => array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -186,9 +187,9 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'       => 'filter_attribute',
             'type'     => 'toggle',
-            'title'    => __( 'Enable Filter Attribute Image Swapping', 'wc_svi' ),
-            'subtitle' => __( 'Showcase variation images based on applied filters', 'wc_svi' ),
-            'desc'     => __( 'When enabled, this option will display the <b>first image</b> of each matching <u>SVI Variations Gallery</u> on the product loop pages (e.g., Shop or Archive pages) based on the applied filters (such as color or size). You can enable/disable specific galleries from being displayed by checking the appropriate <u>SVI Variations Gallery</u> settings on the product edit page.', 'wc_svi' ),
+            'title'    => __( 'Enable Filter Attribute Image Swapping', 'smart-variations-images' ),
+            'subtitle' => __( 'Showcase variation images based on applied filters', 'smart-variations-images' ),
+            'desc'     => __( 'When enabled, this option will display the <b>first image</b> of each matching <u>SVI Variations Gallery</u> on the product loop pages (e.g., Shop or Archive pages) based on the applied filters (such as color or size). You can enable/disable specific galleries from being displayed by checking the appropriate <u>SVI Variations Gallery</u> settings on the product edit page.', 'smart-variations-images' ),
             'show_if'  => array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -198,9 +199,9 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'       => 'filter_attribute_cut',
             'type'     => 'select',
-            'title'    => __( 'Filter Attribute Split Layout Type', 'wc_svi' ),
-            'subtitle' => __( 'Choose the layout style for displaying multiple variation images', 'wc_svi' ),
-            'desc'     => __( 'Select how multiple variation images should be displayed when a filter matches more than one variation on the Shop/Archive page. <b>Diagonal</b>: Images are split diagonally from bottom-left to top-right. <b>Vertical</b>: Images are stacked vertically. <b>Horizontal</b>: Images are arranged side by side horizontally. Default: Diagonal.', 'wc_svi' ),
+            'title'    => __( 'Filter Attribute Split Layout Type', 'smart-variations-images' ),
+            'subtitle' => __( 'Choose the layout style for displaying multiple variation images', 'smart-variations-images' ),
+            'desc'     => __( 'Select how multiple variation images should be displayed when a filter matches more than one variation on the Shop/Archive page. <b>Diagonal</b>: Images are split diagonally from bottom-left to top-right. <b>Vertical</b>: Images are stacked vertically. <b>Horizontal</b>: Images are arranged side by side horizontally. Default: Diagonal.', 'smart-variations-images' ),
             'show_if'  => array(array(
                 'field' => 'main_section_loopvariations_filter_attribute',
                 'value' => array('1'),
@@ -216,9 +217,9 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'       => 'filter_attribute_animation',
             'type'     => ( svi_fs()->can_use_premium_code__premium_only() ? 'toggle' : 'custom' ),
-            'title'    => __( 'Enable Filter Attribute Animation', 'wc_svi' ) . (( svi_fs()->can_use_premium_code__premium_only() ? '' : SMART_SVI_PROVS )),
-            'subtitle' => __( 'Add sliding animation on hover', 'wc_svi' ),
-            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'wc_svi' ) : __( 'This is a premium feature. When enabled, it adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). Upgrade to PRO to unlock this feature. <a href="/wp-admin/admin.php?page=woocommerce_svi-pricing" target="_blank">Upgrade here</a>.', 'wc_svi' ) ),
+            'title'    => __( 'Enable Filter Attribute Animation', 'smart-variations-images' ) . (( svi_fs()->can_use_premium_code__premium_only() ? '' : SMART_SVI_PROVS )),
+            'subtitle' => __( 'Add sliding animation on hover', 'smart-variations-images' ),
+            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'smart-variations-images' ) : __( 'This is a premium feature. When enabled, it adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). Upgrade to PRO to unlock this feature. <a href="/wp-admin/admin.php?page=woocommerce_svi-pricing" target="_blank">Upgrade here</a>.', 'smart-variations-images' ) ),
             'output'   => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'wpsfsvisvi_info' ),
             'style'    => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'warning' ),
             'show_if'  => array(array(
@@ -231,9 +232,9 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'       => 'loop_showcase',
             'type'     => 'toggle',
-            'title'    => __( 'Showcase Variations', 'wc_svi' ),
-            'subtitle' => __( 'Showcase your variations on the product loop page', 'wc_svi' ),
-            'desc'     => __( 'Activating this option will showcase the <b>first image</b> of each of your <u>SVI Variations Gallery</u> under each product on the Product loop pages.<br>You may enable/disable specific galleries from being displayed by checking the proper <u>SVI Variations Gallery</u> on the product.', 'wc_svi' ),
+            'title'    => __( 'Showcase Variations', 'smart-variations-images' ),
+            'subtitle' => __( 'Showcase your variations on the product loop page', 'smart-variations-images' ),
+            'desc'     => __( 'Activating this option will showcase the <b>first image</b> of each of your <u>SVI Variations Gallery</u> under each product on the Product loop pages.<br>You may enable/disable specific galleries from being displayed by checking the proper <u>SVI Variations Gallery</u> on the product.', 'smart-variations-images' ),
             'show_if'  => array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -243,8 +244,8 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'      => 'loop_showcase_limit',
             'type'    => wpsfsvi_svi_pass( 'n' ),
-            'title'   => __( 'Visible galleries ', 'wc_svi' ),
-            'desc'    => __( 'Define a limit of galleries to be displayed p/product, 0 = all', 'wc_svi' ),
+            'title'   => __( 'Visible galleries ', 'smart-variations-images' ),
+            'desc'    => __( 'Define a limit of galleries to be displayed p/product, 0 = all', 'smart-variations-images' ),
             'show_if' => array(array(array(
                 'field' => 'main_section_loopvariations_loop_showcase',
                 'value' => array('1'),
@@ -256,9 +257,9 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         ),
         array(
             'id'       => 'loop_showcase_position',
-            'title'    => __( 'Showcase Position', 'wc_svi' ),
-            'subtitle' => __( 'Adjust the position of the showcase in the product loop.', 'wc_svi' ),
-            'desc'     => __( 'WooCommerce has hooks set in place to allow users to customize the positions of certain elements, if your theme has this hooks in place you may adjust the position.', 'wc_svi' ),
+            'title'    => __( 'Showcase Position', 'smart-variations-images' ),
+            'subtitle' => __( 'Adjust the position of the showcase in the product loop.', 'smart-variations-images' ),
+            'desc'     => __( 'WooCommerce has hooks set in place to allow users to customize the positions of certain elements, if your theme has this hooks in place you may adjust the position.', 'smart-variations-images' ),
             'type'     => wpsfsvi_svi_pass( 's' ),
             'choices'  => array(
                 'woocommerce_before_shop_loop_item'       => 'Display before product loop item',
@@ -279,8 +280,8 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'      => 'loop_showcase_position_priority',
             'type'    => wpsfsvi_svi_pass( 'n' ),
-            'title'   => __( 'Showcase Position Priority', 'wc_svi' ),
-            'desc'    => __( 'Used to specify the order in which the Showcase Position action will be executed. Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action. Default value: 10', 'wc_svi' ),
+            'title'   => __( 'Showcase Position Priority', 'smart-variations-images' ),
+            'desc'    => __( 'Used to specify the order in which the Showcase Position action will be executed. Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action. Default value: 10', 'smart-variations-images' ),
             'show_if' => array(array(array(
                 'field' => 'main_section_loopvariations_loop_showcase',
                 'value' => array('1'),
@@ -293,8 +294,8 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'      => 'loop_showcase_wrapper_el',
             'type'    => wpsfsvi_svi_pass( 'tx' ),
-            'title'   => __( 'Specify Product Wrapper', 'wc_svi' ),
-            'desc'    => __( 'Used to specify the element that is wrapping the product on the loop page. By default, it is set to find the closest ".product", but just in case your theme doesn\'t have the class present, this option will allow you to define the target. You can specify, for example, any element (div, li), classes (.product), or both (div.product).', 'wc_svi' ),
+            'title'   => __( 'Specify Product Wrapper', 'smart-variations-images' ),
+            'desc'    => __( 'Used to specify the element that is wrapping the product on the loop page. By default, it is set to find the closest ".product", but just in case your theme doesn\'t have the class present, this option will allow you to define the target. You can specify, for example, any element (div, li), classes (.product), or both (div.product).', 'smart-variations-images' ),
             'show_if' => array(array(array(
                 'field' => 'main_section_loopvariations_loop_showcase',
                 'value' => array('1'),
@@ -307,8 +308,8 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'      => 'loop_showcase_wrapper_el_img',
             'type'    => wpsfsvi_svi_pass( 'tx' ),
-            'title'   => __( 'Specify Product Wrapper Image', 'wc_svi' ),
-            'desc'    => __( 'Used to specify the element that is wrapping the product image on the loop page. By default, it is set to find the first image, but just in case the first image is not the product image, this option will allow you to define the target. You can specify, for example, any element (img, div), classes (.attachment-woocommerce_thumbnail), or both (img.attachment-woocommerce_thumbnail).', 'wc_svi' ),
+            'title'   => __( 'Specify Product Wrapper Image', 'smart-variations-images' ),
+            'desc'    => __( 'Used to specify the element that is wrapping the product image on the loop page. By default, it is set to find the first image, but just in case the first image is not the product image, this option will allow you to define the target. You can specify, for example, any element (img, div), classes (.attachment-woocommerce_thumbnail), or both (img.attachment-woocommerce_thumbnail).', 'smart-variations-images' ),
             'show_if' => array(array(array(
                 'field' => 'main_section_loopvariations_loop_showcase',
                 'value' => array('1'),
@@ -319,8 +320,8 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
             'default' => 'img',
         ),
         array(
-            'title'   => __( 'Showcase Image Size Loaded', 'wc_svi' ),
-            'desc'    => __( 'Select the image size you want loaded from the available registered image sizes on your site.', 'wc_svi' ),
+            'title'   => __( 'Showcase Image Size Loaded', 'smart-variations-images' ),
+            'desc'    => __( 'Select the image size you want loaded from the available registered image sizes on your site.', 'smart-variations-images' ),
             'id'      => 'showcase_imagesize',
             'type'    => 'select',
             'choices' => svi_get_image_sizes(),
@@ -335,7 +336,7 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         )
     );
     return array(
-        'section_title'       => __( 'WooCommerce Shop Page / Archive', 'wc_svi' ),
+        'section_title'       => __( 'WooCommerce Shop Page / Archive', 'smart-variations-images' ),
         'tab_id'              => 'main',
         'section_id'          => 'section_loopvariations',
         'section_description' => 'A Product Archive/Shop page is a WooCommerce page that displays the list of products.<br>The following options will interact with this page.',
@@ -355,7 +356,7 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
     }
     $li_qv .= "</ul>";
     return array(
-        'section_title'       => __( 'Extra display locations', 'wc_svi' ),
+        'section_title'       => __( 'Extra display locations', 'smart-variations-images' ),
         'tab_id'              => 'main',
         'section_id'          => 'section_displaylocations',
         'section_description' => 'This section allows you to activate extra locations where you want SVI galleries to be loaded.',
@@ -364,8 +365,8 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
             array(
                 'id'      => 'svicart',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Cart Image', 'wc_svi' ),
-                'desc'    => __( 'Display choosen variation image in cart/checkout instead of default Product image.', 'wc_svi' ),
+                'title'   => __( 'Cart Image', 'smart-variations-images' ),
+                'desc'    => __( 'Display choosen variation image in cart/checkout instead of default Product image.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -375,8 +376,8 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
             array(
                 'id'      => 'sviemail',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Show Image in Email', 'wc_svi' ),
-                'desc'    => __( 'Display choosen variation image in order email.', 'wc_svi' ),
+                'title'   => __( 'Show Image in Email', 'smart-variations-images' ),
+                'desc'    => __( 'Display choosen variation image in order email.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -386,8 +387,8 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
             array(
                 'id'      => 'sviemailadmin',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Show Image in Admin Edit Order', 'wc_svi' ),
-                'desc'    => __( 'Display choosen variation image in the admin edit order page.', 'wc_svi' ),
+                'title'   => __( 'Show Image in Admin Edit Order', 'smart-variations-images' ),
+                'desc'    => __( 'Display choosen variation image in the admin edit order page.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -397,8 +398,8 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
             array(
                 'id'      => 'order_details',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Show Image in order details', 'wc_svi' ),
-                'desc'    => __( 'Display choosen variation image in the order details page after the checkout.', 'wc_svi' ),
+                'title'   => __( 'Show Image in order details', 'smart-variations-images' ),
+                'desc'    => __( 'Display choosen variation image in the order details page after the checkout.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -408,8 +409,8 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
             array(
                 'id'      => 'quick_view',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Enable Quick View append', 'wc_svi' ),
-                'desc'    => __( 'If theme has Quick View, SVI <b><u>will try</u></b> to append to it, SVI does not guarantee 100% compatibility.<br>This is a "HACK" so if not compatible or not working get in touch.<br><b>NOTE</b>: Activating this option does not enable Quick View on your site.', 'wc_svi' ),
+                'title'   => __( 'Enable Quick View append', 'smart-variations-images' ),
+                'desc'    => __( 'If theme has Quick View, SVI <b><u>will try</u></b> to append to it, SVI does not guarantee 100% compatibility.<br>This is a "HACK" so if not compatible or not working get in touch.<br><b>NOTE</b>: Activating this option does not enable Quick View on your site.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -419,8 +420,8 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
             array(
                 'id'      => 'quick_view_target',
                 'type'    => wpsfsvi_svi_pass( 'tx' ),
-                'title'   => __( 'Target Quick View Gallery', 'wc_svi' ),
-                'desc'    => __( '<p>There are several Quick View solutions from themes/plugins if activating Quick View isnt enough you may target the Quick View Class/ID (The element that contains the WooCommerce gallery). SVI will try to capture and replace it with SVI gallery.</p><br><p>Known List:<br>' . $li_qv . '</p>', 'wc_svi' ),
+                'title'   => __( 'Target Quick View Gallery', 'smart-variations-images' ),
+                'desc'    => '<p>' . esc_html__( 'There are several Quick View solutions from themes/plugins if activating Quick View isnt enough you may target the Quick View Class/ID (The element that contains the WooCommerce gallery). SVI will try to capture and replace it with SVI gallery.', 'smart-variations-images' ) . '</p><br><p>' . esc_html__( 'Known List:', 'smart-variations-images' ) . '<br>' . wp_kses_post( $li_qv ) . '</p>',
                 'show_if' => array(array(
                     'field' => 'main_section_displaylocations_quick_view',
                     'value' => array('1'),
@@ -433,7 +434,7 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
 
 function wpsfsvi_svi_options_tab_main_imagesettings() {
     return array(
-        'section_title'       => __( 'Image Settings', 'wc_svi' ),
+        'section_title'       => __( 'Image Settings', 'smart-variations-images' ),
         'tab_id'              => 'main',
         'section_id'          => 'section_imagesettings',
         'section_description' => 'This section allows you to refine images sizes and attributes',
@@ -442,8 +443,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'preload_fimg',
                 'type'    => 'toggle',
-                'title'   => __( 'Use Feat. Image as Preload', 'wc_svi' ),
-                'desc'    => __( 'Featured image will be used as preloader until SVI get fully loaded.', 'wc_svi' ),
+                'title'   => __( 'Use Feat. Image as Preload', 'smart-variations-images' ),
+                'desc'    => __( 'Featured image will be used as preloader until SVI get fully loaded.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -453,8 +454,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'placeholder',
                 'type'    => 'toggle',
-                'title'   => __( 'Use Placeholder', 'wc_svi' ),
-                'desc'    => __( 'If activated a placeholder will be displayed for variations that dont have a SVI gallery created otherwise it will fallback to show Default SVI gallery or all images. Want to set a custom placeholder image read <a href="https://docs.woocommerce.com/document/change-the-placeholder-image/" target="_blank">this</a>.', 'wc_svi' ),
+                'title'   => __( 'Use Placeholder', 'smart-variations-images' ),
+                'desc'    => __( 'If activated a placeholder will be displayed for variations that dont have a SVI gallery created otherwise it will fallback to show Default SVI gallery or all images. Want to set a custom placeholder image read <a href="https://docs.woocommerce.com/document/change-the-placeholder-image/" target="_blank">this</a>.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -464,8 +465,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'imagecaption',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Image Caption', 'wc_svi' ),
-                'desc'    => __( 'Show Image Title or Caption under main image.<br>Activating this option may require some styling adjustments specific for your theme not supported by this plugin.', 'wc_svi' ),
+                'title'   => __( 'Image Caption', 'smart-variations-images' ),
+                'desc'    => __( 'Show Image Title or Caption under main image.<br>Activating this option may require some styling adjustments specific for your theme not supported by this plugin.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -475,7 +476,7 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'imagecaption_option',
                 'type'    => wpsfsvi_svi_pass( 's', true ),
-                'title'   => __( 'Show Title or Caption', 'wc_svi' ),
+                'title'   => __( 'Show Title or Caption', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -492,8 +493,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'thumb_imagecaption',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Thumbnails Image Caption', 'wc_svi' ),
-                'desc'    => __( 'Show Image Title or Caption under thumbnail image.<br>Activating this option may require some styling adjustments specific for your theme not supported by this plugin.', 'wc_svi' ),
+                'title'   => __( 'Thumbnails Image Caption', 'smart-variations-images' ),
+                'desc'    => __( 'Show Image Title or Caption under thumbnail image.<br>Activating this option may require some styling adjustments specific for your theme not supported by this plugin.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -503,7 +504,7 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'thumb_imagecaption_option',
                 'type'    => wpsfsvi_svi_pass( 's', true ),
-                'title'   => __( 'Thumbnails Show Title or Caption', 'wc_svi' ),
+                'title'   => __( 'Thumbnails Show Title or Caption', 'smart-variations-images' ),
                 'choices' => array(
                     'title'   => 'Title',
                     'caption' => 'Caption',
@@ -520,8 +521,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'main_imagesize',
                 'type'    => 'select',
-                'title'   => __( 'Main Image Size', 'wc_svi' ),
-                'desc'    => __( 'Select your main image size from the registred sizes', 'wc_svi' ),
+                'title'   => __( 'Main Image Size', 'smart-variations-images' ),
+                'desc'    => __( 'Select your main image size from the registred sizes', 'smart-variations-images' ),
                 'choices' => svi_get_image_sizes(),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
@@ -532,8 +533,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'thumb_imagesize',
                 'type'    => 'select',
-                'title'   => __( 'Thumbnail Image Size', 'wc_svi' ),
-                'desc'    => __( 'Select your Thumbnail size from the registred sizes', 'wc_svi' ),
+                'title'   => __( 'Thumbnail Image Size', 'smart-variations-images' ),
+                'desc'    => __( 'Select your Thumbnail size from the registred sizes', 'smart-variations-images' ),
                 'choices' => svi_get_image_sizes(),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
@@ -544,8 +545,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'sviesrcset',
                 'type'    => 'toggle',
-                'title'   => __( 'Show SRCSET', 'wc_svi' ),
-                'desc'    => __( 'Add scrset attribute to images', 'wc_svi' ),
+                'title'   => __( 'Show SRCSET', 'smart-variations-images' ),
+                'desc'    => __( 'Add scrset attribute to images', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -555,8 +556,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'svititleattr',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Title attribute', 'wc_svi' ),
-                'desc'    => __( 'Add title attribute to images', 'wc_svi' ),
+                'title'   => __( 'Show Title attribute', 'smart-variations-images' ),
+                'desc'    => __( 'Add title attribute to images', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -566,8 +567,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'svialtattr',
                 'type'    => 'toggle',
-                'title'   => __( 'Show ALT attribute', 'wc_svi' ),
-                'desc'    => __( 'Add ALT attribute to images', 'wc_svi' ),
+                'title'   => __( 'Show ALT attribute', 'smart-variations-images' ),
+                'desc'    => __( 'Add ALT attribute to images', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -577,8 +578,8 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
             array(
                 'id'      => 'sviproglobal',
                 'type'    => wpsfsvi_svi_pass( 's' ),
-                'title'   => __( 'SVI GLOBAL position display', 'wc_svi' ),
-                'desc'    => __( 'Whether to display SVI GLOBAL images at Beginning or End of other variation images. Default: End', 'wc_svi' ),
+                'title'   => __( 'SVI GLOBAL position display', 'smart-variations-images' ),
+                'desc'    => __( 'Whether to display SVI GLOBAL images at Beginning or End of other variation images. Default: End', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -599,7 +600,7 @@ function wpsfsvi_svi_options_tab_main_imagesettings() {
  */
 function wpsfsvi_svi_options_tab_stack() {
     return array(
-        'section_title' => __( 'Stacked layout', 'wc_svi' ),
+        'section_title' => __( 'Stacked layout', 'smart-variations-images' ),
         'tab_id'        => 'stacked',
         'section_id'    => 'section_stack',
         'section_order' => 10,
@@ -607,8 +608,8 @@ function wpsfsvi_svi_options_tab_stack() {
             array(
                 'id'      => 'stacked',
                 'type'    => 'toggle',
-                'title'   => __( 'Activate stacked images', 'wc_svi' ),
-                'desc'    => __( 'All images will be showed in a single column, stacked. Only in desktop mode, mobile will fallback to default settings.', 'wc_svi' ),
+                'title'   => __( 'Activate stacked images', 'smart-variations-images' ),
+                'desc'    => __( 'All images will be showed in a single column, stacked. Only in desktop mode, mobile will fallback to default settings.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -618,8 +619,8 @@ function wpsfsvi_svi_options_tab_stack() {
             array(
                 'id'      => 'stacked_columns',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Items per row', 'wc_svi' ),
-                'desc'    => __( 'Number of thumbnails to be displayed by row, min:1 | max: 10.', 'wc_svi' ),
+                'title'   => __( 'Items per row', 'smart-variations-images' ),
+                'desc'    => __( 'Number of thumbnails to be displayed by row, min:1 | max: 10.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -632,8 +633,8 @@ function wpsfsvi_svi_options_tab_stack() {
             array(
                 'id'      => 'force_stacked',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Force Stacked on Mobile', 'wc_svi' ),
-                'desc'    => __( 'If activated Stacked layout will also be displayed on mobile otherwise it will fallback to default SVI settings.', 'wc_svi' ),
+                'title'   => __( 'Force Stacked on Mobile', 'smart-variations-images' ),
+                'desc'    => __( 'If activated Stacked layout will also be displayed on mobile otherwise it will fallback to default SVI settings.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -646,8 +647,8 @@ function wpsfsvi_svi_options_tab_stack() {
             array(
                 'id'      => 'sticky',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Sticky Product Summary', 'wc_svi' ),
-                'desc'    => __( 'Product Summary will slide side by side with the images until it reaches last image', 'wc_svi' ),
+                'title'   => __( 'Sticky Product Summary', 'smart-variations-images' ),
+                'desc'    => __( 'Product Summary will slide side by side with the images until it reaches last image', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -660,8 +661,8 @@ function wpsfsvi_svi_options_tab_stack() {
             array(
                 'id'      => 'sa_element',
                 'type'    => wpsfsvi_svi_pass( 'tx' ),
-                'title'   => __( 'Sticky Element', 'wc_svi' ),
-                'desc'    => __( 'The element that needs to be sticky once you scroll. This can be your menu, or any other element like a sidebar, ad banner, etc. Make sure this is a unique identifier.', 'wc_svi' ),
+                'title'   => __( 'Sticky Element', 'smart-variations-images' ),
+                'desc'    => __( 'The element that needs to be sticky once you scroll. This can be your menu, or any other element like a sidebar, ad banner, etc. Make sure this is a unique identifier.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -677,8 +678,8 @@ function wpsfsvi_svi_options_tab_stack() {
             array(
                 'id'      => 'sticky_margin',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Margin top', 'wc_svi' ),
-                'desc'    => __( 'Space between top of page and sticky element: (optional)', 'wc_svi' ),
+                'title'   => __( 'Margin top', 'smart-variations-images' ),
+                'desc'    => __( 'Space between top of page and sticky element: (optional)', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -694,8 +695,8 @@ function wpsfsvi_svi_options_tab_stack() {
             array(
                 'id'      => 'sa_pushup',
                 'type'    => wpsfsvi_svi_pass( 'tx' ),
-                'title'   => __( 'Push-up element (optional):', 'wc_svi' ),
-                'desc'    => __( 'If you want your sticky element to be \'pushed up\' again by another element lower on the page, enter it here. Make sure this is a unique identifier.', 'wc_svi' ),
+                'title'   => __( 'Push-up element (optional):', 'smart-variations-images' ),
+                'desc'    => __( 'If you want your sticky element to be \'pushed up\' again by another element lower on the page, enter it here. Make sure this is a unique identifier.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -718,7 +719,7 @@ function wpsfsvi_svi_options_tab_stack() {
  */
 function wpsfsvi_svi_options_tab_lightbox() {
     return array(
-        'section_title' => __( 'Lightbox', 'wc_svi' ),
+        'section_title' => __( 'Lightbox', 'smart-variations-images' ),
         'tab_id'        => 'lightbox',
         'section_id'    => 'section_lightboxsvi',
         'section_order' => 10,
@@ -726,8 +727,8 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox',
                 'type'    => 'toggle',
-                'title'   => __( 'Activate Lightbox', 'wc_svi' ),
-                'desc'    => __( 'A Lightbox pops up on click so customers can see a highlighted closeup of the image against a dark background and, if there is one, view the Gallery as a slideshow.', 'wc_svi' ),
+                'title'   => __( 'Activate Lightbox', 'smart-variations-images' ),
+                'desc'    => __( 'A Lightbox pops up on click so customers can see a highlighted closeup of the image against a dark background and, if there is one, view the Gallery as a slideshow.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -737,8 +738,8 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'variation_thumbnails_lb',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Activate Lightbox on Images under Variations', 'wc_svi' ),
-                'desc'    => __( 'This option will display the product variations images under the dropdowns/swatches of the product page.<br>Images with no variations assigned will be displayed as default gallery under the main image.', 'wc_svi' ),
+                'title'   => __( 'Activate Lightbox on Images under Variations', 'smart-variations-images' ),
+                'desc'    => __( 'This option will display the product variations images under the dropdowns/swatches of the product page.<br>Images with no variations assigned will be displayed as default gallery under the main image.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -754,8 +755,8 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_icon',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Icon', 'wc_svi' ),
-                'desc'    => __( 'Enable click icon on image for ligthbox.', 'wc_svi' ),
+                'title'   => __( 'Show Icon', 'smart-variations-images' ),
+                'desc'    => __( 'Enable click icon on image for ligthbox.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -768,8 +769,8 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_iconclick',
                 'type'    => 'toggle',
-                'title'   => __( 'Enable Icon Click', 'wc_svi' ),
-                'desc'    => __( 'Ligthbox only available on icon click, disables ligthbox on image click.', 'wc_svi' ),
+                'title'   => __( 'Enable Icon Click', 'smart-variations-images' ),
+                'desc'    => __( 'Ligthbox only available on icon click, disables ligthbox on image click.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -785,8 +786,8 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_iconcolor',
                 'type'    => 'color',
-                'title'   => __( 'Icon Color', 'wc_svi' ),
-                'desc'    => __( 'Pick a color for the icon.', 'wc_svi' ),
+                'title'   => __( 'Icon Color', 'smart-variations-images' ),
+                'desc'    => __( 'Pick a color for the icon.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -802,8 +803,8 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_thumbnails',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Show Thumbnails', 'wc_svi' ),
-                'desc'    => __( 'Display a slideshow gallery inside the lightbox.', 'wc_svi' ),
+                'title'   => __( 'Show Thumbnails', 'smart-variations-images' ),
+                'desc'    => __( 'Display a slideshow gallery inside the lightbox.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -816,7 +817,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_close',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Close Button', 'wc_svi' ),
+                'title'   => __( 'Show Close Button', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -829,8 +830,8 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_title',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Image Titles', 'wc_svi' ),
-                'desc'    => __( 'Display image titles inside the ligthbox', 'wc_svi' ),
+                'title'   => __( 'Show Image Titles', 'smart-variations-images' ),
+                'desc'    => __( 'Display image titles inside the ligthbox', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -843,7 +844,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_fullScreen',
                 'type'    => 'toggle',
-                'title'   => __( 'Show FullScreen Option', 'wc_svi' ),
+                'title'   => __( 'Show FullScreen Option', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -856,7 +857,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_zoom',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Zoom Option', 'wc_svi' ),
+                'title'   => __( 'Show Zoom Option', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -869,7 +870,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_share',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Share Option', 'wc_svi' ),
+                'title'   => __( 'Show Share Option', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -882,7 +883,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_counter',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Counter Option', 'wc_svi' ),
+                'title'   => __( 'Show Counter Option', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -895,7 +896,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
             array(
                 'id'      => 'lightbox_controls',
                 'type'    => 'toggle',
-                'title'   => __( 'Show Arrows Option', 'wc_svi' ),
+                'title'   => __( 'Show Arrows Option', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -915,7 +916,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
  */
 function wpsfsvi_svi_options_tab_slider() {
     return array(
-        'section_title' => __( 'Slider', 'wc_svi' ),
+        'section_title' => __( 'Slider', 'smart-variations-images' ),
         'tab_id'        => 'slider',
         'section_id'    => 'section_slidersvi',
         'section_order' => 10,
@@ -923,8 +924,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'      => 'slider',
                 'type'    => 'toggle',
-                'title'   => __( 'Activate Slider', 'wc_svi' ),
-                'desc'    => __( 'Swiper is the most modern free mobile touch slider with hardware accelerated transitions and amazing native behavior.', 'wc_svi' ),
+                'title'   => __( 'Activate Slider', 'smart-variations-images' ),
+                'desc'    => __( 'Swiper is the most modern free mobile touch slider with hardware accelerated transitions and amazing native behavior.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -934,8 +935,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'      => 'slider_center',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Centered thumbnails', 'wc_svi' ),
-                'desc'    => __( 'Start in center position or aligned to main image.', 'wc_svi' ),
+                'title'   => __( 'Centered thumbnails', 'smart-variations-images' ),
+                'desc'    => __( 'Start in center position or aligned to main image.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -947,8 +948,8 @@ function wpsfsvi_svi_options_tab_slider() {
             ),
             array(
                 'id'      => 'slider_effect',
-                'title'   => __( 'Tranisition effect', 'wc_svi' ),
-                'desc'    => __( 'Could be "slide", "fade", "cube", "coverflow" or "flip". <b>Note:</b> Cube transition requires that all images are of the same size, which means its width and height should be equal.', 'wc_svi' ),
+                'title'   => __( 'Tranisition effect', 'smart-variations-images' ),
+                'desc'    => __( 'Could be "slide", "fade", "cube", "coverflow" or "flip". <b>Note:</b> Cube transition requires that all images are of the same size, which means its width and height should be equal.', 'smart-variations-images' ),
                 'type'    => 'select',
                 'choices' => array(
                     'slide'     => 'Slide',
@@ -969,8 +970,8 @@ function wpsfsvi_svi_options_tab_slider() {
             ),
             array(
                 'id'      => 'slider_lazyload',
-                'title'   => __( 'LazyLoad', 'wc_svi' ),
-                'desc'    => __( 'Activates LazyLoad of images.', 'wc_svi' ),
+                'title'   => __( 'LazyLoad', 'smart-variations-images' ),
+                'desc'    => __( 'Activates LazyLoad of images.', 'smart-variations-images' ),
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
@@ -984,8 +985,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'      => 'slider_lazyload_color',
                 'type'    => wpsfsvi_svi_pass( 'c' ),
-                'title'   => __( 'LazyLoad Color', 'wc_svi' ),
-                'desc'    => __( 'Pick a color for the lazyload.', 'wc_svi' ),
+                'title'   => __( 'LazyLoad Color', 'smart-variations-images' ),
+                'desc'    => __( 'Pick a color for the lazyload.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1000,8 +1001,8 @@ function wpsfsvi_svi_options_tab_slider() {
             ),
             array(
                 'id'      => 'slider_pagination',
-                'title'   => __( 'Pagination', 'wc_svi' ),
-                'desc'    => __( 'Activates pagination options.', 'wc_svi' ),
+                'title'   => __( 'Pagination', 'smart-variations-images' ),
+                'desc'    => __( 'Activates pagination options.', 'smart-variations-images' ),
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
@@ -1014,8 +1015,8 @@ function wpsfsvi_svi_options_tab_slider() {
             ),
             array(
                 'id'      => 'slider_paginationType',
-                'title'   => __( 'Pagination Type', 'wc_svi' ),
-                'desc'    => __( 'String with type of pagination. Can be "bullets", "fraction", "progressbar".', 'wc_svi' ),
+                'title'   => __( 'Pagination Type', 'smart-variations-images' ),
+                'desc'    => __( 'String with type of pagination. Can be "bullets", "fraction", "progressbar".', 'smart-variations-images' ),
                 'type'    => wpsfsvi_svi_pass( 's' ),
                 'choices' => array(
                     'bullets'     => 'bullets',
@@ -1036,8 +1037,8 @@ function wpsfsvi_svi_options_tab_slider() {
             ),
             array(
                 'id'      => 'slider_paginationclickable',
-                'title'   => __( 'Clickable Bullets', 'wc_svi' ),
-                'desc'    => __( 'If true then clicking on pagination button will cause transition to appropriate slide. Only for bullets pagination type.', 'wc_svi' ),
+                'title'   => __( 'Clickable Bullets', 'smart-variations-images' ),
+                'desc'    => __( 'If true then clicking on pagination button will cause transition to appropriate slide. Only for bullets pagination type.', 'smart-variations-images' ),
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'show_if' => array(array(
                     array(
@@ -1061,8 +1062,8 @@ function wpsfsvi_svi_options_tab_slider() {
             ),
             array(
                 'id'      => 'slider_paginationDynamicBullets',
-                'title'   => __( 'Dynamic Bullets', 'wc_svi' ),
-                'desc'    => __( 'Good to enable if you use bullets pagination with a lot of slides. So it will keep only few bullets visible at the same time.', 'wc_svi' ),
+                'title'   => __( 'Dynamic Bullets', 'smart-variations-images' ),
+                'desc'    => __( 'Good to enable if you use bullets pagination with a lot of slides. So it will keep only few bullets visible at the same time.', 'smart-variations-images' ),
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'show_if' => array(array(
                     array(
@@ -1087,8 +1088,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'      => 'slider_pagination_color',
                 'type'    => wpsfsvi_svi_pass( 'c' ),
-                'title'   => __( 'Pagination Color', 'wc_svi' ),
-                'desc'    => __( 'Pick a color for the pagination.', 'wc_svi' ),
+                'title'   => __( 'Pagination Color', 'smart-variations-images' ),
+                'desc'    => __( 'Pick a color for the pagination.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1104,8 +1105,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'       => 'slider_navigation',
                 'type'     => 'toggle',
-                'title'    => __( 'Main Navigation', 'wc_svi' ),
-                'subtitle' => __( 'Add arrow navigation to main image.', 'wc_svi' ),
+                'title'    => __( 'Main Navigation', 'smart-variations-images' ),
+                'subtitle' => __( 'Add arrow navigation to main image.', 'smart-variations-images' ),
                 'show_if'  => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1118,8 +1119,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'       => 'slider_navigation_thumb',
                 'type'     => 'toggle',
-                'title'    => __( 'Thumb Navigation', 'wc_svi' ),
-                'subtitle' => __( 'Add arrow navigation to thumbnails.', 'wc_svi' ),
+                'title'    => __( 'Thumb Navigation', 'smart-variations-images' ),
+                'subtitle' => __( 'Add arrow navigation to thumbnails.', 'smart-variations-images' ),
                 'show_if'  => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1130,8 +1131,8 @@ function wpsfsvi_svi_options_tab_slider() {
                 'default'  => false,
             ),
             array(
-                'title'   => __( 'Nav Color', 'wc_svi' ),
-                'desc'    => __( 'Select your navigation color. Requires Main Navigation or Thumb navigation On.', 'wc_svi' ),
+                'title'   => __( 'Nav Color', 'smart-variations-images' ),
+                'desc'    => __( 'Select your navigation color. Requires Main Navigation or Thumb navigation On.', 'smart-variations-images' ),
                 'id'      => 'slider_navcolor',
                 'type'    => wpsfsvi_svi_pass( 's' ),
                 'choices' => array(
@@ -1152,8 +1153,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'      => 'slider_navigation_color',
                 'type'    => wpsfsvi_svi_pass( 'c' ),
-                'title'   => __( 'Arrows Color', 'wc_svi' ),
-                'desc'    => __( 'Pick a color for the pagination.', 'wc_svi' ),
+                'title'   => __( 'Arrows Color', 'smart-variations-images' ),
+                'desc'    => __( 'Pick a color for the pagination.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1169,8 +1170,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'       => 'slider_autoslide',
                 'type'     => 'toggle',
-                'title'    => __( 'Auto Slide', 'wc_svi' ),
-                'subtitle' => __( 'Add auto sliding.', 'wc_svi' ),
+                'title'    => __( 'Auto Slide', 'smart-variations-images' ),
+                'subtitle' => __( 'Add auto sliding.', 'smart-variations-images' ),
                 'show_if'  => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1184,8 +1185,8 @@ function wpsfsvi_svi_options_tab_slider() {
                 'id'       => 'slider_autoslide_ms',
                 'type'     => wpsfsvi_svi_pass( 'n' ),
                 'required' => array('slider_autoslide', '=', '1'),
-                'title'    => __( 'Auto Slide time (ms)', 'wc_svi' ),
-                'desc'     => __( 'Delay between transitions (in ms). If this parameter is not specified or is 0(zero), auto play will be 2500 (2, 5s)', 'wc_svi' ),
+                'title'    => __( 'Auto Slide time (ms)', 'smart-variations-images' ),
+                'desc'     => __( 'Delay between transitions (in ms). If this parameter is not specified or is 0(zero), auto play will be 2500 (2, 5s)', 'smart-variations-images' ),
                 'show_if'  => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1202,8 +1203,8 @@ function wpsfsvi_svi_options_tab_slider() {
             array(
                 'id'      => 'slider_autoslide_disableOnInteraction',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Disable on Interaction', 'wc_svi' ),
-                'desc'    => __( 'Set to Enabled and autoplay will be disabled after user interacts.', 'wc_svi' ),
+                'title'   => __( 'Disable on Interaction', 'smart-variations-images' ),
+                'desc'    => __( 'Set to Enabled and autoplay will be disabled after user interacts.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1241,7 +1242,7 @@ function wpsfsvi_svi_options_tab_lens() {
     </li>
     </ul>';
     return array(
-        'section_title' => __( 'Magnifier Lens', 'wc_svi' ),
+        'section_title' => __( 'Magnifier Lens', 'smart-variations-images' ),
         'tab_id'        => 'lens',
         'section_id'    => 'section_lenssvi',
         'section_order' => 10,
@@ -1249,8 +1250,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens',
                 'type'    => 'toggle',
-                'title'   => __( 'Activate Magnifier Lens', 'wc_svi' ),
-                'desc'    => __( 'Allows zooming images within a container or also in a "lens" that floats overtop of web page.', 'wc_svi' ),
+                'title'   => __( 'Activate Magnifier Lens', 'smart-variations-images' ),
+                'desc'    => __( 'Allows zooming images within a container or also in a "lens" that floats overtop of web page.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1258,10 +1259,10 @@ function wpsfsvi_svi_options_tab_lens() {
                 'default' => false,
             ),
             array(
-                'title'   => __( 'Mobile Enabled', 'wc_svi' ),
+                'title'   => __( 'Mobile Enabled', 'smart-variations-images' ),
                 'id'      => 'lens_mobiledisabled',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'desc'    => __( '<b>NOTE</b>: I recommend this option be off, doesnt make sense in mobile since the finger will be over the lens execpt for inner. Lens is Unvailable for "Window" Zoom type. Lightbox will not work with this option enabled in Mobile View due to the trigger.', 'wc_svi' ),
+                'desc'    => '<strong>' . esc_html__( 'NOTE', 'smart-variations-images' ) . '</strong>: ' . esc_html__( 'I recommend this option be off, doesnt make sense in mobile since the finger will be over the lens execpt for inner. Lens is Unvailable for "Window" Zoom type. Lightbox will not work with this option enabled in Mobile View due to the trigger.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1272,13 +1273,13 @@ function wpsfsvi_svi_options_tab_lens() {
                 'default' => false,
             ),
             array(
-                'title'   => __( 'Zoom Type', 'wc_svi' ),
+                'title'   => __( 'Zoom Type', 'smart-variations-images' ),
                 'id'      => 'lens_zoomtype',
                 'type'    => 'select',
                 'choices' => array(
-                    'lens'   => __( 'Lens', 'wc_svi' ),
-                    'window' => __( 'Window', 'wc_svi' ),
-                    'inner'  => __( 'Inner', 'wc_svi' ),
+                    'lens'   => __( 'Lens', 'smart-variations-images' ),
+                    'window' => __( 'Window', 'smart-variations-images' ),
+                    'inner'  => __( 'Inner', 'smart-variations-images' ),
                 ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
@@ -1292,8 +1293,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'containlenszoom',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Disable Lens Zoom Contain', 'wc_svi' ),
-                'desc'    => __( 'NOTE: If active in some themes this option may not work properly.', 'wc_svi' ),
+                'title'   => __( 'Disable Lens Zoom Contain', 'smart-variations-images' ),
+                'desc'    => __( 'NOTE: If active in some themes this option may not work properly.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1309,7 +1310,7 @@ function wpsfsvi_svi_options_tab_lens() {
             ),
             array(
                 'id'      => 'lens_type',
-                'title'   => __( 'Lens Format', 'wc_svi' ),
+                'title'   => __( 'Lens Format', 'smart-variations-images' ),
                 'desc'    => $options,
                 'type'    => wpsfsvi_svi_pass( 's' ),
                 'choices' => array(
@@ -1332,7 +1333,7 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_lensFadeIn',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Fade In Effect', 'wc_svi' ),
+                'title'   => __( 'Fade In Effect', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1349,8 +1350,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_lensFadeInms',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Lens FadeIn ms', 'wc_svi' ),
-                'desc'    => __( 'Set as a number e.g 200 for speed of Lens fadeIn', 'wc_svi' ),
+                'title'   => __( 'Lens FadeIn ms', 'smart-variations-images' ),
+                'desc'    => __( 'Set as a number e.g 200 for speed of Lens fadeIn', 'smart-variations-images' ),
                 'show_if' => array(array(
                     array(
                         'field' => 'main_section_global_default',
@@ -1375,7 +1376,7 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_zoomWindowFadeIn',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Window Fade In Effect', 'wc_svi' ),
+                'title'   => __( 'Window Fade In Effect', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1392,8 +1393,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_zoomWindowFadeInms',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Window FadeIn ms', 'wc_svi' ),
-                'desc'    => __( 'Set as a number e.g 200 for speed of Window fadeIn', 'wc_svi' ),
+                'title'   => __( 'Window FadeIn ms', 'smart-variations-images' ),
+                'desc'    => __( 'Set as a number e.g 200 for speed of Window fadeIn', 'smart-variations-images' ),
                 'show_if' => array(array(
                     array(
                         'field' => 'main_section_global_default',
@@ -1418,8 +1419,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_size',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Lens Size', 'wc_svi' ),
-                'desc'    => __( 'Lens size to be displayed, min:100 | max: 300.', 'wc_svi' ),
+                'title'   => __( 'Lens Size', 'smart-variations-images' ),
+                'desc'    => __( 'Lens size to be displayed, min:100 | max: 300.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1436,8 +1437,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_easing',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Lens Easing', 'wc_svi' ),
-                'desc'    => __( 'Allows smooth scrool of image to Zoom Type Window & Inner', 'wc_svi' ),
+                'title'   => __( 'Lens Easing', 'smart-variations-images' ),
+                'desc'    => __( 'Allows smooth scrool of image to Zoom Type Window & Inner', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1454,8 +1455,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_border',
                 'type'    => wpsfsvi_svi_pass( 'c' ),
-                'title'   => __( 'Magnifier Border Color', 'wc_svi' ),
-                'desc'    => __( 'Pick a border color for the lens.', 'wc_svi' ),
+                'title'   => __( 'Magnifier Border Color', 'smart-variations-images' ),
+                'desc'    => __( 'Pick a border color for the lens.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1470,8 +1471,8 @@ function wpsfsvi_svi_options_tab_lens() {
                 'id'       => 'lens_lensBorder',
                 'type'     => wpsfsvi_svi_pass( 'n' ),
                 'required' => array(array('lens', '=', '1'), array('lens_border', '!=', 'transparent')),
-                'title'    => __( 'Lens Border Width', 'wc_svi' ),
-                'desc'     => __( 'Width in pixels of the lens border. min: 1 | max: 15.', 'wc_svi' ),
+                'title'    => __( 'Lens Border Width', 'smart-variations-images' ),
+                'desc'     => __( 'Width in pixels of the lens border. min: 1 | max: 15.', 'smart-variations-images' ),
                 'show_if'  => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1485,8 +1486,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_zoomWindowWidth',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Width of the Window', 'wc_svi' ),
-                'desc'    => __( 'Set Width for window, default 400.', 'wc_svi' ),
+                'title'   => __( 'Width of the Window', 'smart-variations-images' ),
+                'desc'    => __( 'Set Width for window, default 400.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1503,8 +1504,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_zoomWindowHeight',
                 'type'    => wpsfsvi_svi_pass( 'n' ),
-                'title'   => __( 'Height of the Window', 'wc_svi' ),
-                'desc'    => __( 'Set Height for window, default 400.', 'wc_svi' ),
+                'title'   => __( 'Height of the Window', 'smart-variations-images' ),
+                'desc'    => __( 'Set Height for window, default 400.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1521,8 +1522,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_scrollzoom',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Zoom Effect', 'wc_svi' ),
-                'desc'    => __( 'Allows Zoom with mouse scroll.', 'wc_svi' ),
+                'title'   => __( 'Zoom Effect', 'smart-variations-images' ),
+                'desc'    => __( 'Allows Zoom with mouse scroll.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1535,8 +1536,8 @@ function wpsfsvi_svi_options_tab_lens() {
             array(
                 'id'      => 'lens_zIndex',
                 'type'    => 'text',
-                'title'   => __( 'Custom zIndex for Magnifier', 'wc_svi' ),
-                'desc'    => __( 'Specifies the stack order of an element. An element with greater stack order is always in front of an element with a lower stack order.', 'wc_svi' ),
+                'title'   => __( 'Custom zIndex for Magnifier', 'smart-variations-images' ),
+                'desc'    => __( 'Specifies the stack order of an element. An element with greater stack order is always in front of an element with a lower stack order.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1556,7 +1557,7 @@ function wpsfsvi_svi_options_tab_lens() {
  */
 function wpsfsvi_svi_options_tab_video() {
     return array(
-        'section_title' => __( 'Video', 'wc_svi' ),
+        'section_title' => __( 'Video', 'smart-variations-images' ),
         'tab_id'        => 'video',
         'section_id'    => 'section_videosvi',
         'section_order' => 10,
@@ -1564,8 +1565,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Activate Video Support', 'wc_svi' ),
-                'desc'    => __( 'A simple, accessible and customisable media player for Video, Audio, YouTube and Vimeo.', 'wc_svi' ),
+                'title'   => __( 'Activate Video Support', 'smart-variations-images' ),
+                'desc'    => __( 'A simple, accessible and customisable media player for Video, Audio, YouTube and Vimeo.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1575,8 +1576,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_maincolor',
                 'type'    => wpsfsvi_svi_pass( 'c' ),
-                'title'   => __( 'UI color', 'wc_svi' ),
-                'desc'    => __( 'Change the primary UI color', 'wc_svi' ),
+                'title'   => __( 'UI color', 'smart-variations-images' ),
+                'desc'    => __( 'Change the primary UI color', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1589,13 +1590,13 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_autoplay',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Autoplay', 'wc_svi' ),
+                'title'   => __( 'Autoplay', 'smart-variations-images' ),
                 'desc'    => __( 'Autoplay the media on load.<br> Autoplay is generally not recommended as it is seen as a negative user experience. It is also disabled in many browsers. Before raising issues, do your homework. More info can be found here:
                     <ul>
                     <li>Muted option should be ON and activate Video Control Toggle mute if video has sound so that user can enable it manually if needed.</li>
                     <li><a target="_blank" href="https://webkit.org/blog/6784/new-video-policies-for-ios/">New </video> Policies for iOS</a></li>
                     <li><a target="_blank" href="https://developers.google.com/web/updates/2017/09/autoplay-policy-changes">Autoplay Policy Changes</a></li>
-                    <li><a target="_blank" href="https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/">Firefox 66 to block automatically playing audible video and audio</a></li></ul>', 'wc_svi' ),
+                    <li><a target="_blank" href="https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/">Firefox 66 to block automatically playing audible video and audio</a></li></ul>', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1608,8 +1609,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_muted',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Muted', 'wc_svi' ),
-                'desc'    => __( 'Whether to start playback muted.', 'wc_svi' ),
+                'title'   => __( 'Muted', 'smart-variations-images' ),
+                'desc'    => __( 'Whether to start playback muted.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1622,8 +1623,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_clickToPlay',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Click To Play', 'wc_svi' ),
-                'desc'    => __( 'Click (or tap) of the video container will toggle play/pause.', 'wc_svi' ),
+                'title'   => __( 'Click To Play', 'smart-variations-images' ),
+                'desc'    => __( 'Click (or tap) of the video container will toggle play/pause.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1636,8 +1637,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_disableContextMenu',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Disable Context Menu', 'wc_svi' ),
-                'desc'    => __( 'Disable right click menu on video to help as very primitive obfuscation to prevent downloads of content.', 'wc_svi' ),
+                'title'   => __( 'Disable Context Menu', 'smart-variations-images' ),
+                'desc'    => __( 'Disable right click menu on video to help as very primitive obfuscation to prevent downloads of content.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1650,8 +1651,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_hideControls',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Auto Hide Controls', 'wc_svi' ),
-                'desc'    => __( 'Hide video controls automatically after 2s of no mouse or focus movement, on control element blur (tab out), on playback start or entering fullscreen. As soon as the mouse is moved, a control element is focused or playback is paused, the controls reappear instantly.', 'wc_svi' ),
+                'title'   => __( 'Auto Hide Controls', 'smart-variations-images' ),
+                'desc'    => __( 'Hide video controls automatically after 2s of no mouse or focus movement, on control element blur (tab out), on playback start or entering fullscreen. As soon as the mouse is moved, a control element is focused or playback is paused, the controls reappear instantly.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1664,8 +1665,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_fullscreen',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Fullscreen', 'wc_svi' ),
-                'desc'    => __( 'Toggles whether fullscreen should be enabled on double touch/click.', 'wc_svi' ),
+                'title'   => __( 'Fullscreen', 'smart-variations-images' ),
+                'desc'    => __( 'Toggles whether fullscreen should be enabled on double touch/click.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1678,8 +1679,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_loop',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Loop', 'wc_svi' ),
-                'desc'    => __( 'Whether to loop the current video.', 'wc_svi' ),
+                'title'   => __( 'Loop', 'smart-variations-images' ),
+                'desc'    => __( 'Whether to loop the current video.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1692,8 +1693,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_poster',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Poster', 'wc_svi' ),
-                'desc'    => __( 'Sets SVI image as the current poster image for the player.', 'wc_svi' ),
+                'title'   => __( 'Poster', 'smart-variations-images' ),
+                'desc'    => __( 'Sets SVI image as the current poster image for the player.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1706,8 +1707,8 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_ratio',
                 'type'    => wpsfsvi_svi_pass( 's' ),
-                'title'   => __( 'Ratio', 'wc_svi' ),
-                'desc'    => __( 'Force an aspect ratio for all videos. If this is set to auto then the default for HTML5 and Vimeo is to use the native resolution of the video. Dimensions are not available from YouTube via SDK, 16:9 is forced as a sensible default.', 'wc_svi' ),
+                'title'   => __( 'Ratio', 'smart-variations-images' ),
+                'desc'    => __( 'Force an aspect ratio for all videos. If this is set to auto then the default for HTML5 and Vimeo is to use the native resolution of the video. Dimensions are not available from YouTube via SDK, 16:9 is forced as a sensible default.', 'smart-variations-images' ),
                 'choices' => array(
                     'auto' => 'auto',
                     '1:1'  => '1:1',
@@ -1727,17 +1728,17 @@ function wpsfsvi_svi_options_tab_video() {
             array(
                 'id'      => 'video_controls',
                 'type'    => wpsfsvi_svi_pass( 'cx' ),
-                'title'   => __( 'Video Controls', 'wc_svi' ),
-                'desc'    => __( 'Manage the controls of the player (play,pause,progress, duration, mute, volume, fullscreen)', 'wc_svi' ),
+                'title'   => __( 'Video Controls', 'smart-variations-images' ),
+                'desc'    => __( 'Manage the controls of the player (play,pause,progress, duration, mute, volume, fullscreen)', 'smart-variations-images' ),
                 'choices' => array(
-                    'play-large'   => __( 'The large play button in the center', 'wc_svi' ),
-                    'play'         => __( 'Play/pause playback', 'wc_svi' ),
-                    'progress'     => __( 'The progress bar and scrubber for playback and buffering', 'wc_svi' ),
-                    'current-time' => __( 'The current time of playback', 'wc_svi' ),
-                    'duration'     => __( 'The full duration of the media', 'wc_svi' ),
-                    'mute'         => __( 'Toggle mute', 'wc_svi' ),
-                    'volume'       => __( 'Volume control', 'wc_svi' ),
-                    'fullscreen'   => __( 'Toggle fullscreen', 'wc_svi' ),
+                    'play-large'   => __( 'The large play button in the center', 'smart-variations-images' ),
+                    'play'         => __( 'Play/pause playback', 'smart-variations-images' ),
+                    'progress'     => __( 'The progress bar and scrubber for playback and buffering', 'smart-variations-images' ),
+                    'current-time' => __( 'The current time of playback', 'smart-variations-images' ),
+                    'duration'     => __( 'The full duration of the media', 'smart-variations-images' ),
+                    'mute'         => __( 'Toggle mute', 'smart-variations-images' ),
+                    'volume'       => __( 'Volume control', 'smart-variations-images' ),
+                    'fullscreen'   => __( 'Toggle fullscreen', 'smart-variations-images' ),
                 ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
@@ -1778,7 +1779,7 @@ function wpsfsvi_svi_options_tab_thumbnails() {
     </li>
     </ul>';
     return array(
-        'section_title' => __( 'Thumbails', 'wc_svi' ),
+        'section_title' => __( 'Thumbails', 'smart-variations-images' ),
         'tab_id'        => 'thumbnails',
         'section_id'    => 'section_thumbs',
         'section_order' => 10,
@@ -1786,8 +1787,8 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'      => 'disable_thumb',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Disabled', 'wc_svi' ),
-                'desc'    => __( 'Disable thumbnails on all product pages', 'wc_svi' ),
+                'title'   => __( 'Disabled', 'smart-variations-images' ),
+                'desc'    => __( 'Disable thumbnails on all product pages', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1797,9 +1798,13 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'       => 'slider_position',
                 'type'     => wpsfsvi_svi_pass( 's' ),
-                'title'    => __( 'Position', 'wc_svi' ),
-                'subtitle' => __( 'Select thumnails position. Bottom, Left or right.', 'wc_svi' ),
-                'desc'     => __( 'Bottom, Left and Right positions, for thumbnails.' . $positions, 'wc_svi' ),
+                'title'    => __( 'Position', 'smart-variations-images' ),
+                'subtitle' => __( 'Select thumnails position. Bottom, Left or right.', 'smart-variations-images' ),
+                'desc'     => sprintf( 
+                    /* translators: %s: thumbnail position preview markup. */
+                    __( 'Bottom, Left and Right positions, for thumbnails.%s', 'smart-variations-images' ),
+                    $positions
+                 ),
                 'choices'  => array(
                     '0' => 'Bottom',
                     '1' => 'Left',
@@ -1817,8 +1822,8 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'      => 'columns',
                 'type'    => 'number',
-                'title'   => __( 'Items per row', 'wc_svi' ),
-                'desc'    => __( 'Number of thumbnails to be displayed by row, min:1 | max: 10. <br><b>Note:</b> If using slider you may add decimal to display part of next slide, ex: 4.5', 'wc_svi' ),
+                'title'   => __( 'Items per row', 'smart-variations-images' ),
+                'desc'    => __( 'Number of thumbnails to be displayed by row, min:1 | max: 10. <br><b>Note:</b> If using slider you may add decimal to display part of next slide, ex: 4.5', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1837,7 +1842,7 @@ function wpsfsvi_svi_options_tab_thumbnails() {
                 'type'    => 'custom',
                 'output'  => 'wpsfsvisvi_info',
                 'title'   => '',
-                'desc'    => __( 'Number of thumbnails to be displayed by row only available in <b>bottom</b> position, <b>Vertical</b> positions are auto calculated.', 'wc_svi' ),
+                'desc'    => __( 'Number of thumbnails to be displayed by row only available in <b>bottom</b> position, <b>Vertical</b> positions are auto calculated.', 'smart-variations-images' ),
                 'style'   => 'warning',
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
@@ -1853,8 +1858,8 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'      => 'hide_thumbs',
                 'type'    => 'toggle',
-                'title'   => __( 'Hidden', 'wc_svi' ),
-                'desc'    => __( 'Thumbnails will be hidden until a variation as been selected.<br><b>Note</b>: Will not work with products that have "<u>SVI Default Gallery</u>" present.', 'wc_svi' ),
+                'title'   => __( 'Hidden', 'smart-variations-images' ),
+                'desc'    => __( 'Thumbnails will be hidden until a variation as been selected.<br><b>Note</b>: Will not work with products that have "<u>SVI Default Gallery</u>" present.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1868,9 +1873,9 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'       => 'variation_swap',
                 'type'     => wpsfsvi_svi_pass( 't' ),
-                'title'    => __( 'Trigger on Thumbnail click', 'wc_svi' ),
-                'subtitle' => __( 'Change value of the attributes/Swatches', 'wc_svi' ),
-                'desc'     => __( '<ul><li>When user clicks the thumbnail the values of Attributes/Swatches will changed to reflect the image values.</li><li>If image is present in multiple SVI Galleries the Variations/Swatches will be changed to the first match.</li></ul>', 'wc_svi' ),
+                'title'    => __( 'Trigger on Thumbnail click', 'smart-variations-images' ),
+                'subtitle' => __( 'Change value of the attributes/Swatches', 'smart-variations-images' ),
+                'desc'     => '<ul><li>' . esc_html__( 'When user clicks the thumbnail the values of Attributes/Swatches will changed to reflect the image values.', 'smart-variations-images' ) . '</li><li>' . esc_html__( 'If image is present in multiple SVI Galleries the Variations/Swatches will be changed to the first match.', 'smart-variations-images' ) . '</li></ul>',
                 'show_if'  => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1885,7 +1890,7 @@ function wpsfsvi_svi_options_tab_thumbnails() {
                 'type'    => 'custom',
                 'output'  => 'wpsfsvisvi_info',
                 'title'   => '',
-                'desc'    => __( 'Thumbnail Click Swap disabled. To activate switch Hidden Thumbnails options <b>off</b>.', 'wc_svi' ),
+                'desc'    => __( 'Thumbnail Click Swap disabled. To activate switch Hidden Thumbnails options <b>off</b>.', 'smart-variations-images' ),
                 'style'   => 'warning',
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
@@ -1898,8 +1903,8 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'      => 'keep_thumbnails',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Keep visible', 'wc_svi' ),
-                'desc'    => __( 'This option will keep thumbnails visible all the time. <b>No changes</b> will be made to the product gallery.<br> Option should be disabled if "Showcase Images under Variations" is active or may cause unexpected behaviour.', 'wc_svi' ),
+                'title'   => __( 'Keep visible', 'smart-variations-images' ),
+                'desc'    => __( 'This option will keep thumbnails visible all the time. <b>No changes</b> will be made to the product gallery.<br> Option should be disabled if "Showcase Images under Variations" is active or may cause unexpected behaviour.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1915,11 +1920,11 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'      => 'keep_thumbnails_option',
                 'type'    => wpsfsvi_svi_pass( 's' ),
-                'title'   => __( 'Default Image Display', 'wc_svi' ),
-                'desc'    => __( 'Select the default display to be showed.<br>If <b>SVI Default Gallery</b> not present it will fallback to display the images in the WooCommerce Product Gallery.', 'wc_svi' ),
+                'title'   => __( 'Default Image Display', 'smart-variations-images' ),
+                'desc'    => __( 'Select the default display to be showed.<br>If <b>SVI Default Gallery</b> not present it will fallback to display the images in the WooCommerce Product Gallery.', 'smart-variations-images' ),
                 'choices' => array(
-                    'svidefault' => __( 'SVI Default Gallery', 'wc_svi' ),
-                    'product'    => __( 'WooCommerce Product Gallery', 'wc_svi' ),
+                    'svidefault' => __( 'SVI Default Gallery', 'smart-variations-images' ),
+                    'product'    => __( 'WooCommerce Product Gallery', 'smart-variations-images' ),
                 ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
@@ -1936,8 +1941,8 @@ function wpsfsvi_svi_options_tab_thumbnails() {
             array(
                 'id'      => 'thumbnails_showactive',
                 'type'    => wpsfsvi_svi_pass( 't' ),
-                'title'   => __( 'Thumbnail Opacity', 'wc_svi' ),
-                'desc'    => __( 'If active, current tumbnail will be faded.', 'wc_svi' ),
+                'title'   => __( 'Thumbnail Opacity', 'smart-variations-images' ),
+                'desc'    => __( 'If active, current tumbnail will be faded.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1953,15 +1958,15 @@ function wpsfsvi_svi_options_tab_thumbnails() {
 
 function wpsfsvi_svi_options_tab_fixes() {
     return array(
-        'section_title' => __( 'Layout Fixes', 'wc_svi' ),
+        'section_title' => __( 'Layout Fixes', 'smart-variations-images' ),
         'tab_id'        => 'fixes',
         'section_id'    => 'section_fixessvi',
         'section_order' => 10,
         'fields'        => array(array(
             'id'      => 'custom_class',
             'type'    => 'text',
-            'title'   => __( 'Custom Class', 'wc_svi' ),
-            'desc'    => __( 'Insert custom css class(es) to fit your theme needs.', 'wc_svi' ),
+            'title'   => __( 'Custom Class', 'smart-variations-images' ),
+            'desc'    => __( 'Insert custom css class(es) to fit your theme needs.', 'smart-variations-images' ),
             'show_if' => array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -1969,8 +1974,8 @@ function wpsfsvi_svi_options_tab_fixes() {
         ), array(
             'id'      => 'sviforce_image',
             'type'    => 'toggle',
-            'title'   => __( 'Remove Image class', 'wc_svi' ),
-            'desc'    => __( 'Some theme force styling on image class that may break the layout.', 'wc_svi' ),
+            'title'   => __( 'Remove Image class', 'smart-variations-images' ),
+            'desc'    => __( 'Some theme force styling on image class that may break the layout.', 'smart-variations-images' ),
             'show_if' => array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -2018,7 +2023,10 @@ function svi_get_image_sizes() {
 }
 
 function wpsfsvisvi_info(  $args  ) {
-    echo '<div class="notice wpsfsvi-info notice-' . $args['style'] . ' inline ' . $args['class'] . '"><p>' . $args['desc'] . '</p></div>';
+    $style = ( isset( $args['style'] ) ? sanitize_html_class( $args['style'] ) : 'info' );
+    $class = ( isset( $args['class'] ) ? sanitize_html_class( $args['class'] ) : '' );
+    $desc = ( isset( $args['desc'] ) ? wp_kses_post( $args['desc'] ) : '' );
+    echo '<div class="notice wpsfsvi-info notice-' . esc_attr( $style ) . ' inline ' . esc_attr( $class ) . '"><p>' . wp_kses_post( $desc ) . '</p></div>';
 }
 
 function wpsfsvi_svi_tabbed_settings_clean(  $args  ) {
@@ -2050,7 +2058,7 @@ function wpsfsvi_svi_pass(  $arg, $h = false  ) {
 
 function wpsfsvi_svi_options_tab_importexport() {
     return array(
-        'section_title' => __( 'Import / Export', 'wc_svi' ),
+        'section_title' => __( 'Import / Export', 'smart-variations-images' ),
         'tab_id'        => 'import_export',
         'section_id'    => 'section_import_export',
         'section_order' => 10,

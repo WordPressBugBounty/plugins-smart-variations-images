@@ -27,6 +27,7 @@
  * @subpackage Wcsvfs/includes
  * @author     David Rosendo <david@rosendo.pt>
  */
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy WCSVFS core class referenced by the addon loader.
 class Wcsvfs
 {
 
@@ -58,7 +59,7 @@ class Wcsvfs
      */
     protected $version;
 
-        /**
+    /**
      * Options for the plugin.
      *
      * @since    1.0.0
@@ -114,9 +115,9 @@ class Wcsvfs
         }
         $this->plugin_name = 'wcsvfs';
         $this->types = array(
-            'color' => esc_html__('Color', 'wcsvfs'),
-            'image' => esc_html__('Image', 'wcsvfs'),
-            'label' => esc_html__('Label', 'wcsvfs'),
+            'color' => esc_html__('Color', 'smart-variations-images'),
+            'image' => esc_html__('Image', 'smart-variations-images'),
+            'label' => esc_html__('Label', 'smart-variations-images'),
         );
 
         $this->options = $reduxOptions;
@@ -305,11 +306,15 @@ class Wcsvfs
      */
     public function get_tax_attribute($taxonomy)
     {
-        global $wpdb;
+        $attribute_name = substr($taxonomy, 3);
+        $attributes = wc_get_attribute_taxonomies();
 
-        $attr = substr($taxonomy, 3);
-        $attr = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attr'");
+        foreach ($attributes as $attribute) {
+            if ($attribute_name === $attribute->attribute_name) {
+                return $attribute;
+            }
+        }
 
-        return $attr;
+        return null;
     }
 }

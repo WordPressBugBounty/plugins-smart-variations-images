@@ -1,5 +1,7 @@
 <?php
 
+// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Product-save nonce checks and input normalization are performed in the relevant handlers.
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce compatibility hooks.
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -127,7 +129,18 @@ class Smart_Variations_Images_Admin {
             $product_image_gallery = explode( ',', get_post_meta( $pid, '_product_image_gallery', true ) );
         } else {
             // Backwards compat
-            $attachment_ids = get_posts( 'post_parent=' . $pid . '&numberposts=-1&post_type=attachment&orderby=menu_order&order=ASC&post_mime_type=image&fields=ids&meta_key=_woocommerce_exclude_image&meta_value=0' );
+            $attachment_ids = get_children( array(
+                'post_parent'    => $pid,
+                'numberposts'    => -1,
+                'post_type'      => 'attachment',
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC',
+                'post_mime_type' => 'image',
+                'fields'         => 'ids',
+            ) );
+            $attachment_ids = array_filter( $attachment_ids, static function ( $attachment_id ) {
+                return '1' !== get_post_meta( $attachment_id, '_woocommerce_exclude_image', true );
+            } );
             $attachment_ids = array_diff( $attachment_ids, array(get_post_thumbnail_id()) );
             if ( $attachment_ids ) {
                 $product_image_gallery = $attachment_ids;
@@ -255,7 +268,18 @@ class Smart_Variations_Images_Admin {
             $product_image_gallery = explode( ',', get_post_meta( $pid, '_product_image_gallery', true ) );
         } else {
             // Backwards compat
-            $attachment_ids = get_posts( 'post_parent=' . $pid . '&numberposts=-1&post_type=attachment&orderby=menu_order&order=ASC&post_mime_type=image&fields=ids&meta_key=_woocommerce_exclude_image&meta_value=0' );
+            $attachment_ids = get_children( array(
+                'post_parent'    => $pid,
+                'numberposts'    => -1,
+                'post_type'      => 'attachment',
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC',
+                'post_mime_type' => 'image',
+                'fields'         => 'ids',
+            ) );
+            $attachment_ids = array_filter( $attachment_ids, static function ( $attachment_id ) {
+                return '1' !== get_post_meta( $attachment_id, '_woocommerce_exclude_image', true );
+            } );
             $attachment_ids = array_diff( $attachment_ids, array(get_post_thumbnail_id()) );
             if ( $attachment_ids ) {
                 $product_image_gallery = $attachment_ids;
@@ -270,12 +294,14 @@ class Smart_Variations_Images_Admin {
      * @return void
      */
     public function woosvi_esc_html() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         header( "Content-type: application/json" );
-        $slug = ( isset( $_POST['data'] ) ? $_POST['data'] : '' );
+        $slug = ( isset( $_POST['data'] ) ? wp_unslash( $_POST['data'] ) : '' );
         if ( is_array( $slug ) ) {
+            $slug = array_map( 'sanitize_text_field', $slug );
             $processed_slug = implode( '_svipro_', $slug );
         } else {
-            $processed_slug = (string) $slug;
+            $processed_slug = sanitize_text_field( (string) $slug );
         }
         echo json_encode( esc_html( $processed_slug ) );
         die;
@@ -303,9 +329,9 @@ class Smart_Variations_Images_Admin {
      */
     public function variation_btn_builder( $loop, $variation_data, $variation ) {
         echo '<div class="svi-variation-gallery">';
-        echo '<a href="#" class="button button-primary svi-add-additional-images">' . __( 'Create additional images gallery', 'svi' ) . '</a>';
+        echo '<a href="#" class="button button-primary svi-add-additional-images">' . esc_html__( 'Create additional images gallery', 'smart-variations-images' ) . '</a>';
         echo '</div>';
-        echo wc_help_tip( __( 'SVI Gallery will be created based on first attribute. SVI makes no use of the main variation image set for this variation. Use above variation image for other integrations.', 'svi' ) );
+        echo wp_kses_post( wc_help_tip( __( 'SVI Gallery will be created based on first attribute. SVI makes no use of the main variation image set for this variation. Use above variation image for other integrations.', 'smart-variations-images' ) ) );
     }
 
     /**
@@ -320,8 +346,8 @@ class Smart_Variations_Images_Admin {
         // Checkbox
         woocommerce_wp_checkbox( array(
             'id'          => '_checkbox_svipro_enabled',
-            'label'       => __( 'Disable SVI', 'wc_svi' ),
-            'description' => __( 'Activating this option will make the product load the default theme image gallery and functions', 'wc_svi' ),
+            'label'       => __( 'Disable SVI', 'smart-variations-images' ),
+            'description' => __( 'Activating this option will make the product load the default theme image gallery and functions', 'smart-variations-images' ),
         ) );
         echo '</div>';
     }
@@ -336,13 +362,13 @@ class Smart_Variations_Images_Admin {
     public function images_section( $tabs ) {
         $svi_tab = array(
             'svi_variations' => array(
-                'label'    => __( 'SVI Variations Gallery', 'svi' ),
+                'label'    => __( 'SVI Variations Gallery', 'smart-variations-images' ),
                 'target'   => 'svi-images_tab_data',
                 'class'    => array('variations_tab', 'show_if_variable'),
                 'priority' => 61,
             ),
         );
-        //echo '<li class="box_tab show_if_variable"><a href="#sviproimages_tab_data" id="svibulkbtn"><span>' . __('SVI <b>Variations Gallery</b>', 'svi') . '</span></a></li>';
+        //echo '<li class="box_tab show_if_variable"><a href="#sviproimages_tab_data" id="svibulkbtn"><span>' . __('SVI <b>Variations Gallery</b>', 'smart-variations-images') . '</span></a></li>';
         return $this->array_insert_after( $tabs, 'variations', $svi_tab );
     }
 
@@ -354,6 +380,10 @@ class Smart_Variations_Images_Admin {
      * @return HTML
      */
     public function sviSaveData( $post_id ) {
+        $woocommerce_meta_nonce = ( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' );
+        if ( !$woocommerce_meta_nonce || !wp_verify_nonce( $woocommerce_meta_nonce, 'woocommerce_save_data' ) ) {
+            return;
+        }
         // Checkbox
         $woocommerce_checkbox = ( isset( $_POST['_checkbox_svipro_enabled'] ) ? 'yes' : 'no' );
         update_post_meta( $post_id, '_checkbox_svipro_enabled', $woocommerce_checkbox );
@@ -368,11 +398,16 @@ class Smart_Variations_Images_Admin {
      * @return HTML
      */
     public function save_woosvibulk_meta( $post_id ) {
+        $woocommerce_meta_nonce = ( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' );
+        if ( !$woocommerce_meta_nonce || !wp_verify_nonce( $woocommerce_meta_nonce, 'woocommerce_save_data' ) ) {
+            return;
+        }
         $post_type = get_post_type( $post_id );
         if ( "product" != $post_type ) {
             return;
         }
-        $attachment_ids = ( isset( $_POST['product_image_gallery'] ) ? array_unique( array_filter( explode( ',', wc_clean( $_POST['product_image_gallery'] ) ) ) ) : array() );
+        $product_image_gallery = ( isset( $_POST['product_image_gallery'] ) ? wc_clean( wp_unslash( $_POST['product_image_gallery'] ) ) : '' );
+        $attachment_ids = array_unique( array_filter( explode( ',', $product_image_gallery ) ) );
         if ( empty( $attachment_ids ) ) {
             delete_post_meta( $post_id, 'woosvi_slug' );
         }
@@ -381,7 +416,8 @@ class Smart_Variations_Images_Admin {
         }
         $bulk_video = false;
         $ordered = array();
-        if ( isset( $_POST['product-type'] ) && $_POST['product-type'] == 'simple' ) {
+        $product_type = ( isset( $_POST['product-type'] ) ? sanitize_text_field( wp_unslash( $_POST['product-type'] ) ) : '' );
+        if ( 'simple' === $product_type ) {
             $arr = array(
                 'imgs' => $attachment_ids,
             );
@@ -390,8 +426,9 @@ class Smart_Variations_Images_Admin {
             if ( !isset( $_POST['sviproduct_image_gallery'] ) && !$bulk_video ) {
                 return;
             }
-            if ( isset( $_POST['sviproduct_image_gallery'] ) ) {
-                $bulk = $_POST['sviproduct_image_gallery'];
+            if ( isset( $_POST['sviproduct_image_gallery'] ) && is_array( $_POST['sviproduct_image_gallery'] ) ) {
+                $bulk = wc_clean( wp_unslash( $_POST['sviproduct_image_gallery'] ) );
+                $bulk_hidden = ( isset( $_POST['sviproduct_image_gallery_hidden'] ) && is_array( $_POST['sviproduct_image_gallery_hidden'] ) ? wc_clean( wp_unslash( $_POST['sviproduct_image_gallery_hidden'] ) ) : array() );
                 $keys = array();
                 if ( array_key_exists( 'nullsvi', $bulk ) ) {
                     if ( $bulk['nullsvi'] ) {
@@ -480,9 +517,11 @@ class Smart_Variations_Images_Admin {
      * @return HTML
      */
     public function reloadSelect_json() {
-        $pid = ( isset( $_POST['data'] ) ? intval( $_POST['data'] ) : 0 );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $pid = ( isset( $_POST['data'] ) ? intval( wp_unslash( $_POST['data'] ) ) : 0 );
         //$attributes = get_post_meta($pid, '_product_attributes', true);
         $attributes = $this->load_variations( $pid );
+        Markup::$avoidXSS = true;
         $sviBody = HtmlTag::createElement( 'div' );
         /*if (count($attributes) < 1) {
         			//ALERT IF NO ATTRIBUTES EXIST
@@ -492,6 +531,7 @@ class Smart_Variations_Images_Admin {
         			die();
         		}*/
         $this->build_sviAttributesSelector( $sviBody, $attributes, $pid );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HtmlTag escapes generated values when Markup::$avoidXSS is enabled.
         echo $sviBody;
         die;
     }
@@ -505,6 +545,7 @@ class Smart_Variations_Images_Admin {
      */
     public function build_sviTab() {
         global $post;
+        Markup::$avoidXSS = true;
         //$attributes = get_post_meta($post->ID, '_product_attributes');
         $this->attributes = $this->load_variations( $post->ID );
         $sviBody = HtmlTag::createElement( 'div' )->set( 'class', 'svi-admin-body' );
@@ -520,6 +561,7 @@ class Smart_Variations_Images_Admin {
         $this->build_sviAttributesExplain( $sviBody );
         $this->build_sviGallery( $sviBody );
         $this->build_sviClone( $sviBody );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HtmlTag escapes generated values when Markup::$avoidXSS is enabled.
         echo $sviBody;
     }
 
@@ -531,7 +573,7 @@ class Smart_Variations_Images_Admin {
      * @return HTML
      */
     public function build_sviTabNotice( $sviBody ) {
-        return $sviBody->addElement( 'div' )->set( 'class', 'inline notice woocommerce-message' )->addElement( 'p' )->text( __( 'Before you can assign images to a variation you need to add some variation attributes on the <strong>Attributes</strong> tab and <b>save the product<b>.', 'svi' ) );
+        return $sviBody->addElement( 'div' )->set( 'class', 'inline notice woocommerce-message' )->addElement( 'p' )->text( __( 'Before you can assign images to a variation you need to add some variation attributes on the <strong>Attributes</strong> tab and <b>save the product<b>.', 'smart-variations-images' ) );
     }
 
     /**
@@ -556,7 +598,7 @@ class Smart_Variations_Images_Admin {
         global $post;
         $sviBody = $sviBody->addElement( 'div' )->set( 'class', 'svi-table' );
         if ( !$select_only ) {
-            $sviBody->addElement( 'div' )->set( 'class', 'svi-table-cell' )->addElement( 'label' )->set( 'for', 'sviprobulk' )->text( __( 'Assign Images to:', 'svi' ) );
+            $sviBody->addElement( 'div' )->set( 'class', 'svi-table-cell' )->addElement( 'label' )->set( 'for', 'sviprobulk' )->text( __( 'Assign Images to:', 'smart-variations-images' ) );
         }
         $sviBody_BuildSelect = $sviBody->addElement( 'div' )->set( 'class', 'svi-table-cell' );
         $existing = $this->build_sviAttributesSelector(
@@ -566,7 +608,7 @@ class Smart_Variations_Images_Admin {
             $select_only
         );
         if ( !$select_only ) {
-            $sviBody->addElement( 'div' )->set( 'class', 'svi-table-cell' )->addElement( 'button' )->set( 'id', 'addsviprovariation' )->set( 'class', 'button fr plus' )->text( __( 'Add', 'svi' ) );
+            $sviBody->addElement( 'div' )->set( 'class', 'svi-table-cell' )->addElement( 'button' )->set( 'id', 'addsviprovariation' )->set( 'class', 'button fr plus' )->text( __( 'Add', 'smart-variations-images' ) );
         }
         return $existing;
     }
@@ -591,7 +633,7 @@ class Smart_Variations_Images_Admin {
         }
         $existing = [];
         $options = $sviBody_select->set( 'multiple', 'multiple' );
-        $options->addElement( 'option' )->set( 'value', 'svidefault' )->text( __( 'Default Gallery', 'svi' ) );
+        $options->addElement( 'option' )->set( 'value', 'svidefault' )->text( __( 'Default Gallery', 'smart-variations-images' ) );
         if ( !$extras ) {
             $existing[] = 'svidefault';
         }
@@ -636,7 +678,7 @@ class Smart_Variations_Images_Admin {
             'Default Gallery',
             'Use this option to assign a default gallery to be displayed. All other images will be hidden until match occours.'
         );
-        $table_cell->addElement( 'div' )->text( __( '<br><b>PRO VERSION OPTIONS:</b>', 'svi' ) );
+        $table_cell->addElement( 'div' )->addElement( 'br' )()->addElement( 'strong' )->text( esc_html__( 'PRO VERSION OPTIONS:', 'smart-variations-images' ) );
         $this->build_sviBadge(
             $table_cell,
             'warning',
@@ -660,8 +702,8 @@ class Smart_Variations_Images_Admin {
         $msg = ''
     ) {
         $sviBadge = $table_cell->addElement( 'div' )->set( 'class', 'svibadge_wrapper' )->addElement( 'small' );
-        $sviBadge->addElement( 'span' )->set( 'class', 'svibadge svibadge-' . $type )->text( __( $badge_text, 'svi' ) );
-        $sviBadge->text( __( $msg, 'svi' ) );
+        $sviBadge->addElement( 'span' )->set( 'class', 'svibadge svibadge-' . $type )->text( esc_html( $badge_text ) );
+        $sviBadge->text( esc_html( $msg ) );
         return $sviBadge;
     }
 
@@ -735,8 +777,8 @@ class Smart_Variations_Images_Admin {
                                                 $keep = $extra;
                                             }
                                         }
-                                        $slugs_name[] = HtmlTag::createElement( 'span' )->set( 'class', 'dashicons dashicons-hidden' ) . ' ' . HtmlTag::createElement( 'span' )->text( $s );
-                                        $errors[$s] = HtmlTag::createElement( 'span' )->text( " The atrribute <b><u>" . $s . "</u></b> is no longer available in WooCommerce for the created SVI gallery. It seems that you have either deleted it or changed the attribute slug. This gallery will not work and matching will not occur as a consequence. Please consider either deleting this gallery or selecting the correct new attribute for it." );
+                                        $slugs_name[] = '(Missing) ' . $s;
+                                        $errors[$s] = " The atrribute " . $s . " is no longer available in WooCommerce for the created SVI gallery. It seems that you have either deleted it or changed the attribute slug. This gallery will not work and matching will not occur as a consequence. Please consider either deleting this gallery or selecting the correct new attribute for it.";
                                     }
                                     break;
                             }
@@ -836,9 +878,13 @@ class Smart_Variations_Images_Admin {
                 }
             }
             $svipro_gal = $svigallery->addElement( 'div' )->id( 'svipro_' . $key )->set( 'class', 'postbox svi-woocommerce-product-images' )->set( 'data-title', esc_attr( $title ) )->set( 'data-svigal', esc_html( $slug ) )->set( 'data-svikey', $key );
-            $svipro_gal->addElement( 'h2' )->set( 'class', $h2class )->text( $title_display . $removegal );
+            $h2 = $svipro_gal->addElement( 'h2' )->set( 'class', $h2class );
+            $h2->addElement( $title_display );
+            if ( $removegal ) {
+                $h2->addElement( $removegal );
+            }
             if ( $missingSlugEl ) {
-                $svipro_gal->text( $missingSlugEl );
+                $svipro_gal->addElement( $missingSlugEl );
             }
             $inside = $svipro_gal->addElement( 'div' )->set( 'class', 'inside' );
             $product_images_container = $inside->addElement( 'div' )->set( 'class', 'svipro-product_images_container' );
@@ -854,17 +900,24 @@ class Smart_Variations_Images_Admin {
                         continue;
                     }
                     array_push( $attachments_clean_id, $attachment_id );
-                    $ul->addElement( 'li' )->set( 'class', 'image' )->set( 'data-attachment_id', esc_attr( $attachment_id ) )->text( $attachment )->addElement( 'ul' )->set( 'class', 'actions' )->addElement( 'li' )->addElement( 'a' )->set( 'href', '#/' )->set( 'class', 'delete tips' )->set( 'data-tip', esc_attr__( 'Delete image', 'woocommerce' ) )->text( __( 'Delete', 'woocommerce' ) );
+                    $li = $ul->addElement( 'li' )->set( 'class', 'image' )->set( 'data-attachment_id', esc_attr( $attachment_id ) );
+                    Markup::$avoidXSS = false;
+                    $li->text( $attachment );
+                    Markup::$avoidXSS = true;
+                    $li->addElement( 'ul' )->set( 'class', 'actions' )->addElement( 'li' )->addElement( 'a' )->set( 'href', '#/' )->set( 'class', 'delete tips' )->set( 'data-tip', esc_attr__( 'Delete image', 'smart-variations-images' ) )->text( __( 'Delete', 'smart-variations-images' ) );
                 }
                 $product_image_gallery_svi = implode( ',', $attachments_clean_id );
             }
             if ( $slug != 'unsigned_svi' ) {
                 $ul->addElement( 'li' )->set( 'class', 'add_product_images_svipro  hide-if-no-js ui-state-disabled' )->addElement( 'a' )->set( 'href', '#/' )->set( 'data-choose', 'Add Images to Product Gallery' )->set( 'data-update', 'Add to gallery' )->set( 'data-delete', 'Delete image' )->set( 'data-text', 'Delete' )->addElement( 'span' )->set( 'class', 'dashicons dashicons-plus' );
             }
-            $product_images_container->addElement( 'span' )->set( 'class', 'sviHiddenLoop' )->text( 'Hide from <b>Product Loop</b>: (PRO VERSION FEATURE)' );
+            $span = $product_images_container->addElement( 'span' )->set( 'class', 'sviHiddenLoop' );
+            Markup::$avoidXSS = false;
+            $span->text( 'Hide from <b>Product Loop</b>: (PRO VERSION FEATURE)' );
+            Markup::$avoidXSS = true;
             $product_images_container->addElement( 'input' )->set( 'class', 'svipro-product_image_gallery' )->set( 'name', 'sviproduct_image_gallery[' . esc_html( $slug ) . ']' )->set( 'value', $product_image_gallery_svi )->set( 'type', 'hidden' );
             if ( sanitize_title( $slugs[0] ) == 'svidefault' ) {
-                $inside->addElement( 'p' )->addElement( 'b' )->text( __( 'NOTICE: All other images/galleries will be hidden until matching occours.', 'svi' ) );
+                $inside->addElement( 'p' )->addElement( 'b' )->text( __( 'NOTICE: All other images/galleries will be hidden until matching occours.', 'smart-variations-images' ) );
             }
         }
         return $svigallery;
@@ -874,12 +927,17 @@ class Smart_Variations_Images_Admin {
         $removegal = HtmlTag::createElement( 'a' )->set( 'href', '#/' )->set( 'class', 'svi-pullright sviprobulk_remove' )->addElement( 'span' )->set( 'class', 'dashicons dashicons-trash' );
         $title_display = HtmlTag::createElement( 'span' )->set( 'class', 'svititle' )->text( 'Product Gallery' );
         $svipro_gal = $sviBody->addElement( 'div' )->id( 'svipro_clone' )->set( 'class', 'postbox svi-woocommerce-product-images hidden' )->set( 'data-title', 'Product Gallery' )->set( 'data-svigal', '' );
-        $svipro_gal->addElement( 'h2' )->text( $title_display . $removegal );
+        $h2 = $svipro_gal->addElement( 'h2' );
+        $h2->addElement( $title_display );
+        $h2->addElement( $removegal );
         $inside = $svipro_gal->addElement( 'div' )->set( 'class', 'inside' );
         $product_images_container = $inside->addElement( 'div' )->set( 'class', 'svipro-product_images_container' );
         $ul = $product_images_container->addElement( 'ul' )->set( 'class', 'product_images ui-sortable product_galsort' );
         $ul->addElement( 'li' )->set( 'class', 'add_product_images_svipro  hide-if-no-js ui-state-disabled' )->addElement( 'a' )->set( 'href', '#/' )->set( 'data-choose', 'Add Images to Product Gallery' )->set( 'data-update', 'Add to gallery' )->set( 'data-delete', 'Delete image' )->set( 'data-text', 'Delete' )->addElement( 'span' )->set( 'class', 'dashicons dashicons-plus' );
-        $product_images_container->addElement( 'span' )->set( 'class', 'sviHiddenLoop' )->text( 'Hide from <b>Product Loop</b>: (PRO VERSION FEATURE)' );
+        $span = $product_images_container->addElement( 'span' )->set( 'class', 'sviHiddenLoop' );
+        Markup::$avoidXSS = false;
+        $span->text( 'Hide from <b>Product Loop</b>: (PRO VERSION FEATURE)' );
+        Markup::$avoidXSS = true;
         $product_images_container->addElement( 'input' )->set( 'class', 'svipro-product_image_gallery' )->set( 'name', '' )->set( 'value', '' )->set( 'type', 'hidden' );
         return $sviBody;
     }

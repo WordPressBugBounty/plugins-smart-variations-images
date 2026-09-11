@@ -323,6 +323,13 @@ class Smart_Variations_Images {
                 5
             );
         }
+        $this->loader->add_filter(
+            'woocommerce_available_variation',
+            $plugin_public,
+            'filter_woocommerce_available_variation',
+            99,
+            1
+        );
         $this->register_loop_showcase_hooks( $plugin_public );
         if ( $this->is_option_enabled( 'filter_attribute' ) ) {
             $this->loader->add_filter(
@@ -489,8 +496,8 @@ class Smart_Variations_Images {
     public function add_settings_page() : void {
         $this->wpsf->add_settings_page( [
             'parent_slug' => 'woocommerce',
-            'page_title'  => esc_html__( 'Smart Variations Images & Swatches for WooCommerce', 'text-domain' ),
-            'menu_title'  => esc_html__( 'SVI', 'text-domain' ),
+            'page_title'  => esc_html__( 'Smart Variations Images & Swatches for WooCommerce', 'smart-variations-images' ),
+            'menu_title'  => esc_html__( 'SVI', 'smart-variations-images' ),
             'capability'  => 'edit_products',
             'page_slug'   => 'woocommerce_svi',
         ] );

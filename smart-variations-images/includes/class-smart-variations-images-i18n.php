@@ -34,6 +34,7 @@ class Smart_Variations_Images_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
+		// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
 		load_plugin_textdomain(
 			'smart-variations-images',
 			false,

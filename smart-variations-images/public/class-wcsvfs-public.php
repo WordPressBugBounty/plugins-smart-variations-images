@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Legacy WCSVFS class and WooCommerce/WCSVFS integration contracts.
 
 /**
  * The public-facing functionality of the plugin.
@@ -20,6 +21,7 @@
  * @subpackage Wcsvfs/public
  * @author     David Rosendo <david@rosendo.pt>
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy class referenced by the WCSVFS loader.
 class Wcsvfs_Public
 {
 
@@ -137,6 +139,7 @@ class Wcsvfs_Public
 
                 foreach ($terms as $term) {
                     if (in_array($term->slug, $options)) {
+                        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public WCSVFS extension hook.
                         $swatches .= apply_filters('wcsvfs_swatch_html', '', $term, $attr->attribute_name, $attr->attribute_type, $args);
                     }
                 }
@@ -166,8 +169,9 @@ class Wcsvfs_Public
     public function swatch_html($html, $term, $tax, $type, $args = false, $image = '')
     {
         $selected = '';
-        if (isset($_GET['filter_' . $tax]) && $_GET['filter_' . $tax] != '') {
-            $taxonomies = explode(',', $_GET['filter_' . $tax]);
+        $filter_value = filter_input(INPUT_GET, 'filter_' . $tax, FILTER_UNSAFE_RAW);
+        if (is_string($filter_value) && '' !== $filter_value) {
+            $taxonomies = explode(',', sanitize_text_field(wp_unslash($filter_value)));
 
             $selected = (in_array($term->slug, $taxonomies)) ? 'selected' : '';
         }
@@ -175,6 +179,7 @@ class Wcsvfs_Public
             $selected = (sanitize_title($args['selected']) == $term->slug) ? 'selected' : '';
         }
 
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Required WooCommerce compatibility hook.
         $name = esc_html(apply_filters('woocommerce_variation_option_name', $term->name));
 
         if ($image) {

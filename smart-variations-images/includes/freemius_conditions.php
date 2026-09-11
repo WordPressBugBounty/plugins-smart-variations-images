@@ -1,5 +1,9 @@
 <?php
 
+if ( !defined( 'ABSPATH' ) ) {
+    exit;
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Freemius callback names are registered as public compatibility APIs.
 function my_svi_pricing_js_path(  $default_pricing_js_path  ) {
     return dirname( __FILE__ ) . '/library/freemius-pricing/freemius-pricing.js';
 }
