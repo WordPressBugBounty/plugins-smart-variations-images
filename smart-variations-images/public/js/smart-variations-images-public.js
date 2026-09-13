@@ -6536,7 +6536,6 @@
     );
     this.form.on("found_variation.svi", (event, variation) => {
       this.currentVariationId = variation && variation.variation_id ? parseInt(variation.variation_id, 10) : 0;
-      this.loadSviGalleries();
     });
     this.form.on("reset_data.svi hide_variation.svi", () => {
       this.currentVariationId = 0;
@@ -6593,7 +6592,7 @@
     let $attributes = this.attributes;
     this.sviLog("Gallery", "Matching Started (RetrieveGalleryForDisplay)", $attributes);
     let $gal = this.removeDuplicatesID(this.RetrieveImagesAccordingToSelectedAttributes($attributes.data, $isthumbGal, false));
-    if ($gal.length < 1) {
+    if ($gal.length < 1 && $attributes.chosenCount === $attributes.count) {
       $gal = this.RetrieveNativeVariationGallery();
     }
     if ($gal.length < 1) {

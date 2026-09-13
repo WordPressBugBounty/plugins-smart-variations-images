@@ -138,6 +138,15 @@ class Smart_Variations_Images_Public {
     protected static $product_cache = [];
 
     /**
+     * Track which products have already had their galleries rendered on this page load.
+     * Prevents double-rendering when Gutenberg or theme hooks call render_frontend multiple times.
+     *
+     * @since    5.2.35
+     * @var      array<int, bool> $rendered_products_on_load
+     */
+    protected static $rendered_products_on_load = [];
+
+    /**
      * Initialize the class and set its properties.
      *
      * @since    1.0.0
@@ -631,6 +640,19 @@ class Smart_Variations_Images_Public {
         }
         if ( !$run ) {
             return;
+        }
+        // Prevent double-rendering of the same product gallery (5.2.35+).
+        // Gutenberg and some themes may call render_frontend multiple times during page load.
+        // Only render the first call; subsequent calls for the same product are skipped.
+        // Skip this check on AJAX requests (quick-view, dynamic loads) to allow multiple renders.
+        if ( !wp_doing_ajax() ) {
+            $product_id = ( $product instanceof WC_Product ? $product->get_id() : 0 );
+            if ( $product_id && isset( self::$rendered_products_on_load[$product_id] ) ) {
+                return;
+            }
+            if ( $product_id ) {
+                self::$rendered_products_on_load[$product_id] = true;
+            }
         }
         include plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/smart-variations-images-public-display.php';
     }

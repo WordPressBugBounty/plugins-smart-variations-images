@@ -4,7 +4,7 @@ Tags: woocommerce, product variations, image gallery, swatches, ecommerce
 Requires at least: 6.0 
 Tested up to: 7.1
 WC requires at least: 8.2
-Stable tag: 5.2.34
+Stable tag: 5.2.35
 Requires PHP: 7.4
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ WooCommerce now includes native galleries for individual variations. SVI is buil
 
 SVI complements native WooCommerce variation galleries. When a product has no matching SVI gallery, SVI can use the selected variation's native WooCommerce gallery, so existing product data remains useful.
 
-**Make the smart choice!** [Read the article](https://www.smart-variations.com/additional-images-woocommerce-variations/)
+**Make the smart choice!** [Read the article](https://www.smart-variations.com/woocommerce-11-1-brought-native-variation-galleries-but-is-it-enough/)
 
 ## Features
 
@@ -125,6 +125,13 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 7. Setup swatches on Product > Attributes
 
 == Changelog ==
+
+= 5.2.35 =
+* Fix: Resolved Swiper crash ("TypeError: Cannot read properties of null") caused by unscoped global gallery selectors that incorrectly targeted duplicate gallery wrappers rendered by Gutenberg on initial page load.
+* Fix: Added PHP-level deduplication to prevent multiple `render_frontend()` calls from creating duplicate `.gallery-svi` wrapper divs for the same product on page load (non-AJAX). This resolves the root cause of the Swiper crash when multiple wrappers with conflicting image data were mounted.
+* Fix: Fixed empty Swiper gallery on initial page load by ensuring gallery data is always passed via the `data-wcsvi` attribute in the template. Previously, data was only available on AJAX requests, causing the initial load to render an empty gallery while waiting for AJAX data.
+* Fix: Admin gallery delete button now responds to clicks with improved UI. Fixed event delegation to document-level for proper click handling, removed excessive hover effects for cleaner UX, and ensured single-click delete action without duplicate event binding. Updated event handler selectors to work with the bare trash icon `<span>` element rendered in gallery headers.
+* Fix: Regression in 5.2.34 where the gallery could be computed twice on load - once immediately on `found_variation` with stale attributes, and again ~50ms later once attributes were fully resolved. The mismatched image sets could collapse the slider to one slide or duplicate/overflow thumbnails. The native-gallery fallback added in 5.2.34 now only applies once a specific variation is fully resolved, and the duplicate render pass was removed.
 
 = 5.2.34 =
 * Compatibility: Added WooCommerce 11.1 native variation-gallery support. When no SVI gallery matches the selected attributes, SVI can display that variation's native WooCommerce gallery.

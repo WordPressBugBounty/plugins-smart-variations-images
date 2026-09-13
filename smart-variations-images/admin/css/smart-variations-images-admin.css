@@ -174,6 +174,15 @@ div#svigallery .inside .svipro-product_images_container ul ul.actions {
 
 .svi-pullright {
     float: right !important;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+/* Ensure h2 headers with delete buttons display properly */
+.postbox h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 li.svi_variations_options.show_if_variable>a {
@@ -349,6 +358,39 @@ div#svigallery .wc-metabox-sortable-placeholder::after {
 a.sviprobulk_remove {
     text-decoration: none;
     color: #fff;
+    padding: 5px 8px;
+    display: inline-block;
+    border-radius: 3px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer !important;
+}
+
+a.sviprobulk_remove:hover {
+    background-color: #dc3545;
+    color: #fff;
+    cursor: pointer !important;
+}
+
+a.sviprobulk_remove:hover .dashicons {
+    cursor: pointer !important;
+}
+
+a.sviprobulk_remove .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    cursor: pointer !important;
+}
+
+/* Styles for bare trash icon in h2 header */
+h2 .dashicons-trash {
+    cursor: pointer !important;
+    transition: color 0.2s ease-in-out;
+}
+
+h2:hover .dashicons-trash {
+    color: #dc3545 !important;
 }
 
 .svi-editvideo .dashicons:hover {

@@ -47,10 +47,10 @@ if (!$smart_variations_images_is_ajax_request) {
 
 $smart_variations_images_data = '';
 
-if ($smart_variations_images_is_ajax_request) {
-    $smart_variations_images_load = wp_json_encode($smart_variations_images_load_data);
-    $smart_variations_images_data = function_exists('wc_esc_json') ? wc_esc_json($smart_variations_images_load) : _wp_specialchars($smart_variations_images_load, ENT_QUOTES, 'UTF-8', true);
-}
+// Always encode data for Vue component - pass via data-wcsvi on BOTH AJAX and initial page load
+// This ensures the gallery has data immediately without needing to wait for inline scripts or AJAX
+$smart_variations_images_load = wp_json_encode($smart_variations_images_load_data);
+$smart_variations_images_data = function_exists('wc_esc_json') ? wc_esc_json($smart_variations_images_load) : _wp_specialchars($smart_variations_images_load, ENT_QUOTES, 'UTF-8', true);
 //wp_localize_script($this->plugin_name, 'wcsvi_' . $pid, json_encode($this->loadProduct($pid)));
 //$columns           = apply_filters('woocommerce_product_thumbnails_columns', 4);
 $smart_variations_images_thumbnail_id = $smart_variations_images_product->get_image_id();
@@ -105,7 +105,8 @@ if (!empty($smart_variations_images_initial_markup) || $this->options->preload_f
 
 $smart_variations_images_div_attributes[] = 'style="' . esc_attr($smart_variations_images_transition_style) . '"';
 
-if ($smart_variations_images_is_ajax_request) {
+// Always pass data-wcsvi to Vue component for immediate initialization with gallery data
+if ($smart_variations_images_data) {
     $smart_variations_images_div_attributes[] = 'data-wcsvi="' . $smart_variations_images_data . '"';
 }
 
