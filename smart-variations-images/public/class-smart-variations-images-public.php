@@ -138,15 +138,6 @@ class Smart_Variations_Images_Public {
     protected static $product_cache = [];
 
     /**
-     * Track which products have already had their galleries rendered on this page load.
-     * Prevents double-rendering when Gutenberg or theme hooks call render_frontend multiple times.
-     *
-     * @since    5.2.35
-     * @var      array<int, bool> $rendered_products_on_load
-     */
-    protected static $rendered_products_on_load = [];
-
-    /**
      * Initialize the class and set its properties.
      *
      * @since    1.0.0
@@ -640,19 +631,6 @@ class Smart_Variations_Images_Public {
         }
         if ( !$run ) {
             return;
-        }
-        // Prevent double-rendering of the same product gallery (5.2.35+).
-        // Gutenberg and some themes may call render_frontend multiple times during page load.
-        // Only render the first call; subsequent calls for the same product are skipped.
-        // Skip this check on AJAX requests (quick-view, dynamic loads) to allow multiple renders.
-        if ( !wp_doing_ajax() ) {
-            $product_id = ( $product instanceof WC_Product ? $product->get_id() : 0 );
-            if ( $product_id && isset( self::$rendered_products_on_load[$product_id] ) ) {
-                return;
-            }
-            if ( $product_id ) {
-                self::$rendered_products_on_load[$product_id] = true;
-            }
         }
         include plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/smart-variations-images-public-display.php';
     }
@@ -1151,15 +1129,6 @@ CSS;
             // slot they belong to, with video URLs embedded when applicable).
             $attachment_ids = array_merge( $attachment_ids, $this->get_svigallery_image_ids( $woosvi_slug ) );
         }
-        if ( $product->is_type( 'variable' ) ) {
-            $variation_galleries = $this->get_variation_gallery_image_ids( $product );
-            foreach ( $variation_galleries as $variation_id => $image_ids ) {
-                foreach ( $image_ids as $image_id ) {
-                    $attachment_ids[] = $image_id;
-                }
-            }
-            $return['variation_galleries'] = $variation_galleries;
-        }
         $attachment_ids = array_filter( $attachment_ids );
         // ─── 6. PREP SLUG DATA ────────────────────────────────────────────────────
         // For 'svidefault' galleries, prepend the main product image so the
@@ -1302,32 +1271,6 @@ CSS;
             }
         }
         return $imgs;
-    }
-
-    /**
-     * Return native WooCommerce variation gallery image IDs keyed by variation ID.
-     *
-     * WooCommerce 11.1 stores these galleries on the variation itself. Keeping the
-     * IDs in the existing SVI payload lets the client retain its gallery mount while
-     * using core galleries whenever no SVI attribute gallery matches.
-     *
-     * @since 5.2.33
-     * @param WC_Product_Variable $product Variable product instance.
-     * @return array<int, array<int, int>>
-     */
-    private function get_variation_gallery_image_ids( WC_Product_Variable $product ) : array {
-        $galleries = [];
-        foreach ( $product->get_children() as $variation_id ) {
-            $variation = wc_get_product( $variation_id );
-            if ( !$variation instanceof WC_Product_Variation || !is_callable( [$variation, 'get_gallery_image_ids'] ) ) {
-                continue;
-            }
-            $image_ids = array_values( array_filter( array_map( 'absint', $variation->get_gallery_image_ids() ) ) );
-            if ( !empty( $image_ids ) ) {
-                $galleries[$variation->get_id()] = $image_ids;
-            }
-        }
-        return $galleries;
     }
 
     /**

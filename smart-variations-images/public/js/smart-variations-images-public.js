@@ -6264,7 +6264,7 @@
       }
       if (!this.hasImages) return;
       if (this.ajax) this.loadSviGalleries();
-      if (this.ptype && (this.hasSVIdata || this.hasNativeVariationGalleries)) this.DetectChangesInForm();
+      if (this.ptype && this.hasSVIdata) this.DetectChangesInForm();
       else this.loadSviGalleries();
       this.$nextTick(function() {
         window.addEventListener("resize", () => {
@@ -6345,8 +6345,6 @@
         windowType: this.getWindowWidth(true),
         curVideo: false,
         hasSVIdata: "slugs" in this.wcsvi && Object.keys(this.wcsvi.slugs).length > 0 ? true : false,
-        hasNativeVariationGalleries: "variation_galleries" in this.wcsvi && Object.keys(this.wcsvi.variation_galleries).length > 0 ? true : false,
-        currentVariationId: 0,
         originalAttributes: "keep_thumbnails" in wcsvi.options && parseInt(wcsvi.options.keep_thumbnails) ? [] : false
       };
     },
@@ -6534,12 +6532,6 @@
         }, 50);
       }
     );
-    this.form.on("found_variation.svi", (event, variation) => {
-      this.currentVariationId = variation && variation.variation_id ? parseInt(variation.variation_id, 10) : 0;
-    });
-    this.form.on("reset_data.svi hide_variation.svi", () => {
-      this.currentVariationId = 0;
-    });
   };
   Vue.prototype.isEquivalentAttributes = function(a, b) {
     return JSON.stringify(a) === JSON.stringify(b);
@@ -6591,13 +6583,7 @@
   Vue.prototype.RetrieveGalleryForDisplay = function($isthumbGal = false) {
     let $attributes = this.attributes;
     this.sviLog("Gallery", "Matching Started (RetrieveGalleryForDisplay)", $attributes);
-    let $gal = this.removeDuplicatesID(this.RetrieveImagesAccordingToSelectedAttributes($attributes.data, $isthumbGal, false));
-    if ($gal.length < 1 && $attributes.chosenCount === $attributes.count) {
-      $gal = this.RetrieveNativeVariationGallery();
-    }
-    if ($gal.length < 1) {
-      $gal = this.removeDuplicatesID(this.RetrieveImagesAccordingToSelectedAttributes($attributes.data, $isthumbGal));
-    }
+    let $gal = this.removeDuplicatesID(this.RetrieveImagesAccordingToSelectedAttributes($attributes.data, $isthumbGal));
     this.sviLog("Gallery", "Final Match Result", { matchedImages: $gal, count: $gal.length });
     if ("placeholder" in wcsvi.options && this.boolEval(wcsvi.options.placeholder) && $gal.length < 1 && this.attributes.chosenCount > 0) {
       $gal.push(this.placeholder());
@@ -6630,7 +6616,7 @@
     }
     return result;
   };
-  Vue.prototype.RetrieveImagesAccordingToSelectedAttributes = function($attributes, $isthumbGal, $allowDefault = true) {
+  Vue.prototype.RetrieveImagesAccordingToSelectedAttributes = function($attributes, $isthumbGal) {
     this.sviLog("Gallery", "Evaluating Selected Attributes", { attributes: $attributes, gallery: this.gallery });
     let $clean_attributes = $jq.map($attributes, ($attribute) => {
       this.sviLog("Gallery", "Slugifying Attribute", $attribute);
@@ -6641,29 +6627,13 @@
     let $possible_combinations = this.RetrieveAttributesCombinations($clean_attributes, $isthumbGal);
     this.sviLog("Gallery", "Generated Combinations", $possible_combinations);
     let $img_ids = this.RetrieveTheImagesID($possible_combinations);
-    if ($allowDefault && $img_ids.length < 1) {
+    if ($img_ids.length < 1) {
       $possible_combinations = ["svidefault"];
       $img_ids = this.RetrieveTheImagesID($possible_combinations);
       this.sviLog("Gallery", "Fallback To Default (No valid combinations)", $possible_combinations);
     }
     this.sviLog("Gallery", "Extracting Image IDs", $img_ids);
     return this.RetrieveTheImages($img_ids, $isthumbGal);
-  };
-  Vue.prototype.RetrieveNativeVariationGallery = function() {
-    const galleries = this.gallery.variation_galleries;
-    const imageIds = galleries && this.currentVariationId ? galleries[this.currentVariationId] : false;
-    if (!Array.isArray(imageIds) || imageIds.length < 1) {
-      return [];
-    }
-    return imageIds.reduce((images, imageId) => {
-      const image = this.gallery.images.find(
-        (candidate) => parseInt(candidate.id, 10) === parseInt(imageId, 10) && !candidate.idk
-      );
-      if (image) {
-        images.push(image);
-      }
-      return images;
-    }, []);
   };
   Vue.prototype.RetrieveImagesAccordingToSelectedOriginalAttributes = function(originalAttributes) {
     let $img_ids = this.RetrieveTheImagesID(originalAttributes);
@@ -6840,19 +6810,19 @@
     }
     if ("slider_navigation" in wcsvi.options && this.boolEval(wcsvi.options.slider_navigation)) {
       sliderOptions.navigation = {
-        nextEl: ".swiperTop-swiper-button-next",
-        prevEl: ".swiperTop-swiper-button-prev"
+        nextEl: this.$el.querySelector(".swiperTop-swiper-button-next"),
+        prevEl: this.$el.querySelector(".swiperTop-swiper-button-prev")
       };
     }
     if ("slider_pagination" in wcsvi.options && this.boolEval(wcsvi.options.slider_pagination)) {
       sliderOptions.pagination = {
-        el: ".sviswiper-pagination",
+        el: this.$el.querySelector(".sviswiper-pagination"),
         dynamicBullets: "slider_paginationDynamicBullets" in wcsvi.options && this.boolEval(wcsvi.options.slider_paginationDynamicBullets),
         type: "slider_paginationType" in wcsvi.options && wcsvi.options.slider_paginationType ? wcsvi.options.slider_paginationType : "bullets",
         clickable: "slider_paginationclickable" in wcsvi.options && this.boolEval(wcsvi.options.slider_paginationclickable)
       };
     }
-    return new Swiper(".svi-gallery-top", sliderOptions);
+    return new Swiper(this.$el.querySelector(".svi-gallery-top"), sliderOptions);
   };
   Vue.prototype.sliderThumbs = function() {
     let sliderOptions = {
@@ -6884,11 +6854,11 @@
     };
     if ("slider_navigation_thumb" in wcsvi.options && this.boolEval(wcsvi.options.slider_navigation_thumb)) {
       sliderOptions.navigation = {
-        nextEl: ".swiperThumbs-swiper-button-next",
-        prevEl: ".swiperThumbs-swiper-button-prev"
+        nextEl: this.$el.querySelector(".swiperThumbs-swiper-button-next"),
+        prevEl: this.$el.querySelector(".swiperThumbs-swiper-button-prev")
       };
     }
-    return new Swiper(".svi-gallery-thumbs", sliderOptions);
+    return new Swiper(this.$el.querySelector(".svi-gallery-thumbs"), sliderOptions);
   };
   Vue.prototype.isEquivalent = function(aOriginal, bOriginal) {
     let a = JSON.parse(JSON.stringify(aOriginal)).map(function(i3, obj) {

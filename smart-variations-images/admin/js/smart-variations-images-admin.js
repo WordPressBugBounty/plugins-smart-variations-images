@@ -656,34 +656,18 @@ WOOSVIADM.STARTS = function($) {
 
         },
         removeMediaGallery: function($slug, $svikey) {
-            // Handle clicks on gallery delete button using the trash icon in h2 header
-            // Use document-level delegation since the delete button is in h2 (outside the #svipro_ container)
-            // Unbind any existing handlers first to prevent multiple bindings
-            $(document).off('click', 'h2 .dashicons-trash, h2 .sviprobulk_remove, h2 .sviprobulk_remove .dashicons');
-            
-            $(document).on('click', 'h2 .dashicons-trash, h2 .sviprobulk_remove, h2 .sviprobulk_remove .dashicons', function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                
-                let $h2 = $(this).closest('h2');
-                let $postbox = $h2.closest('.postbox.svi-woocommerce-product-images');
-                
-                if (!$postbox.length) {
-                    return false;
-                }
-                
+            $('#svipro_' + $svikey).on('click', 'a.sviprobulk_remove', function(event) {
                 let txtDel = '';
-                if ($h2.find('span>span').length > 0)
-                    txtDel = $h2.find('span>span').html();
-                else if ($h2.find('span.svititle').length > 0)
-                    txtDel = $h2.find('span.svititle').html();
+                if ($(this).closest('.postbox').find('h2>span>span').length > 0)
+                    txtDel = $(this).closest('.postbox').find('h2>span>span').html();
                 else
-                    txtDel = $h2.find('span').first().html();
+                    txtDel = $(this).closest('.postbox').find('h2>span').html();
 
                 if (confirm("Delete " + txtDel + "?")) {
-                    var $input = $postbox.find('input.svipro-product_image_gallery').val().split(',');
+                    event.preventDefault();
+                    var $input = $(this).closest('div.svi-woocommerce-product-images').find('input.svipro-product_image_gallery').val().split(',');
 
-                    $postbox.remove();
+                    $(this).closest('div.svi-woocommerce-product-images').remove();
 
                     $.each($input, function(i, v) {
                         if ($('#svigallery').find('ul li.image[data-attachment_id="' + v + '"]').length < 1)

@@ -17,9 +17,9 @@
  * Plugin Name:       Smart Variations Images & Swatches for WooCommerce
  * Plugin URI:        https://www.smart-variations.com/
  * Description:       Enhance your WooCommerce store by adding multiple images to the product gallery and using them as variable product variations images effortlessly.
- * Version:           5.2.35
+ * Version:           5.2.36
  * WC requires at least: 8.2
- * WC tested up to:   11.1.0
+ * WC tested up to:   11.2.1
  * Author:            David Rosendo
  * Author URI:        https://www.rosendo.pt
  * License:           GPL-2.0+
@@ -34,7 +34,7 @@ if ( !defined( 'WPINC' ) ) {
 /**
  * Define plugin constants.
  */
-define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.2.35' );
+define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.2.36' );
 // Current plugin version.
 define( 'WCSVFS_VERSION', '1.0' );
 // Version for additional functionality.

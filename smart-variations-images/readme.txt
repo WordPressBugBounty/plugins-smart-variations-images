@@ -4,24 +4,22 @@ Tags: woocommerce, product variations, image gallery, swatches, ecommerce
 Requires at least: 6.0 
 Tested up to: 7.1
 WC requires at least: 8.2
-Stable tag: 5.2.35
+Stable tag: 5.2.36
 Requires PHP: 7.4
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Build reusable variation galleries and swatches that help customers choose the right product.
+Boost your WooCommerce sales by adding additional gallery images and swatches to variable products with ease.
 
 ## Description
 
-Smart Variations Images & Swatches gives variable products a gallery experience designed around the attributes shoppers use to choose: color, size, material, and their combinations. Create a gallery once, assign it to the relevant attribute values, and reuse it across every matching variation.
+Smart Variations Images & Swatches is a powerful WooCommerce extension that enhances your product image gallery and adds swatches for an improved shopping experience. Designed to optimize your workflow, this plugin allows you to upload images only once for each variation gallery.
 
 [youtube https://youtu.be/QMV8XBeub_o]
 
-WooCommerce now includes native galleries for individual variations. SVI is built for stores where multiple variations share the same visual assets: assign one gallery to a color or attribute combination instead of recreating it for every SKU. On the storefront, customers can browse galleries, choose variations from images and swatches, and see their selection reflected immediately.
+By default, WooCommerce swaps only the main variation image. This extension allows visitors to swap gallery images when selecting a product variation, providing a comprehensive view of each product variation. SVI also replaces dropdown fields for variable products with color, image, or label swatches for a more user-friendly display.
 
-SVI complements native WooCommerce variation galleries. When a product has no matching SVI gallery, SVI can use the selected variation's native WooCommerce gallery, so existing product data remains useful.
-
-**Make the smart choice!** [Read the article](https://www.smart-variations.com/woocommerce-11-1-brought-native-variation-galleries-but-is-it-enough/)
+**Make the smart choice!** [Read the article](https://www.smart-variations.com/additional-images-woocommerce-variations/)
 
 ## Features
 
@@ -29,17 +27,22 @@ SVI complements native WooCommerce variation galleries. When a product has no ma
 
 [Live Demo](http://svi.rosendo.pt/free) | [Support](https://wordpress.org/support/plugin/smart-variations-images/)
 
-* Reusable galleries for attributes and attribute combinations, reducing repeated image setup across matching variations
-* Unlimited additional images with drag-and-drop sorting
-* Gallery changes when shoppers choose a single attribute, such as color
-* Color, image, and label variation swatches
-* Image clicks can update matching variation selections
-* Static, stacked, and slider gallery layouts with navigation arrows
-* Variation thumbnails below product selectors and image showcases on product loop pages
-* Magnifier lens and lightbox support
-* Option to hide thumbnails until a variation is chosen
-* Native WooCommerce variation-gallery fallback when no SVI gallery matches
-* Responsive, WPML-aware, page-builder, theme, and swatches-plugin compatibility
+* Unlimited additional images for each variation
+* Drag & Drop custom sorting option
+* Trigger gallery change on single attribute change
+* Variation Swatches and Photos
+* Stacked Layout Display
+* Display 1 Image under Variation Selection
+* Showcase Variations on product loop pages
+* Slider with navigation arrows
+* Magnifier Lens with Lens, Window, or Inner display
+* Lightbox
+* Hide thumbnails until variation is chosen
+* WPML Compatible
+* Compatible with page builders
+* Compatible with other Swatches Plugins
+* Compatible with popular themes
+* Responsive design
 
 ### Premium Features
 
@@ -126,16 +129,12 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 
 == Changelog ==
 
-= 5.2.35 =
-* Fix: Resolved Swiper crash ("TypeError: Cannot read properties of null") caused by unscoped global gallery selectors that incorrectly targeted duplicate gallery wrappers rendered by Gutenberg on initial page load.
-* Fix: Added PHP-level deduplication to prevent multiple `render_frontend()` calls from creating duplicate `.gallery-svi` wrapper divs for the same product on page load (non-AJAX). This resolves the root cause of the Swiper crash when multiple wrappers with conflicting image data were mounted.
-* Fix: Fixed empty Swiper gallery on initial page load by ensuring gallery data is always passed via the `data-wcsvi` attribute in the template. Previously, data was only available on AJAX requests, causing the initial load to render an empty gallery while waiting for AJAX data.
-* Fix: Admin gallery delete button now responds to clicks with improved UI. Fixed event delegation to document-level for proper click handling, removed excessive hover effects for cleaner UX, and ensured single-click delete action without duplicate event binding. Updated event handler selectors to work with the bare trash icon `<span>` element rendered in gallery headers.
-* Fix: Regression in 5.2.34 where the gallery could be computed twice on load - once immediately on `found_variation` with stale attributes, and again ~50ms later once attributes were fully resolved. The mismatched image sets could collapse the slider to one slide or duplicate/overflow thumbnails. The native-gallery fallback added in 5.2.34 now only applies once a specific variation is fully resolved, and the duplicate render pass was removed.
+= 5.2.36 =
+* Fix: Slider gallery crash ("Cannot read properties of null (reading 'el')") when more than one SVI slider gallery existed in the page DOM at the same time (e.g. Quick View, product loop showcase, or hidden builder templates). Swiper was initialised against a page-wide CSS selector instead of the specific gallery instance; each slider now initialises against its own DOM node.
+* Update: Freemius SDK updated to 2.13.5; WooCommerce tested up to 11.2.1.
 
-= 5.2.34 =
-* Compatibility: Added WooCommerce 11.1 native variation-gallery support. When no SVI gallery matches the selected attributes, SVI can display that variation's native WooCommerce gallery.
-* Update: Refreshed plugin-directory information to clarify SVI's reusable attribute-gallery workflow.
+= 5.2.35 =
+* Update: Minor adjustments.
 
 = 5.2.33 =
 * Update: Bumped minimum requirements to WordPress 6.0 and WooCommerce 8.2 to ensure stability with modern environments.
