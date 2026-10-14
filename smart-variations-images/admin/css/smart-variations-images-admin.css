@@ -445,13 +445,187 @@ span.sviHiddenLoop {
     font-weight: 400;
 }
 
-.svipro-dialog .ui-dialog-titlebar-close:before {
-    display: none;
+/* Video dialog chrome.
+ *
+ * jQuery UI would render our dialog with WooCommerce's bundled jQuery UI theme
+ * (woocommerce/assets/css/jquery-ui/jquery-ui.min.css), which wins by source
+ * order over WordPress's own wp-jquery-ui-dialog skin because both use the same
+ * unscoped .ui-dialog-* selectors. Everything here is scoped to .svipro-dialog
+ * (the dialog's dialogClass) so it wins on specificity instead of on load order,
+ * and so no other admin dialog is affected.
+ */
+
+.svipro-dialog.ui-dialog {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .3);
+    padding: 0;
+    /* WordPress stacks a dialog at 100102 with its overlay at 100101
+     * (wp-includes/css/jquery-ui-dialog.css). That stylesheet is not loaded on
+     * this screen, so without these two values the dialog keeps jQuery UI's
+     * 100/101 - below #adminmenu (9990) and #wpadminbar (99999) - and the admin
+     * chrome paints over the veil. jQuery UI writes z-index inline and moves the
+     * dialog to the top of the .ui-front elements, hence !important. Still below
+     * the media modal (160000), so a media frame opened from here lands on top. */
+    z-index: 100102 !important;
 }
 
-.svipro-dialog .ui-button.ui-dialog-titlebar-close {
-    top: 5px;
-    color: transparent!important;
+.svipro-dialog.ui-dialog .ui-dialog-titlebar {
+    background: #fff;
+    background-image: none;
+    border: 0;
+    border-bottom: 1px solid #dcdcde;
+    border-radius: 4px 4px 0 0;
+    color: #1d2327;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 36px;
+    min-height: 36px;
+    padding: 0 44px 0 16px;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-title {
+    font: inherit;
+    margin: 0;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-titlebar-close {
+    background: none;
+    background-image: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #646970;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    top: 0;
+    width: 36px;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-titlebar-close:before {
+    content: "\f158";
+    display: block;
+    font: normal 20px/36px dashicons;
+    -webkit-font-smoothing: antialiased;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-titlebar-close:hover,
+.svipro-dialog.ui-dialog .ui-dialog-titlebar-close:focus {
+    color: #135e96;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-content {
+    color: #50575e;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 16px 20px;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane {
+    background: #fff;
+    border: 0;
+    border-top: 1px solid #dcdcde;
+    margin: 0;
+    padding: 12px 16px;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: right;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button {
+    background: #f6f7f7;
+    border: 1px solid #c3c4c7;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 #c3c4c7;
+    color: #50575e;
+    font-size: 13px;
+    font-weight: 400;
+    height: 28px;
+    line-height: 2;
+    margin-left: 12px;
+    padding: 0 10px 1px;
+    text-shadow: none;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button:hover,
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button:focus {
+    background: #f6f7f7;
+    border-color: #8c8f94;
+    color: #1d2327;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button.svi-primary {
+    background: var(--wp-admin-theme-color, #2271b1);
+    border-color: var(--wp-admin-theme-color, #2271b1);
+    box-shadow: none;
+    color: #fff;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button.svi-primary:hover,
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button.svi-primary:focus {
+    background: var(--wp-admin-theme-color-darker-10, #135e96);
+    border-color: var(--wp-admin-theme-color-darker-10, #135e96);
+    color: #fff;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button.svi-danger {
+    color: #b32d2e;
+}
+
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button.svi-danger:hover,
+.svipro-dialog.ui-dialog .ui-dialog-buttonpane .ui-button.svi-danger:focus {
+    border-color: #b32d2e;
+    color: #b32d2e;
+}
+
+/* Field: admin-scaled instead of the settings framework's Bootstrap metrics. */
+.svipro-dialog.ui-dialog .svi-formgroup label {
+    color: #1d2327;
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.svipro-dialog.ui-dialog .svi-formgroup .form-control {
+    border: 1px solid #8c8f94;
+    border-radius: 3px;
+    box-shadow: none;
+    color: #2c3338;
+    font-size: 14px;
+    height: auto;
+    line-height: 1.4;
+    padding: 4px 8px;
+    width: 100%;
+}
+
+.svipro-dialog.ui-dialog .svi-formgroup .form-control:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: 2px solid transparent;
+}
+
+.svipro-dialog.ui-dialog .svi-formgroup small {
+    color: #646970;
+    display: block;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+/* Modal overlay while this dialog is open: the overlay is a body-level sibling,
+ * so it cannot be scoped to .svipro-dialog - it is tagged from the dialog's
+ * open/close callbacks instead. The z-index matches WordPress's own dialog
+ * stylesheet (100101, one below its dialog) so the whole admin screen is dimmed
+ * instead of just the content area. */
+body.svi-dialog-open .ui-widget-overlay {
+    background: #000;
+    background-image: none;
+    opacity: .7;
+    z-index: 100101 !important;
 }
 
 .select2-results__group {

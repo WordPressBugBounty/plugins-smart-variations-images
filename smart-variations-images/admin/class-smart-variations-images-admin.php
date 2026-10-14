@@ -860,7 +860,8 @@ class Smart_Variations_Images_Admin {
                     $class = 'svibadge svibadge-warning';
                     break;
             }
-            $removegal = HtmlTag::createElement( 'a' )->set( 'href', '#/' )->set( 'class', 'svi-pullright sviprobulk_remove' )->addElement( 'span' )->set( 'class', 'dashicons dashicons-trash' );
+            $removegal = HtmlTag::createElement( 'a' )->set( 'href', '#/' )->set( 'class', 'svi-pullright sviprobulk_remove' );
+            $removegal->addElement( 'span' )->set( 'class', 'dashicons dashicons-trash' );
             $unsigned_svi = '';
             if ( $slug == 'unsigned_svi' ) {
                 $unsigned_svi = $slug;
@@ -924,7 +925,8 @@ class Smart_Variations_Images_Admin {
     }
 
     public function build_sviClone( $sviBody ) {
-        $removegal = HtmlTag::createElement( 'a' )->set( 'href', '#/' )->set( 'class', 'svi-pullright sviprobulk_remove' )->addElement( 'span' )->set( 'class', 'dashicons dashicons-trash' );
+        $removegal = HtmlTag::createElement( 'a' )->set( 'href', '#/' )->set( 'class', 'svi-pullright sviprobulk_remove' );
+        $removegal->addElement( 'span' )->set( 'class', 'dashicons dashicons-trash' );
         $title_display = HtmlTag::createElement( 'span' )->set( 'class', 'svititle' )->text( 'Product Gallery' );
         $svipro_gal = $sviBody->addElement( 'div' )->id( 'svipro_clone' )->set( 'class', 'postbox svi-woocommerce-product-images hidden' )->set( 'data-title', 'Product Gallery' )->set( 'data-svigal', '' );
         $h2 = $svipro_gal->addElement( 'h2' );
