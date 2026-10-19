@@ -202,6 +202,25 @@ class Smart_Variations_Images_Public {
     }
 
     /**
+     * Register script and style handles before the template is rendered.
+     *
+     * Block themes build their template HTML before wp_head() runs, so inline
+     * gallery data added while rendering the gallery is discarded unless the
+     * script handle is already registered at that point.
+     *
+     * @since    5.2.38
+     */
+    public function register_asset_handles() : void {
+        // The admin screen registers its own assets under the same handles, so
+        // registering the public ones here would win the `wp_register_*()` race.
+        if ( is_admin() ) {
+            return;
+        }
+        $this->register_scripts();
+        $this->register_styles();
+    }
+
+    /**
      * Load the main JavaScript and CSS files for the plugin.
      *
      * @since    1.0.0
@@ -619,8 +638,9 @@ class Smart_Variations_Images_Public {
      * Render the frontend app.
      *
      * @since    1.0.0
+     * @param    bool $from_template_override Whether the output is being captured by the WooCommerce template override.
      */
-    public function render_frontend() : void {
+    public function render_frontend( bool $from_template_override = false ) : void {
         global $product;
         if ( $this->options->template === 'Divi' && $this->validate_runningDivi( $product ) && !wp_doing_ajax() ) {
             return;
@@ -632,7 +652,49 @@ class Smart_Variations_Images_Public {
         if ( !$run ) {
             return;
         }
+        if ( !$from_template_override && $this->block_template_renders_gallery() ) {
+            return;
+        }
         include plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/smart-variations-images-public-display.php';
+    }
+
+    /**
+     * Check whether the active block template already renders the gallery block.
+     *
+     * WooCommerce injects the classic `woocommerce_before_single_product_summary`
+     * hook into block templates for backwards compatibility, so rendering here as
+     * well would duplicate the gallery next to the one built by the
+     * `woocommerce/product-image-gallery` block.
+     *
+     * @since    5.2.38
+     * @return   bool True when the gallery block is part of the current template.
+     */
+    protected function block_template_renders_gallery() : bool {
+        if ( !function_exists( 'wp_is_block_theme' ) || !wp_is_block_theme() || !function_exists( 'is_product' ) || !is_product() ) {
+            return false;
+        }
+        global $_wp_current_template_content;
+        if ( !is_string( $_wp_current_template_content ) || '' === $_wp_current_template_content ) {
+            return false;
+        }
+        if ( false !== strpos( $_wp_current_template_content, 'woocommerce/product-image-gallery' ) ) {
+            return true;
+        }
+        if ( !preg_match_all( '/<!--\\s+wp:template-part\\s+(\\{.*?\\})\\s*\\/-->/s', $_wp_current_template_content, $matches ) ) {
+            return false;
+        }
+        foreach ( $matches[1] as $attributes ) {
+            $attributes = json_decode( $attributes, true );
+            if ( !is_array( $attributes ) || empty( $attributes['slug'] ) || !function_exists( 'get_block_template' ) ) {
+                continue;
+            }
+            $theme = ( !empty( $attributes['theme'] ) ? $attributes['theme'] : get_stylesheet() );
+            $part = get_block_template( $theme . '//' . $attributes['slug'], 'wp_template_part' );
+            if ( $part && is_string( $part->content ) && false !== strpos( $part->content, 'woocommerce/product-image-gallery' ) ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -658,7 +720,7 @@ class Smart_Variations_Images_Public {
      */
     public function capture_frontend_template() : string {
         ob_start();
-        $this->render_frontend();
+        $this->render_frontend( true );
         return (string) ob_get_clean();
     }
 
@@ -685,6 +747,12 @@ class Smart_Variations_Images_Public {
         if ( count( $data['images'] ) > 1 ) {
             $thumbnails = array_slice( $data['images'], 0, min( 6, count( $data['images'] ) ) );
         }
+        $primary_src = ( isset( $primary['src'] ) ? $primary['src'] : '' );
+        $primary_srcset = ( isset( $primary['srcset'] ) ? $primary['srcset'] : '' );
+        $primary_sizes = ( isset( $primary['sizes'] ) ? $primary['sizes'] : '' );
+        $primary_alt = ( isset( $primary['alt'] ) ? $primary['alt'] : '' );
+        $primary_width = ( isset( $primary['width'] ) ? intval( $primary['width'] ) : 0 );
+        $primary_height = ( isset( $primary['height'] ) ? intval( $primary['height'] ) : 0 );
         ob_start();
         ?>
         <div class="svi-initial-gallery" aria-hidden="true">
@@ -692,6 +760,51 @@ class Smart_Variations_Images_Public {
         echo esc_attr( $ratio );
         ?>%;">
                 <span class="svi-skeleton"></span>
+                <?php 
+        if ( $primary_src ) {
+            ?>
+                    <img
+                        class="svi-initial-image"
+                        src="<?php 
+            echo esc_url( $primary_src );
+            ?>"
+                        <?php 
+            if ( $primary_srcset ) {
+                ?>srcset="<?php 
+                echo esc_attr( $primary_srcset );
+                ?>"<?php 
+            }
+            ?>
+                        <?php 
+            if ( $primary_sizes ) {
+                ?>sizes="<?php 
+                echo esc_attr( $primary_sizes );
+                ?>"<?php 
+            }
+            ?>
+                        <?php 
+            if ( $primary_width > 0 ) {
+                ?>width="<?php 
+                echo esc_attr( $primary_width );
+                ?>"<?php 
+            }
+            ?>
+                        <?php 
+            if ( $primary_height > 0 ) {
+                ?>height="<?php 
+                echo esc_attr( $primary_height );
+                ?>"<?php 
+            }
+            ?>
+                        alt="<?php 
+            echo esc_attr( $primary_alt );
+            ?>"
+                        decoding="async"
+                        fetchpriority="high"
+                    />
+                <?php 
+        }
+        ?>
             </div>
             <?php 
         if ( !empty( $thumbnails ) ) {
@@ -700,8 +813,28 @@ class Smart_Variations_Images_Public {
                     <?php 
             foreach ( $thumbnails as $thumb_index => $thumb ) {
                 ?>
+                        <?php 
+                $thumb_src = ( isset( $thumb['thumb_image'] ) ? $thumb['thumb_image'] : (( isset( $thumb['src'] ) ? $thumb['src'] : '' )) );
+                ?>
                         <li class="svi-initial-thumb">
                             <span class="svi-skeleton"></span>
+                            <?php 
+                if ( $thumb_src ) {
+                    ?>
+                                <img
+                                    class="svi-initial-thumb-image"
+                                    src="<?php 
+                    echo esc_url( $thumb_src );
+                    ?>"
+                                    alt="<?php 
+                    echo esc_attr( ( isset( $thumb['alt'] ) ? $thumb['alt'] : '' ) );
+                    ?>"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            <?php 
+                }
+                ?>
                         </li>
                     <?php 
             }
@@ -721,18 +854,26 @@ class Smart_Variations_Images_Public {
      * @since    5.2.20
      * @param    int   $product_id Product identifier.
      * @param    array $data       Prepared gallery payload.
+     * @return   bool  True when the payload was attached to the script handle.
      */
-    public function prime_product_data( int $product_id, array $data ) : void {
-        if ( wp_doing_ajax() || isset( self::$localized_products[$product_id] ) ) {
-            return;
+    public function prime_product_data( int $product_id, array $data ) : bool {
+        if ( wp_doing_ajax() ) {
+            return false;
+        }
+        if ( isset( self::$localized_products[$product_id] ) ) {
+            return true;
         }
         $encoded = wp_json_encode( $data );
         if ( false === $encoded || null === $encoded ) {
-            return;
+            return false;
         }
         $inline = 'window.wcsvi = window.wcsvi || {}; wcsvi.products = wcsvi.products || {}; wcsvi.products[' . $product_id . '] = ' . $encoded . ';';
-        wp_add_inline_script( $this->plugin_name, $inline, 'before' );
+        // Custom integrations may render the gallery with a different script handle.
+        if ( !wp_add_inline_script( $this->plugin_name, $inline, 'before' ) ) {
+            return false;
+        }
         self::$localized_products[$product_id] = true;
+        return true;
     }
 
     /**
@@ -921,6 +1062,25 @@ class Smart_Variations_Images_Public {
     display: block;
     width: 100%;
     height: auto;
+}
+
+.svi_wrapper .svi-initial-main > img,
+.svi_wrapper .svi-initial-thumb > img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    z-index: 2;
+}
+
+.svi_wrapper.svi-app-fallback .svi-skeleton,
+.svi_wrapper.svi-app-fallback .svi-app-entry {
+    display: none;
 }
 
 @keyframes sviSkeletonPulse {

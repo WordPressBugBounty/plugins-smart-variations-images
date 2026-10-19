@@ -6334,17 +6334,18 @@
       }
     },
     data: function() {
-      window.wcsvislugs = "slugs" in this.wcsvi && Object.keys(this.wcsvi.slugs).length > 0 ? this.wcsvi.slugs : [];
+      const svidata = this.wcsvi && typeof this.wcsvi === "object" ? this.wcsvi : {};
+      window.wcsvislugs = "slugs" in svidata && Object.keys(svidata.slugs).length > 0 ? svidata.slugs : [];
       return {
-        hasImages: "images" in this.wcsvi && this.wcsvi.images.length > 0 ? true : false,
+        hasImages: "images" in svidata && svidata.images.length > 0 ? true : false,
         type: "static",
         options: wcsvi.options,
-        gallery: this.wcsvi,
+        gallery: svidata,
         attributes: false,
         template: "svi-" + wcsvi.options.template,
         windowType: this.getWindowWidth(true),
         curVideo: false,
-        hasSVIdata: "slugs" in this.wcsvi && Object.keys(this.wcsvi.slugs).length > 0 ? true : false,
+        hasSVIdata: "slugs" in svidata && Object.keys(svidata.slugs).length > 0 ? true : false,
         originalAttributes: "keep_thumbnails" in wcsvi.options && parseInt(wcsvi.options.keep_thumbnails) ? [] : false
       };
     },
@@ -6433,6 +6434,19 @@
         $parent.data("wcsvi", $svidata);
       }
     }
+    if (!$svidata) {
+      const inlineData = $parent.find("script[data-svi-product-data]").get(0);
+      if (inlineData) {
+        try {
+          $svidata = JSON.parse(inlineData.textContent || "") || false;
+        } catch (error) {
+          $svidata = false;
+        }
+        if ($svidata) {
+          $parent.data("wcsvi", $svidata);
+        }
+      }
+    }
     let $ptype = $parent.hasClass("svi-variable") ? true : false;
     let $form = $ptype ? this.findVariationsForm($product_id) : false;
     const startWithData = (svidata) => {
@@ -6489,6 +6503,16 @@
     });
   };
   Vue.prototype.startMount = function(dataObj) {
+    if (!dataObj || !dataObj.svidata) {
+      if (window.console && console.warn) {
+        console.warn("SVI: gallery data unavailable for product " + (dataObj && dataObj.product_id) + ". Keeping the server-rendered image.");
+      }
+      const fallbackWrapper = dataObj && dataObj.v ? $jq(dataObj.v).closest(".svi_wrapper") : null;
+      if (fallbackWrapper && fallbackWrapper.length) {
+        fallbackWrapper.addClass("svi-app-fallback");
+      }
+      return;
+    }
     window.svi_method = new Vue({
       render: (h) => h(dataObj.main, {
         props: {

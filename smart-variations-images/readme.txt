@@ -4,7 +4,7 @@ Tags: woocommerce, product variations, image gallery, swatches, ecommerce
 Requires at least: 6.0 
 Tested up to: 7.1
 WC requires at least: 8.2
-Stable tag: 5.2.37
+Stable tag: 5.2.38
 Requires PHP: 7.4
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -128,6 +128,12 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 7. Setup swatches on Product > Attributes
 
 == Changelog ==
+
+= 5.2.38 =
+* Fix: Duplicate product gallery on block themes (Twenty Twenty-Three, Twenty Twenty-Four, Twenty Twenty-Five, Storefront block templates, etc.). WooCommerce injects the classic `woocommerce_before_single_product_summary` hook into block templates for backwards compatibility, so SVI rendered one gallery on that hook and the `woocommerce/product-image-gallery` block rendered a second one. The hook render is now skipped whenever the active block template already contains the gallery block.
+* Fix: Block themes discarded the inlined gallery data. Block templates are built before `wp_head()`, so `wp_add_inline_script()` ran before the SVI script handle existed and the product payload was dropped, forcing every view to fetch it through `admin-ajax.php`. Asset handles are now registered on `wp_loaded`, before the template is rendered.
+* Fix: When the gallery payload could not be loaded (blocked `admin-ajax.php`, security plugin or a custom integration using a different script handle) the Vue app was still mounted with empty data, threw `Cannot use 'in' operator to search for 'slugs' in false` and left an empty skeleton where the product image should be. The app now leaves the server-rendered image in place, and the payload falls back to an inline JSON block when it cannot be attached to the script handle.
+* Update: The initial gallery placeholder now contains the real main image and thumbnails (with `srcset`, `sizes` and `fetchpriority`) behind the skeleton, so the product image is visible even if JavaScript does not run.
 
 = 5.2.37 =
 * Fix: The "Remove gallery" bulk action control in the product edit gallery now renders as a clickable link wrapping the trash icon. A chained HTML generator call returned the inner icon element instead of the anchor, so the icon was output without its link wrapper.

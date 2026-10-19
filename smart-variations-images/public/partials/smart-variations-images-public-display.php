@@ -41,11 +41,27 @@ $smart_variations_images_load_data = $this->loadProduct($smart_variations_images
 $smart_variations_images_is_ajax_request = wp_doing_ajax();
 $smart_variations_images_initial_markup = $this->get_initial_gallery_markup($smart_variations_images_load_data, $smart_variations_images_product_id);
 
+$smart_variations_images_data_primed = false;
+
 if (!$smart_variations_images_is_ajax_request) {
-    $this->prime_product_data($smart_variations_images_product_id, $smart_variations_images_load_data);
+    $smart_variations_images_data_primed = $this->prime_product_data($smart_variations_images_product_id, $smart_variations_images_load_data);
 }
 
 $smart_variations_images_data = '';
+
+$smart_variations_images_allowed_html = wp_kses_allowed_html('post');
+$smart_variations_images_allowed_html['img'] = array_merge(
+    isset($smart_variations_images_allowed_html['img']) && is_array($smart_variations_images_allowed_html['img'])
+        ? $smart_variations_images_allowed_html['img']
+        : [],
+    [
+        'srcset' => true,
+        'sizes' => true,
+        'decoding' => true,
+        'fetchpriority' => true,
+        'loading' => true,
+    ]
+);
 
 if ($smart_variations_images_is_ajax_request) {
     $smart_variations_images_load = wp_json_encode($smart_variations_images_load_data);
@@ -125,7 +141,7 @@ if ($smart_variations_images_is_ajax_request) {
     <div class="svi_wrapper">
         <?php if ($smart_variations_images_initial_markup) : ?>
             <div class="svi-initial-holder">
-                <?php echo wp_kses_post($smart_variations_images_initial_markup); ?>
+                <?php echo wp_kses($smart_variations_images_initial_markup, $smart_variations_images_allowed_html); ?>
             </div>
         <?php elseif ($this->options->preload_fimg) : ?>
             <div class="svi-initial-holder">
@@ -133,5 +149,8 @@ if ($smart_variations_images_is_ajax_request) {
             </div>
         <?php endif; ?>
         <div class="svi-app-entry" data-svi-mount></div>
+        <?php if (!$smart_variations_images_is_ajax_request && !$smart_variations_images_data_primed) : ?>
+            <script type="application/json" data-svi-product-data><?php echo wp_json_encode($smart_variations_images_load_data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?></script>
+        <?php endif; ?>
     </div>&nbsp;
 </div>

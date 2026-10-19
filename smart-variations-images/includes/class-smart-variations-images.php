@@ -281,6 +281,13 @@ class Smart_Variations_Images {
             'load_scripts',
             99999
         );
+        // Block themes render the template before wp_head(), so handles must be registered earlier.
+        $this->loader->add_action(
+            'wp_loaded',
+            $plugin_public,
+            'register_asset_handles',
+            1
+        );
         $this->loader->add_filter(
             'wc_get_template',
             $plugin_public,
