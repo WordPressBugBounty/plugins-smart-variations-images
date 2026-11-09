@@ -4,7 +4,7 @@ Tags: woocommerce, product variations, image gallery, swatches, ecommerce
 Requires at least: 6.0 
 Tested up to: 7.1
 WC requires at least: 8.2
-Stable tag: 5.2.38
+Stable tag: 5.2.39
 Requires PHP: 7.4
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -128,6 +128,9 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 7. Setup swatches on Product > Attributes
 
 == Changelog ==
+
+= 5.2.39 =
+* Fix: Cart, Mini-Cart and Checkout blocks displayed the parent product image even though the Store API payload carried the variation image. The override replaced `src`, `thumbnail`, `srcset` and `sizes` but left `thumbnail_srcset`/`thumbnail_sizes` pointing at the original image, and the blocks resolve `currentSrc` from the thumbnail srcset, so the stale srcset won.
 
 = 5.2.38 =
 * Fix: Duplicate product gallery on block themes (Twenty Twenty-Three, Twenty Twenty-Four, Twenty Twenty-Five, Storefront block templates, etc.). WooCommerce injects the classic `woocommerce_before_single_product_summary` hook into block templates for backwards compatibility, so SVI rendered one gallery on that hook and the `woocommerce/product-image-gallery` block rendered a second one. The hook render is now skipped whenever the active block template already contains the gallery block.
