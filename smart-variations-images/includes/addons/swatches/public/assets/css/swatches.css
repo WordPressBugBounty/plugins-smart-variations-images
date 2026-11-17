@@ -1,0 +1,742 @@
+/* SVI Swatches Styles - V2 */
+
+/* Wrapper & Alignment */
+.svi-swatches-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    /* Default gap */
+    margin-bottom: 10px;
+    justify-content: var(--svi-align, flex-start);
+    /* Alignment variable */
+}
+
+/* Catalog specific overrides */
+.svi-catalog-wrapper {
+    justify-content: var(--svi-catalog-align, flex-start);
+    margin: 10px 0;
+}
+
+/* Overflow: Stacked (Force Wrap). The alignment follows the surface: shop
+   cards use the catalog setting, the product page uses the product one. */
+.svi-overflow-stacked {
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+}
+
+.svi-catalog-wrapper.svi-overflow-stacked {
+    justify-content: var(--svi-catalog-align, flex-start);
+}
+
+.svi-swatches-wrapper:not(.svi-catalog-wrapper).svi-overflow-stacked {
+    justify-content: var(--svi-align, flex-start);
+}
+
+/* Overflow: Single Line */
+.svi-overflow-single_line {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-bottom: 4px;
+    max-width: 100%;
+    justify-content: flex-start !important;
+    /* Force start for scrolling */
+}
+
+/* Overflow: Slider (Basic CSS implementation for now, JS enhanced later) */
+.svi-overflow-slider {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    max-width: 100%;
+    justify-content: flex-start !important;
+    padding-bottom: 0;
+    /* Removing padding as we hide scrollbar */
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+}
+
+.svi-overflow-slider::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+/* Slider Navigation */
+.svi-slider-container {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+    padding: 0 35px;
+    /* Space for arrows */
+}
+
+.svi-catalog-swatches {
+    margin: 0;
+    /* Reset margin inside container */
+}
+
+.svi-slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--svi-arrow-bg, #ffffff);
+    border: 1px solid var(--svi-arrow-border, #dddddd);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    opacity: 0;
+    /* Hidden by default until visible class added */
+    visibility: hidden;
+    padding: 0;
+}
+
+.svi-slider-nav svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--svi-arrow-color, #333333);
+    pointer-events: none;
+}
+
+.svi-slider-nav:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-50%) scale(1.05);
+    /* Subtle pop */
+}
+
+/* Visibility Logic */
+.svi-slider-nav.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Hover Only Mode */
+.svi-slider-container.svi-show-on-hover .svi-slider-nav.visible {
+    opacity: 0;
+    /* Hide even if theoretically visible, until hover */
+    visibility: visible;
+    transform: translateY(-50%) scale(0.9);
+    /* Slight shrink effect when hidden */
+}
+
+.svi-slider-container.svi-show-on-hover:hover .svi-slider-nav.visible {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+}
+
+.svi-slider-nav.disabled {
+    opacity: 0.3 !important;
+    cursor: default;
+    pointer-events: none;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.8);
+    /* Faded look */
+}
+
+.svi-nav-prev {
+    left: 0;
+}
+
+.svi-nav-next {
+    right: 0;
+}
+
+/* Remove CSS arrow hack */
+.svi-slider-nav::before {
+    display: none;
+}
+
+/* Add to Cart in Catalog: a compact pill that sits on the swatch row and does
+   not inherit the theme's link or button typography (which is 19px in block
+   themes and breaks the row). */
+/* Colours come from the theme so the button always keeps its own contrast.
+   The hidden state needs !important: themes style `.button` with more specific
+   selectors and would otherwise keep it visible. */
+.svi-catalog-add-to-cart {
+    display: none !important;
+    align-items: center;
+    align-self: center;
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 0 12px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-decoration: none !important;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+}
+
+.svi-catalog-add-to-cart.visible {
+    display: inline-flex !important;
+}
+
+.svi-catalog-add-to-cart:hover {
+    opacity: 0.85;
+}
+
+.svi-catalog-add-to-cart:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* Catalog Swatches Wrapper */
+.svi-catalog-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    /* Default to wrap/stacked */
+    gap: var(--svi-catalog-gap, 5px);
+    justify-content: var(--svi-catalog-align, flex-start);
+    margin: 5px 0;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0;
+}
+
+.svi-catalog-swatches::before,
+.svi-catalog-swatches::after {
+    content: none !important;
+    display: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Apply new Catalog Styling overrides to swatches within this wrapper */
+.svi-catalog-swatches .svi-swatch {
+    width: var(--svi-catalog-size, 30px) !important;
+    height: var(--svi-catalog-size, 30px) !important;
+    border-radius: var(--svi-catalog-radius, 30px) !important;
+    /* If variable is unset, fall back to 1px (global default) to ensure consistent rendering */
+    border-width: var(--svi-catalog-border-width, 1px) !important;
+    margin: 0 !important;
+    /* Gap handles spacing now */
+    transition: all 0.2s ease;
+}
+
+/* Hover Style: Border */
+.svi-catalog-swatches:not(.svi-hover-fade) .svi-swatch:hover {
+    border-color: var(--svi-catalog-hover-border, #999999) !important;
+}
+
+/* Hover Style: Fade */
+.svi-catalog-swatches.svi-hover-fade .svi-swatch {
+    opacity: 0.7;
+}
+
+.svi-catalog-swatches.svi-hover-fade .svi-swatch:hover,
+.svi-catalog-swatches.svi-hover-fade .svi-swatch.selected {
+    opacity: 1;
+    border-color: var(--svi-catalog-hover-border, #999999) !important;
+}
+
+/* Ensure selected always looks active/selected regardless of hover style */
+.svi-catalog-swatches .svi-swatch.selected {
+    /* Keep global selected styles but maybe enforce border color if set? */
+    /* For now rely on global selected style, but ensure opacity is 1 */
+    opacity: 1;
+}
+
+/* Base Swatch Style */
+.svi-swatch {
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    /* Dimensions */
+    width: var(--svi-w, 30px);
+    height: var(--svi-h, 30px);
+    min-width: var(--svi-w, 30px);
+    /* Prevent shrinking */
+    min-height: var(--svi-h, 30px);
+
+    /* Typography */
+    font-size: var(--svi-fs, 14px);
+
+    /* Colors & Borders (Normal State) */
+    background: var(--svi-bg, #ffffff);
+    color: var(--svi-text, #333333);
+    border: 1px solid var(--svi-border, #dddddd);
+
+    /* Radius */
+    border-radius: var(--svi-radius, 4px);
+}
+
+/* Swatches render as <button> for keyboard and screen-reader support:
+   neutralise the user-agent button styling so the look is unchanged. */
+button.svi-swatch {
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    text-align: center;
+    border: var(--svi-bw, 1px) solid var(--svi-border, #dddddd);
+}
+
+button.svi-swatch:focus {
+    outline: none;
+}
+
+/* Themes style button:focus themselves; the doubled class keeps the ring ours
+   without resorting to !important. */
+.svi-swatch.svi-swatch:focus-visible {
+    outline: 2px solid currentColor !important;
+    outline-offset: 2px !important;
+    z-index: 3;
+}
+
+/* Base disabled state (a combination that does not exist). */
+.svi-swatch.svi-disabled {
+    opacity: 0.45;
+    filter: saturate(0.65);
+    cursor: not-allowed;
+}
+
+.svi-swatch.svi-disabled:hover {
+    transform: none;
+}
+
+/* Inner Content (Image/Color block).
+   Scoped to the child image: the swatch itself carries the "svi-swatch-image"
+   type class, so a bare selector would resize the button instead of its image. */
+.svi-swatch-inner,
+.svi-swatch .svi-swatch-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    /* Inherit outer radius */
+}
+
+/* A value configured as image/colour but with no data stores falls back to its
+   label; keep it inside the swatch box. The clipping lives on the text itself
+   so tooltips inside the button are not cut off. */
+.svi-swatch-fallback .svi-swatch-text {
+    display: block;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0 2px;
+    font-size: 9px;
+    line-height: 1.1;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* Chosen value: inline caption at the end of the row, never a separate line. */
+.svi-attribute-label-selected {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    margin-left: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: #555555;
+    white-space: nowrap;
+}
+
+.svi-attribute-label-selected[hidden] {
+    display: none !important;
+}
+
+/* Chosen value inside the attribute label: "Color: Red". */
+.svi-attribute-label-selected.svi-in-label {
+    display: inline;
+    margin-left: 0;
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: normal;
+    color: inherit;
+    align-self: auto;
+    /* The caption now lives in the label cell: let it break at that column's
+       edge instead of running under the swatches next to it. */
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Hover State */
+.svi-swatch:not(.svi-disabled):hover {
+    background: var(--svi-bg-hover, #f0f0f0);
+    color: var(--svi-text-hover, #000000);
+    border-color: var(--svi-border-hover, #999999);
+    transform: scale(var(--svi-scale, 1));
+    z-index: 2;
+    /* Bring to front on scale */
+}
+
+/* Selected State */
+.svi-swatch.selected {
+    background: var(--svi-bg-selected, #333333);
+    color: var(--svi-text-selected, #ffffff);
+    border-color: var(--svi-border-selected, #333333);
+    /* A ring detached from the swatch makes the selection unmistakable on
+       colours and photos, where the fill colour is the value itself. */
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--svi-border-selected, #333333);
+}
+
+/* The catalog row is dense: a full ring would collide with the neighbours. */
+.svi-catalog-wrapper .svi-swatch.selected {
+    box-shadow: none;
+}
+
+/* Shape variants */
+
+.svi-swatches-wrapper.svi-shape-round .svi-swatch {
+    border-radius: 50%;
+}
+
+.svi-swatches-wrapper.svi-shape-square .svi-swatch {
+    border-radius: 0;
+}
+
+.svi-swatches-wrapper.svi-shape-rounded .svi-swatch {
+    border-radius: var(--svi-radius, 4px);
+}
+
+/* Automatic keeps the per-type legacy look: colours round, others square. */
+.svi-swatches-wrapper.svi-shape-auto .svi-swatch-color {
+    border-radius: 50%;
+}
+
+.svi-swatches-wrapper.svi-shape-auto .svi-swatch.svi-swatch-image,
+.svi-swatches-wrapper.svi-shape-auto .svi-swatch-text,
+.svi-swatches-wrapper.svi-shape-auto .svi-swatch-label,
+.svi-swatches-wrapper.svi-shape-auto .svi-swatch-radio {
+    border-radius: 0;
+}
+
+/* Out of Stock Behaviors */
+.svi-swatch.svi-oos-blur {
+    opacity: 0.5;
+    filter: blur(1px);
+    cursor: context-menu;
+}
+
+.svi-swatch.svi-oos-dim {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.svi-swatch.svi-oos-hide {
+    display: none;
+}
+
+.svi-swatch.svi-oos-cross {
+    opacity: 0.6;
+    position: relative;
+    overflow: hidden;
+    cursor: not-allowed;
+}
+
+.svi-swatch.svi-oos-cross::after,
+.svi-swatch.svi-oos-cross::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+    background: #ff0000;
+}
+
+.svi-swatch.svi-oos-cross::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.svi-swatch.svi-oos-cross::before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+/* Text Swatch Specifics */
+/* Text swatches override fixed W/h to auto if not square? 
+   Actually, usually text swatches should allow auto width. 
+   Let's check if we want to force variables or allow auto. */
+.svi-swatches-wrapper[data-type="text"] .svi-swatch {
+    width: auto;
+    padding: 0 10px;
+    /* Horizontal padding for text */
+}
+
+/* Radio Style (Legacy/Native feel) */
+.svi-swatches-wrapper[data-type="radio"] {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.svi-swatches-wrapper[data-type="radio"] .svi-swatch {
+    width: auto;
+    height: auto;
+    border: none;
+    background: none;
+    padding: 5px 0;
+    justify-content: flex-start;
+}
+
+.svi-swatches-wrapper[data-type="radio"] .svi-radio-circle {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin-right: 8px;
+    position: relative;
+}
+
+.svi-swatches-wrapper[data-type="radio"] .svi-swatch.selected .svi-radio-circle {
+    border-color: #333;
+}
+
+.svi-swatches-wrapper[data-type="radio"] .svi-swatch.selected .svi-radio-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: #333;
+    border-radius: 50%;
+}
+
+
+/* Tooltips: one card that can hold a picture, a name, or both. */
+.svi-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    max-width: 220px;
+    padding: 5px 10px;
+    background-color: var(--svi-tooltip-bg, #000);
+    color: var(--svi-tooltip-text, #fff);
+    border-radius: var(--svi-tooltip-radius, 4px);
+    font-size: 12px;
+    line-height: 1.3;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.svi-tooltip.has-image {
+    padding: 4px;
+    min-width: 132px;
+}
+
+/* Themes force img{max-width:100%}; that makes the width collapse inside an
+   absolutely positioned flex box, so the picture keeps its own width. */
+.svi-tooltip img {
+    display: block;
+    width: 132px;
+    max-width: none;
+    height: auto;
+    border-radius: calc(var(--svi-tooltip-radius, 4px) - 2px);
+    box-shadow: none;
+}
+
+.svi-tooltip-label {
+    display: block;
+    max-width: 100%;
+    padding: 0 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.svi-tooltip.has-image .svi-tooltip-label {
+    padding-bottom: 1px;
+}
+
+/* Tooltip Arrow */
+.svi-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--svi-tooltip-bg, #000) transparent transparent transparent;
+}
+
+.svi-swatch:hover .svi-tooltip,
+.svi-swatch:focus-visible .svi-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Scrolling wrapper modes clip vertically: show the tooltip below instead. */
+.svi-overflow-single_line .svi-tooltip,
+.svi-overflow-slider .svi-tooltip {
+    bottom: auto;
+    top: calc(100% + 10px);
+}
+
+.svi-overflow-single_line .svi-tooltip::after,
+.svi-overflow-slider .svi-tooltip::after {
+    top: auto;
+    bottom: 100%;
+    border-color: transparent transparent var(--svi-tooltip-bg, #000) transparent;
+}
+
+/* Radio type: keep the circle aligned with a button element. */
+.svi-swatches-wrapper[data-type="radio"] .svi-swatch {
+    min-width: 0;
+    min-height: 0;
+}
+
+/* "Show More" Link */
+.svi-show-more-link {
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 5px;
+    color: inherit;
+}
+/* Card image swap on shop loops */
+.svi-card-image-swapped {
+    transition: opacity 0.15s ease-in-out;
+}
+
+/* Attribute filter widget */
+.svi-filter-term {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* The swatch replaces the theme bullet, so drop it. Where :has() is available
+   the whole list loses it and the rows stay aligned. */
+.svi-filter-term::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* One left edge for the whole list: the swatch replaces the theme marker and
+   the few text-only rows line up with it. */
+.woocommerce-widget-layered-nav ul:has(.svi-filter-term) > li {
+    list-style: none;
+}
+
+.woocommerce-widget-layered-nav ul:has(.svi-filter-term) > li::before {
+    content: none !important;
+    display: none !important;
+}
+
+.svi-filter-term .svi-filter-swatch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--svi-w, 30px);
+    height: var(--svi-h, 30px);
+    border-radius: var(--svi-radius, 4px);
+    border: var(--svi-bw, 1px) solid var(--svi-border, #dddddd);
+    background: var(--svi-bg, #ffffff);
+    color: var(--svi-text, #333333);
+    font-size: 12px;
+    line-height: 1;
+    text-decoration: none;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+.svi-filter-term .svi-filter-swatch .svi-swatch-inner,
+.svi-filter-term .svi-filter-swatch .svi-swatch-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.svi-filter-term .svi-filter-swatch.svi-filter-swatch:focus-visible {
+    outline: 2px solid currentColor !important;
+    outline-offset: 2px !important;
+}
+
+/* Active filter: same ring used by the product page, plus a stronger label. */
+.svi-filter-term.chosen .svi-filter-swatch {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--svi-border-selected, #333333);
+}
+
+.svi-filter-term.chosen .svi-filter-label {
+    font-weight: 600;
+    color: #111111;
+}
+
+/* Right-to-left languages */
+.rtl .svi-show-more-link {
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+.rtl .svi-swatches-wrapper {
+    direction: rtl;
+}
+
+.rtl .svi-swatch.has-tooltip .svi-tooltip {
+    left: auto;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.rtl .svi-tooltip::after {
+    left: auto;
+    right: 50%;
+    margin-left: 0;
+    margin-right: -5px;
+}
+
+.rtl .svi-filter-term {
+    flex-direction: row-reverse;
+}
+
+.svi-filter-term .svi-filter-label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.svi-filter-term .count {
+    flex: 0 0 auto;
+}
+
+/* The attribute label sits on the first swatch row, not in the middle of the
+   cell (the legacy "Clear" link makes the cell taller than the swatches). */
+table.variations tr.svi-row-swatches > th.label,
+table.variations tr.svi-row-swatches > td.label {
+	vertical-align: top;
+}

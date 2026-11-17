@@ -50,7 +50,7 @@ class Smart_Variations_Images_Black_Friday
     /**
      * Product page linked from the secondary call to action.
      */
-    const PRODUCT_URL = 'https://www.smart-variations.com/black-friday/';
+    const PRODUCT_URL = 'https://www.smart-variations.com/black-friday/?utm_source=plugin&utm_medium=wp-admin&utm_campaign=bf2026&utm_content=bf-banner';
 
     /**
      * Screens the notice is allowed on.
@@ -330,7 +330,7 @@ class Smart_Variations_Images_Black_Friday
                 <ul class="svi-bf-benefits">
                     <li><?php esc_html_e('One gallery per colour — not per variation', 'smart-variations-images'); ?></li>
                     <li><?php esc_html_e('Video in the gallery: YouTube, Vimeo, self-hosted', 'smart-variations-images'); ?></li>
-                    <li><?php esc_html_e('Swatches, magnifier and lightbox built in', 'smart-variations-images'); ?></li>
+                    <li><?php esc_html_e('The chosen variation image in the cart and order emails', 'smart-variations-images'); ?></li>
                 </ul>
                 <div class="svi-bf-buttons">
                     <a class="svi-bf-primary" href="<?php echo esc_url($checkout_url); ?>"><?php esc_html_e('Claim 50% off', 'smart-variations-images'); ?></a>

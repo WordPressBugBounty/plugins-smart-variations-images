@@ -259,11 +259,20 @@ class Smart_Variations_Images_Admin {
     public function getImagesAssignedWithVariations( $pid, $woosvi_slug = array() ) {
         $asigned_svi = array();
         $product_image_gallery = array();
-        if ( !empty( $woosvi_slug ) && count( $woosvi_slug ) > 0 ) {
-            foreach ( $woosvi_slug as $k => $v ) {
-                $asigned_svi = array_unique( array_merge( $asigned_svi, $v['imgs'] ) );
+        // Tolerate galleries imported with `{id, url, full_url}` entries: only
+        // scalar attachment IDs may reach array_unique()/array_diff().
+        $woosvi_slug = Smart_Variations_Images::normalize_galleries( $woosvi_slug );
+        foreach ( $woosvi_slug as $v ) {
+            if ( empty( $v['imgs'] ) || !is_array( $v['imgs'] ) ) {
+                continue;
+            }
+            foreach ( $v['imgs'] as $img_id ) {
+                if ( is_numeric( $img_id ) ) {
+                    $asigned_svi[] = (int) $img_id;
+                }
             }
         }
+        $asigned_svi = array_values( array_unique( $asigned_svi ) );
         if ( metadata_exists( 'post', $pid, '_product_image_gallery' ) ) {
             $product_image_gallery = explode( ',', get_post_meta( $pid, '_product_image_gallery', true ) );
         } else {
@@ -676,9 +685,9 @@ class Smart_Variations_Images_Admin {
             $table_cell,
             'info',
             'Default Gallery',
-            'Use this option to assign a default gallery to be displayed. All other images will be hidden until match occours.'
+            'Use this option to assign a default gallery to be displayed. All other images will be hidden until match occurs.'
         );
-        $table_cell->addElement( 'div' )->addElement( 'br' )()->addElement( 'strong' )->text( esc_html__( 'PRO VERSION OPTIONS:', 'smart-variations-images' ) );
+        $table_cell->addElement( 'div' )->addElement( 'br' )()->addElement( 'strong' )->text( esc_html__( 'SVI PRO:', 'smart-variations-images' ) );
         $this->build_sviBadge(
             $table_cell,
             'warning',
@@ -733,6 +742,13 @@ class Smart_Variations_Images_Admin {
         }
         if ( $woosvi_slug == '' || $woosvi_slug == '""' ) {
             $woosvi_slug = array();
+        }
+        // Heal galleries saved by an import (JSON or {id, url, full_url}
+        // entries) so the panel and the editor receive attachment IDs.
+        $stored_slug = $woosvi_slug;
+        $woosvi_slug = Smart_Variations_Images::normalize_galleries( $woosvi_slug );
+        if ( $woosvi_slug !== $stored_slug && !empty( $woosvi_slug ) ) {
+            update_post_meta( $pid, 'woosvi_slug', $woosvi_slug );
         }
         $unsigned_svi = $this->getImagesAssignedWithVariations( $pid, $woosvi_slug );
         //GET PRODUCT IMAGES IN GALLERY NOT ASSOCIATED TO ANY VARIATION
@@ -914,11 +930,11 @@ class Smart_Variations_Images_Admin {
             }
             $span = $product_images_container->addElement( 'span' )->set( 'class', 'sviHiddenLoop' );
             Markup::$avoidXSS = false;
-            $span->text( 'Hide from <b>Product Loop</b>: (PRO VERSION FEATURE)' );
+            $span->text( 'Hide from <b>Product Loop</b> (SVI PRO)' );
             Markup::$avoidXSS = true;
             $product_images_container->addElement( 'input' )->set( 'class', 'svipro-product_image_gallery' )->set( 'name', 'sviproduct_image_gallery[' . esc_html( $slug ) . ']' )->set( 'value', $product_image_gallery_svi )->set( 'type', 'hidden' );
             if ( sanitize_title( $slugs[0] ) == 'svidefault' ) {
-                $inside->addElement( 'p' )->addElement( 'b' )->text( __( 'NOTICE: All other images/galleries will be hidden until matching occours.', 'smart-variations-images' ) );
+                $inside->addElement( 'p' )->addElement( 'b' )->text( __( 'NOTICE: All other images/galleries will be hidden until matching occurs.', 'smart-variations-images' ) );
             }
         }
         return $svigallery;
@@ -938,7 +954,7 @@ class Smart_Variations_Images_Admin {
         $ul->addElement( 'li' )->set( 'class', 'add_product_images_svipro  hide-if-no-js ui-state-disabled' )->addElement( 'a' )->set( 'href', '#/' )->set( 'data-choose', 'Add Images to Product Gallery' )->set( 'data-update', 'Add to gallery' )->set( 'data-delete', 'Delete image' )->set( 'data-text', 'Delete' )->addElement( 'span' )->set( 'class', 'dashicons dashicons-plus' );
         $span = $product_images_container->addElement( 'span' )->set( 'class', 'sviHiddenLoop' );
         Markup::$avoidXSS = false;
-        $span->text( 'Hide from <b>Product Loop</b>: (PRO VERSION FEATURE)' );
+        $span->text( 'Hide from <b>Product Loop</b> (SVI PRO)' );
         Markup::$avoidXSS = true;
         $product_images_container->addElement( 'input' )->set( 'class', 'svipro-product_image_gallery' )->set( 'name', '' )->set( 'value', '' )->set( 'type', 'hidden' );
         return $sviBody;
@@ -958,6 +974,7 @@ class Smart_Variations_Images_Admin {
         $row
     ) {
         if ( $meta->key == 'woosvi_slug' ) {
+            $value = Smart_Variations_Images::normalize_galleries( $value );
             foreach ( $value as $k => $v ) {
                 foreach ( $v['imgs'] as $k2 => $v2 ) {
                     $value[$k]['imgs'][$k2] = array(
@@ -994,11 +1011,18 @@ class Smart_Variations_Images_Admin {
     /**
      * Ignore the meta if running on free version
      *
+     * The PRO build imports the galleries itself and normalizes them right
+     * after the row is saved, so dropping `woosvi_slug` there would lose the
+     * data. The free build never renders SVI galleries, so the meta is skipped.
+     *
      * @param array $data Data.
      *
      * @return array
      */
     public function wc_ignore_svimeta_in_import( $data ) {
+        if ( function_exists( 'svi_fs' ) && svi_fs()->is_premium() ) {
+            return $data;
+        }
         $ignore_with_key = array('woosvi_slug');
         if ( isset( $data['meta_data'] ) ) {
             foreach ( $data['meta_data'] as $index => $meta ) {

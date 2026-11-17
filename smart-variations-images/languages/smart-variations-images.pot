@@ -1,0 +1,2185 @@
+# Copyright (C) 2026 David Rosendo
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Smart Variations Images & Swatches for WooCommerce 5.3.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/smart-variations-images\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-17T15:56:11+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: smart-variations-images\n"
+
+#. Plugin Name of the plugin
+#: svi.php
+msgid "Smart Variations Images & Swatches for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: svi.php
+msgid "https://www.smart-variations.com/"
+msgstr ""
+
+#. Description of the plugin
+#: svi.php
+msgid "Every swatch option free: color, image, text and radio. Plus a whole WooCommerce gallery per color, set once and reused by every size."
+msgstr ""
+
+#. Author of the plugin
+#: svi.php
+msgid "David Rosendo"
+msgstr ""
+
+#. Author URI of the plugin
+#: svi.php
+msgid "https://www.rosendo.pt"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:349
+msgid "Create additional images gallery"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:352
+msgid "SVI makes no use of the main variation image set for this variation. Use above variation image for other integrations."
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:354
+msgid "SVI Gallery will be created based on first attribute. SVI makes no use of the main variation image set for this variation. Use above variation image for other integrations."
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:374
+msgid "Disable SVI"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:375
+msgid "Activating this option will make the product load the default theme image gallery and functions"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:386
+msgid "Load current Product Galleries"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:387
+msgid "Activating this option will SVI load the galleries present in this translation instead of the original translation."
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:406
+#: includes/library/wp-settings-framework/settings/svi-settings.php:109
+msgid "SVI Variations Gallery"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:834
+msgid "Before you can assign images to a variation you need to add some variation attributes on the <strong>Attributes</strong> tab and <b>save the product<b>."
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:864
+msgid "Assign Images to:"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:871
+msgid "Add"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:893
+msgid "Default Gallery"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:898
+msgid "SVI Global"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:950
+msgid "SVI PRO:"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:1209
+msgid "Delete image"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:1209
+msgid "Delete"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:1257
+msgid "NOTICE: Images in this gallery will be showed in all variations."
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:1261
+msgid "NOTICE: All other images/galleries will be hidden until matching occurs."
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:1390
+msgid "Video URL"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:1394
+msgid "Youtube, Vimeo or video url (.mp4)"
+msgstr ""
+
+#: admin/class-smart-variations-images-admin.php:1400
+msgid "Insert or replace the current video URL."
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:136
+msgid "Choose an image"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:137
+msgid "Use image"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: admin/class-wcsvfs-admin.php:152
+#, php-format
+msgid "%s is enabled but not effective. It requires WooCommerce in order to work."
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:175
+msgid "Select terms"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:188
+msgid "Select all"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:189
+msgid "Select none"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:190
+msgid "Add new"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:207
+msgid "Wrong request"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:211
+msgid "Not enough data"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:215
+msgid "Taxonomy is not exists"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:219
+msgid "This term is exists"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:233
+msgid "Added successfully"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:258
+msgid "Add new term"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:263
+msgid "Name"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:269
+msgid "Slug"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:281
+msgid "Cancel"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:282
+msgid "Add New"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:292
+#: includes/addons/swatches/class-svi-swatches-product.php:289
+#: includes/addons/swatches/class-svi-swatches-product.php:324
+#: includes/addons/swatches/class-svi-swatches.php:466
+#: includes/addons/swatches/class-svi-swatches.php:598
+#: includes/class-wcsvfs.php:118
+msgid "Color"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:299
+#: includes/addons/swatches/class-svi-swatches-product.php:290
+#: includes/addons/swatches/class-svi-swatches-product.php:328
+#: includes/addons/swatches/class-svi-swatches.php:467
+#: includes/addons/swatches/class-svi-swatches.php:601
+#: includes/addons/swatches/class-svi-swatches.php:889
+#: includes/addons/swatches/class-svi-swatches.php:963
+#: includes/class-wcsvfs.php:119
+msgid "Image"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:305
+#: admin/class-wcsvfs-admin.php:487
+msgid "Upload/Add image"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:306
+#: admin/class-wcsvfs-admin.php:488
+msgid "Remove image"
+msgstr ""
+
+#: admin/class-wcsvfs-admin.php:314
+#: includes/addons/swatches/class-svi-swatches-product.php:329
+#: includes/class-wcsvfs.php:120
+msgid "Label"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-frontend.php:173
+msgid "Previous"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-frontend.php:190
+msgid "Next"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-frontend.php:815
+msgid "more"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:59
+msgid "SVI Swatches"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:264
+msgid "Save the product to configure swatches."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:272
+msgid "Add variation attributes to configure per-product swatches."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:280
+msgid "Per-product overrides"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:282
+msgid "Leave a field empty to inherit the global value. Overrides only apply to this product."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:284
+msgid "Up to four colors: two split the swatch in half, three or four become stripes."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:288
+msgid "Inherit global type"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:291
+#: includes/addons/swatches/class-svi-swatches.php:468
+#: includes/addons/swatches/class-svi-swatches.php:604
+msgid "Text / Button"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:292
+#: includes/addons/swatches/class-svi-swatches-settings.php:684
+msgid "Radio buttons"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:299
+msgid "custom attribute"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:304
+msgid "Swatch type"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:323
+msgid "Value"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:325
+msgid "Second color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:326
+msgid "Third color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:327
+msgid "Fourth color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:363
+msgid "Select image"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-product.php:364
+msgid "Clear"
+msgstr ""
+
+#. translators: 1: number of attributes, 2: number of term values.
+#: includes/addons/swatches/class-svi-swatches-settings.php:46
+#, php-format
+msgid "Legacy swatch data converted: %1$d attributes and %2$d term values."
+msgstr ""
+
+#. translators: 1: number of terms, 2: number of products.
+#: includes/addons/swatches/class-svi-swatches-settings.php:63
+#, php-format
+msgid "Swatch definitions imported: %1$d values and %2$d product overrides."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:74
+msgid "The swatch definitions file could not be imported. Please upload a JSON file exported by this plugin."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:87
+msgid "Swatches"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:89
+msgid "Configure the appearance and behavior of variation swatches. <strong>Note:</strong> These settings apply to attributes that are configured with a specific type (Color, Image, etc.) in the global attribute settings."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:93
+msgid "General"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:98
+#: includes/addons/swatches/class-svi-swatches.php:477
+#: includes/addons/swatches/class-svi-swatches.php:618
+msgid "Swatch Shape"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:100
+#: includes/addons/swatches/class-svi-swatches.php:479
+#: includes/addons/swatches/class-svi-swatches.php:623
+msgid "Round"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:101
+#: includes/addons/swatches/class-svi-swatches.php:480
+#: includes/addons/swatches/class-svi-swatches.php:626
+msgid "Square"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:102
+msgid "Rounded (custom radius)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:103
+msgid "Automatic (legacy per type)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:111
+msgid "Styling"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:117
+msgid "Width (px)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:123
+msgid "Height (px)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:129
+#: includes/addons/swatches/class-svi-swatches-settings.php:286
+#: includes/addons/swatches/class-svi-swatches-settings.php:449
+msgid "Border Radius (px)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:142
+#: includes/addons/swatches/class-svi-swatches-settings.php:462
+msgid "Border Width (px)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:148
+msgid "Font Size (px)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:155
+msgid "Text Color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:161
+msgid "Background Color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:167
+msgid "Border Color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:174
+msgid "Hover State"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:179
+msgid "Text Color (Hover)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:185
+msgid "Background Color (Hover)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:191
+msgid "Border Color (Hover)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:197
+msgid "Scale Effect"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:198
+msgid "Zoom factor on hover (e.g., 1.1 for 10% zoom). Set 1 to disable."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:206
+msgid "Selected State"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:211
+msgid "Text Color (Selected)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:217
+msgid "Background Color (Selected)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:223
+msgid "Border Color (Selected)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:230
+msgid "Tooltip"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:235
+msgid "Enable Tooltips"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:241
+msgid "Tooltip Content"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:242
+msgid "Choose what the tooltip shows: the value name, a larger image, or nothing."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:244
+msgid "Value name"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:245
+msgid "Image preview"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:246
+msgid "No tooltip"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:260
+msgid "Tooltip Text Color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:273
+msgid "Tooltip Background"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:299
+msgid "Large Image Preview"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:300
+msgid "Show a larger preview of the image swatch on hover."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:314
+msgid "Product Page"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:319
+msgid "Clear on Reselect"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:320
+msgid "Clicking the selected swatch again will clear the selection."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:326
+msgid "Show Selected Label"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:327
+msgid "Display the name of the selected attribute, e.g., Color: Red."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:333
+msgid "Out of Stock Behavior"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:335
+msgid "Blur"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:336
+msgid "Dim only"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:337
+msgid "Strikethrough"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:338
+msgid "Hide"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:345
+#: includes/addons/swatches/class-svi-swatches-settings.php:368
+msgid "Alignment"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:347
+#: includes/addons/swatches/class-svi-swatches-settings.php:370
+msgid "Left"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:348
+#: includes/addons/swatches/class-svi-swatches-settings.php:371
+msgid "Center"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:349
+#: includes/addons/swatches/class-svi-swatches-settings.php:372
+msgid "Right"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:357
+msgid "Catalog / Shop"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:362
+msgid "Enable on Catalog"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:386
+#: includes/library/wp-settings-framework/settings/svi-settings.php:325
+msgid "Showcase Position"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:387
+msgid "Choose where to display the swatches in the shop loop."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:389
+msgid "Display before product loop item"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:390
+msgid "Display before product title"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:391
+msgid "Display next to product title"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:392
+msgid "Display after product title"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:393
+msgid "Display after product loop item"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:407
+msgid "Position Priority"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:408
+msgid "Order priority for the hook execution. Lower numbers display earlier."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:421
+#: includes/addons/swatches/class-svi-swatches.php:486
+#: includes/addons/swatches/class-svi-swatches.php:636
+msgid "Swatch Size (px)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:422
+msgid "Override global swatch size for catalog. Default: 30"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:435
+msgid "Swatch Gap (px)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:436
+msgid "Space between swatches."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:463
+msgid "Leave empty to inherit global settings."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:476
+msgid "Hover Effect"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:478
+msgid "Border Change"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:479
+msgid "Fade/Opacity"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:480
+msgid "None"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:494
+msgid "Hover Border Color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:512
+msgid "Max Items"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:513
+msgid "Limit the number of swatches shown. 0 for unlimited."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:526
+msgid "Overflow Behavior"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:528
+#: includes/addons/swatches/class-svi-swatches.php:542
+#: includes/addons/swatches/class-svi-swatches.php:729
+msgid "Stacked"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:529
+msgid "Single Line (Scroll)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:530
+#: includes/addons/swatches/class-svi-swatches.php:544
+#: includes/addons/swatches/class-svi-swatches.php:735
+#: includes/library/wp-settings-framework/settings/svi-settings.php:40
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1167
+msgid "Slider"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:544
+msgid "Show Add to Cart"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:545
+msgid "Show an Add to Cart button when a variation is selected."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:559
+msgid "Show Arrows on Hover Only"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:577
+msgid "Arrow Background"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:595
+msgid "Arrow Icon Color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:613
+msgid "Arrow Border Color"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:631
+msgid "Attribute to show"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:632
+msgid "Attribute name, for example pa_color. Leave empty to show every variation attribute."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:638
+msgid "Swap the card image on"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:639
+msgid "Uses the SVI gallery image of the hovered value."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:641
+msgid "Do not swap"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:642
+msgid "Hover"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:643
+msgid "Click"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:657
+msgid "Link to the preselected variation"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:658
+msgid "Adds the clicked value to the product link so the product page opens with that variation selected."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:672
+msgid "Automatic Conversion"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:677
+msgid "Render attributes without a type as"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:678
+msgid "Attributes that have no swatch type of their own are shown using this style instead of a dropdown. Choose \"Dropdown\" to leave them untouched."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:680
+msgid "Dropdown (no change)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:681
+msgid "Text buttons"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:682
+msgid "Color (falls back to text)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:683
+msgid "Image (falls back to text)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:691
+msgid "Use the variation image"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:692
+msgid "When a value has no image of its own, use the first image of a variation that contains it."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:699
+msgid "Filters"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:704
+msgid "Swatches in the \"Filter by attribute\" widget"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:710
+msgid "Hide values with fewer products than"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:724
+msgid "Block themes: enable \"Color / image\" as the attribute type in Products > Attributes. Swatch colours and images are stored in the format that type understands, so the native filter block renders them without extra setup."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches-settings.php:731
+msgid "Swatch Definitions"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:463
+#: includes/addons/swatches/class-svi-swatches.php:590
+msgid "Swatch Type"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:465
+#: includes/addons/swatches/class-svi-swatches.php:595
+msgid "None (Dropdown)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:469
+#: includes/addons/swatches/class-svi-swatches.php:607
+msgid "Radio Buttons"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:472
+#: includes/addons/swatches/class-svi-swatches.php:611
+msgid "Select how this attribute is displayed on the frontend."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:482
+#: includes/addons/swatches/class-svi-swatches.php:629
+msgid "The shape of your swatches on the frontend."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:492
+#: includes/addons/swatches/class-svi-swatches.php:645
+msgid "The size of your swatches on the frontend."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:496
+#: includes/addons/swatches/class-svi-swatches.php:652
+msgid "Enable Tooltips?"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:498
+#: includes/addons/swatches/class-svi-swatches.php:509
+#: includes/addons/swatches/class-svi-swatches.php:521
+#: includes/addons/swatches/class-svi-swatches.php:555
+#: includes/addons/swatches/class-svi-swatches.php:656
+#: includes/addons/swatches/class-svi-swatches.php:674
+#: includes/addons/swatches/class-svi-swatches.php:694
+#: includes/addons/swatches/class-svi-swatches.php:752
+msgid "Yes"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:499
+#: includes/addons/swatches/class-svi-swatches.php:510
+#: includes/addons/swatches/class-svi-swatches.php:520
+#: includes/addons/swatches/class-svi-swatches.php:554
+#: includes/addons/swatches/class-svi-swatches.php:658
+#: includes/addons/swatches/class-svi-swatches.php:677
+#: includes/addons/swatches/class-svi-swatches.php:692
+#: includes/addons/swatches/class-svi-swatches.php:750
+msgid "No"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:502
+#: includes/addons/swatches/class-svi-swatches.php:662
+msgid "When enabled, a tooltip style text description will accompany your swatches."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:507
+#: includes/addons/swatches/class-svi-swatches.php:669
+msgid "Show Large Preview?"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:513
+#: includes/addons/swatches/class-svi-swatches.php:681
+msgid "Display a larger preview of the image swatch within a tooltip."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:518
+#: includes/addons/swatches/class-svi-swatches.php:688
+msgid "Show Swatch in Catalog?"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:524
+#: includes/addons/swatches/class-svi-swatches.php:698
+msgid "When enabled, available swatches will be displayed in the catalog listing for each product."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:529
+#: includes/addons/swatches/class-svi-swatches.php:705
+msgid "Catalog Swatch Method"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:531
+#: includes/addons/swatches/class-svi-swatches.php:710
+msgid "Link to Product"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:532
+#: includes/addons/swatches/class-svi-swatches.php:713
+msgid "Change Product Image"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:535
+#: includes/addons/swatches/class-svi-swatches.php:717
+msgid "What should happen when a user clicks on the swatch in the catalog."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:540
+#: includes/addons/swatches/class-svi-swatches.php:724
+msgid "Overflow"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:543
+#: includes/addons/swatches/class-svi-swatches.php:732
+msgid "Single Line"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:547
+#: includes/addons/swatches/class-svi-swatches.php:739
+msgid "How to display swatches with a large number of attributes."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:552
+#: includes/addons/swatches/class-svi-swatches.php:746
+msgid "Show Swatch in Filters?"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:558
+#: includes/addons/swatches/class-svi-swatches.php:756
+msgid "When enabled, swatches will be displayed in the WooCommerce layered nav filter widgets."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:563
+#: includes/addons/swatches/class-svi-swatches.php:763
+msgid "Groups"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:565
+#: includes/addons/swatches/class-svi-swatches.php:767
+msgid "Enter group labels separated by commas."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:870
+#: includes/addons/swatches/class-svi-swatches.php:928
+msgid "Color 1 (Primary)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:874
+#: includes/addons/swatches/class-svi-swatches.php:937
+msgid "Color 2 (Optional)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:878
+#: includes/addons/swatches/class-svi-swatches.php:945
+msgid "Color 3 (Optional)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:882
+#: includes/addons/swatches/class-svi-swatches.php:953
+msgid "Color 4 (Optional)"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:896
+#: includes/addons/swatches/class-svi-swatches.php:972
+msgid "Upload/Add Image"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:898
+#: includes/addons/swatches/class-svi-swatches.php:974
+msgid "Remove"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1382
+msgid "You are not allowed to convert swatch data."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1432
+msgid "Export"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1433
+msgid "Download swatch definitions"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1434
+msgid "A JSON file with attribute types, value colours/images and per-product overrides."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1438
+msgid "Import"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1443
+msgid "Import definitions"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1445
+msgid "Values are merged into the existing ones; nothing is deleted. Matching is done by attribute taxonomy and term slug, so the import works across sites."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1457
+msgid "Convert legacy swatch data"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1458
+msgid "Convert now"
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1459
+msgid "Copies the swatch type of each attribute and the colour, image and label of each term into the keys this module reads. Existing values are never overwritten and nothing is deleted."
+msgstr ""
+
+#. translators: %s: version number.
+#: includes/addons/swatches/class-svi-swatches.php:1464
+#, php-format
+msgid "Last conversion ran on plugin version %s."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1481
+msgid "You are not allowed to export swatch definitions."
+msgstr ""
+
+#: includes/addons/swatches/class-svi-swatches.php:1501
+msgid "You are not allowed to import swatch definitions."
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:324
+msgid "Black Friday offer"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:325
+msgid "Dismiss this offer"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:327
+msgid "Black Friday"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:328
+msgid "50% off your first year"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:329
+msgid "First 100 licences. Then 30% until 1 December."
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:331
+msgid "One gallery per colour — not per variation"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:332
+msgid "Video in the gallery: YouTube, Vimeo, self-hosted"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:333
+msgid "The chosen variation image in the cart and order emails"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:336
+msgid "Claim 50% off"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:337
+msgid "See what's included"
+msgstr ""
+
+#: includes/class-smart-variations-images-black-friday.php:343
+msgid "first year · PRO"
+msgstr ""
+
+#: includes/class-smart-variations-images-rest.php:72
+#: includes/class-smart-variations-images-rest.php:119
+#: includes/class-smart-variations-images-rest.php:139
+msgid "message"
+msgstr ""
+
+#: includes/class-smart-variations-images-rest.php:99
+msgid "An error occoured while trying to create the galleries."
+msgstr ""
+
+#: includes/class-smart-variations-images-rest.php:145
+msgid "Sorry, you cannot edit this resource."
+msgstr ""
+
+#: includes/class-smart-variations-images.php:547
+msgid "Smart Variations Images & Swatches"
+msgstr ""
+
+#: includes/class-smart-variations-images.php:548
+msgid "SVI"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:23
+#: includes/library/wp-settings-framework/settings/svi-settings.php:115
+msgid "Global"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:26
+#: includes/library/wp-settings-framework/settings/svi-settings.php:195
+msgid "Variation Select Options"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:32
+msgid "Stacked Layout"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:36
+#: includes/library/wp-settings-framework/settings/svi-settings.php:901
+msgid "Lightbox"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:44
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1579
+msgid "Magnifier Lens"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:48
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1986
+msgid "Video"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:52
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2272
+msgid "Thumbnails"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:56
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2504
+msgid "Layout Fixes"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:79
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2565
+msgid "Support"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:87
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2681
+msgid "Import / Export"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:102
+msgid "Free: one image under the variations. SVI PRO shows the whole gallery, in columns."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:103
+#: includes/library/wp-settings-framework/settings/svi-settings.php:278
+msgid "See SVI PRO"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:104
+msgid "This option will display the product variations images under the dropdowns/swatches of the product page."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:105
+msgid "All images or Images with no variations assigned will be displayed as default gallery under the main image."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:106
+msgid "Adds lightbox option to be activated or not on this images."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:106
+msgid "Thumbnails Keep visible"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:106
+msgid "option should be set disabled because activating this options already keeps the images visible."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:109
+msgid "Display created"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:109
+msgid "under the dropdowns/swatches selection area."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:110
+msgid "Main gallery will display one of the following:"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:110
+msgid "All images"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:110
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2456
+msgid "SVI Default Gallery"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:111
+msgid "Adds new option in Lightbox tab to open on click."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:123
+msgid "Enable SVI"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:124
+msgid "This setting allows you to activate or deactivate SVI from running on your site. If you deactivate SVI, it will not be displayed on any product pages."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:130
+msgid "Enable Swatches"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:131
+msgid "This setting allows you to activate or deactivate SVI swatches from running on your site. If you deactivate SVI swatches, they will not be displayed on any product pages and the Swatches tab settings will have no effect."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:137
+msgid "Showcase Images under Variations"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:150
+msgid "Showcase Thumbnail Items"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:151
+msgid "This setting allows you to set the number of thumbnails to be displayed by row. You can choose a value between 1 and 10. This setting is only applicable if you have enabled the Showcase Images under Variations setting."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:164
+msgid "Disable SVI display"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:177
+msgid "Skip Gallery equivalence check"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:204
+msgid "Trigger on attribute change"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:205
+msgid "This setting allows you to trigger the image changing when an attribute is selected. All attributes/swatches will trigger the image changing, so customers don't have to wait for all attributes/swatches to be selected before the image changes."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:219
+msgid "Trigger Exact SVI Gallery Match"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:220
+msgid "Only activate if you understand the effect"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:221
+msgid "This setting allows you to trigger/display the SVI gallery only when there is an exact match between the attributes selected and the SVI galleries created. This means that variation images will only be displayed when there is a gallery that exactly matches the attributes selected. Note that this setting should only be activated if you understand its effect."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:240
+msgid "Enable Filter Attribute Image Swapping"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:241
+msgid "Showcase variation images based on applied filters"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:242
+msgid "On shop, category and tag pages, when a customer filters by an attribute value (for example <b>?filter_color=red</b> from the WooCommerce filter widget or block), the main product image changes to the <b>first image</b> of that value's <u>SVI Variations Gallery</u>.<br>If several values are filtered, the image is split into one part per value, using the layout set in \"Filter Attribute Split Layout Type\".<br>Products with no gallery for the filtered value keep their normal image. Only the first filtered attribute is used.<br><b>PRO:</b> galleries marked \"Hide from Product Loop\" are skipped, and the image can animate on hover."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:254
+msgid "Filter Attribute Split Layout Type"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:255
+msgid "Choose the layout style for displaying multiple variation images"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:256
+msgid "Select how multiple variation images should be displayed when a filter matches more than one variation on the Shop/Archive page. <b>Diagonal</b>: Images are split diagonally from bottom-left to top-right. <b>Vertical</b>: Images are stacked vertically. <b>Horizontal</b>: Images are arranged side by side horizontally. Default: Diagonal."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:274
+msgid "Enable Filter Attribute Animation"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:275
+msgid "Add sliding animation on hover"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:277
+msgid "When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:278
+msgid "SVI PRO adds a sliding animation on hover to split images (Diagonal, Vertical, Horizontal). Filter Attribute Image Swapping itself is free."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:293
+msgid "Showcase Variations"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:294
+msgid "Showcase your variations on the product loop page"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:295
+msgid "Shows the <b>first image</b> of each <u>SVI Variations Gallery</u> under each product on shop and catalog pages.<br><b>Free:</b> shows the first <b>2 galleries</b> of each product.<br><b>PRO:</b> shows every gallery that isn't hidden. You can hide a gallery with \"Hide from Product Loop\" on the product, set a limit with \"Visible galleries\" (0 = all), and pick where it appears with \"Showcase Position\"."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:307
+msgid "Visible galleries "
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:308
+msgid "Define a limit of galleries to be displayed p/product, 0 = all"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:326
+msgid "Adjust the position of the showcase in the product loop."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:327
+msgid "WooCommerce has hooks set in place to allow users to customize the positions of certain elements, if your theme has this hooks in place you may adjust the position."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:353
+msgid "Showcase Position Priority"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:354
+msgid "Used to specify the order in which the Showcase Position action will be executed. Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action. Default value: 10"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:372
+msgid "Specify Product Wrapper"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:373
+msgid "Used to specify the element that is wrapping the product on the loop page. By default, it is set to find the closest \".product\", but just in case your theme doesn't have the class present, this option will allow you to define the target. You can specify, for example, any element (div, li), classes (.product), or both (div.product)."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:391
+msgid "Specify Product Wrapper Image"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:392
+msgid "Used to specify the element that is wrapping the product image on the loop page. By default, it is set to find the first image, but just in case the first image is not the product image, this option will allow you to define the target. You can specify, for example, any element (img, div), classes (.attachment-woocommerce_thumbnail), or both (img.attachment-woocommerce_thumbnail)."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:408
+msgid "Showcase Image Size Loaded"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:409
+msgid "Select the image size you want loaded from the available registered image sizes on your site."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:430
+msgid "WooCommerce Shop Page / Archive"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:454
+msgid "Extra display locations"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:463
+msgid "Cart Image"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:464
+msgid "Display chosen variation image in cart/checkout instead of default Product image."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:476
+msgid "Show Image in Email"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:477
+msgid "Display chosen variation image in order email."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:489
+msgid "Show Image in Admin Edit Order"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:490
+msgid "Display chosen variation image in the admin edit order page."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:502
+msgid "Show Image in order details"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:503
+msgid "Display chosen variation image in the order details page after the checkout."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:515
+msgid "Enable Quick View append"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:516
+msgid "If theme has Quick View, SVI <b><u>will try</u></b> to append to it, SVI does not guarantee 100% compatibility.<br>This is a \"HACK\" so if not compatible or not working get in touch.<br><b>NOTE</b>: Activating this option does not enable Quick View on your site."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:528
+msgid "Target Quick View Gallery"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:529
+msgid "There are several Quick View solutions from themes/plugins if activating Quick View isnt enough you may target the Quick View Class/ID (The element that contains the WooCommerce gallery). SVI will try to capture and replace it with SVI gallery."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:529
+msgid "Known List:"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:546
+msgid "Image Settings"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:555
+msgid "Use Feat. Image as Preload"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:556
+msgid "Featured image will be used as preloader until SVI get fully loaded."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:568
+msgid "Use Placeholder"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:569
+msgid "If activated a placeholder will be displayed for variations that dont have a SVI gallery created otherwise it will fallback to show Default SVI gallery or all images. Want to set a custom placeholder image read <a href=\"https://docs.woocommerce.com/document/change-the-placeholder-image/\" target=\"_blank\">this</a>."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:581
+msgid "Image Caption"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:582
+msgid "Show Image Title or Caption under main image.<br>Activating this option may require some styling adjustments specific for your theme not supported by this plugin."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:594
+msgid "Show Title or Caption"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:616
+msgid "Thumbnails Image Caption"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:617
+msgid "Show Image Title or Caption under thumbnail image.<br>Activating this option may require some styling adjustments specific for your theme not supported by this plugin."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:629
+msgid "Thumbnails Show Title or Caption"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:651
+msgid "Main Image Size"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:652
+msgid "Select your main image size from the registred sizes"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:665
+msgid "Thumbnail Image Size"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:666
+msgid "Select your Thumbnail size from the registred sizes"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:679
+msgid "Show SRCSET"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:680
+msgid "Add scrset attribute to images"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:692
+msgid "Show Title attribute"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:693
+msgid "Add title attribute to images"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:705
+msgid "Show ALT attribute"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:706
+msgid "Add ALT attribute to images"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:718
+msgid "SVI GLOBAL position display"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:719
+msgid "Whether to display SVI GLOBAL images at Beginning or End of other variation images. Default: End"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:744
+msgid "Stacked layout"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:752
+msgid "Activate stacked images"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:753
+msgid "All images will be showed in a single column, stacked. Only in desktop mode, mobile will fallback to default settings."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:765
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2322
+msgid "Items per row"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:766
+msgid "Number of thumbnails to be displayed by row, min:1 | max: 10."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:784
+msgid "Force Stacked on Mobile"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:785
+msgid "If activated Stacked layout will also be displayed on mobile otherwise it will fallback to default SVI settings."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:803
+msgid "Sticky Product Summary"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:804
+msgid "Product Summary will slide side by side with the images until it reaches last image"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:822
+msgid "Sticky Element"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:823
+msgid "The element that needs to be sticky once you scroll. This can be your menu, or any other element like a sidebar, ad banner, etc. Make sure this is a unique identifier."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:845
+msgid "Margin top"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:846
+msgid "Space between top of page and sticky element: (optional)"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:868
+msgid "Push-up element (optional):"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:869
+msgid "If you want your sticky element to be 'pushed up' again by another element lower on the page, enter it here. Make sure this is a unique identifier."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:909
+msgid "Activate Lightbox"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:910
+msgid "A Lightbox pops up on click so customers can see a highlighted closeup of the image against a dark background and, if there is one, view the Gallery as a slideshow."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:922
+msgid "Activate Lightbox on Images under Variations"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:923
+msgid "This option will display the product variations images under the dropdowns/swatches of the product page.<br>Images with no variations assigned will be displayed as default gallery under the main image."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:946
+msgid "Show Icon"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:947
+msgid "Enable click icon on image for lightbox."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:965
+msgid "Enable Icon Click"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:966
+msgid "Lightbox only available on icon click, disables lightbox on image click."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:988
+msgid "Icon Color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:989
+msgid "Pick a color for the icon."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1011
+msgid "Show Thumbnails"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1012
+msgid "Display a slideshow gallery inside the lightbox."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1030
+msgid "Show Close Button"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1048
+msgid "Show Image Titles"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1049
+msgid "Display image titles inside the lightbox"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1067
+msgid "Show FullScreen Option"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1085
+msgid "Show Zoom Option"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1103
+msgid "Show Share Option"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1121
+msgid "Show Counter Option"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1139
+msgid "Show Arrows Option"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1175
+msgid "Activate Slider"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1176
+msgid "Swiper is the most modern free mobile touch slider with hardware accelerated transitions and amazing native behavior."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1188
+msgid "Centered thumbnails"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1189
+msgid "Start in center position or aligned to main image."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1206
+msgid "Tranisition effect"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1207
+msgid "Could be \"slide\", \"fade\", \"cube\", \"coverflow\" or \"flip\". <b>Note:</b> Cube transition requires that all images are of the same size, which means its width and height should be equal."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1233
+msgid "LazyLoad"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1234
+msgid "Activates LazyLoad of images."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1253
+msgid "LazyLoad Color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1254
+msgid "Pick a color for the lazyload."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1275
+msgid "Pagination"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1276
+msgid "Activates pagination options."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1294
+msgid "Pagination Type"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1295
+msgid "String with type of pagination. Can be \"bullets\", \"fraction\", \"progressbar\"."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1322
+msgid "Clickable Bullets"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1323
+msgid "If true then clicking on pagination button will cause transition to appropriate slide. Only for bullets pagination type."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1349
+msgid "Dynamic Bullets"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1350
+msgid "Good to enable if you use bullets pagination with a lot of slides. So it will keep only few bullets visible at the same time."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1377
+msgid "Pagination Color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1378
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1463
+msgid "Pick a color for the pagination."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1400
+msgid "Main Navigation"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1401
+msgid "Add arrow navigation to main image."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1419
+msgid "Thumb Navigation"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1420
+msgid "Add arrow navigation to thumbnails."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1436
+msgid "Nav Color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1438
+msgid "Select your navigation color. Requires Main Navigation or Thumb navigation On."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1462
+msgid "Arrows Color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1485
+msgid "Auto Slide"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1486
+msgid "Add auto sliding."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1505
+msgid "Auto Slide time (ms)"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1506
+msgid "Delay between transitions (in ms). If this parameter is not specified or is 0(zero), auto play will be 2500 (2, 5s)"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1529
+msgid "Disable on Interaction"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1530
+msgid "Set to Enabled and autoplay will be disabled after user interacts."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1587
+msgid "Activate Magnifier Lens"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1588
+msgid "Allows zooming images within a container or also in a \"lens\" that floats overtop of web page."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1598
+msgid "Mobile Enabled"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1601
+msgid "NOTE"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1601
+msgid "I recommend this option be off, doesnt make sense in mobile since the finger will be over the lens execpt for inner. Lens is Unvailable for \"Window\" Zoom type. Lightbox will not work with this option enabled in Mobile View due to the trigger."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1617
+msgid "Zoom Type"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1621
+msgid "Lens"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1622
+msgid "Window"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1623
+msgid "Inner"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1642
+msgid "Disable Lens Zoom Contain"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1643
+msgid "NOTE: If active in some themes this option may not work properly."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1665
+msgid "Lens Format"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1694
+msgid "Fade In Effect"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1717
+msgid "Lens FadeIn ms"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1718
+msgid "Set as a number e.g 200 for speed of Lens fadeIn"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1745
+msgid "Window Fade In Effect"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1768
+msgid "Window FadeIn ms"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1769
+msgid "Set as a number e.g 200 for speed of Window fadeIn"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1796
+msgid "Lens Size"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1797
+msgid "Lens size to be displayed, min:100 | max: 300."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1820
+msgid "Lens Easing"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1821
+msgid "Allows smooth scrool of image to Zoom Type Window & Inner"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1844
+msgid "Magnifier Border Color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1845
+msgid "Pick a border color for the lens."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1868
+msgid "Lens Border Width"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1869
+msgid "Width in pixels of the lens border. min: 1 | max: 15."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1889
+msgid "Width of the Window"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1890
+msgid "Set Width for window, default 400."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1913
+msgid "Height of the Window"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1914
+msgid "Set Height for window, default 400."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1938
+msgid "Zoom Effect"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1939
+msgid "Allows Zoom with mouse scroll."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1957
+msgid "Custom zIndex for Magnifier"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1958
+msgid "Specifies the stack order of an element. An element with greater stack order is always in front of an element with a lower stack order."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1994
+msgid "Activate Video Support"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:1995
+msgid "A simple, accessible and customisable media player for Video, Audio, YouTube and Vimeo."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2007
+msgid "UI color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2008
+msgid "Change the primary UI color"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2026
+msgid "Autoplay"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2027
+msgid ""
+"Autoplay the media on load.<br> Autoplay is generally not recommended as it is seen as a negative user experience. It is also disabled in many browsers. Before raising issues, do your homework. More info can be found here:\n"
+"                    <ul>\n"
+"                    <li>Muted option should be ON and activate Video Control Toggle mute if video has sound so that user can enable it manually if needed.</li>\n"
+"                    <li><a target=\"_blank\" href=\"https://webkit.org/blog/6784/new-video-policies-for-ios/\">New </video> Policies for iOS</a></li>\n"
+"                    <li><a target=\"_blank\" href=\"https://developers.google.com/web/updates/2017/09/autoplay-policy-changes\">Autoplay Policy Changes</a></li>\n"
+"                    <li><a target=\"_blank\" href=\"https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/\">Firefox 66 to block automatically playing audible video and audio</a></li></ul>"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2049
+msgid "Muted"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2050
+msgid "Whether to start playback muted."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2067
+msgid "Click To Play"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2068
+msgid "Click (or tap) of the video container will toggle play/pause."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2085
+msgid "Disable Context Menu"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2086
+msgid "Disable right click menu on video to help as very primitive obfuscation to prevent downloads of content."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2103
+msgid "Auto Hide Controls"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2104
+msgid "Hide video controls automatically after 2s of no mouse or focus movement, on control element blur (tab out), on playback start or entering fullscreen. As soon as the mouse is moved, a control element is focused or playback is paused, the controls reappear instantly."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2121
+msgid "Fullscreen"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2122
+msgid "Toggles whether fullscreen should be enabled on double touch/click."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2139
+msgid "Loop"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2140
+msgid "Whether to loop the current video."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2157
+msgid "Poster"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2158
+msgid "Sets SVI image as the current poster image for the player."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2175
+msgid "Ratio"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2176
+msgid "Force an aspect ratio for all videos. If this is set to auto then the default for HTML5 and Vimeo is to use the native resolution of the video. Dimensions are not available from YouTube via SDK, 16:9 is forced as a sensible default."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2200
+msgid "Video Controls"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2202
+msgid "Manage the controls of the player (play,pause,progress, duration, mute, volume, fullscreen)"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2205
+msgid "The large play button in the center"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2208
+msgid "Play/pause playback"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2210
+msgid "The progress bar and scrubber for playback and buffering"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2211
+msgid "The current time of playback"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2212
+msgid "The full duration of the media"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2213
+msgid "Toggle mute"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2214
+msgid "Volume control"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2220
+msgid "Toggle fullscreen"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2280
+msgid "Disabled"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2281
+msgid "Disable thumbnails on all product pages"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2293
+msgid "Position"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2294
+msgid "Select thumnails position. Bottom, Left or right."
+msgstr ""
+
+#. translators: %s: thumbnail position preview markup.
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2297
+#, php-format
+msgid "Bottom, Left and Right positions, for thumbnails.%s"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2323
+msgid "Number of thumbnails to be displayed by row, min:1 | max: 10. <br><b>Note:</b> If using slider you may add decimal to display part of next slide, ex: 4.5"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2348
+msgid "Number of thumbnails to be displayed by row only available in <b>bottom</b> position, <b>Vertical</b> positions are auto calculated."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2370
+msgid "Hidden"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2371
+msgid "Thumbnails will be hidden until a variation as been selected.<br><b>Note</b>: Will not work with products that have \"<u>SVI Default Gallery</u>\" present."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2390
+msgid "Trigger on Thumbnail click"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2391
+msgid "Change value of the attributes/Swatches"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2392
+msgid "When user clicks the thumbnail the values of Attributes/Swatches will changed to reflect the image values."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2392
+msgid "If image is present in multiple SVI Galleries the Variations/Swatches will be changed to the first match."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2412
+msgid "Thumbnail Click Swap disabled. To activate switch Hidden Thumbnails options <b>off</b>."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2430
+msgid "Keep visible"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2431
+msgid "This option will keep thumbnails visible all the time. <b>No changes</b> will be made to the product gallery.<br> Option should be disabled if \"Showcase Images under Variations\" is active or may cause unexpected behaviour."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2453
+msgid "Default Image Display"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2454
+msgid "Select the default display to be showed.<br>If <b>SVI Default Gallery</b> not present it will fallback to display the images in the WooCommerce Product Gallery."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2457
+msgid "WooCommerce Product Gallery"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2480
+msgid "Thumbnail Opacity"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2481
+msgid "If active, current thumbnail will be faded."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2512
+msgid "Custom Class"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2513
+msgid "Insert custom css class(es) to fit your theme needs."
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2524
+msgid "Remove Image class"
+msgstr ""
+
+#: includes/library/wp-settings-framework/settings/svi-settings.php:2525
+msgid "Some theme force styling on image class that may break the layout."
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:153
+msgid "wpsfsvi settings must be an array"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:236
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:290
+msgid "Please select a file to import"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:291
+msgid "Invalid file"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:292
+msgid "Something went wrong"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:420
+msgid "Learn More"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:599
+msgid "Export Settings"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:617
+msgid "Import Settings"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:938
+msgid "Select a image to upload"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:940
+msgid "Use this image"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:1106
+#: includes/library/wp-settings-framework/wp-settings-framework.php:1368
+msgid "Save Changes"
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:1487
+msgid "Action failed."
+msgstr ""
+
+#: includes/library/wp-settings-framework/wp-settings-framework.php:1491
+msgid "No option group specified."
+msgstr ""
+
+#: public/class-smart-variations-images-public.php:2065
+msgid "Product image"
+msgstr ""

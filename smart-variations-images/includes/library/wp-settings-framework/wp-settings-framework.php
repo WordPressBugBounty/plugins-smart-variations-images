@@ -44,6 +44,14 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		private $option_group;
 
 		/**
+		 * Per-request cache of resolved settings, keyed by option group and shape.
+		 *
+		 * @access private
+		 * @var array<string, array>
+		 */
+		private static $settings_cache = array();
+
+		/**
 		 * @access private
 		 * @var array
 		 */
@@ -304,7 +312,62 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		 */
 		public function settings_validate($input)
 		{
+			$input = $this->preserve_locked_settings(is_array($input) ? $input : array());
+
 			return apply_filters($this->option_group . '_settings_validate', $input);
+		}
+
+		/**
+		 * Keep stored values for locked (PRO only) fields that the form did not post.
+		 *
+		 * Locked fields render as a notice or a hidden input, so a save never
+		 * carries them and the Settings API would overwrite them with nothing.
+		 * Copying the stored value back keeps them for when the licence returns.
+		 *
+		 * @param array $input Posted settings.
+		 * @return array Settings to store.
+		 */
+		private function preserve_locked_settings(array $input)
+		{
+			$locked = $this->get_locked_field_defaults();
+
+			if (empty($locked)) {
+				return $input;
+			}
+
+			$saved = get_option($this->option_group . '_settings');
+
+			if (!is_array($saved) || empty($saved) || empty($this->settings) || !is_array($this->settings)) {
+				return $input;
+			}
+
+			foreach ($this->settings as $section) {
+				if (empty($section['fields']) || !is_array($section['fields'])) {
+					continue;
+				}
+
+				foreach ($section['fields'] as $field) {
+					if (empty($field['id'])) {
+						continue;
+					}
+
+					$field_id = (string) $field['id'];
+
+					if (!array_key_exists($field_id, $locked)) {
+						continue;
+					}
+
+					$setting_key = ($this->has_tabs())
+						? sprintf('%s_%s_%s', $section['tab_id'], $section['section_id'], $field_id)
+						: sprintf('%s_%s', $section['section_id'], $field_id);
+
+					if (!array_key_exists($setting_key, $input) && array_key_exists($setting_key, $saved)) {
+						$input[$setting_key] = $saved[$setting_key];
+					}
+				}
+			}
+
+			return $input;
 		}
 
 		/**
@@ -559,7 +622,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 				<div class="wpsfsvi-import">
 					<div class="wpsfsvi-import__false_btn">
 						<input type="file" name="wpsfsvi-import-field" class="wpsfsvi-import__file_field" id="%s" accept=".json"/>
-						<button type="button" name="wpsfsvi_import_button" class="button wpsfsvi-import__button" id="%s">%s</button>
+						<button type="button" name="wpsfsvi_import_button" class="button wpsfsvi-import__button" id="%s-button">%s</button>
 						<input type="hidden" class="wpsfsvi_import_nonce" value="%s"></input>
 						<input type="hidden" class="wpsfsvi_import_option_group" value="%s"></input>
 					</div>
@@ -1057,15 +1120,16 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		{
 			$settings_name = $this->option_group . '_settings';
 
-			static $settings = array();
+			// `$clean` produces a different key shape, so both shapes need their own cache entry.
+			$cache_key = $settings_name . ( $clean ? '_clean' : '' );
 
-			if (isset($settings[$settings_name])) {
-				return $settings[$settings_name];
+			if (isset(self::$settings_cache[$cache_key])) {
+				return self::$settings_cache[$cache_key];
 			}
 
 			$saved_settings             = get_option($this->option_group . '_settings');
 
-			$settings[$settings_name] = array();
+			self::$settings_cache[$cache_key] = array();
 
 			foreach ($this->settings as $section) {
 				if (empty($section['fields'])) {
@@ -1084,14 +1148,151 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 
 
 					if (isset($saved_settings[$setting_key])) {
-						$settings[$settings_name][($clean) ? $setting_key_clean : $setting_key] = $saved_settings[$setting_key];
+						self::$settings_cache[$cache_key][($clean) ? $setting_key_clean : $setting_key] = $saved_settings[$setting_key];
 					} else {
-						$settings[$settings_name][($clean) ? $setting_key_clean : $setting_key] = (isset($field['default'])) ? $field['default'] : false;
+						self::$settings_cache[$cache_key][($clean) ? $setting_key_clean : $setting_key] = (isset($field['default'])) ? $field['default'] : false;
 					}
 				}
 			}
 
-			return $settings[$settings_name];
+			return self::$settings_cache[$cache_key];
+		}
+
+		/**
+		 * Get the tabbed key for every registered field, mapped to its default.
+		 *
+		 * @return array<string, mixed> Tabbed key => default value.
+		 */
+		public function get_setting_keys()
+		{
+			return $this->get_settings();
+		}
+
+		/**
+		 * Defaults of the fields this install shows as locked (PRO only).
+		 *
+		 * The settings file turns a PRO field into a notice ('custom' rendered by
+		 * wpsfsvisvi_info) or a hidden field when premium code cannot be used, so the
+		 * registered definitions already say which fields are locked. Ids that are
+		 * also registered as a normal field elsewhere are left alone.
+		 *
+		 * @return array<string, mixed> Field id (clean key) => default value.
+		 */
+		public function get_locked_field_defaults()
+		{
+			$locked   = array();
+			$unlocked = array();
+
+			if (empty($this->settings) || !is_array($this->settings)) {
+				return $locked;
+			}
+
+			foreach ($this->settings as $section) {
+				if (empty($section['fields']) || !is_array($section['fields'])) {
+					continue;
+				}
+
+				foreach ($section['fields'] as $field) {
+					if (empty($field['id'])) {
+						continue;
+					}
+
+					$field_id   = (string) $field['id'];
+					$field_type = isset($field['type']) ? $field['type'] : '';
+
+					$is_locked = ('hidden' === $field_type)
+						|| (
+							'custom' === $field_type
+							&& isset($field['output'])
+							&& 'wpsfsvisvi_info' === $field['output']
+						);
+
+					if (!$is_locked) {
+						$unlocked[$field_id] = true;
+						continue;
+					}
+
+					$default = (isset($field['default'])) ? $field['default'] : false;
+
+					if (is_array($default)) {
+						$default = array_values($default);
+					}
+
+					$locked[$field_id] = $default;
+				}
+			}
+
+			foreach (array_keys($unlocked) as $field_id) {
+				unset($locked[$field_id]);
+			}
+
+			return $locked;
+		}
+
+		/**
+		 * Reduce a settings payload to the registered tabbed keys.
+		 *
+		 * Accepts payloads written by older releases, where each field was stored
+		 * under its bare id (e.g. `hide_thumbs`), and maps them to the current
+		 * `<tab>_<section>_<field>` key. Unknown keys are dropped.
+		 *
+		 * @param array $settings Settings payload.
+		 * @return array<string, mixed> Normalized settings.
+		 */
+		public function normalize_settings(array $settings)
+		{
+			$registered = $this->get_settings();
+			$normalized = array();
+
+			foreach ($registered as $key => $default) {
+				if (array_key_exists($key, $settings)) {
+					$normalized[$key] = $settings[$key];
+					continue;
+				}
+
+				$legacy = $this->find_legacy_key($key, $settings, $registered);
+
+				if (null !== $legacy) {
+					$normalized[$key] = $settings[$legacy];
+				}
+			}
+
+			return $normalized;
+		}
+
+		/**
+		 * Find the legacy flat key that belongs to a tabbed key.
+		 *
+		 * Legacy keys are the bare field ids, so the longest matching suffix wins:
+		 * `thumb_imagecaption` must beat `imagecaption` for
+		 * `main_section_imagesettings_thumb_imagecaption`.
+		 *
+		 * @param string $key        Tabbed key.
+		 * @param array  $settings   Settings payload.
+		 * @param array  $registered Registered settings, keyed by tabbed key.
+		 * @return string|null Legacy key, or null when there is no match.
+		 */
+		private function find_legacy_key($key, array $settings, array $registered)
+		{
+			$best = null;
+
+			foreach ($settings as $candidate => $value) {
+				$candidate = (string) $candidate;
+
+				if ('' === $candidate || isset($registered[$candidate])) {
+					continue;
+				}
+
+				if (substr($key, -strlen($candidate)) !== $candidate) {
+					continue;
+				}
+
+				if (null === $best || strlen($candidate) > strlen($best)) {
+					$best = $candidate;
+				}
+			}
+
+			return $best;
 		}
 
 		/**
@@ -1277,7 +1478,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		/**
 		 * Handle export settings action.
 		 */
-		public static function export_settings()
+		public function export_settings()
 		{
 			$_wpnonce     = filter_input(INPUT_GET, '_wpnonce');
 			$option_group = filter_input(INPUT_GET, 'option_group');
@@ -1290,7 +1491,13 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 				wp_die(esc_html__('No option group specified.', 'smart-variations-images'));
 			}
 
-			$options = get_option($option_group . '_settings');
+			// Export the shape the settings screen reads, so an export always
+			// represents what the merchant sees and an import can restore it.
+			$options = $this->get_settings();
+
+			if (empty($options)) {
+				$options = get_option($option_group . '_settings');
+			}
 
 			// output the file contents to the browser.
 			header('Content-Type: text/json; charset=utf-8');
@@ -1323,7 +1530,14 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			}
 
 			$settings_data = json_decode($settings, true);
-			update_option($option_group . '_settings', $settings_data);
+			$normalized    = $this->normalize_settings($settings_data);
+
+			// Reject payloads that match none of this screen's fields.
+			if (empty($normalized)) {
+				wp_send_json_error();
+			}
+
+			update_option($option_group . '_settings', $normalized);
 
 			wp_send_json_success();
 		}

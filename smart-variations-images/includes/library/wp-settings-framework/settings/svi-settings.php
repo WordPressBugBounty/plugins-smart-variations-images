@@ -44,7 +44,7 @@ function wpsfsvi_svi_tabbed_settings(  $wpsfsvi_settings  ) {
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'thumbnails',
-        'title' => esc_html__( 'Thumbails', 'smart-variations-images' ),
+        'title' => esc_html__( 'Thumbnails', 'smart-variations-images' ),
     );
     $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'fixes',
@@ -76,11 +76,11 @@ function wpsfsvi_svi_tabbed_settings(  $wpsfsvi_settings  ) {
  * @return void
  */
 function wpsfsvi_svi_options_tab_main() {
-    $variation_thumbdesc = '<strong>' . esc_html__( 'Free Version limited to display 1 image, upgrade to PRO to display all.', 'smart-variations-images' ) . '</strong> ';
-    $variation_thumbdesc .= esc_html__( 'Unlock all these features', 'smart-variations-images' ) . ' <a href="/wp-admin/admin.php?page=woocommerce_svi-pricing" target="_blank">' . esc_html__( 'here', 'smart-variations-images' ) . '</a>.<br><br>';
+    $variation_thumbdesc = '<strong>' . esc_html__( 'Free: one image under the variations. SVI PRO shows the whole gallery, in columns.', 'smart-variations-images' ) . '</strong> ';
+    $variation_thumbdesc .= '<a href="' . esc_url( svi_fs()->get_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a><br><br>';
     $variation_thumbdesc .= esc_html__( 'This option will display the product variations images under the dropdowns/swatches of the product page.', 'smart-variations-images' ) . '<br>';
     $variation_thumbdesc .= esc_html__( 'All images or Images with no variations assigned will be displayed as default gallery under the main image.', 'smart-variations-images' ) . '<br>';
-    $variation_thumbdesc .= esc_html__( 'Adds lightbox option to be activated or not on this images.', 'smart-variations-images' ) . ' <strong>' . esc_html__( 'Thumbnails Keep visible', 'smart-variations-images' ) . '</strong> ' . esc_html__( 'option should be set disabled because activating this options alraedy keeps the images visible.', 'smart-variations-images' );
+    $variation_thumbdesc .= esc_html__( 'Adds lightbox option to be activated or not on this images.', 'smart-variations-images' ) . ' <strong>' . esc_html__( 'Thumbnails Keep visible', 'smart-variations-images' ) . '</strong> ' . esc_html__( 'option should be set disabled because activating this options already keeps the images visible.', 'smart-variations-images' );
     return array(
         'section_title' => __( 'Global', 'smart-variations-images' ),
         'tab_id'        => 'main',
@@ -98,7 +98,7 @@ function wpsfsvi_svi_options_tab_main() {
                 'id'      => 'default_swatches',
                 'type'    => 'toggle',
                 'title'   => __( 'Enable Swatches', 'smart-variations-images' ),
-                'desc'    => __( 'This setting allows you to activate or deactivate SVI swatches from running on your site. If you deactivate SVI swatches, they will not be displayed on any product pages.', 'smart-variations-images' ),
+                'desc'    => __( 'This setting allows you to activate or deactivate SVI swatches from running on your site. If you deactivate SVI swatches, they will not be displayed on any product pages and the Swatches tab settings will have no effect.', 'smart-variations-images' ),
                 'default' => false,
             ),
             array(
@@ -189,7 +189,7 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
             'type'     => 'toggle',
             'title'    => __( 'Enable Filter Attribute Image Swapping', 'smart-variations-images' ),
             'subtitle' => __( 'Showcase variation images based on applied filters', 'smart-variations-images' ),
-            'desc'     => __( 'When enabled, this option will display the <b>first image</b> of each matching <u>SVI Variations Gallery</u> on the product loop pages (e.g., Shop or Archive pages) based on the applied filters (such as color or size). You can enable/disable specific galleries from being displayed by checking the appropriate <u>SVI Variations Gallery</u> settings on the product edit page.', 'smart-variations-images' ),
+            'desc'     => __( 'On shop, category and tag pages, when a customer filters by an attribute value (for example <b>?filter_color=red</b> from the WooCommerce filter widget or block), the main product image changes to the <b>first image</b> of that value\'s <u>SVI Variations Gallery</u>.<br>If several values are filtered, the image is split into one part per value, using the layout set in "Filter Attribute Split Layout Type".<br>Products with no gallery for the filtered value keep their normal image. Only the first filtered attribute is used.<br><b>PRO:</b> galleries marked "Hide from Product Loop" are skipped, and the image can animate on hover.', 'smart-variations-images' ),
             'show_if'  => array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -219,7 +219,7 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
             'type'     => ( svi_fs()->can_use_premium_code__premium_only() ? 'toggle' : 'custom' ),
             'title'    => __( 'Enable Filter Attribute Animation', 'smart-variations-images' ) . (( svi_fs()->can_use_premium_code__premium_only() ? '' : SMART_SVI_PROVS )),
             'subtitle' => __( 'Add sliding animation on hover', 'smart-variations-images' ),
-            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'smart-variations-images' ) : __( 'This is a premium feature. When enabled, it adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). Upgrade to PRO to unlock this feature. <a href="/wp-admin/admin.php?page=woocommerce_svi-pricing" target="_blank">Upgrade here</a>.', 'smart-variations-images' ) ),
+            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'smart-variations-images' ) : esc_html__( 'SVI PRO adds a sliding animation on hover to split images (Diagonal, Vertical, Horizontal). Filter Attribute Image Swapping itself is free.', 'smart-variations-images' ) . ' <a href="' . esc_url( svi_fs()->get_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a>' ),
             'output'   => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'wpsfsvisvi_info' ),
             'style'    => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'warning' ),
             'show_if'  => array(array(
@@ -234,7 +234,7 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
             'type'     => 'toggle',
             'title'    => __( 'Showcase Variations', 'smart-variations-images' ),
             'subtitle' => __( 'Showcase your variations on the product loop page', 'smart-variations-images' ),
-            'desc'     => __( 'Activating this option will showcase the <b>first image</b> of each of your <u>SVI Variations Gallery</u> under each product on the Product loop pages.<br>You may enable/disable specific galleries from being displayed by checking the proper <u>SVI Variations Gallery</u> on the product.', 'smart-variations-images' ),
+            'desc'     => __( 'Shows the <b>first image</b> of each <u>SVI Variations Gallery</u> under each product on shop and catalog pages.<br><b>Free:</b> shows the first <b>2 galleries</b> of each product.<br><b>PRO:</b> shows every gallery that isn\'t hidden. You can hide a gallery with "Hide from Product Loop" on the product, set a limit with "Visible galleries" (0 = all), and pick where it appears with "Showcase Position".', 'smart-variations-images' ),
             'show_if'  => array(array(
                 'field' => 'main_section_global_default',
                 'value' => array('1'),
@@ -366,7 +366,7 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
                 'id'      => 'svicart',
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'title'   => __( 'Cart Image', 'smart-variations-images' ),
-                'desc'    => __( 'Display choosen variation image in cart/checkout instead of default Product image.', 'smart-variations-images' ),
+                'desc'    => __( 'Display chosen variation image in cart/checkout instead of default Product image.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -377,7 +377,7 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
                 'id'      => 'sviemail',
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'title'   => __( 'Show Image in Email', 'smart-variations-images' ),
-                'desc'    => __( 'Display choosen variation image in order email.', 'smart-variations-images' ),
+                'desc'    => __( 'Display chosen variation image in order email.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -388,7 +388,7 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
                 'id'      => 'sviemailadmin',
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'title'   => __( 'Show Image in Admin Edit Order', 'smart-variations-images' ),
-                'desc'    => __( 'Display choosen variation image in the admin edit order page.', 'smart-variations-images' ),
+                'desc'    => __( 'Display chosen variation image in the admin edit order page.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -399,7 +399,7 @@ function wpsfsvi_svi_options_tab_main_displaylocations() {
                 'id'      => 'order_details',
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'title'   => __( 'Show Image in order details', 'smart-variations-images' ),
-                'desc'    => __( 'Display choosen variation image in the order details page after the checkout.', 'smart-variations-images' ),
+                'desc'    => __( 'Display chosen variation image in the order details page after the checkout.', 'smart-variations-images' ),
                 'show_if' => array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -756,7 +756,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
                 'id'      => 'lightbox_icon',
                 'type'    => 'toggle',
                 'title'   => __( 'Show Icon', 'smart-variations-images' ),
-                'desc'    => __( 'Enable click icon on image for ligthbox.', 'smart-variations-images' ),
+                'desc'    => __( 'Enable click icon on image for lightbox.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -770,7 +770,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
                 'id'      => 'lightbox_iconclick',
                 'type'    => 'toggle',
                 'title'   => __( 'Enable Icon Click', 'smart-variations-images' ),
-                'desc'    => __( 'Ligthbox only available on icon click, disables ligthbox on image click.', 'smart-variations-images' ),
+                'desc'    => __( 'Lightbox only available on icon click, disables lightbox on image click.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -831,7 +831,7 @@ function wpsfsvi_svi_options_tab_lightbox() {
                 'id'      => 'lightbox_title',
                 'type'    => 'toggle',
                 'title'   => __( 'Show Image Titles', 'smart-variations-images' ),
-                'desc'    => __( 'Display image titles inside the ligthbox', 'smart-variations-images' ),
+                'desc'    => __( 'Display image titles inside the lightbox', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1779,7 +1779,7 @@ function wpsfsvi_svi_options_tab_thumbnails() {
     </li>
     </ul>';
     return array(
-        'section_title' => __( 'Thumbails', 'smart-variations-images' ),
+        'section_title' => __( 'Thumbnails', 'smart-variations-images' ),
         'tab_id'        => 'thumbnails',
         'section_id'    => 'section_thumbs',
         'section_order' => 10,
@@ -1942,7 +1942,7 @@ function wpsfsvi_svi_options_tab_thumbnails() {
                 'id'      => 'thumbnails_showactive',
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'title'   => __( 'Thumbnail Opacity', 'smart-variations-images' ),
-                'desc'    => __( 'If active, current tumbnail will be faded.', 'smart-variations-images' ),
+                'desc'    => __( 'If active, current thumbnail will be faded.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),

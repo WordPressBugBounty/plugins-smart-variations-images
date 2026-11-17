@@ -6169,15 +6169,18 @@
               this.ThumbClickSwap(item);
           }
         } else {
-          if ("variation_thumbnails_lb" in wcsvi.options) {
-            if (this.boolEval(wcsvi.options.variation_thumbnails_lb) || item.video)
-              this.photo(item, $event, "variationThumbImages");
-            else {
-              if ($jq(this.$el).find("video,.plyr").length > 0) {
-                $jq(this.$el).find("video,.plyr").remove();
-                $jq(this.$el).find(".sviicon-play").show();
-              }
-            }
+          const lightboxEnabled = "variation_thumbnails_lb" in wcsvi.options && this.boolEval(wcsvi.options.variation_thumbnails_lb);
+          if (lightboxEnabled || item.video) {
+            this.photo(item, $event, "variationThumbImages");
+          } else if ($jq(this.$el).find("video,.plyr").length > 0) {
+            $jq(this.$el).find("video,.plyr").remove();
+            $jq(this.$el).find(".sviicon-play").show();
+          }
+          if (!lightboxEnabled) {
+            this.$bus.$emit(
+              "mainImage_static_change_" + this.$root.$children[0].pid,
+              item
+            );
           }
         }
       }
@@ -6856,8 +6859,7 @@
       loopedSlides: 1,
       watchSlidesVisibility: true,
       watchSlidesProgress: true,
-      centeredSlides: false,
-      // Set to false for a left-aligned behavior
+      centeredSlides: "slider_center" in wcsvi.options && this.boolEval(wcsvi.options.slider_center),
       slideToClickedSlide: true,
       // Allows clicking on a thumbnail to center it in the main swiper
       preloadImages: "slider_lazyload" in wcsvi.options && this.boolEval(wcsvi.options.slider_lazyload) ? false : true,
@@ -7000,7 +7002,13 @@
     if (checkAttrAndOption(title, "svititleattr", options)) img.title = this.decodeEntities(title);
     if (checkAttrAndOption(alt, "svialtattr", options)) img.alt = this.decodeEntities(alt);
     if (id) img.dataset.sviid = id;
-    if (checkAttrAndOption(srcset, "sviesrcset", options)) img.dataset.srcset = srcset;
+    if (checkAttrAndOption(srcset, "sviesrcset", options)) {
+      img.dataset.srcset = srcset;
+      if (!$thumb) {
+        img.srcset = srcset;
+        if ($attr.sizes) img.sizes = $attr.sizes;
+      }
+    }
     if ("lens" in options && Number(options.lens) && !$thumb) img.dataset.zoomImage = src;
     if (height) img.height = !$thumb ? large_image_height : thumb_image_height;
     if (width) img.width = !$thumb ? large_image_width : thumb_image_width;
@@ -7118,8 +7126,9 @@
   };
   Vue.prototype.RetrieveTheSlugs = function($imgID) {
     let sviGal = this.$root.$children[0].gallery.svi;
+    const $target = String($imgID);
     return $jq.map(sviGal, (svi) => {
-      if (svi.imgs.includes($imgID.toString())) {
+      if ((svi.imgs || []).map(String).includes($target)) {
         return [svi.slugs];
       }
     });
@@ -7263,6 +7272,7 @@
         muted: shouldAutoplay ? true : shouldMute,
         clickToPlay: isTrue2(wcsvi.options.video_clickToPlay ?? 1),
         hideControls: isTrue2(wcsvi.options.video_hideControls ?? 1),
+        disableContextMenu: isTrue2(wcsvi.options.video_disableContextMenu ?? 0),
         fullscreen: { enabled: isTrue2(wcsvi.options.video_fullscreen ?? 1) },
         controls: $controls,
         ratio: wcsvi.options.video_ratio === "auto" || pswp ? "" : wcsvi.options.video_ratio ?? "",
@@ -7430,7 +7440,7 @@
     cursor: "pointer",
     attrImageZoomSrc: "zoom-image",
     galleryActiveClass: "active",
-    containLensZoom: true,
+    containLensZoom: !("containlenszoom" in wcsvi.options && parseInt(wcsvi.options.containlenszoom)),
     borderColour: "lens_border" in wcsvi.options && wcsvi.options.lens_border ? wcsvi.options.lens_border : "#888",
     lensBorderSize: "lens_lensBorder" in wcsvi.options && wcsvi.options.lens_lensBorder ? wcsvi.options.lens_lensBorder : 1,
     lensShape: "lens_type" in wcsvi.options && wcsvi.options.lens_type ? wcsvi.options.lens_type : "round",
@@ -7438,8 +7448,8 @@
     zoomType: "lens_zoomtype" in wcsvi.options && wcsvi.options.lens_zoomtype ? wcsvi.options.lens_zoomtype : "lens",
     easing: "lens_easing" in wcsvi.options && parseInt(wcsvi.options.lens_easing) ? true : false,
     scrollZoom: "lens_scrollzoom" in wcsvi.options && wcsvi.options.lens_scrollzoom ? true : false,
-    lensFadeIn: "lens_lensFadeIn" in wcsvi.options && parseInt(wcsvi.options.lens_lensFadeIn) ? wcsvi.options.lens_lensFadeIn : false,
-    zoomWindowFadeIn: "lens_zoomWindowFadeIn" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowFadeIn) ? wcsvi.options.lens_zoomWindowFadeIn : false,
+    lensFadeIn: "lens_lensFadeIn" in wcsvi.options && parseInt(wcsvi.options.lens_lensFadeIn) ? "lens_lensFadeInms" in wcsvi.options && parseInt(wcsvi.options.lens_lensFadeInms) ? parseInt(wcsvi.options.lens_lensFadeInms) : 200 : false,
+    zoomWindowFadeIn: "lens_zoomWindowFadeIn" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowFadeIn) ? "lens_zoomWindowFadeInms" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowFadeInms) ? parseInt(wcsvi.options.lens_zoomWindowFadeInms) : 200 : false,
     zIndex: "lens_zIndex" in wcsvi.options && wcsvi.options.lens_zIndex ? wcsvi.options.lens_zIndex : 1e3,
     zoomWindowWidth: "lens_zoomWindowWidth" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowWidth) ? wcsvi.options.lens_zoomWindowWidth : 400,
     zoomWindowHeight: "lens_zoomWindowHeight" in wcsvi.options && parseInt(wcsvi.options.lens_zoomWindowHeight) ? wcsvi.options.lens_zoomWindowHeight : 400,

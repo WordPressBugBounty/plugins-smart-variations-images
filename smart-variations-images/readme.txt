@@ -1,133 +1,234 @@
 === Smart Variations Images & Swatches for WooCommerce ===
 Contributors: drosendo
-Tags: woocommerce, product variations, image gallery, swatches, ecommerce  
-Requires at least: 6.0 
+Tags: woocommerce, variation swatches, variation images, product gallery, color swatches
+Requires at least: 6.0
 Tested up to: 7.1
 WC requires at least: 8.2
-Stable tag: 5.2.39
+WC tested up to: 11.3.0
+Stable tag: 5.3.2
 Requires PHP: 7.4
-License: GPLv2 or later  
+License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Boost your WooCommerce sales by adding additional gallery images and swatches to variable products with ease.
+Every swatch option free: color, image, text and radio. Plus a whole WooCommerce gallery per color, set once and reused by every size.
 
-## Description
+== Description ==
 
-Smart Variations Images & Swatches is a powerful WooCommerce extension that enhances your product image gallery and adds swatches for an improved shopping experience. Designed to optimize your workflow, this plugin allows you to upload images only once for each variation gallery.
+**Every swatch option is free. No lite version, no locked swatch settings.**
+
+Smart Variations Images & Swatches (SVI) turns WooCommerce variation dropdowns into color, image, text or radio swatches. When a shopper picks one, the whole product gallery changes: the main image and every thumbnail, not only the first photo.
+
+The gallery is the part I have built SVI around since 2015. You create one gallery per attribute value, for example one per color, and every size reuses it. A hoodie in 6 colors and 7 sizes has 42 variations. With SVI it needs 6 galleries, not 42.
+
+WooCommerce 11.1 added a gallery to each variation row. If every variation has its own photos, that may be all you need. SVI is for the catalogs where the same photos repeat across sizes, materials or fits.
 
 [youtube https://youtu.be/QMV8XBeub_o]
 
-By default, WooCommerce swaps only the main variation image. This extension allows visitors to swap gallery images when selecting a product variation, providing a comprehensive view of each product variation. SVI also replaces dropdown fields for variable products with color, image, or label swatches for a more user-friendly display.
+[How native variation galleries compare with galleries per attribute](https://www.smart-variations.com/e-commerce-news-updates/woocommerce-native-vs-attribute-variation-galleries/?utm_source=wporg&utm_medium=listing&utm_campaign=evergreen&utm_content=readme-article)
 
-**Make the smart choice!** [Read the article](https://www.smart-variations.com/additional-images-woocommerce-variations/)
+= Swatches (free, every option) =
 
-## Features
+[Live demo](https://svi.rosendo.pt/free) | [Support](https://wordpress.org/support/plugin/smart-variations-images/)
 
-### Free Features
+SVI PRO does not unlock extra swatch types or swatch settings. Everything below is in the free version.
 
-[Live Demo](http://svi.rosendo.pt/free) | [Support](https://wordpress.org/support/plugin/smart-variations-images/)
+* Color, image, text and radio swatches, including custom (non-taxonomy) attributes
+* Up to four colors in one swatch, for two-tone and multi-color values
+* Shape, size, colors, hover and selected states
+* Tooltips, with an optional large image preview
+* The selected value next to the attribute name, for example "Color: Red"
+* Out-of-stock values can be blurred, dimmed, struck through or hidden
+* Keyboard access: swatches work as a radio group, with arrow keys, Home, End, Space and Enter
+* Per-product overrides, so one product can use different types or colors
+* Swatches on shop and catalog cards, with optional image swap on hover or click. An optional button appears once a swatch is chosen and opens the product page with those values already selected
+* Color and image swatches in the classic "Filter by attribute" widget (block themes can use the native Color/image attribute type)
+* Attributes that have no type can be shown as text, color, image or radio swatches with one setting (Dropdown by default). Nothing is saved to your attributes, and switching back to Dropdown undoes it. Color and image values without a color or image show as text, and you can use the variation image instead
+* Import and export of swatch definitions, with a safe conversion of existing color, image and label data
 
-* Unlimited additional images for each variation
-* Drag & Drop custom sorting option
-* Trigger gallery change on single attribute change
-* Variation Swatches and Photos
-* Stacked Layout Display
-* Display 1 Image under Variation Selection
-* Showcase Variations on product loop pages
-* Slider with navigation arrows
-* Magnifier Lens with Lens, Window, or Inner display
+= Variation galleries (free) =
+
+* One gallery per attribute value, reused by every combination that shares it
+* Unlimited images in each gallery, in the order you drag and drop
+* The gallery changes as soon as one attribute is picked, without waiting for the full combination
+* Filter Attribute Image Swapping: when a shopper filters the shop by color, each product card shows that color's image. Several filtered values split the image into one part per value
+* Showcase Variations on shop and catalog cards: the first image of the first 2 galleries of each product
+* One showcase image under the variation selection
+* Slider with navigation arrows, or a stacked layout
+* Magnifier lens (Lens, Window or Inner)
 * Lightbox
-* Hide thumbnails until variation is chosen
-* WPML Compatible
-* Compatible with page builders
-* Compatible with other Swatches Plugins
-* Compatible with popular themes
-* Responsive design
+* Hide thumbnails until a variation is chosen
+* Shortcode `[svi_wcsc]` for builders and custom layouts
+* WPML-aware
+* Import and export of global plugin settings
 
-### Premium Features
+= SVI PRO: more from the same galleries =
 
-[Live Demo](https://svi.rosendo.pt/pro) | [Upgrade to PRO](https://www.smart-variations.com/smart-variations-images-pro/) | [Support](https://www.smart-variations.com/)
+[Live demo](https://svi.rosendo.pt/pro) | [See SVI PRO plans](https://www.smart-variations.com/?utm_source=wporg&utm_medium=listing&utm_campaign=evergreen&utm_content=readme-pro#pricing)
 
-* All Free Features plus:
-* Video Support
-* Advanced Slider/Lightbox/Magnifier Lens options
-* Stacked Layout
-* Trigger image swap on specific attribute change
-* Add variation image to Cart / Email / Admin order Edit / Order details
-* API actions
-* Import/Export handling
-* Filter Attribute Animation (Sliding effect on hover for Diagonal, Vertical, and Horizontal layouts)
-* And much more...
+The free version is complete for swatches and galleries. SVI PRO is for stores that want the chosen variation to follow the order, and more control over how galleries look. It runs on the same galleries you already built, so nothing has to be set up again.
 
-## Installation
+After the click: the right image follows the order
 
-### Automatic Install From WordPress Dashboard
+* The chosen variation image in the cart, mini-cart and checkout, including the Cart and Checkout blocks
+* The same image in order emails, the admin order screen and the customer's order details
+
+On the product page
+
+* Video in the variation gallery (YouTube, Vimeo or MP4)
+* Showcase Images under Variations with the whole gallery, in columns, instead of one image
+* SVI Global: images added to every variation gallery, at the start or the end
+* Exact-match triggering, so a gallery is used only when the full combination matches
+* Sticky product summary next to a stacked gallery, stacked columns, and stacked layout forced on mobile
+* Quick View append: SVI tries to put its gallery inside the Quick View your theme or another plugin already provides. It does not add Quick View itself
+* Advanced slider, lightbox and magnifier options (pagination, lazy load, lightbox thumbnails, round or square lens, and similar controls), plus image captions
+
+On shop and catalog pages
+
+* Showcase Variations with every gallery, a limit per product and a choice of position
+* "Hide from Product Loop" per gallery, also respected when filtering swaps the product image
+* Filter Attribute Animation for split images
+
+For large catalogs
+
+* CSV import of product galleries through the WooCommerce product importer
+* REST API (GET and POST) for product galleries
+
+SVI PRO includes priority ticket support. There is a 7-day free trial (payment method required) and a 14-day money-back guarantee, no questions asked.
+
+== Installation ==
+
+= Automatic install from the WordPress dashboard =
 
 1. Log in to your admin panel
-2. Navigate to Plugins -> Add New
+2. Go to Plugins → Add New
 3. Search for **Smart Variations Images & Swatches**
-4. Click install and activate respectively
+4. Click Install, then Activate
 
-### Manual Install From WordPress Dashboard
+= Manual install from the WordPress dashboard =
 
 1. Download the plugin
-2. Log in to your site's admin panel and navigate to Plugins -> Add New -> Upload
-3. Click choose file, select the plugin file, and click install
+2. Log in to your admin panel and go to Plugins → Add New → Upload
+3. Choose the plugin file and click Install
 
-### Install Using FTP
+= Install using FTP =
 
 1. Download the plugin
 2. Unzip the file
-3. Launch your favorite FTP client (e.g., FileZilla, FireFTP, CyberDuck). Advanced users can use SSH
-4. Upload the folder to `wp-content/plugins/`
-5. Log in to your WordPress dashboard
-6. Navigate to Plugins -> Installed
-7. Activate the plugin
+3. Upload the folder to `wp-content/plugins/`
+4. Log in to your WordPress dashboard
+5. Go to Plugins → Installed Plugins
+6. Activate the plugin
 
-## Frequently Asked Questions
+== Frequently Asked Questions ==
 
-**Q: Is it compatible with any Theme?**
+= Are some swatch options only available in SVI PRO? =
 
-A: Yes! Themes that follow the default WooCommerce implementation will usually work with this plugin. However, some themes use unorthodox methods to add their own lightbox/slider, which might interfere with the hooks this plugin needs.
+No. From 5.3.0, every swatch option is in the free version. There is no lite or PRO split for swatches. SVI PRO adds gallery features: video, the variation image in the cart, emails and orders, the full showcase, sticky product summary, Quick View append, and finer slider, lightbox and lens controls.
 
-**Q: Does it support page builders?**
+= Is the free version enough for my store? =
 
-A: Yes! Although some builders take over the design and hooks of the pages running them. If you run into issues, I can probably figure something out!
+Often, yes. Swatches, galleries per attribute, the gallery swap, the filter image swap, slider, lens and lightbox are free. Consider SVI PRO when you want the variation image in the cart and in emails, video in the gallery, or the whole gallery shown under the variations and on shop cards.
 
-**Q: How do I configure it to work?**
+= WooCommerce 11.1 has variation galleries. Do I still need SVI? =
 
-1. Create a product and build its attributes & variations
-2. Go to "SVI Variations Gallery" tab and set up the galleries according to the variations you want displayed
+Not always. WooCommerce 11.1 lets you set a gallery on each variation row. If each variation has its own photos, that is simple and free. SVI stores the gallery once per attribute value, so a color gallery is reused by every size. That saves the most time when the same photos repeat across many variations.
+
+= How do I set up the galleries? =
+
+1. Create a product and build its attributes and variations
+2. Open the **SVI Variations Gallery** tab and add a gallery for each attribute value you want to show, for example one per color
 3. Save the product
-4. Go to WooCommerce > SVI > Global TAB and "Enable SVI" so that it works on the Front-End
-5. Good luck with sales :)
-6. Watch the video if you have doubts (https://youtu.be/QMV8XBeub_o)
+4. Go to WooCommerce → SVI → Global and enable SVI so it runs on the storefront
+5. If you want help with the layout, [watch the walkthrough](https://youtu.be/QMV8XBeub_o)
 
-**Q: What Browsers does SVI support?**
+= How do I set up swatches? =
 
-A: SVI doesn’t support IE since it is no longer maintained by Microsoft since at least 2015 and doesn’t support ECMAScript. [READ MORE](https://microsoft.com/en-us/windowsforbusiness/end-of-ie-support)
+1. Turn on **Enable Swatches** under WooCommerce → SVI → Global
+2. Edit each attribute under Products → Attributes and choose a type: color, image, text or radio
+3. Open Configure terms and set the colors, image or label for each value
+4. Optionally, adjust appearance and catalog or filter behavior under WooCommerce → SVI → Swatches
+5. To override types or values on a single product, use the **SVI Swatches** tab on the product edit screen
 
-SVI is tested to run on:
-- Microsoft EDGE
-- Safari
-- Chrome
-- Firefox
+Existing color, image and label swatches from earlier versions are kept. You can convert them from the Swatch Definitions section if you want them stored in the new fields.
 
-**Q: What happens to my theme default gallery display?**
+= What happens to my PRO settings if my license expires? =
 
-A: SVI replaces your default theme settings/options for the image & thumbnails area, so don't expect to use any of your theme features for this area. Otherwise, SVI wouldn't be able to do the magic. Each theme has its own structure, and it wouldn't be feasible to create all the available layouts combinations on the same plugin, so SVI just had to build its own layout.
+They stay saved. Without an active license, PRO settings stop taking effect, and they work again when the license is reactivated. Swatches and the free gallery features keep working.
 
-## Screenshots
+= Is it compatible with any theme? =
 
-1. Display Images according to variation
-2. Lightbox
-3. Set up the combinations
-4. Display variations under Variations Select
-5. Display variations on Product Loop Pages
-6. Replace dropdown fields for your variable products with Swatches
-7. Setup swatches on Product > Attributes
+Themes that follow the default WooCommerce product layout usually work. Some themes replace the product gallery or lightbox with their own code, which can get in the way of the hooks this plugin needs. I do not claim it works with every theme. If you run into a conflict, try a default theme such as Storefront on a staging site first.
+
+= Does it support page builders? =
+
+Often yes, and there is a `[svi_wcsc]` shortcode when you need to place the gallery yourself. Some builders take over the product image area and its hooks. If the gallery does not appear, I can usually find a way to hook it back in.
+
+= What happens to my theme's default gallery? =
+
+SVI replaces the theme's image and thumbnail area on the product page, so theme options for that area no longer apply. Each theme builds this section differently, and it is not practical to support every layout, so SVI uses its own.
+
+= What browsers does SVI support? =
+
+SVI does not support Internet Explorer, which Microsoft ended support for some time ago and which does not handle the JavaScript this plugin needs. [Read more about the end of IE support](https://www.microsoft.com/en-us/windowsforbusiness/end-of-ie-support).
+
+SVI is tested in Microsoft Edge, Safari, Chrome and Firefox.
+
+== Screenshots ==
+
+1. Pick a color and the whole gallery changes: main image and every thumbnail.
+2. The lightbox on a variation gallery.
+3. The SVI Variations Gallery tab, where you build the galleries. The SVI Global gallery and "Hide from Product Loop" shown here are SVI PRO.
+4. Showcase under the variation selection. The free version shows one image; SVI PRO shows the whole gallery.
+5. Color, image, text and radio swatches on the product page. Every swatch option is free.
+6. Swatches on shop and catalog cards. The card image can change on hover or click.
+7. Attribute setup: swatch type, shape, size and tooltips for each attribute.
+8. The Swatches settings tab. Shape, size, border and colors come first; tooltips, out-of-stock behavior, catalog and filter options follow on the same tab.
 
 == Changelog ==
+
+= 5.3.2 =
+* Fix: Product CSV imports now keep the SVI galleries and normalise the imported image data, so imported products render their galleries again.
+* Fix: Existing galleries saved with the exported image data are repaired automatically when the product is opened in the admin.
+
+= 5.3.1 =
+* Fix: Swatch labels and the selected value caption no longer overlap the swatches in themes that stack the variation rows.
+* Fix: Swatches admin screens now load their minified CSS and JavaScript.
+
+= 5.3.0 =
+* New: Every swatch option is now included in the free version. There is no lite or PRO split for swatches. SVI PRO continues to add advanced galleries, not extra swatch settings.
+* New: Color, image, text and radio swatches, including custom (non-taxonomy) attributes and up to four colors in one swatch.
+* New: Swatch styling (shape, size, colors, hover and selected states), tooltips with an optional large image preview, and out-of-stock states (blur, dim, strikethrough or hide).
+* New: Keyboard access for swatches (radiogroup, arrow keys, Home, End, Space and Enter).
+* New: Per-product swatch overrides.
+* New: Swatches on shop and catalog cards, with optional image swap, overflow options, and an optional button that opens the product page with the chosen values selected.
+* New: Swatches in the classic "Filter by attribute" widget.
+* New: Option to show attributes that have no type as text, color, image or radio swatches, without changing stored data, with an optional fallback to the variation image. Import/export of swatch definitions.
+* Fix: The attribute label sat below its swatch row when the theme aligns table cells vertically (WooCommerce block themes do). The label is now measured against the swatch row and lined up with it, at every swatch size and screen width.
+* Fix: The Swatches tab follows the "Enable Swatches" switch in the Global tab immediately, without saving, and its settings are never lost while the tab is hidden.
+* Fix: The selected value now shows next to the attribute name (for example "Color: Red") and updates on click, keyboard and Clear. It previously appeared at the end of the row and disappeared after Clear.
+* Improved: Arrow keys, Home and End now select swatches the way a radio group does, and skip out-of-stock values. On shop and catalog cards they only move focus.
+* Improved: Per-product swatch rules now accept up to four colors, the same as terms. Existing two-color rules keep working.
+* Fix: Per-product rules for custom attributes with uppercase letters in their name now appear in the product panel.
+* Fix: The Quick View AJAX request now responds only when a PRO license is active.
+* Changed: Without an active PRO license, saved PRO settings no longer take effect, for example after moving from PRO to Free. Your values stay saved and work again when the license is reactivated.
+* Fix: Galleries marked "Hide from Product Loop" are now also skipped when filtering swaps the product image on shop and archive pages.
+
+= 5.2.40 =
+* Note: 5.2.40 was not released on its own. These changes ship in 5.3.0.
+* Fix: Preserve WooCommerce variation galleries when SVI is disabled for a product or configured to skip products without SVI data.
+* Remove the Version 6 announcement from admin notices and move its legacy callbacks to a dedicated include.
+* Update: WooCommerce tested up to 11.3.0.
+* Fix: Settings stored under the legacy bare field ids (for example `lens`, `slider_effect`, `columns`) were ignored by the settings screen and the runtime, which only read `<tab>_<section>_<field>` keys, so a save replaced them with defaults. The stored values are now migrated once to the current keys; the legacy keys are kept so the change can be rolled back.
+* Fix: The settings framework cached resolved settings per option group only, so `get_settings()` and `get_settings(true)` could return each other's key shapes within one request.
+* Fix: Export now writes the keys the settings screen reads, and import normalizes payloads (including older bare-id exports) instead of storing them verbatim.
+* Fix: "Show Image in Email" now enables order item images. WooCommerce always passes `show_image` to `woocommerce_email_order_items_args`, so the previous "only when missing" check never applied and the option had no effect. Verified in both classic and block (email editor) emails.
+* Fix: The Import/Export tab reused the same DOM id for the import file field and the import button, producing invalid duplicate ids.
+* Fix: Every gallery option was silently inactive when the JS bundle read `wcsvi.options` as JSON booleans (`true`/`false`), because the guards use `parseInt()`/`parseInt(x) || 0` and `parseInt(true)` is `NaN`. Swatches, lightbox, lens, slider, video, captions, thumbnail and loop options were all disabled by it. Boolean values are now sent as `"1"`/`""`.
+* Fix: "Trigger on Thumbnail click" (attribute swap) never matched the clicked image because the gallery image ids are serialised as numbers while the lookup compared them with strings.
+* Fix: "Show SRCSET" only produced a `data-srcset` attribute, which browsers ignore. Main images now also receive the native `srcset`/`sizes` attributes (thumbnails keep `data-srcset` so lazy load plugins still find it).
+* Fix: Options that were rendered in the settings screen but never read by the runtime: Slider "Centered thumbnails", Magnifier "Disable Lens Zoom Contain", lens/window fade-in duration, and Video "Disable Context Menu".
+* Fix: Products that SVI does not render (SVI disabled, or "Disable SVI display" enabled on a product without SVI data) still had their attribute dropdown replaced by swatches. The scripts that bind the swatch clicks are only loaded when SVI renders the product, so those swatches could not be clicked and the variation was impossible to select. Swatches are now only output when SVI renders that product.
+* Fix: Clicking an image in "Showcase Images under Variations" did nothing unless the showcase lightbox option was enabled. The image is now shown in the main gallery, and the lightbox option still takes priority when enabled.
 
 = 5.2.39 =
 * Fix: Cart, Mini-Cart and Checkout blocks displayed the parent product image even though the Store API payload carried the variation image. The override replaced `src`, `thumbnail`, `srcset` and `sizes` but left `thumbnail_srcset`/`thumbnail_sizes` pointing at the original image, and the blocks resolve `currentSrc` from the thumbnail srcset, so the stale srcset won.
@@ -222,7 +323,6 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 * Added compatibility fix for Gutenberg Product Template — ensures gallery renders inside WooCommerce block `<div data-block-name="woocommerce/product-image-gallery">`.
 * Improved compatibility with block-based themes.
 * Added relocation fallback script for older versions of SVI to maintain gallery positioning.
-
 
 = 5.2.18 =
 * Added feature: Filter Attribute on Shop/archive Pages to show fitlered image
@@ -331,3 +431,8 @@ A: SVI replaces your default theme settings/options for the image & thumbnails a
 * Updated Video player to Plyr 3.7.0
 * Unlocked Stacked Option
 * Unlocked Multiple variation gallery creation
+
+== Upgrade Notice ==
+
+= 5.3.0 =
+Every swatch option is now free. After updating, review WooCommerce → SVI → Swatches. Existing color, image and label data is kept. If your PRO license is not active, saved PRO gallery settings pause until you reactivate it. Your settings are kept.

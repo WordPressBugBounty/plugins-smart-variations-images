@@ -136,7 +136,7 @@ class Wcsvfs_Admin
                     'mediaTitle' => esc_html__('Choose an image', 'smart-variations-images'),
                     'mediaButton' => esc_html__('Use image', 'smart-variations-images'),
                 ),
-                'placeholder' => WC()->plugin_url() . '/assets/images/placeholder.png',
+                'placeholder' => wc_placeholder_img_src('woocommerce_thumbnail'),
             )
         );
     }
@@ -298,7 +298,7 @@ class Wcsvfs_Admin
 
             <label><?php esc_html_e('Image', 'smart-variations-images') ?></label><br>
 			<div class="wcsvfs-term-image-thumbnail" style="float:left;margin-right:10px;">
-				<img src="<?php echo esc_url(WC()->plugin_url() . '/assets/images/placeholder.png') ?>" width="60px" height="60px" />
+				<img src="<?php echo esc_url(wc_placeholder_img_src('woocommerce_thumbnail')) ?>" width="60px" height="60px" />
 			</div>
 			<div style="line-height:60px;">
 				<input type="hidden" class="wcsvfs-input wcsvfs-input-image wcsvfs-term-image" name="swatch" value="" />
@@ -439,7 +439,7 @@ class Wcsvfs_Admin
 
             case 'image':
                 $image = $value ? wp_get_attachment_image_src($value) : '';
-                $image = $image ? $image[0] : WC()->plugin_url() . '/assets/images/placeholder.png';
+                $image = $image ? $image[0] : wc_placeholder_img_src('woocommerce_thumbnail');
                 printf('<img class="swatch-preview swatch-image" src="%s" width="44px" height="44px">', esc_url($image));
                 break;
 
@@ -477,7 +477,7 @@ class Wcsvfs_Admin
         switch ($type) {
             case 'image':
                 $image = $value ? wp_get_attachment_image_src($value) : '';
-                $image = $image ? $image[0] : WC()->plugin_url() . '/assets/images/placeholder.png';
+                $image = $image ? $image[0] : wc_placeholder_img_src('woocommerce_thumbnail');
         ?>
                 <div class="wcsvfs-term-image-thumbnail" style="float:left;margin-right:10px;">
                     <img src="<?php echo esc_url($image) ?>" width="60px" height="60px" />

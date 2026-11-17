@@ -82,6 +82,18 @@ class Smart_Variations_Images {
     public $options = null;
 
     /**
+     * The public-facing handler instance.
+     *
+     * Swatch rendering lives in a separate class and needs to know whether SVI
+     * will render a given product before it hides the native attribute dropdowns.
+     *
+     * @since    5.2.40
+     * @access   private
+     * @var      Smart_Variations_Images_Public|null $plugin_public The public handler instance.
+     */
+    private $plugin_public = null;
+
+    /**
      * Define the core functionality of the plugin.
      *
      * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -95,10 +107,36 @@ class Smart_Variations_Images {
         $this->plugin_name = 'smart-variations-images';
         $this->load_dependencies();
         $this->options = $this->run_reduxMigration();
+        // Without usable premium code, PRO-only options fall back to their
+        // defaults at runtime, whatever an earlier licence saved.
+        if ( empty( $this->options->status ) ) {
+            $this->apply_free_option_limits();
+        }
         $this->options->rtl = is_rtl();
         $this->set_locale();
         $this->define_admin_hooks();
         $this->define_public_hooks();
+    }
+
+    /**
+     * Reset PRO-only options to their defaults when premium code cannot be used.
+     *
+     * A value saved while the licence was active (or imported from another
+     * install) must not drive the front end after the licence lapses, so the
+     * in-memory options object is reset. The stored settings are left untouched
+     * so nothing is lost when the licence is restored.
+     *
+     * @since 5.3.0
+     */
+    private function apply_free_option_limits() : void {
+        if ( !method_exists( $this->wpsf, 'get_locked_field_defaults' ) ) {
+            return;
+        }
+        foreach ( $this->wpsf->get_locked_field_defaults() as $id => $default ) {
+            if ( property_exists( $this->options, $id ) ) {
+                $this->options->{$id} = $default;
+            }
+        }
     }
 
     /**
@@ -132,6 +170,98 @@ class Smart_Variations_Images {
             self::$instance = new self();
         }
         return self::$instance;
+    }
+
+    /**
+     * Normalise stored SVI galleries to attachment IDs.
+     *
+     * `woosvi_slug` normally stores `imgs` as attachment IDs, but CSV exports
+     * and third-party importers can leave the exported `{id, url, full_url}`
+     * entries in place. Resolve them once so every consumer (admin panel,
+     * front-end gallery, export) works with the same shape. A JSON string, as
+     * stored right after a CSV import, is decoded too.
+     *
+     * @since    5.3.2
+     * @param    mixed $galleries Raw `woosvi_slug` value.
+     * @return   array Galleries whose `imgs` entries are attachment IDs.
+     */
+    public static function normalize_galleries( $galleries ) : array {
+        if ( is_string( $galleries ) ) {
+            $decoded = json_decode( $galleries, true );
+            $galleries = ( is_array( $decoded ) ? $decoded : [] );
+        }
+        if ( !is_array( $galleries ) ) {
+            return [];
+        }
+        $normalized = [];
+        foreach ( $galleries as $gallery ) {
+            if ( !is_array( $gallery ) ) {
+                continue;
+            }
+            $imgs = ( isset( $gallery['imgs'] ) && is_array( $gallery['imgs'] ) ? $gallery['imgs'] : [] );
+            $ids = [];
+            foreach ( $imgs as $img ) {
+                $id = self::resolve_gallery_image_id( $img );
+                if ( $id > 0 ) {
+                    $ids[] = $id;
+                }
+            }
+            $gallery['imgs'] = array_values( array_unique( $ids ) );
+            $normalized[] = $gallery;
+        }
+        return $normalized;
+    }
+
+    /**
+     * Resolve a single gallery `imgs` entry to an attachment ID.
+     *
+     * @since    5.3.2
+     * @param    mixed $img Attachment ID or an `{id, url, full_url}` entry.
+     * @return   int Attachment ID, or 0 when it cannot be resolved.
+     */
+    private static function resolve_gallery_image_id( $img ) : int {
+        if ( is_numeric( $img ) ) {
+            return (int) $img;
+        }
+        if ( !is_array( $img ) ) {
+            return 0;
+        }
+        $filename = ( isset( $img['url'] ) ? sanitize_file_name( wp_basename( (string) $img['url'] ) ) : '' );
+        $id = 0;
+        // The export carries the source URL, which only resolves when the same
+        // media item exists on this site.
+        if ( !empty( $img['full_url'] ) ) {
+            $id = (int) attachment_url_to_postid( (string) $img['full_url'] );
+        }
+        if ( $id <= 0 && '' !== $filename ) {
+            $id = self::attachment_id_by_filename( $filename );
+        }
+        // Last resort: the exported ID, accepted only when it still points to
+        // the same file, so a recycled ID cannot pull an unrelated image in.
+        if ( $id <= 0 && !empty( $img['id'] ) && is_numeric( $img['id'] ) ) {
+            $candidate = (int) $img['id'];
+            $candidate_file = sanitize_file_name( wp_basename( (string) wp_get_attachment_url( $candidate ) ) );
+            if ( '' === $filename || $filename === $candidate_file ) {
+                $id = $candidate;
+            }
+        }
+        return $id;
+    }
+
+    /**
+     * Find an attachment ID from its base file name.
+     *
+     * @since    5.3.2
+     * @param    string $filename Base file name.
+     * @return   int Attachment ID, or 0 when not found.
+     */
+    private static function attachment_id_by_filename( string $filename ) : int {
+        global $wpdb;
+        if ( '' === $filename ) {
+            return 0;
+        }
+        $id = (int) $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND (meta_value = %s OR meta_value LIKE %s) ORDER BY post_id ASC LIMIT 1", $filename, '%/' . $wpdb->esc_like( $filename ) ) );
+        return ( $id > 0 ? $id : 0 );
     }
 
     /**
@@ -272,6 +402,7 @@ class Smart_Variations_Images {
             return;
         }
         $plugin_public = new Smart_Variations_Images_Public($this->get_plugin_name(), $this->get_version(), $this->options);
+        $this->plugin_public = $plugin_public;
         if ( $this->is_option_enabled( 'placeholder' ) ) {
             $this->options->placeholder_img = $plugin_public->imgtagger( wc_placeholder_img( $this->options->main_imagesize ) );
         }
@@ -335,7 +466,7 @@ class Smart_Variations_Images {
             $plugin_public,
             'filter_woocommerce_available_variation',
             99,
-            1
+            2
         );
         $this->register_loop_showcase_hooks( $plugin_public );
         if ( $this->is_option_enabled( 'filter_attribute' ) ) {
@@ -350,8 +481,6 @@ class Smart_Variations_Images {
         $this->loader->add_action( 'wp_ajax_woosvi_slugify', $plugin_public, 'woosvi_slugify' );
         $this->loader->add_action( 'wp_ajax_sviloadProduct', $plugin_public, 'loadProductAjax' );
         $this->loader->add_action( 'wp_ajax_nopriv_sviloadProduct', $plugin_public, 'loadProductAjax' );
-        $this->loader->add_action( 'wp_ajax_loadProduct', $plugin_public, 'render_quick_view_frontend' );
-        $this->loader->add_action( 'wp_ajax_nopriv_loadProduct', $plugin_public, 'render_quick_view_frontend' );
         $this->loader->add_action( 'svi_before_images', $plugin_public, 'run_integrations' );
     }
 
@@ -436,6 +565,9 @@ class Smart_Variations_Images {
                 20
             );
         }
+        // Quick View is PRO: its AJAX endpoint only exists with usable premium code.
+        $this->loader->add_action( 'wp_ajax_loadProduct', $plugin_public, 'render_quick_view_frontend' );
+        $this->loader->add_action( 'wp_ajax_nopriv_loadProduct', $plugin_public, 'render_quick_view_frontend' );
     }
 
     /**
@@ -445,6 +577,16 @@ class Smart_Variations_Images {
      */
     public function run() : void {
         $this->loader->run();
+    }
+
+    /**
+     * Get the public-facing handler instance.
+     *
+     * @since    5.2.40
+     * @return   Smart_Variations_Images_Public|null The public handler, or null when SVI is disabled.
+     */
+    public function get_public() : ?Smart_Variations_Images_Public {
+        return $this->plugin_public;
     }
 
     /**
@@ -503,7 +645,7 @@ class Smart_Variations_Images {
     public function add_settings_page() : void {
         $this->wpsf->add_settings_page( [
             'parent_slug' => 'woocommerce',
-            'page_title'  => esc_html__( 'Smart Variations Images & Swatches for WooCommerce', 'smart-variations-images' ),
+            'page_title'  => esc_html__( 'Smart Variations Images & Swatches', 'smart-variations-images' ),
             'menu_title'  => esc_html__( 'SVI', 'smart-variations-images' ),
             'capability'  => 'edit_products',
             'page_slug'   => 'woocommerce_svi',
@@ -517,6 +659,7 @@ class Smart_Variations_Images {
      * @return   stdClass The migrated plugin options.
      */
     public function run_reduxMigration() : stdClass {
+        $this->migrateLegacySettings();
         $redux = get_option( 'woosvi_options' );
         $redux_imported = get_option( 'woosvi_options_settings_imported', false );
         if ( $redux && !$redux_imported ) {
@@ -536,6 +679,33 @@ class Smart_Variations_Images {
             update_option( 'woosvi_options_settings', $wpsfsvi );
         }
         return (object) $this->wpsf->get_settings( true );
+    }
+
+    /**
+     * Move settings stored under bare field ids to the tabbed keys the runtime reads.
+     *
+     * Releases before the tabbed settings screen saved the option with each field
+     * under its own id (e.g. `lens`, `slider_effect`). The settings screen and the
+     * runtime only read `<tab>_<section>_<field>`, so those values were silently
+     * ignored and the next save replaced them with defaults. Copy them once,
+     * leaving the original keys in place so the change can be rolled back.
+     *
+     * @since 5.2.40
+     */
+    private function migrateLegacySettings() : void {
+        if ( get_option( 'woosvi_options_legacy_migrated' ) ) {
+            return;
+        }
+        $stored = get_option( 'woosvi_options_settings' );
+        if ( !is_array( $stored ) || empty( $stored ) ) {
+            update_option( 'woosvi_options_legacy_migrated', SMART_VARIATIONS_IMAGES_VERSION );
+            return;
+        }
+        $normalized = $this->wpsf->normalize_settings( $stored );
+        if ( $normalized ) {
+            update_option( 'woosvi_options_settings', array_merge( $stored, $normalized ) );
+        }
+        update_option( 'woosvi_options_legacy_migrated', SMART_VARIATIONS_IMAGES_VERSION );
     }
 
     /**

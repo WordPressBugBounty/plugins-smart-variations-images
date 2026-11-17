@@ -122,6 +122,14 @@ class Wcsvfs_Public
             return $html;
         }
 
+        // Swatches replace the select box and rely on the SVI front-end handlers.
+        // When SVI does not render this product (SVI disabled, or no SVI data and
+        // "Disable SVI display" enabled) keep the native dropdown instead of
+        // outputting swatches that cannot be clicked.
+        if (!$this->svi_renders_product($args['product'] ?? null)) {
+            return $html;
+        }
+
         $options = $args['options'];
         $product = $args['product'];
         $attribute = $args['attribute'];
@@ -157,6 +165,75 @@ class Wcsvfs_Public
     }
 
     /**
+     * Whether the SVI front-end app will render the given product.
+     *
+     * Swatch markup is only useful when SVI's scripts run, because the click
+     * handlers that keep the hidden attribute select in sync are bound there.
+     *
+     * @param mixed $product Product being rendered.
+     * @return bool True when SVI renders this product.
+     */
+    private function svi_renders_product($product): bool
+    {
+        if (!$product instanceof WC_Product) {
+            return true;
+        }
+
+        if (!function_exists('WC_SVINST')) {
+            return false;
+        }
+
+        $svi = WC_SVINST();
+
+        if (!is_object($svi) || !method_exists($svi, 'get_public')) {
+            return false;
+        }
+
+        $svi_public = $svi->get_public();
+
+        if (!$svi_public || !method_exists($svi_public, 'validate_run')) {
+            return false;
+        }
+
+        return (bool) $svi_public->validate_run($product);
+    }
+
+    /**
+     * Read a swatch value from either term-meta key family.
+     *
+     * Values saved by the WCSVFS module live in `color`, `image` and `label`.
+     * Values saved by the newer swatch implementation live in `svi_swatch_color`,
+     * `svi_swatch_image_id` and `svi_swatch_label`. Reading both keeps the
+     * colours and images of existing stores no matter which one created them.
+     *
+     * @param int    $term_id Term ID.
+     * @param string $key     One of color|image|label.
+     * @return string Stored value, or an empty string.
+     */
+    private function get_swatch_meta(int $term_id, string $key): string
+    {
+        $map = [
+            'color' => ['svi_swatch_color', 'color'],
+            'image' => ['svi_swatch_image_id', 'image'],
+            'label' => ['svi_swatch_label', 'label'],
+        ];
+
+        if (!isset($map[$key])) {
+            return '';
+        }
+
+        foreach ($map[$key] as $meta_key) {
+            $value = get_term_meta($term_id, $meta_key, true);
+
+            if (is_scalar($value) && '' !== trim((string) $value)) {
+                return trim((string) $value);
+            }
+        }
+
+        return '';
+    }
+
+    /**
      * Print HTML of a single swatch
      *
      * @param $html
@@ -186,17 +263,24 @@ class Wcsvfs_Public
             $image = json_encode($image);
         }
 
+        // Read the swatch value from either meta key family so stores configured
+        // by the newer keys keep their colours, images and labels.
+        $swatch_color  = $this->get_swatch_meta($term->term_id, 'color');
+        $swatch_image  = absint($this->get_swatch_meta($term->term_id, 'image'));
+        $swatch_label  = $this->get_swatch_meta($term->term_id, 'label');
+
         switch ($type) {
             case 'color':
-                $color = get_term_meta($term->term_id, 'color', true);
-                list($r, $g, $b) = sscanf($color, "#%02x%02x%02x");
+                $color = sanitize_hex_color($swatch_color);
+                $rgb   = $color ? sscanf($color, "#%02x%02x%02x") : false;
+                $shade = (is_array($rgb) && 3 === count($rgb)) ? sprintf('rgba(%d,%d,%d,0.5)', $rgb[0], $rgb[1], $rgb[2]) : 'transparent';
                 $html = sprintf(
                     '<span data-svfs=\'%s\' class="swatch swatch-color swatch-%s %s" style="background-color:%s;color:%s;" title="%s" data-value="%s">%s</span>',
                     $image,
                     esc_attr($term->slug),
                     $selected,
                     esc_attr($color),
-                    "rgba($r,$g,$b,0.5)",
+                    esc_attr($shade),
                     esc_attr($name),
                     esc_attr($term->slug),
                     $name
@@ -204,8 +288,7 @@ class Wcsvfs_Public
                 break;
 
             case 'image':
-                $image = get_term_meta($term->term_id, 'image', true);
-                $image = $image ? wp_get_attachment_image_src($image) : '';
+                $image = $swatch_image ? wp_get_attachment_image_src($swatch_image) : '';
                 $image = $image ? $image[0] : WC()->plugin_url() . '/assets/images/placeholder.png';
                 $html = sprintf(
                     '<span data-svfs=\'%s\' class="swatch swatch-image swatch-%s %s" title="%s" data-value="%s"><img src="%s" alt="%s"></span>',
@@ -220,8 +303,7 @@ class Wcsvfs_Public
                 break;
 
             case 'label':
-                $label = get_term_meta($term->term_id, 'label', true);
-                $label = $label ? $label : $name;
+                $label = '' !== $swatch_label ? $swatch_label : $name;
                 $html = sprintf(
                     '<span data-svfs=\'%s\' class="swatch swatch-label swatch-%s %s" title="%s" data-value="%s">%s</span>',
                     $image,

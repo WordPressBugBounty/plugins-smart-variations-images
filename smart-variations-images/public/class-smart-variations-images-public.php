@@ -235,11 +235,45 @@ class Smart_Variations_Images_Public {
         $this->ensure_inline_styles();
         wp_localize_script( $this->plugin_name, 'wcsvi', [
             'prod'     => ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? false : true ),
-            'options'  => $this->options,
+            'options'  => $this->normalize_option_values( $this->options ),
             'call'     => admin_url( 'admin-ajax.php' ),
             'version'  => $this->version,
             'products' => [],
         ] );
+    }
+
+    /**
+     * Normalise boolean option values for the front-end payload.
+     *
+     * The front-end scripts test options with `parseInt()`, which returns NaN for
+     * real booleans. Field defaults are booleans, so flags such as
+     * `default_swatches` never enabled their feature. Booleans become "1"/"" so
+     * `parseInt()` and `!value` checks behave as the scripts expect, while
+     * numbers and strings are left untouched.
+     *
+     * @since 5.2.40
+     * @param mixed $value Option value.
+     * @return mixed Normalised value.
+     */
+    private function normalize_option_values( $value ) {
+        if ( is_bool( $value ) ) {
+            return ( $value ? '1' : '' );
+        }
+        if ( is_array( $value ) ) {
+            $normalized = [];
+            foreach ( $value as $key => $item ) {
+                $normalized[$key] = $this->normalize_option_values( $item );
+            }
+            return $normalized;
+        }
+        if ( $value instanceof \stdClass ) {
+            $normalized = new \stdClass();
+            foreach ( get_object_vars( $value ) as $key => $item ) {
+                $normalized->{$key} = $this->normalize_option_values( $item );
+            }
+            return $normalized;
+        }
+        return $value;
     }
 
     /**
@@ -702,11 +736,16 @@ class Smart_Variations_Images_Public {
      * when variations are loaded inline (<= 30 variations).
      *
      * @since 5.2.32
-     * @param array $data Variation data array.
+     * @param array           $data    Variation data array.
+     * @param WC_Product|null $product Parent product, when supplied by the caller.
      * @return array
      */
-    public function filter_woocommerce_available_variation( $data ) {
-        if ( is_array( $data ) && array_key_exists( 'gallery_images_html', $data ) ) {
+    public function filter_woocommerce_available_variation( $data, $product = null ) {
+        if ( !is_array( $data ) || !array_key_exists( 'gallery_images_html', $data ) ) {
+            return $data;
+        }
+        // Callers that omit the product keep the previous unconditional behaviour.
+        if ( !$product instanceof WC_Product || $this->validate_run( $product ) ) {
             $data['gallery_images_html'] = '';
         }
         return $data;
@@ -1102,6 +1141,12 @@ CSS;
      * @since    1.0.0
      */
     public function render_quick_view_frontend() : void {
+        // Quick View is PRO; the endpoint is only registered with usable premium code.
+        if ( !svi_fs()->can_use_premium_code() ) {
+            wp_die( '', '', [
+                'response' => 403,
+            ] );
+        }
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $product_id = ( isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : 0 );
         if ( $product_id <= 0 || get_post_status( $product_id ) !== 'publish' && !current_user_can( 'read_post', $product_id ) ) {
@@ -1249,6 +1294,9 @@ CSS;
             $this->fallback();
             $woosvi_slug = get_post_meta( $this->pid, 'woosvi_slug', true );
         }
+        // Imports can leave `imgs` entries as `{id, url, full_url}` arrays.
+        // Resolve them before anything reads the image IDs.
+        $woosvi_slug = Smart_Variations_Images::normalize_galleries( $woosvi_slug );
         if ( !is_array( $woosvi_slug ) ) {
             // No SVI galleries configured — treat as empty.
             $woosvi_slug = [];
@@ -1628,6 +1676,11 @@ CSS;
     public function svi_product_tn_images() : void {
         global $product;
         if ( !$product instanceof WC_Product ) {
+            return;
+        }
+        // The swatch row replaces this strip on the card; printing both put two
+        // rows of mini images under the product picture.
+        if ( class_exists( 'SVI_Swatches_Frontend' ) && SVI_Swatches_Frontend::product_has_catalog_swatches( $product ) ) {
             return;
         }
         $this->loadMainFiles();
@@ -2220,11 +2273,16 @@ CSS;
         // error_log('SVI: SVI gallery data for product ' . $product->get_id() . ': ' . print_r($data['svi'], true));
         $filtered_values = $filtered_attribute['values'];
         $matching_images = [];
+        // PRO: galleries marked "Hide from Product Loop" are not used for filter swapping either.
+        $respect_loop_hidden = false;
         foreach ( $filtered_values as $filtered_value ) {
             $found = false;
             foreach ( $data['svi'] as $variation ) {
                 if ( !isset( $variation['slugs'] ) || empty( $variation['slugs'] ) || !isset( $variation['imgs'] ) || empty( $variation['imgs'] ) ) {
                     // error_log('SVI: Skipping variation with missing slugs or images for product ' . $product->get_id() . ': ' . print_r($variation, true));
+                    continue;
+                }
+                if ( $respect_loop_hidden && !empty( $variation['loop_hidden'] ) ) {
                     continue;
                 }
                 $slugs = array_map( 'sanitize_title', $variation['slugs'] );
