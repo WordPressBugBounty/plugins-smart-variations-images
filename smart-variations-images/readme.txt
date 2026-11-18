@@ -5,7 +5,7 @@ Requires at least: 6.0
 Tested up to: 7.1
 WC requires at least: 8.2
 WC tested up to: 11.3.0
-Stable tag: 5.3.2
+Stable tag: 5.3.7
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,6 +44,19 @@ SVI PRO does not unlock extra swatch types or swatch settings. Everything below 
 * Color and image swatches in the classic "Filter by attribute" widget (block themes can use the native Color/image attribute type)
 * Attributes that have no type can be shown as text, color, image or radio swatches with one setting (Dropdown by default). Nothing is saved to your attributes, and switching back to Dropdown undoes it. Color and image values without a color or image show as text, and you can use the variation image instead
 * Import and export of swatch definitions, with a safe conversion of existing color, image and label data
+
+= Switching from another swatches plugin? Import in one click =
+
+Already configured your swatches somewhere else? SVI reads them from your database and copies them into its own swatch settings, from **Swatches > Import Swatches** in the SVI settings screen.
+
+* Preview first: a dry run lists every attribute, term value and product override, and says what would happen to it.
+* Nothing is deleted. The other plugin keeps all of its data and SVI values that already exist are kept unless you tick "Overwrite". Back up your database before you start, and use **Undo** to return SVI to exactly what it was before the import.
+* The import runs in batches with a progress bar and per-item results, and can be resumed if the tab closes.
+* WP-CLI is available too: `wp svi import-swatches --list`, `--from=<plugin> --dry-run`, `--from=<plugin> --overwrite`, `--undo=<run-id>`.
+
+Supported sources (free versions from the WordPress.org directory): Woo Variation Swatches, Variation Swatches for WooCommerce, WCBoost Variation Swatches, Variation Swatches for WooCommerce (WooSuite), Product Variations Swatches for WooCommerce (VillaTheme), Woo Product Variation Swatches (RadiusTheme), Product Variation Swatches for WooCommerce (ThemeHunk) and WPC Variation Swatches.
+
+What is imported: attribute swatch types, term colors (including dual color where the source stores it), swatch images and labels, per-product overrides where the source has them, and the matching global swatch settings. What has no SVI equivalent is listed in the preview, item by item, for example tooltips and groups, per-attribute shape or size, and the source's own theme or profile settings.
 
 = Variation galleries (free) =
 
@@ -185,6 +198,26 @@ SVI is tested in Microsoft Edge, Safari, Chrome and Firefox.
 8. The Swatches settings tab. Shape, size, border and colors come first; tooltips, out-of-stock behavior, catalog and filter options follow on the same tab.
 
 == Changelog ==
+
+= 5.3.7 =
+* Fix: In the free version the locked SVI PRO options showed the PRO badge on its own centred line and hid their description, which left the control column empty. The badge now sits with the option text and every locked option explains what it does.
+* New: A Support menu in every edition, pointing to the right place: the WordPress.org forum for the free version, the smart-variations.com support area for SVI PRO and the contact form for self-managed installs. It used to open the smart-variations.com homepage.
+
+= 5.3.6 =
+* Fix: Radio-style swatches kept their text when selected. They were inheriting the filled pill used for colours and images, so the label turned white on a transparent background and disappeared; the radio circle marks the choice and the label stays readable (and bold) now.
+
+= 5.3.5 =
+* New: Showcase variations on hover now change the product card image, like catalog swatches do, instead of covering the card and hiding its title, price and swatches. Works with themes whose product cards do not use the default WooCommerce markup (tested with Storefront, OceanWP, Flatsome and Twenty Twenty-Five).
+* Fix: The attribute filter widget no longer nests a second list item inside WooCommerce's own one, so the swatches line up with the widget title instead of being indented by the theme's bullet padding. Active filters keep their ring and bold label.
+
+= 5.3.4 =
+* Fix: Swatches on shop and catalog cards use the full card width again, and text, label and radio values size to their content instead of being clipped by the fixed swatch square.
+* Fix: Image swatches reset the theme's loop-image margin, padding and border, so the photo fills the swatch in themes such as Storefront.
+
+= 5.3.3 =
+* New: Import swatches from another swatches plugin, with a dry run first, batched import with progress, per-run undo and WP-CLI. Supported: Woo Variation Swatches, Variation Swatches for WooCommerce, WCBoost Variation Swatches, Variation Swatches for WooCommerce (WooSuite), Product Variations Swatches for WooCommerce (VillaTheme), Woo Product Variation Swatches (RadiusTheme), Product Variation Swatches for WooCommerce (ThemeHunk) and WPC Variation Swatches. Nothing is deleted in the other plugin, and the screen asks for a backup before you start.
+* New: The Import Swatches tab follows the "Enable Swatches" switch, is only shown when a supported plugin's data is found, and the Swatches tab points to it.
+* Fix: Activating SVI without WooCommerce no longer throws fatal errors. SVI now declares WooCommerce as a plugin dependency (WordPress 6.5+ blocks the invalid activation and blocks deactivating WooCommerce while SVI is active), stays dormant with a clear notice elsewhere, and the settings URL goes to the Plugins screen instead of "Sorry, you are not allowed to access this page."
 
 = 5.3.2 =
 * Fix: Product CSV imports now keep the SVI galleries and normalise the imported image data, so imported products render their galleries again.

@@ -7802,49 +7802,117 @@
       }
     }
     if ($jq(".svitn_img").length > 0) {
-      const handleImageInteraction = function() {
-        const $parentProduct = $jq(this).closest($loopEl);
-        let $imageContainer = $parentProduct.find($loopImg).first().parent();
-        if ($imageContainer.is("li")) {
-          $imageContainer = $imageContainer.closest("ul").parent();
-        }
-        $jq(".svitn_current_img").removeClass("svitn_current_img");
-        $jq(this).addClass("svitn_current_img");
-        loadImage($imageContainer, this, $jq(this).index());
+      const pickLoopImage = ($scope) => {
+        const $candidates = $scope.find($loopImg).not(".svitn_img,.svi-swatch-image,.svi-tooltip img");
+        const $preferred = $candidates.filter(".attachment-woocommerce_thumbnail, .wp-post-image, .attachment-shop_catalog").first();
+        if ($preferred.length) return $preferred;
+        if ($candidates.length) return $candidates.first();
+        return $scope.find("img").not(".svitn_img,.svi-swatch-image,.svi-tooltip img").first();
       };
-      $jq(".svitn_img").on("mouseenter", handleImageInteraction);
-      $jq(".svitn_img").on("click", handleImageInteraction);
-      $jq(".svitn_img").on("mouseleave", function() {
-        const $parentProduct = $jq(this).closest($loopEl);
-        let $imageContainer = $parentProduct.find($loopImg).first().parent();
-        if ($imageContainer.is("li")) {
-          $imageContainer = $imageContainer.closest("ul").parent();
+      const cardOf = (imgElement) => {
+        const $start = $jq(imgElement);
+        const $card = $start.closest($loopEl);
+        return $card.length ? $card : $start.closest(".svitn_wrapper").parent();
+      };
+      /**
+       * Catalog swatches climb the DOM a few levels to find the card picture;
+       * the showcase does the same so themes whose loop markup does not match
+       * the configured selectors keep working.
+       */
+      const findLoopImage = (imgElement) => {
+        let $node = cardOf(imgElement);
+        for (let depth = 0; depth < 6 && $node.length; depth += 1) {
+          const $found = pickLoopImage($node);
+          if ($found.length) return $found;
+          $node = $node.parent();
         }
-        const $accordionContainer = $parentProduct.find(".svi-image-compare");
-        $jq(".svitn_current_img").removeClass("svitn_current_img");
-        if ($accordionContainer.length > 0) {
-          const defaultBackground = $imageContainer.attr("data-default-background") || "none";
-          $imageContainer.css("background", defaultBackground);
-          $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").css({ opacity: "" });
-        } else {
-          const defaultBackground = $imageContainer.attr("data-default-background") || "none";
-          $imageContainer.css("background", defaultBackground);
-          $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").removeAttr("style");
-        }
-      });
-      const loadImage = ($imageContainer, imgElement, index2) => {
-        const imageSrc = $jq(imgElement).data("large_image");
+        return $jq();
+      };
+      const LAZY_ATTRS = ["data-src", "data-lazy-src", "data-old-src", "data-lazy-srcset"];
+      /**
+       * Swap the card's main image, the same way a catalog swatch does, so the
+       * title, price and swatches stay where they are. Themes that render the
+       * loop image as a CSS background keep the previous behaviour.
+       */
+      const loadImage = (imgElement) => {
+        const $source = $jq(imgElement);
+        const imageSrc = $source.data("src") || $source.data("large_image") || $source.attr("src");
         if (!imageSrc || typeof imageSrc !== "string" || !imageSrc.trim()) {
           console.error("SVI: Loop showcase - Invalid image URL:", imageSrc);
           return;
         }
-        $imageContainer.css({
-          background: `url(${imageSrc}) no-repeat center center`,
-          "background-size": "cover",
-          display: "block"
+        const $image = findLoopImage(imgElement);
+        if (!$image.length) {
+          const $imageContainer = cardOf(imgElement);
+          $imageContainer.css({
+            background: `url(${imageSrc}) no-repeat center center`,
+            "background-size": "cover",
+            display: "block"
+          });
+          $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").css({ opacity: "0" });
+          return;
+        }
+        if (typeof $image.data("svi-default-src") === "undefined") {
+          $image.data("svi-default-src", $image.attr("src"));
+          $image.data("svi-default-srcset", $image.attr("srcset"));
+          $image.data("svi-default-sizes", $image.attr("sizes"));
+          const lazyDefaults = {};
+          LAZY_ATTRS.forEach((attr) => {
+            const value = $image.attr(attr);
+            if (typeof value !== "undefined") lazyDefaults[attr] = value;
+          });
+          $image.data("svi-default-lazy", lazyDefaults);
+        }
+        $image.closest("picture").find("source").each(function() {
+          const $sourceEl = $jq(this);
+          if (typeof $sourceEl.attr("data-svi-default-srcset") === "undefined") {
+            $sourceEl.attr("data-svi-default-srcset", $sourceEl.attr("srcset") || "");
+          }
+          $sourceEl.removeAttr("srcset");
         });
-        $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").css({ opacity: "0" });
+        const lazyDefaults = $image.data("svi-default-lazy") || {};
+        LAZY_ATTRS.forEach((attr) => {
+          if (typeof lazyDefaults[attr] !== "undefined") $image.attr(attr, imageSrc);
+        });
+        $image.attr("src", imageSrc).removeAttr("srcset").removeAttr("sizes");
       };
+      const restoreImage = (imgElement) => {
+        const $image = findLoopImage(imgElement);
+        if (!$image.length) {
+          const $imageContainer = cardOf(imgElement);
+          const defaultBackground = $imageContainer.attr("data-default-background") || "none";
+          $imageContainer.css("background", defaultBackground);
+          $imageContainer.find("*").not(".svitn_wrapper,.svitn_img").removeAttr("style");
+          return;
+        }
+        const defaultSrc = $image.data("svi-default-src");
+        if (typeof defaultSrc === "undefined") return;
+        $image.attr("src", defaultSrc);
+        const defaultSrcset = $image.data("svi-default-srcset");
+        const defaultSizes = $image.data("svi-default-sizes");
+        if (defaultSrcset) { $image.attr("srcset", defaultSrcset); } else { $image.removeAttr("srcset"); }
+        if (defaultSizes) { $image.attr("sizes", defaultSizes); } else { $image.removeAttr("sizes"); }
+        $image.closest("picture").find("source").each(function() {
+          const $sourceEl = $jq(this);
+          const defaultSrcset = $sourceEl.attr("data-svi-default-srcset");
+          if (typeof defaultSrcset === "undefined") return;
+          if (defaultSrcset) { $sourceEl.attr("srcset", defaultSrcset); } else { $sourceEl.removeAttr("srcset"); }
+          $sourceEl.removeAttr("data-svi-default-srcset");
+        });
+        const lazyDefaults = $image.data("svi-default-lazy") || {};
+        LAZY_ATTRS.forEach((attr) => {
+          if (typeof lazyDefaults[attr] !== "undefined") $image.attr(attr, lazyDefaults[attr]);
+        });
+      };
+      $jq(document).off("mouseenter.sviShowcase click.sviShowcase", ".svitn_img").on("mouseenter.sviShowcase click.sviShowcase", ".svitn_img", function() {
+        $jq(".svitn_current_img").removeClass("svitn_current_img");
+        $jq(this).addClass("svitn_current_img");
+        loadImage(this);
+      });
+      $jq(document).off("mouseleave.sviShowcase", ".svitn_img").on("mouseleave.sviShowcase", ".svitn_img", function() {
+        $jq(".svitn_current_img").removeClass("svitn_current_img");
+        restoreImage(this);
+      });
     }
   };
   const setupFilterAttributeAccordion = () => {

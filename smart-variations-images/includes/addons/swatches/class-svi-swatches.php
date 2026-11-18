@@ -438,7 +438,7 @@ class SVI_Swatches
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 		$url    = plugin_dir_url(__FILE__);
 		// Bump on every asset change so browsers pick the new file up.
-		$ver    = '1.3.6';
+		$ver    = '1.3.10';
 
 		wp_enqueue_style('svi-swatches', $url . 'public/assets/css/swatches' . $suffix . '.css', [], $ver);
 
@@ -1067,11 +1067,11 @@ class SVI_Swatches
 		wp_enqueue_style('wp-color-picker');
 
 		if ($is_settings) {
-			wp_enqueue_style('svi-swatches-admin', plugin_dir_url(__FILE__) . 'public/assets/css/swatches-admin' . SMART_SCRIPT_DEBUG . '.css', [], '1.3.6');
+			wp_enqueue_style('svi-swatches-admin', plugin_dir_url(__FILE__) . 'public/assets/css/swatches-admin' . SMART_SCRIPT_DEBUG . '.css', [], '1.3.7');
 		}
 
 		wp_enqueue_media();
-		wp_enqueue_script('svi-swatches-admin', plugin_dir_url(__FILE__) . 'public/assets/js/admin-swatches' . SMART_SCRIPT_DEBUG . '.js', ['jquery', 'wp-color-picker'], '1.3.6', true);
+		wp_enqueue_script('svi-swatches-admin', plugin_dir_url(__FILE__) . 'public/assets/js/admin-swatches' . SMART_SCRIPT_DEBUG . '.js', ['jquery', 'wp-color-picker'], '1.3.7', true);
 
 		wp_localize_script('svi-swatches-admin', 'sviSwatchesImport', [
 			'action' => admin_url('admin-post.php'),

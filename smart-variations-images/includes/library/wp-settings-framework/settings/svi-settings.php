@@ -63,6 +63,11 @@ function wpsfsvi_svi_tabbed_settings(  $wpsfsvi_settings  ) {
     $wpsfsvi_settings['sections'][] = wpsfsvi_svi_options_tab_thumbnails();
     $wpsfsvi_settings['sections'][] = wpsfsvi_svi_options_tab_fixes();
     $wpsfsvi_settings['tabs'][] = array(
+        'id'    => 'support',
+        'title' => esc_html__( 'Support', 'smart-variations-images' ),
+    );
+    $wpsfsvi_settings['sections'][] = wpsfsvi_svi_options_tab_support();
+    $wpsfsvi_settings['tabs'][] = array(
         'id'    => 'import_export',
         'title' => esc_html__( 'Import / Export', 'smart-variations-images' ),
     );
@@ -217,9 +222,9 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
         array(
             'id'       => 'filter_attribute_animation',
             'type'     => ( svi_fs()->can_use_premium_code__premium_only() ? 'toggle' : 'custom' ),
-            'title'    => __( 'Enable Filter Attribute Animation', 'smart-variations-images' ) . (( svi_fs()->can_use_premium_code__premium_only() ? '' : SMART_SVI_PROVS )),
+            'title'    => __( 'Enable Filter Attribute Animation', 'smart-variations-images' ),
             'subtitle' => __( 'Add sliding animation on hover', 'smart-variations-images' ),
-            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'smart-variations-images' ) : esc_html__( 'SVI PRO adds a sliding animation on hover to split images (Diagonal, Vertical, Horizontal). Filter Attribute Image Swapping itself is free.', 'smart-variations-images' ) . ' <a href="' . esc_url( svi_fs()->get_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a>' ),
+            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'smart-variations-images' ) : SMART_SVI_PROVS . ' ' . esc_html__( 'SVI PRO adds a sliding animation on hover to split images (Diagonal, Vertical, Horizontal). Filter Attribute Image Swapping itself is free.', 'smart-variations-images' ) . ' <a href="' . esc_url( svi_fs()->get_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a>' ),
             'output'   => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'wpsfsvisvi_info' ),
             'style'    => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'warning' ),
             'show_if'  => array(array(
@@ -1334,6 +1339,7 @@ function wpsfsvi_svi_options_tab_lens() {
                 'id'      => 'lens_lensFadeIn',
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'title'   => __( 'Fade In Effect', 'smart-variations-images' ),
+                'desc'    => __( 'Fade the lens in when it appears instead of showing it at once.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1377,6 +1383,7 @@ function wpsfsvi_svi_options_tab_lens() {
                 'id'      => 'lens_zoomWindowFadeIn',
                 'type'    => wpsfsvi_svi_pass( 't' ),
                 'title'   => __( 'Window Fade In Effect', 'smart-variations-images' ),
+                'desc'    => __( 'Fade the zoom window in when it appears instead of showing it at once.', 'smart-variations-images' ),
                 'show_if' => array(array(array(
                     'field' => 'main_section_global_default',
                     'value' => array('1'),
@@ -1986,6 +1993,68 @@ function wpsfsvi_svi_options_tab_fixes() {
 }
 
 /**
+ * Where support lives for this install.
+ *
+ * The free build is supported on WordPress.org, a licensed PRO install on the
+ * smart-variations.com support area, and a self-managed PRO build has no
+ * support area, so it points to the contact form instead.
+ *
+ * @param bool $is_premium_build       Premium code is present.
+ * @param bool $can_use_premium_code   PRO license is valid.
+ * @return array{url:string,title:string,intro:string,cta:string}
+ */
+function wpsfsvi_svi_support_target(  $is_premium_build, $can_use_premium_code  ) {
+    if ( !$is_premium_build ) {
+        return array(
+            'url'   => 'https://wordpress.org/support/plugin/smart-variations-images/',
+            'title' => __( 'WordPress.org support forum', 'smart-variations-images' ),
+            'intro' => __( 'The free version is supported on the WordPress.org forums. Open a topic with your site URL, the SVI version and the steps to reproduce the problem.', 'smart-variations-images' ),
+            'cta'   => __( 'Open the support forum', 'smart-variations-images' ),
+        );
+    }
+    if ( $can_use_premium_code ) {
+        return array(
+            'url'   => 'https://www.smart-variations.com/support/',
+            'title' => __( 'SVI PRO support', 'smart-variations-images' ),
+            'intro' => __( 'Your SVI PRO license includes support on smart-variations.com. Log in there to open a ticket.', 'smart-variations-images' ),
+            'cta'   => __( 'Open the support area', 'smart-variations-images' ),
+        );
+    }
+    return array(
+        'url'   => 'https://www.smart-variations.com/contact-us/',
+        'title' => __( 'Support by email', 'smart-variations-images' ),
+        'intro' => __( 'This install is managed by you, so there is no support account attached to it. Send the details of the problem with the contact form and you will get an answer by email.', 'smart-variations-images' ),
+        'cta'   => __( 'Contact support', 'smart-variations-images' ),
+    );
+}
+
+function wpsfsvi_svi_options_tab_support() {
+    $target = wpsfsvi_svi_support_target( svi_fs()->is_premium(), svi_fs()->can_use_premium_code__premium_only() );
+    $desc = sprintf(
+        '<p><b>%1$s</b></p><p>%2$s</p><p><a class="button button-primary" href="%3$s" target="_blank" rel="noopener">%4$s</a></p>',
+        esc_html( $target['title'] ),
+        esc_html( $target['intro'] ),
+        esc_url( $target['url'] ),
+        esc_html( $target['cta'] )
+    );
+    $desc .= '<p><b>' . esc_html__( 'Before you write', 'smart-variations-images' ) . '</b></p>' . '<p>' . esc_html__( 'WordPress has a long history of conflicts between plugins and themes, so most reports are solved faster with:', 'smart-variations-images' ) . '</p>' . '<ul>' . '<li>' . esc_html__( 'Your WordPress, WooCommerce, theme and SVI versions.', 'smart-variations-images' ) . '</li>' . '<li>' . esc_html__( 'The plugin or theme you think is involved, and whether the problem disappears when it is switched off.', 'smart-variations-images' ) . '</li>' . '<li>' . esc_html__( 'A link to the product page where it happens, plus a screenshot or short screen recording.', 'smart-variations-images' ) . '</li>' . '</ul>' . '<p>' . esc_html__( 'Support works on Lisbon (Portugal) time, 9am to 6pm, and is not a full-time desk, so please allow some time for the answer.', 'smart-variations-images' ) . '</p>';
+    return array(
+        'section_title' => __( 'Support', 'smart-variations-images' ),
+        'tab_id'        => 'support',
+        'section_id'    => 'section_support',
+        'section_order' => 10,
+        'fields'        => array(array(
+            'id'     => 'info_support_svi',
+            'title'  => '',
+            'type'   => 'custom',
+            'output' => 'wpsfsvisvi_info',
+            'style'  => 'success',
+            'desc'   => $desc,
+        )),
+    );
+}
+
+/**
  * Get size information for all currently-registered image sizes.
  *
  * @global $_wp_additional_image_sizes
@@ -2026,7 +2095,13 @@ function wpsfsvisvi_info(  $args  ) {
     $style = ( isset( $args['style'] ) ? sanitize_html_class( $args['style'] ) : 'info' );
     $class = ( isset( $args['class'] ) ? sanitize_html_class( $args['class'] ) : '' );
     $desc = ( isset( $args['desc'] ) ? wp_kses_post( $args['desc'] ) : '' );
-    echo '<div class="notice wpsfsvi-info notice-' . esc_attr( $style ) . ' inline ' . esc_attr( $class ) . '"><p>' . wp_kses_post( $desc ) . '</p></div>';
+    // Only wrap plain text in a paragraph: block markup already brings its own,
+    // and wrapping it printed an empty paragraph above the content.
+    if ( !preg_match( '/<(p|ul|ol|h[1-6]|div|table)\\b/i', $desc ) ) {
+        $desc = '<p>' . $desc . '</p>';
+    }
+    echo '<div class="notice wpsfsvi-info notice-' . esc_attr( $style ) . ' inline ' . esc_attr( $class ) . '">' . $desc . '</div>';
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 }
 
 function wpsfsvi_svi_tabbed_settings_clean(  $args  ) {
@@ -2034,8 +2109,12 @@ function wpsfsvi_svi_tabbed_settings_clean(  $args  ) {
         foreach ( $fields['fields'] as $k2 => $field ) {
             if ( $field['type'] == 'svi' ) {
                 unset($args['sections'][$k]['fields'][$k2]['show_if']);
-                $title = $args['sections'][$k]['fields'][$k2]['title'];
-                $args['sections'][$k]['fields'][$k2]['title'] = $title . SMART_SVI_PROVS;
+                // The badge belongs with the option text in the control column,
+                // next to the controls of the rows above and below. Prefixed to
+                // the title it dropped onto its own line, centred in the narrow
+                // label column, and left the control column empty.
+                $desc = ( isset( $args['sections'][$k]['fields'][$k2]['desc'] ) ? (string) $args['sections'][$k]['fields'][$k2]['desc'] : '' );
+                $args['sections'][$k]['fields'][$k2]['desc'] = SMART_SVI_PROVS . (( $desc === '' ? '' : ' ' . $desc ));
                 $args['sections'][$k]['fields'][$k2]['type'] = 'custom';
                 $args['sections'][$k]['fields'][$k2]['style'] = 'warning';
                 $args['sections'][$k]['fields'][$k2]['output'] = 'wpsfsvisvi_info';

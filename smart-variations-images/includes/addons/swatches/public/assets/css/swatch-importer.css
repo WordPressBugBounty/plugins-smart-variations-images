@@ -1,0 +1,143 @@
+.svi-importer {
+	max-width: 960px;
+}
+
+.svi-importer__notice {
+	margin: 12px 0;
+	padding: 10px 12px;
+	border-left: 4px solid #dba617;
+	background: #fcf9e8;
+}
+
+.svi-importer__notice p {
+	margin: 0;
+}
+
+.svi-importer__summary {
+	display: flex;
+	gap: 14px;
+	flex-wrap: wrap;
+	margin: 8px 0 18px;
+	font-size: 13px;
+}
+
+.svi-importer__summary-item--created {
+	color: #007017;
+	font-weight: 600;
+}
+
+.svi-importer__summary-item--updated {
+	color: #2271b1;
+	font-weight: 600;
+}
+
+.svi-importer__summary-item--kept,
+.svi-importer__summary-item--skipped {
+	color: #b32d2e;
+}
+
+.svi-importer__sources {
+	margin: 12px 0;
+}
+
+.svi-importer__options {
+	margin: 16px 0;
+}
+
+.svi-importer__part,
+.svi-importer__overwrite {
+	display: block;
+	margin: 4px 0;
+}
+
+.svi-importer__overwrite .description {
+	display: inline;
+	margin-left: 6px;
+}
+
+.svi-importer__actions {
+	margin: 16px 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.svi-importer__scan {
+	min-height: 20px;
+	margin: 8px 0;
+	color: #1d2327;
+}
+
+.svi-importer__scan--error {
+	color: #b32d2e;
+}
+
+.svi-importer__progress {
+	margin: 12px 0;
+}
+
+.svi-importer__bar {
+	height: 10px;
+	background: #dcdcde;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.svi-importer__bar span {
+	display: block;
+	height: 100%;
+	width: 0;
+	background: #2271b1;
+	transition: width .2s ease-in-out;
+}
+
+.svi-importer__progress-text {
+	margin: 4px 0 0;
+	font-size: 12px;
+	color: #50575e;
+}
+
+.svi-importer__results {
+	margin: 12px 0;
+	max-height: 420px;
+	overflow: auto;
+}
+
+.svi-importer__row--created td:nth-child(2) {
+	color: #007017;
+}
+
+.svi-importer__row--updated td:nth-child(2) {
+	color: #2271b1;
+}
+
+.svi-importer__row--kept td:nth-child(2),
+.svi-importer__row--skipped td:nth-child(2) {
+	color: #b32d2e;
+}
+
+.svi-importer__runs {
+	margin: 6px 0;
+}
+
+.svi-importer__runs li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 2px 0;
+}
+
+.svi-import-notice {
+	margin: 12px 0;
+	padding: 10px 12px;
+	border-left: 4px solid #2271b1;
+	background: #f0f6fc;
+}
+
+.svi-import-notice p {
+	margin: 0;
+}
+
+.svi-import-notice a {
+	font-weight: 600;
+}

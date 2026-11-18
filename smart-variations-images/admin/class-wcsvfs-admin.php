@@ -150,7 +150,7 @@ class Wcsvfs_Admin
         echo '<p>' . sprintf(
             /* translators: %s: plugin name. */
             esc_html__('%s is enabled but not effective. It requires WooCommerce in order to work.', 'smart-variations-images'),
-            esc_html(WCVFS_NAME)
+            '<strong>' . esc_html__('Smart Variations Images & Swatches', 'smart-variations-images') . '</strong>'
         ) . '</p>';
         echo '</div>';
     }

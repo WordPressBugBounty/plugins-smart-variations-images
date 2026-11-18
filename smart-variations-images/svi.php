@@ -17,9 +17,10 @@
  * Plugin Name:       Smart Variations Images & Swatches for WooCommerce
  * Plugin URI:        https://www.smart-variations.com/
  * Description:       Every swatch option free: color, image, text and radio. Plus a whole WooCommerce gallery per color, set once and reused by every size.
- * Version:           5.3.2
+ * Version:           5.3.7
  * WC requires at least: 8.2
  * WC tested up to:   11.3.0
+ * Requires Plugins:  woocommerce
  * Author:            David Rosendo
  * Author URI:        https://www.rosendo.pt
  * License:           GPL-2.0+
@@ -34,7 +35,7 @@ if ( !defined( 'WPINC' ) ) {
 /**
  * Define plugin constants.
  */
-define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.3.2' );
+define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.3.7' );
 // Current plugin version.
 define( 'WCSVFS_VERSION', '1.0' );
 // Version for additional functionality.
@@ -120,9 +121,78 @@ function activate_smart_variations_images() {
 register_activation_hook( __FILE__, 'activate_smart_variations_images' );
 /**
  * Include the core plugin class and additional functionality.
+ *
+ * Plugins are read in alphabetical order, so WooCommerce is not loaded yet when
+ * this file runs: "smart-..." sorts before "woocommerce". The check therefore
+ * happens on `plugins_loaded`, and without WooCommerce the plugin stays dormant
+ * and only shows an admin notice instead of calling functions that do not exist.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-smart-variations-images.php';
-require plugin_dir_path( __FILE__ ) . 'includes/class-wcsvfs.php';
+function svi_boot() {
+    if ( !class_exists( 'WooCommerce' ) ) {
+        add_action( 'admin_notices', 'svi_missing_woocommerce_notice' );
+        add_action( 'network_admin_notices', 'svi_missing_woocommerce_notice' );
+        add_action( 'admin_menu', 'svi_redirect_missing_woocommerce_screen' );
+        return;
+    }
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-smart-variations-images.php';
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-wcsvfs.php';
+    /**
+     * Swatches module: new renderer, settings tab and per-product overrides.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/swatches/bootstrap-5x.php';
+    // Run the plugin after all plugins are loaded.
+    add_action( 'init', 'run_smart_variations_images' );
+}
+
+add_action( 'plugins_loaded', 'svi_boot', 0 );
+/**
+ * Explain why the plugin is idle when WooCommerce is missing.
+ *
+ * Nothing is installed automatically: the notice only links to the WooCommerce
+ * installer or to the activation link, and the user decides.
+ */
+function svi_missing_woocommerce_notice() {
+    if ( !current_user_can( 'activate_plugins' ) ) {
+        return;
+    }
+    $woocommerce = 'woocommerce/woocommerce.php';
+    $plugins = ( function_exists( 'get_plugins' ) ? get_plugins() : [] );
+    $installed = isset( $plugins[$woocommerce] );
+    $active = $installed && function_exists( 'is_plugin_active' ) && is_plugin_active( $woocommerce );
+    if ( $active ) {
+        return;
+    }
+    $action = ( $installed ? sprintf( '<a href="%1$s">%2$s</a>', esc_url( wp_nonce_url( self_admin_url( 'plugins.php?action=activate&amp;plugin=' . $woocommerce . '&amp;plugin_status=all&amp;paged=1' ), 'activate-plugin_' . $woocommerce ) ), esc_html__( 'Activate WooCommerce', 'smart-variations-images' ) ) : sprintf( '<a href="%1$s">%2$s</a>', esc_url( self_admin_url( 'plugin-install.php?s=woocommerce&amp;tab=search&amp;type=term' ) ), esc_html__( 'Install WooCommerce', 'smart-variations-images' ) ) );
+    printf( '<div class="notice notice-error"><p>%1$s %2$s</p></div>', sprintf( 
+        /* translators: %s: plugin name. */
+        esc_html__( '%s is enabled but not effective. It requires WooCommerce in order to work.', 'smart-variations-images' ),
+        '<strong>' . esc_html__( 'Smart Variations Images & Swatches', 'smart-variations-images' ) . '</strong>'
+     ), $action );
+}
+
+/**
+ * Send the settings URL back to the Plugins screen while WooCommerce is missing.
+ *
+ * Freemius registers this menu under WooCommerce, so with WooCommerce inactive
+ * the page is unknown and WordPress ends the request with "Sorry, you are not
+ * allowed to access this page." before any screen can render. The redirect runs
+ * on `admin_menu`, which fires before that check, and lands on the Plugins
+ * screen where the notice explains what is missing.
+ *
+ * @return void
+ */
+function svi_redirect_missing_woocommerce_screen() {
+    if ( !isset( $_GET['page'] ) || 'woosvi-options-settings' !== $_GET['page'] ) {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only redirect.
+        return;
+    }
+    if ( !current_user_can( 'activate_plugins' ) ) {
+        return;
+    }
+    wp_safe_redirect( add_query_arg( 'svi_requires_woocommerce', '1', self_admin_url( 'plugins.php' ) ) );
+    exit;
+}
+
 /**
  * Begins execution of the plugin.
  *
@@ -142,7 +212,7 @@ function run_smart_variations_images() {
  */
 if ( !function_exists( 'WC_SVINST' ) ) {
     function WC_SVINST() {
-        return Smart_Variations_Images::instance();
+        return ( class_exists( 'Smart_Variations_Images' ) ? Smart_Variations_Images::instance() : null );
     }
 
 }
@@ -153,7 +223,7 @@ if ( !function_exists( 'WC_SVINST' ) ) {
  */
 if ( !function_exists( 'WC_SVFS' ) ) {
     function WC_SVFS() {
-        return Wcsvfs::instance();
+        return ( class_exists( 'Wcsvfs' ) ? Wcsvfs::instance() : null );
     }
 
 }
@@ -184,8 +254,6 @@ if ( !function_exists( 'fs_ddd' ) ) {
     }
 
 }
-// Run the plugin after all plugins are loaded.
-add_action( 'init', 'run_smart_variations_images' );
 /**
  * Declare compatibility with WooCommerce custom order tables.
  */
@@ -194,7 +262,3 @@ add_action( 'before_woocommerce_init', function () {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
     }
 } );
-/**
- * Swatches module: new renderer, settings tab and per-product overrides.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/addons/swatches/bootstrap-5x.php';

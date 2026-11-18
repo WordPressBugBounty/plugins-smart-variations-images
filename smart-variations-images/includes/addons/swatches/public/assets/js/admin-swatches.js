@@ -203,6 +203,11 @@ jQuery(document).ready(function ($) {
         var sviTabItem = sviTabLink ? sviTabLink.closest('.wpsfsvi-nav__item') : null;
         var sviTabPanel = document.getElementById('tab-swatches');
 
+        // The import screen only makes sense with swatches on, so it follows the same switch.
+        var sviImportLink = document.querySelector('.wpsfsvi-nav__item-link[href="#tab-swatches_import"]');
+        var sviImportItem = sviImportLink ? sviImportLink.closest('.wpsfsvi-nav__item') : null;
+        var sviImportPanel = document.getElementById('tab-swatches_import');
+
         var sviApplyTabState = function () {
             var on = !!sviMaster.checked;
 
@@ -216,6 +221,24 @@ jQuery(document).ready(function ($) {
 
             if (sviTabPanel) {
                 sviTabPanel.style.display = on ? '' : 'none';
+            }
+
+            if (sviImportItem) {
+                sviImportItem.style.display = on ? '' : 'none';
+            }
+
+            if (sviImportPanel) {
+                sviImportPanel.style.display = on ? '' : 'none';
+            }
+
+            // If the import tab was open when swatches were switched off, show
+            // the tab the switch lives on instead of an empty screen.
+            if (!on && sviImportPanel && sviImportPanel.classList.contains('wpsfsvi-tab--active')) {
+                var fallbackLink = document.querySelector('.wpsfsvi-nav__item-link[href="#tab-main"]') || sviTabLink;
+
+                if (fallbackLink) {
+                    fallbackLink.click();
+                }
             }
         };
 

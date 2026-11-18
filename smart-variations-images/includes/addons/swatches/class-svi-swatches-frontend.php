@@ -256,15 +256,25 @@ class SVI_Swatches_Frontend
 			$chosen = ' chosen';
 		}
 
-		return sprintf(
-			'<li class="wc-layered-nav-term svi-filter-term%6$s"><a rel="nofollow" href="%1$s" class="svi-swatch svi-swatch-%2$s svi-filter-swatch" aria-label="%3$s">%4$s</a><span class="svi-filter-label">%5$s</span> <span class="count">(%7$s)</span></li>',
-			esc_url($link),
+		// WooCommerce prints its own <li> around this markup, so returning a
+		// second one nested the row and doubled the theme's list indentation.
+		$swatch = sprintf(
+			'<%1$s%2$s class="svi-swatch svi-swatch-%3$s svi-filter-swatch" aria-label="%4$s">%5$s</%1$s>',
+			$link ? 'a' : 'span',
+			$link ? ' rel="nofollow" href="' . esc_url($link) . '"' : '',
 			esc_attr($type),
 			esc_attr($label),
-			$inner,
-			esc_html($term->name),
+			$inner
+		);
+
+		$count_html = apply_filters('woocommerce_layered_nav_count', '<span class="count">(' . absint($count) . ')</span>', $count, $term);
+
+		return sprintf(
+			'<span class="svi-filter-term%1$s">%2$s<span class="svi-filter-label">%3$s</span> %4$s</span>',
 			esc_attr($chosen),
-			esc_html((string) $count)
+			$swatch,
+			esc_html($term->name),
+			$count_html
 		);
 	}
 

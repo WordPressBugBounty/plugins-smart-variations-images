@@ -156,8 +156,56 @@
 
 /* Notices */
 
-.notice {
+/* WordPress prints its admin notices at the top of the screen; the framework
+   moves them into .wpsfsvi-notices, so hide the rest. Field output callbacks
+   also use .notice to print locked-option blocks, and those must stay. */
+.notice:not(.wpsfsvi-info) {
     display: none !important;
+}
+
+/* Locked-option block rendered in a field cell (see wpsfsvisvi_info()). */
+.notice.wpsfsvi-info {
+    display: block !important;
+    margin: 0 !important;
+    padding: 8px 12px;
+}
+
+.notice.wpsfsvi-info>p:first-child {
+    margin-top: 0;
+}
+
+.notice.wpsfsvi-info>p:last-child {
+    margin-bottom: 0;
+}
+
+.notice.wpsfsvi-info ul,
+.notice.wpsfsvi-info ol {
+    list-style: disc;
+    margin: 0 0 12px 22px;
+    padding: 0;
+}
+
+.notice.wpsfsvi-info ol {
+    list-style: decimal;
+}
+
+.notice.wpsfsvi-info li {
+    margin-bottom: 4px;
+}
+
+/* Some options illustrate the choice with images laid out in a flex list; those
+   keep their own layout instead of turning into a bulleted list. */
+.notice.wpsfsvi-info ul[style*="flex"] {
+    list-style: none;
+    margin-left: 0;
+}
+
+.notice.wpsfsvi-info ul[style*="flex"]>li {
+    margin-bottom: 0;
+}
+
+.notice.wpsfsvi-info .button {
+    margin: 4px 0 8px;
 }
 
 .wpsfsvi-notices {
@@ -602,8 +650,10 @@ p.submit {
     margin-bottom: 0;
 }
 
+/* Sits with the field title or the locked-option text, never as a block of its
+   own centred in the label column. */
 .wpsfsvi-label {
-    display: block;
+    display: inline-block;
     padding: .3em .6em .3em;
     font-size: 75%;
     font-weight: 700;
@@ -612,9 +662,8 @@ p.submit {
     text-align: center;
     white-space: nowrap;
     border-radius: .25em;
-    width: 65%;
-    margin: auto;
-    margin-top: 5px;
+    vertical-align: middle;
+    margin: 0 .5em 0 0;
 }
 
 .wpsfsvi-label.label-warning {

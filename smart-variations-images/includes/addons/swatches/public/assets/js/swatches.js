@@ -30,6 +30,10 @@
             // Catalog cards: swap the product image with the value's gallery image.
             this.initCatalogImages();
 
+            // Filter widget: mark the list rows so the theme's bullet padding can
+            // be dropped even where :has() is not supported.
+            this.markFilterRows();
+
             // Product page: preselect the variation coming from a link.
             this.preselectFromQuery();
 
@@ -620,6 +624,19 @@
          */
         handleVariationUpdates: function (e) {
             SVI_Swatches.updateAvailability($(this));
+        },
+
+        /**
+         * Tag the layered nav rows that hold a swatch so the theme's bullet
+         * padding can be dropped even where :has() is not supported.
+         */
+        markFilterRows: function () {
+            $('.woocommerce-widget-layered-nav-list > li').each(function () {
+                const $row = $(this);
+                if ($row.children('.svi-filter-term').length) {
+                    $row.addClass('svi-filter-row');
+                }
+            });
         },
 
         /**

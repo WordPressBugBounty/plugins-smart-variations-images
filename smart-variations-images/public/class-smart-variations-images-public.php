@@ -164,7 +164,7 @@ class Smart_Variations_Images_Public {
     public function handleLoadCondition() : bool {
         global $post;
         if ( $post instanceof WP_Post ) {
-            return function_exists( 'is_product' ) && is_product() || has_shortcode( $post->post_content, 'product_page' ) || is_woocommerce() || has_shortcode( $post->post_content, 'product_category' ) || has_shortcode( $post->post_content, 'dt_products_carousel' );
+            return function_exists( 'is_product' ) && is_product() || has_shortcode( $post->post_content, 'product_page' ) || function_exists( 'is_woocommerce' ) && is_woocommerce() || has_shortcode( $post->post_content, 'product_category' ) || has_shortcode( $post->post_content, 'dt_products_carousel' );
         }
         return false;
     }

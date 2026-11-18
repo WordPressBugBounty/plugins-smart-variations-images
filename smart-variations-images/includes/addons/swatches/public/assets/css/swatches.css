@@ -230,6 +230,34 @@
     transition: all 0.2s ease;
 }
 
+/* The attribute rows are flex items of the catalog container; without a width
+   they shrink to their first swatch and the rows stack at the card edge. */
+.svi-catalog-swatches .svi-swatches-wrapper {
+    gap: var(--svi-catalog-gap, 5px);
+    width: 100%;
+}
+
+/* The catalog size is meant for colour and image swatches. Text and label
+   values need their content width, otherwise the fixed square clips the label
+   and it spills over the neighbouring swatch. */
+.svi-catalog-swatches .svi-swatches-wrapper[data-type="text"] .svi-swatch,
+.svi-catalog-swatches .svi-swatches-wrapper[data-type="label"] .svi-swatch {
+    width: auto !important;
+    height: auto !important;
+    min-height: var(--svi-catalog-size, 30px) !important;
+    padding: 0 10px;
+}
+
+/* Same for radio: the fixed square shrinks the radio circle to a sliver and
+   pushes the label outside the button. */
+.svi-catalog-swatches .svi-swatches-wrapper[data-type="radio"] .svi-swatch {
+    width: auto !important;
+    height: auto !important;
+    border: none !important;
+    background: none !important;
+    padding: 5px 0 !important;
+}
+
 /* Hover Style: Border */
 .svi-catalog-swatches:not(.svi-hover-fade) .svi-swatch:hover {
     border-color: var(--svi-catalog-hover-border, #999999) !important;
@@ -320,15 +348,21 @@ button.svi-swatch:focus {
 
 /* Inner Content (Image/Color block).
    Scoped to the child image: the swatch itself carries the "svi-swatch-image"
-   type class, so a bare selector would resize the button instead of its image. */
+   type class, so a bare selector would resize the button instead of its image.
+   Themes style loop images aggressively (Storefront:
+   `ul.products li.product img { margin: 0 auto 1.618em }`), and a margin on
+   the image pushes it out of the circular swatch, so the resets have to win. */
 .svi-swatch-inner,
-.svi-swatch .svi-swatch-image {
+.svi-swatches-wrapper .svi-swatch > img.svi-swatch-image {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: inherit;
     /* Inherit outer radius */
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* A value configured as image/colour but with no data stores falls back to its
@@ -523,6 +557,21 @@ button.svi-swatch:focus {
     border-radius: 50%;
 }
 
+/* The radio shows the selection in its circle, so the row must not take the
+   filled pill treatment meant for colours and images: its white text had no
+   background and disappeared. */
+.svi-swatches-wrapper[data-type="radio"] .svi-swatch.selected {
+    background: none;
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--svi-text, #333333);
+}
+
+.svi-swatches-wrapper[data-type="radio"] .svi-swatch.selected .svi-radio-label {
+    color: var(--svi-text, #333333);
+    font-weight: 600;
+}
+
 
 /* Tooltips: one card that can hold a picture, a name, or both. */
 .svi-tooltip {
@@ -656,6 +705,13 @@ button.svi-swatch:focus {
     display: none !important;
 }
 
+/* The swatch row sets its own left edge: themes pad list items for the bullet
+   we replaced, which pushed the swatches in from the widget title. */
+.woocommerce-widget-layered-nav-list > li.svi-filter-row,
+.woocommerce-widget-layered-nav-list > li:has(> .svi-filter-term) {
+    padding-left: 0 !important;
+}
+
 .svi-filter-term .svi-filter-swatch {
     display: inline-flex;
     align-items: center;
@@ -680,6 +736,9 @@ button.svi-swatch:focus {
     display: block;
     object-fit: cover;
     border-radius: inherit;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .svi-filter-term .svi-filter-swatch.svi-filter-swatch:focus-visible {
@@ -687,12 +746,15 @@ button.svi-swatch:focus {
     outline-offset: 2px !important;
 }
 
-/* Active filter: same ring used by the product page, plus a stronger label. */
-.svi-filter-term.chosen .svi-filter-swatch {
+/* Active filter: same ring used by the product page, plus a stronger label.
+   WooCommerce marks the list item, so both wrappers are covered. */
+.svi-filter-term.chosen .svi-filter-swatch,
+.chosen > .svi-filter-term .svi-filter-swatch {
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--svi-border-selected, #333333);
 }
 
-.svi-filter-term.chosen .svi-filter-label {
+.svi-filter-term.chosen .svi-filter-label,
+.chosen > .svi-filter-term .svi-filter-label {
     font-weight: 600;
     color: #111111;
 }
