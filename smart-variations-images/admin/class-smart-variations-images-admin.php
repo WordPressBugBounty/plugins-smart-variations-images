@@ -306,11 +306,19 @@ class Smart_Variations_Images_Admin {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
         header( "Content-type: application/json" );
         $slug = ( isset( $_POST['data'] ) ? wp_unslash( $_POST['data'] ) : '' );
+        // Attribute slugs can be percent-encoded: a value such as 18″ has the
+        // slug 18%e2%80%b3. sanitize_text_field() deletes those %xx octets, so
+        // the gallery was stored under a key WooCommerce never uses and could
+        // never match. Only characters that break an input name or an HTML
+        // attribute are removed here; slugs and their octets are kept as-is.
+        $clean = static function ( $value ) {
+            $value = wp_strip_all_tags( wp_check_invalid_utf8( (string) $value ) );
+            return preg_replace( '/[\\s"\'<>&\\\\\\/?#\\[\\]]/u', '', $value );
+        };
         if ( is_array( $slug ) ) {
-            $slug = array_map( 'sanitize_text_field', $slug );
-            $processed_slug = implode( '_svipro_', $slug );
+            $processed_slug = implode( '_svipro_', array_map( $clean, $slug ) );
         } else {
-            $processed_slug = sanitize_text_field( (string) $slug );
+            $processed_slug = $clean( $slug );
         }
         echo json_encode( esc_html( $processed_slug ) );
         die;
@@ -750,6 +758,14 @@ class Smart_Variations_Images_Admin {
         if ( $woosvi_slug !== $stored_slug && !empty( $woosvi_slug ) ) {
             update_post_meta( $pid, 'woosvi_slug', $woosvi_slug );
         }
+        // Re-link galleries saved while a value with a non-ASCII slug had its key
+        // stripped (`18-x-24` instead of `18%e2%80%b3-x-24`), so the panel stops
+        // reporting a working gallery as missing.
+        $healed_slug = $this->heal_gallery_keys( $woosvi_slug, $theslugs );
+        if ( $healed_slug !== $woosvi_slug ) {
+            $woosvi_slug = $healed_slug;
+            update_post_meta( $pid, 'woosvi_slug', $woosvi_slug );
+        }
         $unsigned_svi = $this->getImagesAssignedWithVariations( $pid, $woosvi_slug );
         //GET PRODUCT IMAGES IN GALLERY NOT ASSOCIATED TO ANY VARIATION
         if ( !empty( $unsigned_svi ) ) {
@@ -780,19 +796,10 @@ class Smart_Variations_Images_Admin {
                                     $key = 'svidefault';
                                     break;
                                 default:
-                                    $sLower = strtolower( $s );
-                                    if ( array_key_exists( $sLower, $theslugs ) ) {
-                                        $slugs_name[] = $theslugs[$sLower];
+                                    $resolved = Smart_Variations_Images::resolve_gallery_key( (string) $s, $theslugs );
+                                    if ( null !== $resolved ) {
+                                        $slugs_name[] = $theslugs[$resolved];
                                     } else {
-                                        $bigger = 0;
-                                        $keep = '';
-                                        foreach ( $theslugs as $extra => $check ) {
-                                            $sim = similar_text( $extra, $s, $perc );
-                                            if ( $perc > $bigger ) {
-                                                $bigger = $perc;
-                                                $keep = $extra;
-                                            }
-                                        }
                                         $slugs_name[] = '(Missing) ' . $s;
                                         $errors[$s] = " The atrribute " . $s . " is no longer available in WooCommerce for the created SVI gallery. It seems that you have either deleted it or changed the attribute slug. This gallery will not work and matching will not occur as a consequence. Please consider either deleting this gallery or selecting the correct new attribute for it.";
                                     }
@@ -812,19 +819,8 @@ class Smart_Variations_Images_Admin {
                                 $key = 'svidefault';
                                 break;
                             default:
-                                $sLower = strtolower( $firstSlug );
-                                if ( array_key_exists( $sLower, $theslugs ) ) {
-                                    $slugs_name = $theslugs[$sLower];
-                                } else {
-                                    $bigger = 0;
-                                    foreach ( $theslugs as $extra => $check ) {
-                                        $sim = similar_text( $extra, $firstSlug, $perc );
-                                        if ( $perc > $bigger ) {
-                                            $slugs_name = $check;
-                                            $bigger = $perc;
-                                        }
-                                    }
-                                }
+                                $resolved = Smart_Variations_Images::resolve_gallery_key( (string) $firstSlug, $theslugs );
+                                $slugs_name = ( null !== $resolved ? $theslugs[$resolved] : '(Missing) ' . $firstSlug );
                                 $title = $slugs_name . ' Gallery';
                                 break;
                         }
@@ -842,6 +838,29 @@ class Smart_Variations_Images_Admin {
                 }
             }
         }
+    }
+
+    /**
+     * Re-link stored gallery keys to the attribute keys of the product.
+     *
+     * @since 5.3.8
+     * @param array $galleries Stored galleries.
+     * @param array $theslugs  Attribute keys available on the product.
+     * @return array Galleries with resolved keys.
+     */
+    private function heal_gallery_keys( array $galleries, array $theslugs ) : array {
+        foreach ( $galleries as $k => $gallery ) {
+            if ( empty( $gallery['slugs'] ) || !is_array( $gallery['slugs'] ) ) {
+                continue;
+            }
+            foreach ( $gallery['slugs'] as $k2 => $slug ) {
+                $resolved = Smart_Variations_Images::resolve_gallery_key( (string) $slug, $theslugs );
+                if ( null !== $resolved && $resolved !== $slug ) {
+                    $galleries[$k]['slugs'][$k2] = $resolved;
+                }
+            }
+        }
+        return $galleries;
     }
 
     /**

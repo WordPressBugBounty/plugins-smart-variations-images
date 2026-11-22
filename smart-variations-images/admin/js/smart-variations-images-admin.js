@@ -119,7 +119,7 @@
   function woosviDismissNotice() {
     return post({ action: "woosvi_dismiss_notice" });
   }
-  const SAFE_SLUG = /^[A-Za-z0-9_-]+$/;
+  const SAFE_SLUG = /^[A-Za-z0-9_%.-]+$/;
   function escapeSlug(data) {
     const parts = Array.isArray(data) ? data : [data];
     const safe = parts.every((part) => SAFE_SLUG.test(String(part === null || part === void 0 ? "" : part)));

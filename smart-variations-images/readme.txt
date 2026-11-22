@@ -5,7 +5,7 @@ Requires at least: 6.0
 Tested up to: 7.1
 WC requires at least: 8.2
 WC tested up to: 11.3.0
-Stable tag: 5.3.7
+Stable tag: 5.3.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -198,6 +198,11 @@ SVI is tested in Microsoft Edge, Safari, Chrome and Firefox.
 8. The Swatches settings tab. Shape, size, border and colors come first; tooltips, out-of-stock behavior, catalog and filter options follow on the same tab.
 
 == Changelog ==
+
+= 5.3.8 =
+* Fix: A gallery could not be created for an attribute value whose slug contains a special character, such as the ″ in "18″ x 24″". The gallery key lost its percent-encoded octets (18%e2%80%b3 became 18), so it never matched the value and was reported as "(Missing)", and its images never appeared on the product page. Those values now keep their gallery, and galleries already saved that way are re-linked automatically when the product is opened. Values with plain slugs are untouched.
+* Fix: In the free version "Showcase Images under Variations" showed the second image of a gallery instead of the first.
+* Fix: Deleting and recreating an attribute no longer detaches its galleries through a fuzzy slug match. Galleries are only re-linked when the match is unambiguous.
 
 = 5.3.7 =
 * Fix: In the free version the locked SVI PRO options showed the PRO badge on its own centred line and hid their description, which left the control column empty. The badge now sits with the option text and every locked option explains what it does.

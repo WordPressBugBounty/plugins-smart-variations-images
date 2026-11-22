@@ -28,6 +28,11 @@ class Smart_Variations_Images_Black_Friday
     const DEADLINE = '2026-12-01 23:59:59';
 
     /**
+     * Campaign start, in the Europe/Lisbon timezone.
+     */
+    const STARTS = '2026-11-08 00:00:00';
+
+    /**
      * Timezone the deadline is measured in.
      */
     const TIMEZONE = 'Europe/Lisbon';
@@ -400,5 +405,50 @@ class Smart_Variations_Images_Black_Friday
         $deadline = new DateTimeImmutable(self::DEADLINE, $timezone);
 
         return $now <= $deadline;
+    }
+
+    /**
+     * Append the campaign coupon to a checkout URL while the promotion runs.
+     *
+     * Keeps the in-plugin "See SVI PRO" links on the discounted price; once the
+     * deadline passes the coupon is silently dropped, so no code change is needed.
+     *
+     * @param string $url Checkout URL.
+     * @return string
+     */
+    public static function apply_coupon($url)
+    {
+        if (!is_string($url) || '' === $url) {
+            return $url;
+        }
+
+        $timezone = new DateTimeZone(self::TIMEZONE);
+        $now      = new DateTimeImmutable('now', $timezone);
+
+        if ($now < new DateTimeImmutable(self::STARTS, $timezone) || $now > new DateTimeImmutable(self::DEADLINE, $timezone)) {
+            return $url;
+        }
+
+        return add_query_arg('coupon', self::COUPON, $url);
+    }
+}
+
+if (!function_exists('svi_upgrade_url')) {
+    /**
+     * Upgrade URL for admin links, with the campaign coupon when it is live.
+     *
+     * @return string
+     */
+    function svi_upgrade_url()
+    {
+        if (!function_exists('svi_fs') || !is_object(svi_fs())) {
+            return '';
+        }
+
+        $url = svi_fs()->get_upgrade_url();
+
+        return class_exists('Smart_Variations_Images_Black_Friday')
+            ? Smart_Variations_Images_Black_Friday::apply_coupon($url)
+            : $url;
     }
 }

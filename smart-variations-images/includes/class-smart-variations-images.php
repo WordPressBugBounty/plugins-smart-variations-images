@@ -213,6 +213,61 @@ class Smart_Variations_Images {
     }
 
     /**
+     * Re-link a stored gallery key to the attribute key WooCommerce uses.
+     *
+     * Gallery keys are attribute value slugs. A slug with a character outside
+     * ASCII (the double prime in 18″, an emoji, a symbol) is stored by
+     * WordPress percent-encoded (`18%e2%80%b3-x-24%e2%80%b3`), while the admin
+     * screens show it decoded. Earlier builds cleaned that key with
+     * sanitize_text_field(), which deletes every `%xx` octet, so the gallery
+     * was saved as `18-x-24-…` and could never match its value again.
+     *
+     * The exact key always wins. When it is not found, keys are compared after
+     * removing the octets from both sides, which repairs galleries saved by
+     * those builds. A stripped form is only accepted when it points at a
+     * single value, so two different values can never be cross-linked.
+     *
+     * @since    5.3.8
+     * @param    string $key       Stored gallery key.
+     * @param    array  $available Attribute keys available on the product.
+     * @return   string|null Canonical attribute key, or null when unresolved.
+     */
+    public static function resolve_gallery_key( string $key, array $available ) : ?string {
+        $key = trim( $key );
+        if ( '' === $key ) {
+            return null;
+        }
+        if ( array_key_exists( $key, $available ) ) {
+            return $key;
+        }
+        $lower = strtolower( $key );
+        foreach ( array_keys( $available ) as $candidate ) {
+            if ( strtolower( (string) $candidate ) === $lower ) {
+                return (string) $candidate;
+            }
+        }
+        $needle = self::strip_gallery_key_octets( $key );
+        $matches = [];
+        foreach ( array_keys( $available ) as $candidate ) {
+            if ( self::strip_gallery_key_octets( (string) $candidate ) === $needle ) {
+                $matches[] = (string) $candidate;
+            }
+        }
+        return ( 1 === count( $matches ) ? $matches[0] : null );
+    }
+
+    /**
+     * Remove the percent-encoded octets from a gallery key.
+     *
+     * @since    5.3.8
+     * @param    string $key Gallery key.
+     * @return   string Lowercase key without `%xx` sequences.
+     */
+    private static function strip_gallery_key_octets( string $key ) : string {
+        return strtolower( preg_replace( '/%[a-f0-9]{2}/i', '', $key ) );
+    }
+
+    /**
      * Resolve a single gallery `imgs` entry to an attachment ID.
      *
      * @since    5.3.2

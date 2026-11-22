@@ -17,7 +17,7 @@
  * Plugin Name:       Smart Variations Images & Swatches for WooCommerce
  * Plugin URI:        https://www.smart-variations.com/
  * Description:       Every swatch option free: color, image, text and radio. Plus a whole WooCommerce gallery per color, set once and reused by every size.
- * Version:           5.3.7
+ * Version:           5.3.8
  * WC requires at least: 8.2
  * WC tested up to:   11.3.0
  * Requires Plugins:  woocommerce
@@ -35,7 +35,7 @@ if ( !defined( 'WPINC' ) ) {
 /**
  * Define plugin constants.
  */
-define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.3.7' );
+define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.3.8' );
 // Current plugin version.
 define( 'WCSVFS_VERSION', '1.0' );
 // Version for additional functionality.

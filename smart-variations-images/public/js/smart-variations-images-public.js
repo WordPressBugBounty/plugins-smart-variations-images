@@ -6205,7 +6205,7 @@
     _sfc_staticRenderFns$4,
     false,
     null,
-    "eca8d2b6"
+    "cf8e62b4"
   );
   const thumbnailsComponent = __component__$4.exports;
   const _sfc_main$3 = {
@@ -6603,7 +6603,7 @@
     if (this.boolEval(wcsvi.options.variation_thumbnails)) {
       let $gal_thumb = this.RetrieveGalleryForDisplay(true);
       if ((!("status" in wcsvi.options) || !wcsvi.options.status) && $gal_thumb.length > 1)
-        $gal_thumb = $gal_thumb.slice(1, 2);
+        $gal_thumb = $gal_thumb.slice(0, 1);
       this.$bus.$emit("variationThumbImages_" + this.type + "_" + this.pid, $gal_thumb);
     }
   };
@@ -7814,11 +7814,6 @@
         const $card = $start.closest($loopEl);
         return $card.length ? $card : $start.closest(".svitn_wrapper").parent();
       };
-      /**
-       * Catalog swatches climb the DOM a few levels to find the card picture;
-       * the showcase does the same so themes whose loop markup does not match
-       * the configured selectors keep working.
-       */
       const findLoopImage = (imgElement) => {
         let $node = cardOf(imgElement);
         for (let depth = 0; depth < 6 && $node.length; depth += 1) {
@@ -7829,11 +7824,6 @@
         return $jq();
       };
       const LAZY_ATTRS = ["data-src", "data-lazy-src", "data-old-src", "data-lazy-srcset"];
-      /**
-       * Swap the card's main image, the same way a catalog swatch does, so the
-       * title, price and swatches stay where they are. Themes that render the
-       * loop image as a CSS background keep the previous behaviour.
-       */
       const loadImage = (imgElement) => {
         const $source = $jq(imgElement);
         const imageSrc = $source.data("src") || $source.data("large_image") || $source.attr("src");
@@ -7856,12 +7846,12 @@
           $image.data("svi-default-src", $image.attr("src"));
           $image.data("svi-default-srcset", $image.attr("srcset"));
           $image.data("svi-default-sizes", $image.attr("sizes"));
-          const lazyDefaults = {};
+          const lazyDefaults2 = {};
           LAZY_ATTRS.forEach((attr) => {
             const value = $image.attr(attr);
-            if (typeof value !== "undefined") lazyDefaults[attr] = value;
+            if (typeof value !== "undefined") lazyDefaults2[attr] = value;
           });
-          $image.data("svi-default-lazy", lazyDefaults);
+          $image.data("svi-default-lazy", lazyDefaults2);
         }
         $image.closest("picture").find("source").each(function() {
           const $sourceEl = $jq(this);
@@ -7890,13 +7880,25 @@
         $image.attr("src", defaultSrc);
         const defaultSrcset = $image.data("svi-default-srcset");
         const defaultSizes = $image.data("svi-default-sizes");
-        if (defaultSrcset) { $image.attr("srcset", defaultSrcset); } else { $image.removeAttr("srcset"); }
-        if (defaultSizes) { $image.attr("sizes", defaultSizes); } else { $image.removeAttr("sizes"); }
+        if (defaultSrcset) {
+          $image.attr("srcset", defaultSrcset);
+        } else {
+          $image.removeAttr("srcset");
+        }
+        if (defaultSizes) {
+          $image.attr("sizes", defaultSizes);
+        } else {
+          $image.removeAttr("sizes");
+        }
         $image.closest("picture").find("source").each(function() {
           const $sourceEl = $jq(this);
-          const defaultSrcset = $sourceEl.attr("data-svi-default-srcset");
-          if (typeof defaultSrcset === "undefined") return;
-          if (defaultSrcset) { $sourceEl.attr("srcset", defaultSrcset); } else { $sourceEl.removeAttr("srcset"); }
+          const defaultSourceSrcset = $sourceEl.attr("data-svi-default-srcset");
+          if (typeof defaultSourceSrcset === "undefined") return;
+          if (defaultSourceSrcset) {
+            $sourceEl.attr("srcset", defaultSourceSrcset);
+          } else {
+            $sourceEl.removeAttr("srcset");
+          }
           $sourceEl.removeAttr("data-svi-default-srcset");
         });
         const lazyDefaults = $image.data("svi-default-lazy") || {};

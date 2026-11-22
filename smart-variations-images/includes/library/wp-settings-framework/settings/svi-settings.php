@@ -82,7 +82,7 @@ function wpsfsvi_svi_tabbed_settings(  $wpsfsvi_settings  ) {
  */
 function wpsfsvi_svi_options_tab_main() {
     $variation_thumbdesc = '<strong>' . esc_html__( 'Free: one image under the variations. SVI PRO shows the whole gallery, in columns.', 'smart-variations-images' ) . '</strong> ';
-    $variation_thumbdesc .= '<a href="' . esc_url( svi_fs()->get_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a><br><br>';
+    $variation_thumbdesc .= '<a href="' . esc_url( svi_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a><br><br>';
     $variation_thumbdesc .= esc_html__( 'This option will display the product variations images under the dropdowns/swatches of the product page.', 'smart-variations-images' ) . '<br>';
     $variation_thumbdesc .= esc_html__( 'All images or Images with no variations assigned will be displayed as default gallery under the main image.', 'smart-variations-images' ) . '<br>';
     $variation_thumbdesc .= esc_html__( 'Adds lightbox option to be activated or not on this images.', 'smart-variations-images' ) . ' <strong>' . esc_html__( 'Thumbnails Keep visible', 'smart-variations-images' ) . '</strong> ' . esc_html__( 'option should be set disabled because activating this options already keeps the images visible.', 'smart-variations-images' );
@@ -224,7 +224,7 @@ function wpsfsvi_svi_options_tab_main_loopvariations() {
             'type'     => ( svi_fs()->can_use_premium_code__premium_only() ? 'toggle' : 'custom' ),
             'title'    => __( 'Enable Filter Attribute Animation', 'smart-variations-images' ),
             'subtitle' => __( 'Add sliding animation on hover', 'smart-variations-images' ),
-            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'smart-variations-images' ) : SMART_SVI_PROVS . ' ' . esc_html__( 'SVI PRO adds a sliding animation on hover to split images (Diagonal, Vertical, Horizontal). Filter Attribute Image Swapping itself is free.', 'smart-variations-images' ) . ' <a href="' . esc_url( svi_fs()->get_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a>' ),
+            'desc'     => ( svi_fs()->can_use_premium_code__premium_only() ? __( 'When enabled, this option adds a sliding animation effect on hover for the Filter Attribute Split Layout (Diagonal, Vertical, Horizontal). The hovered image will expand, and the other images will slide to the remaining space.', 'smart-variations-images' ) : SMART_SVI_PROVS . ' ' . esc_html__( 'SVI PRO adds a sliding animation on hover to split images (Diagonal, Vertical, Horizontal). Filter Attribute Image Swapping itself is free.', 'smart-variations-images' ) . ' <a href="' . esc_url( svi_upgrade_url() ) . '" target="_blank">' . esc_html__( 'See SVI PRO', 'smart-variations-images' ) . '</a>' ),
             'output'   => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'wpsfsvisvi_info' ),
             'style'    => ( svi_fs()->can_use_premium_code__premium_only() ? null : 'warning' ),
             'show_if'  => array(array(

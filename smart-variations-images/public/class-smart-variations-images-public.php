@@ -1205,25 +1205,27 @@ CSS;
         int $pid,
         array $theslugs
     ) : array {
-        if ( $product->is_type( 'variable' ) ) {
-            foreach ( $woosvi_slug as $k => $v ) {
-                if ( array_key_exists( 'slugs', $v ) ) {
-                    foreach ( $v['slugs'] as $k2 => $slug ) {
-                        if ( !array_key_exists( $slug, $theslugs ) ) {
-                            $bigger = 95;
-                            foreach ( $theslugs as $extra => $check ) {
-                                $perc = 0;
-                                similar_text( $extra, $slug, $perc );
-                                if ( $perc > $bigger ) {
-                                    $bigger = $perc;
-                                    $woosvi_slug[$k]['slugs'][$k2] = trim( $extra );
-                                    update_post_meta( $pid, 'woosvi_slug', $woosvi_slug );
-                                }
-                            }
-                        }
-                    }
+        if ( !$product->is_type( 'variable' ) ) {
+            return $woosvi_slug;
+        }
+        $changed = false;
+        foreach ( $woosvi_slug as $k => $v ) {
+            if ( empty( $v['slugs'] ) || !is_array( $v['slugs'] ) ) {
+                continue;
+            }
+            foreach ( $v['slugs'] as $k2 => $slug ) {
+                // Galleries saved while a value with a non-ASCII slug had its
+                // key stripped (`18-x-24` instead of `18%e2%80%b3-x-24`) are
+                // re-linked to the key WooCommerce uses.
+                $resolved = Smart_Variations_Images::resolve_gallery_key( (string) $slug, $theslugs );
+                if ( null !== $resolved && $resolved !== $slug ) {
+                    $woosvi_slug[$k]['slugs'][$k2] = $resolved;
+                    $changed = true;
                 }
             }
+        }
+        if ( $changed ) {
+            update_post_meta( $pid, 'woosvi_slug', $woosvi_slug );
         }
         return $woosvi_slug;
     }
