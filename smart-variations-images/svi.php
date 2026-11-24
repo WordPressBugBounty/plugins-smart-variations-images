@@ -17,7 +17,7 @@
  * Plugin Name:       Smart Variations Images & Swatches for WooCommerce
  * Plugin URI:        https://www.smart-variations.com/
  * Description:       Every swatch option free: color, image, text and radio. Plus a whole WooCommerce gallery per color, set once and reused by every size.
- * Version:           5.3.8
+ * Version:           5.3.15
  * WC requires at least: 8.2
  * WC tested up to:   11.3.0
  * Requires Plugins:  woocommerce
@@ -35,7 +35,7 @@ if ( !defined( 'WPINC' ) ) {
 /**
  * Define plugin constants.
  */
-define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.3.8' );
+define( 'SMART_VARIATIONS_IMAGES_VERSION', '5.3.15' );
 // Current plugin version.
 define( 'WCSVFS_VERSION', '1.0' );
 // Version for additional functionality.
@@ -113,9 +113,9 @@ $svi_black_friday->run();
  *
  * This function runs during plugin activation and sets up necessary configurations.
  */
-function activate_smart_variations_images() {
+function activate_smart_variations_images(  $network_wide = false  ) {
     require_once plugin_dir_path( __FILE__ ) . 'includes/class-smart-variations-images-activator.php';
-    Smart_Variations_Images_Activator::activate();
+    Smart_Variations_Images_Activator::activate( $network_wide );
 }
 
 register_activation_hook( __FILE__, 'activate_smart_variations_images' );
@@ -140,6 +140,52 @@ function svi_boot() {
      * Swatches module: new renderer, settings tab and per-product overrides.
      */
     require_once plugin_dir_path( __FILE__ ) . 'includes/addons/swatches/bootstrap-5x.php';
+    /**
+     * "What's new" screen, update notice and first-run redirect.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/whats-new/main.php';
+    /**
+     * First-run setup wizard.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/setup-wizard/main.php';
+    /**
+     * "Copy link to this variation" button on the product page.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/copy-variation-link/main.php';
+    /**
+     * Variations as products: variation cards in the shop, categories and search.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/single-variations/main.php';
+    /**
+     * Core bridge: SVI galleries written back into WooCommerce variations.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/core-sync/main.php';
+    /**
+     * Core bridge: WooCommerce "color / image" attributes as SVI swatches.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/core-bridge/main.php';
+    /**
+     * Variant schema: ProductGroup structured data and product feeds.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/variant-schema/main.php';
+    /**
+     * Divi gallery module detection.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/divi-gallery/main.php';
+    /**
+     * Silent schema-3 mirror: keeps writing woosvi_slug and also maintains
+     * _svi_galleries, so a later release that reads schema 3 finds the data.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/galleries-mirror/bootstrap-5x.php';
+    /**
+     * Gallery importer: copies variation galleries another plugin left behind
+     * into SVI's native woosvi_slug structure.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/galleries-import/bootstrap-5x.php';
+    /**
+     * Migration tab: one tab, vertical panes for swatches and galleries.
+     */
+    require_once plugin_dir_path( __FILE__ ) . 'includes/addons/migration-hub/bootstrap-5x.php';
     // Run the plugin after all plugins are loaded.
     add_action( 'init', 'run_smart_variations_images' );
 }

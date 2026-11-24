@@ -42,32 +42,128 @@
 
 /* Nav */
 
-.wpsfsvi-nav {
-    margin: 0 -20px;
-    padding: 0 12px;
-    list-style: none none outside;
-    background: #fff;
-    border-bottom: 1px solid #e2e4e7;
-    display: flex;
-    flex-wrap: nowrap;
+/* The bar sticks to the top and keeps a gap to the section below it. The list
+   inside it scrolls sideways when the tabs do not fit, so the page itself
+   never scrolls horizontally. */
+.wpsfsvi-nav-wrap {
     position: sticky;
     top: 32px;
     z-index: 100;
+    margin: 0 0 20px;
+    background: #fff;
+    border-bottom: 1px solid #e2e4e7;
+    display: flex;
+    align-items: stretch;
+}
+
+/* Soft edges: partially scrolled tabs fade out instead of being cut. */
+.wpsfsvi-nav-wrap.has-overflow::before,
+.wpsfsvi-nav-wrap.has-overflow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 1px;
+    width: 24px;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+}
+
+.wpsfsvi-nav-wrap.has-overflow::before {
+    left: 34px;
+    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+}
+
+.wpsfsvi-nav-wrap.has-overflow::after {
+    right: 34px;
+    background: linear-gradient(to left, #fff, rgba(255, 255, 255, 0));
+}
+
+.wpsfsvi-nav-wrap.has-overflow:not(.is-start)::before,
+.wpsfsvi-nav-wrap.has-overflow:not(.is-end)::after {
+    opacity: 1;
+}
+
+.wpsfsvi-nav {
+    margin: 0;
+    padding: 0 16px;
+    list-style: none none outside;
+    background: #fff;
+    display: flex;
+    flex-wrap: nowrap;
     align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.wpsfsvi-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.wpsfsvi-nav__arrow {
+    flex: 0 0 34px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: #fff;
+    color: #2271b6;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.wpsfsvi-nav-wrap.has-overflow .wpsfsvi-nav__arrow:not(:disabled) {
+    display: flex;
+}
+
+.wpsfsvi-nav__arrow:hover,
+.wpsfsvi-nav__arrow:focus-visible {
+    background: #f0f6fc;
+}
+
+.wpsfsvi-nav__arrow:disabled {
+    color: #c3c4c7;
+    cursor: default;
+}
+
+.wpsfsvi-nav__arrow--prev {
+    border-inline-end: 1px solid #f0f0f1;
+}
+
+.wpsfsvi-nav__arrow--next {
+    border-inline-start: 1px solid #f0f0f1;
 }
 
 @media screen and (max-width: 782px) {
-    .wpsfsvi-nav {
+    .wpsfsvi-nav-wrap {
         top: 46px;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .wpsfsvi-nav {
+    .wpsfsvi-nav-wrap {
         position: relative;
         top: 0;
+        display: block;
+    }
+
+    .wpsfsvi-nav {
         flex-direction: column;
         padding: 0;
+        overflow-x: visible;
+    }
+
+    .wpsfsvi-nav__arrow {
+        display: none !important;
     }
 }
 
@@ -142,9 +238,14 @@
     color: #2271b6;
 }
 
+/* Save button: pinned to the right end of the bar, outside the scrolling list. */
 .wpsfsvi-nav__item--last {
-    margin: 0 0 0 auto;
-    padding: 0 8px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0 12px;
+    background: #fff;
 }
 
 @media screen and (max-width: 782px) {
@@ -668,4 +769,811 @@ p.submit {
 
 .wpsfsvi-label.label-warning {
     background-color: #f0ad4e;
+}
+/* Vertical main tab layout (opt-in with 'tabs_layout' => 'vertical'). */
+.wpsfsvi-settings__content--vertical {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    column-gap: 24px;
+    align-items: start;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav-wrap {
+    grid-column: 1;
+    grid-row: 1;
+    position: static;
+    display: block;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav {
+    flex-direction: column;
+    align-items: stretch;
+    overflow: visible;
+    padding: 0;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__arrow {
+    display: none !important;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item {
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item:last-child {
+    border-bottom: 0;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item::after {
+    display: none;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item--active {
+    box-shadow: inset 3px 0 0 #2271b1;
+    background: #f6f7f7;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item-link {
+    display: block;
+    padding: 10px 14px;
+}
+
+.wpsfsvi-settings__content--vertical form {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+@media screen and (max-width: 960px) {
+    .wpsfsvi-settings__content--vertical {
+        display: block;
+    }
+
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav-wrap {
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+    }
+
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav__item {
+        border-bottom: 0;
+    }
+
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav__item--active {
+        box-shadow: inset 0 -3px 0 #2271b1;
+    }
+
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav__item-link {
+        padding: 10px 12px;
+        white-space: nowrap;
+    }
+}
+
+/* Sub-tabs: vertical (default) or horizontal, responsive. */
+.wpsfsvi-subtabs {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    margin-top: 4px;
+}
+
+.wpsfsvi-subtabs__nav {
+    display: flex;
+    gap: 2px;
+}
+
+.wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__nav {
+    flex: 0 0 190px;
+    flex-direction: column;
+    border-right: 1px solid #dcdcde;
+    padding-right: 16px;
+}
+
+.wpsfsvi-subtabs--horizontal {
+    flex-direction: column;
+    gap: 16px;
+}
+
+.wpsfsvi-subtabs--horizontal .wpsfsvi-subtabs__nav {
+    flex: 1 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.wpsfsvi-subtabs__tab {
+    text-align: left;
+    background: none;
+    border: 0;
+    border-left: 3px solid transparent;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #2271b1;
+    border-radius: 0;
+}
+
+.wpsfsvi-subtabs__tab:hover {
+    background: #f6f7f7;
+}
+
+.wpsfsvi-subtabs__tab.is-active {
+    border-left-color: #2271b1;
+    font-weight: 600;
+    color: #1d2327;
+    background: #f6f7f7;
+}
+
+.wpsfsvi-subtabs--horizontal .wpsfsvi-subtabs__tab {
+    border-left: 0;
+    border-bottom: 3px solid transparent;
+}
+
+.wpsfsvi-subtabs--horizontal .wpsfsvi-subtabs__tab.is-active {
+    border-bottom-color: #2271b1;
+    background: transparent;
+}
+
+.wpsfsvi-subtabs__panes {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.wpsfsvi-subtabs__pane[hidden] {
+    display: none;
+}
+
+@media screen and (max-width: 782px) {
+    .wpsfsvi-subtabs {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__nav {
+        flex: 1 1 auto;
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: 0;
+        border-bottom: 1px solid #dcdcde;
+        padding: 0 0 8px;
+    }
+
+    .wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__tab {
+        border-left: 0;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+    }
+
+    .wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__tab.is-active {
+        border-bottom-color: #2271b1;
+        background: transparent;
+    }
+}
+
+/* ==========================================================================
+   Modern skin — aligned with the RL options framework
+   Light section headers, 220px label grid, cards and a calmer tab strip.
+   ========================================================================== */
+
+.wpsfsvi-settings {
+    --svi-accent: #2271b1;
+    --svi-ink: #1d2327;
+    --svi-muted: #646970;
+    --svi-line: #dcdcde;
+    --svi-soft: #f6f7f7;
+}
+
+/* Page header */
+.wpsfsvi-settings__header {
+    height: auto;
+    padding: 18px 24px;
+}
+
+.wpsfsvi-settings__header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    color: var(--svi-ink);
+}
+
+/* Tab strip */
+.wpsfsvi-nav-wrap {
+    background: #fff;
+    border-bottom: 1px solid var(--svi-line);
+}
+
+.wpsfsvi-nav__item-link {
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #50575e;
+}
+
+.wpsfsvi-nav__item-link:hover {
+    color: var(--svi-accent);
+    background: var(--svi-soft);
+}
+
+.wpsfsvi-nav__item--active .wpsfsvi-nav__item-link {
+    color: var(--svi-accent);
+    font-weight: 600;
+}
+
+.wpsfsvi-nav__item::after {
+    background: var(--svi-accent);
+    border-radius: 2px 2px 0 0;
+}
+
+/* Cards */
+.wpsfsvi-tab .postbox {
+    border: 1px solid var(--svi-line);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.wpsfsvi-tab .postbox h2 {
+    padding: 14px 20px;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid var(--svi-line);
+    border-radius: 0;
+    background: var(--svi-soft);
+    color: var(--svi-ink);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+.wpsfsvi-tab .postbox h2:first-child {
+    border-radius: 0;
+}
+
+.wpsfsvi-tab .wpsfsvi-section-description {
+    margin: 0;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--svi-line);
+    color: var(--svi-muted);
+    font-size: 13px;
+}
+
+.wpsfsvi-tab .wpsfsvi-section-description h3 {
+    font-size: 16px;
+    margin: 0 0 6px;
+}
+
+/* Fields: label column + control column.
+   Child combinators keep the rule off the tables a custom screen may nest. */
+.wpsfsvi-tab .postbox table.form-table,
+.wpsfsvi-tab .postbox table.form-table > tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+.wpsfsvi-tab .postbox table.form-table > tbody > tr {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.wpsfsvi-tab .postbox table.form-table > tbody > tr:last-child {
+    border-bottom: 0;
+}
+
+/* A custom screen has no label: give the control the whole row. */
+.wpsfsvi-tab .postbox table.form-table > tbody > tr:has(.wpsfsvi-field-custom) {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.wpsfsvi-tab .postbox table.form-table > tbody > tr:has(.wpsfsvi-field-custom) > th {
+    display: none;
+}
+
+.wpsfsvi-tab .postbox table.form-table > tbody > tr > th {
+    display: block;
+    width: auto;
+    padding: 6px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--svi-ink);
+}
+
+.wpsfsvi-tab .postbox table.form-table > tbody > tr > td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.wpsfsvi-tab .postbox table.form-table > tbody > tr > td p.description {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--svi-muted);
+}
+
+/* Save bar */
+.wpsfsvi-settings form p.submit {
+    margin: 16px 0 24px;
+    padding: 0;
+    text-align: right;
+}
+
+.wpsfsvi-settings .button-primary.wpsfsvi-button-submit {
+    height: auto;
+    padding: 6px 20px;
+    border-radius: 4px;
+}
+
+/* Vertical tab layout: match the cards */
+.wpsfsvi-settings__content--vertical {
+    /* Breathing room around the sidebar + card pair. */
+    padding: 20px 20px 40px;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav-wrap {
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    /* A long tab (Global) scrolls the page; the sidebar stays next to it. */
+    position: sticky;
+    top: 32px;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+/* Rounded card: the first and last item must not touch the corners. */
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav {
+    padding: 6px 0;
+}
+
+/* Save lives at the foot of the sidebar: a long tab no longer hides it. */
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item--last {
+    display: flex !important;
+    position: sticky;
+    bottom: 0;
+    margin: 0;
+    padding: 12px 14px;
+    border-inline-start: 0;
+    border-top: 1px solid #e2e4e7;
+    background: #f6f7f7;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item--last .button-primary {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Labels wrap instead of widening the column. */
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__item-link {
+    padding: 11px 16px;
+    white-space: normal;
+    line-height: 1.4;
+}
+
+/* Light rule between tab groups: Global | Swatches | gallery | shop | help. */
+.wpsfsvi-nav__divider {
+    display: none;
+}
+
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav__divider {
+    display: block;
+    height: 1px;
+    margin: 8px 14px;
+    background: #e2e4e7;
+    list-style: none;
+}
+
+/* Below 960px the sidebar becomes a strip: back to one line per tab. */
+@media screen and (max-width: 960px) {
+    .wpsfsvi-settings__content--vertical {
+        padding: 12px 10px 32px;
+    }
+
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav {
+        padding: 0;
+    }
+
+    /* The strip is only for switching tabs; the form's own Save stays below. */
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav__item--last {
+        display: none !important;
+    }
+
+    .wpsfsvi-settings__content--vertical .wpsfsvi-nav__item-link {
+        white-space: nowrap;
+        line-height: 1.2;
+    }
+}
+
+/* The scroll fade belongs to the horizontal strip only. */
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav-wrap::before,
+.wpsfsvi-settings__content--vertical .wpsfsvi-nav-wrap::after {
+    display: none;
+}
+
+/* Sub-tabs: same language */
+.wpsfsvi-subtabs__tab {
+    border-radius: 0;
+    font-weight: 500;
+}
+
+.wpsfsvi-subtabs__tab.is-active {
+    color: var(--svi-accent);
+}
+
+/* Horizontal sub-tabs: a strip above the pane, matching the tab bar language. */
+.wpsfsvi-subtabs--horizontal .wpsfsvi-subtabs__nav {
+    gap: 2px;
+    padding: 0 20px;
+    background: var(--svi-soft);
+    border-bottom: 1px solid var(--svi-line);
+}
+
+.wpsfsvi-subtabs--horizontal .wpsfsvi-subtabs__tab {
+    border: 0;
+    border-bottom: 3px solid transparent;
+    padding: 12px 16px;
+    color: var(--svi-accent);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.wpsfsvi-subtabs--horizontal .wpsfsvi-subtabs__tab:hover {
+    background: #fff;
+}
+
+.wpsfsvi-subtabs--horizontal .wpsfsvi-subtabs__tab.is-active {
+    background: #fff;
+    border-bottom-color: var(--svi-accent);
+    color: var(--svi-ink);
+    font-weight: 600;
+}
+
+/* Narrow screens: one column, labels above controls */
+@media screen and (max-width: 960px) {
+    .wpsfsvi-tab .postbox table.form-table > tbody > tr {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 14px 16px;
+    }
+
+    .wpsfsvi-tab .postbox table.form-table > tbody > tr > th {
+        padding-top: 0;
+    }
+
+    .wpsfsvi-tab .postbox h2 {
+        padding: 12px 16px;
+    }
+
+    .wpsfsvi-tab .wpsfsvi-section-description {
+        padding: 10px 16px;
+    }
+}
+
+/* Save button living in the tab bar: separated from the tabs, roomy label */
+.wpsfsvi-nav-wrap .wpsfsvi-nav__item--last {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 7px 12px 7px 14px;
+    border-inline-start: 1px solid #f0f0f1;
+    /* The scroll fade (::after on the wrap) is anchored to the wrap's right
+       edge, which now sits under this button: keep the button above it. */
+    position: relative;
+    z-index: 3;
+    background: #fff;
+}
+
+.wpsfsvi-nav-wrap .wpsfsvi-nav__item--last .button-primary {
+    height: auto;
+    min-width: 136px;
+    padding: 6px 18px;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+   Sub-tabs as a real sidebar inside the card (RL options pattern)
+   ========================================================================== */
+
+/* The row that hosts sub-tabs goes edge to edge; the panes carry the padding. */
+.wpsfsvi-tab .postbox table.form-table > tbody > tr:has(.wpsfsvi-subtabs) {
+    padding: 0;
+    gap: 0;
+}
+
+.wpsfsvi-tab .postbox table.form-table > tbody > tr:has(.wpsfsvi-subtabs) > td {
+    width: 100%;
+}
+
+.wpsfsvi-field-custom .wpsfsvi-subtabs,
+.wpsfsvi-subtabs--vertical {
+    margin: 0;
+    align-items: stretch;
+    gap: 0;
+}
+
+.wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__nav {
+    flex: 0 0 210px;
+    flex-direction: column;
+    gap: 0;
+    padding: 10px 0;
+    background: var(--svi-soft);
+    border-inline-end: 1px solid var(--svi-line);
+}
+
+.wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__tab {
+    border: 0;
+    border-inline-start: 3px solid transparent;
+    border-radius: 0;
+    padding: 11px 18px;
+    background: transparent;
+    color: var(--svi-accent);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: start;
+    width: 100%;
+}
+
+.wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__tab:hover {
+    background: #fff;
+}
+
+.wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__tab.is-active {
+    background: #fff;
+    border-inline-start-color: var(--svi-accent);
+    color: var(--svi-ink);
+    font-weight: 600;
+}
+
+.wpsfsvi-subtabs__panes {
+    padding: 20px 24px 24px;
+    background: #fff;
+}
+
+@media screen and (max-width: 782px) {
+    .wpsfsvi-subtabs__panes {
+        padding: 16px;
+    }
+
+    .wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__nav {
+        flex: 1 1 auto;
+        width: 100%;
+        flex-direction: row;
+        gap: 0;
+        padding: 0 8px;
+        border-inline-end: 0;
+        border-bottom: 1px solid var(--svi-line);
+    }
+
+    .wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__tab {
+        width: auto;
+        border-inline-start: 0;
+        border-bottom: 3px solid transparent;
+        padding: 12px 14px;
+        white-space: nowrap;
+    }
+
+    .wpsfsvi-subtabs--vertical .wpsfsvi-subtabs__tab.is-active {
+        background: transparent;
+        border-bottom-color: var(--svi-accent);
+    }
+}
+
+/* ==========================================================================
+   Tables inside a sub-tab pane.
+   WP's `.form-table th` (20px 10px 20px 0) also matches nested tables, which
+   is why importer headers were flush left and 20px taller than their cells.
+   ========================================================================== */
+
+.wpsfsvi-subtabs table.widefat {
+    margin: 16px 0 8px;
+    border: 1px solid var(--svi-line);
+    border-radius: 6px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.wpsfsvi-subtabs table.widefat th,
+.wpsfsvi-subtabs table.widefat td {
+    width: auto;
+    padding: 11px 14px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.wpsfsvi-subtabs table.widefat thead th {
+    background: var(--svi-soft);
+    border-bottom: 1px solid var(--svi-line);
+    color: var(--svi-ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-align: left;
+}
+
+.wpsfsvi-subtabs table.widefat tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.wpsfsvi-subtabs table.widefat tbody tr:hover td {
+    background: #fbfbfc;
+}
+
+.wpsfsvi-subtabs table.widefat td label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wpsfsvi-subtabs table.widefat td input[type="radio"] {
+    margin: 0;
+}
+
+/* Importer tables: proportional columns so "Plugin installed, not active"
+   does not collapse into three lines in a narrow pane. */
+.wpsfsvi-subtabs table.widefat thead th:nth-child(1) {
+    width: 44%;
+}
+
+.wpsfsvi-subtabs table.widefat thead th:nth-child(2) {
+    width: 26%;
+}
+
+.wpsfsvi-subtabs table.widefat thead th:nth-child(3) {
+    width: 30%;
+}
+
+/* Recent imports: a table-like block.
+   The rows used to be plain inline text, so every Undo button landed at a
+   different x position. A two-column grid puts the label and the action on
+   the same rails as the source table above. */
+.svi-importer__undo > p {
+    margin: 20px 0 8px;
+}
+
+.svi-importer__runs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.svi-importer__runs li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #50575e;
+}
+
+.svi-importer__runs li:nth-child(odd) {
+    background: #f6f7f7;
+}
+
+.svi-importer__runs li:last-child {
+    border-bottom: 0;
+}
+
+.svi-importer__runs em {
+    font-size: 12px;
+    color: #646970;
+    white-space: nowrap;
+}
+
+.svi-importer__runs .button,
+.svi-importer__runs .button-link-delete {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+/* Import progress bar, shared by both importer panes. */
+.svi-gp__track {
+    position: relative;
+    height: 12px;
+    margin: 14px 0 6px;
+    background: #dcdcde;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.svi-gp__bar {
+    height: 100%;
+    width: 0;
+    background: #2271b1;
+    border-radius: 6px;
+    transition: width .25s ease-in-out;
+}
+
+.svi-gp__label {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.svi-gp__meta {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: #646970;
+}
+
+/* Sources that are not on this site: readable, but visibly out of reach. */
+.wpsfsvi-subtabs table.widefat tbody tr.svi-source--off td,
+.wpsfsvi-subtabs table.widefat tbody tr.svi-source--off:hover td {
+    background: #fbfbfc;
+    color: #8c8f94;
+}
+
+.wpsfsvi-subtabs table.widefat tbody tr.svi-source--off td strong {
+    font-weight: 400;
+    color: #8c8f94;
+}
+
+.wpsfsvi-subtabs table.widefat .svi-source__hint {
+    display: block;
+    margin: 3px 0 0 24px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #a7aaad;
+}
+
+/* Narrow admin columns: keep the status text to two lines at most. */
+@media screen and (max-width: 1100px) {
+    .wpsfsvi-subtabs table.widefat th,
+    .wpsfsvi-subtabs table.widefat td {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+}
+
+/* WordPress stacks the cells under 782px; tighten the gaps so one source
+   does not take a whole screen. */
+@media screen and (max-width: 782px) {
+    .wpsfsvi-subtabs table.widefat td {
+        padding: 3px 12px;
+    }
+
+    .wpsfsvi-subtabs table.widefat td:first-child {
+        padding-top: 12px;
+    }
+
+    .wpsfsvi-subtabs table.widefat td:last-child {
+        padding-bottom: 12px;
+    }
+
+    .wpsfsvi-subtabs table.widefat thead {
+        display: none;
+    }
 }

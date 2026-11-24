@@ -2,9 +2,8 @@
 /**
  * Admin screen for importing swatches from another plugin.
  *
- * The screen lives in its own settings tab, right after Import / Export, and is
- * only registered when SVI swatches are switched on and at least one supported
- * plugin left data behind.
+ * The screen is one pane of the Migration tab (migration-hub add-on) and is
+ * only listed when SVI swatches are switched on.
  *
  * @package Smart_Variations_Images\Addons\Swatches
  */
@@ -20,9 +19,14 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 	class SVI_Swatch_Import_Admin
 	{
 		/**
-		 * Tab id of the import screen.
+		 * Anchor of the tab that hosts this screen.
 		 */
-		const TAB_ID = 'swatches_import';
+		const TAB_ID = 'migration';
+
+		/**
+		 * Pane id inside the Migration tab.
+		 */
+		const PANE_ID = 'swatches';
 
 		/**
 		 * AJAX nonce action.
@@ -36,8 +40,9 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 		 */
 		public static function init(): void
 		{
-			add_filter('wpsfsvi_register_settings_woosvi_options', [__CLASS__, 'register_tab'], 30);
-			add_filter('wpsfsvi_register_settings_clean_woosvi_options', [__CLASS__, 'register_tab'], 30);
+			add_filter('wpsfsvi_register_settings_woosvi_options', [__CLASS__, 'add_notice'], 30);
+			add_filter('wpsfsvi_register_settings_clean_woosvi_options', [__CLASS__, 'add_notice'], 30);
+			add_filter('svi_migration_screens', [__CLASS__, 'register_screen'], 20);
 			add_action('admin_enqueue_scripts', [__CLASS__, 'enqueue']);
 
 			foreach (['scan', 'preview', 'import', 'undo', 'runs'] as $action) {
@@ -71,91 +76,32 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 		 * @param array $settings Settings payload.
 		 * @return array
 		 */
-		public static function register_tab(array $settings): array
+		public static function add_notice(array $settings): array
 		{
 			if (!self::should_show()) {
 				return $settings;
 			}
 
-			$settings['tabs'] = isset($settings['tabs']) && is_array($settings['tabs']) ? $settings['tabs'] : [];
-			$settings['sections'] = isset($settings['sections']) && is_array($settings['sections']) ? $settings['sections'] : [];
-
-			if (!self::has_tab($settings['tabs'], self::TAB_ID)) {
-				$tab = [
-					'id' => self::TAB_ID,
-					'title' => __('Import Swatches', 'smart-variations-images'),
-				];
-
-				$settings['tabs'] = self::insert_tab_after($settings['tabs'], 'import_export', $tab);
-			}
-
-			$settings['sections'][] = [
-				'section_title' => __('Import Swatches from another plugin', 'smart-variations-images'),
-				'tab_id' => self::TAB_ID,
-				'section_id' => 'section_import',
-				'section_order' => 10,
-				'fields' => [
-					[
-						'id' => 'importer',
-						'title' => '',
-						'default' => '',
-						'type' => 'custom',
-						'output' => [__CLASS__, 'render_screen'],
-					],
-				],
-			];
-
-			$settings = self::add_swatches_notice($settings);
-
-			return $settings;
+			return self::add_swatches_notice($settings);
 		}
 
 		/**
-		 * Is a tab id already registered?
+		 * Add the pane to the Migration tab.
 		 *
-		 * @param array  $tabs Registered tabs.
-		 * @param string $id   Tab id.
-		 * @return bool
-		 */
-		private static function has_tab(array $tabs, string $id): bool
-		{
-			foreach ($tabs as $tab) {
-				if (isset($tab['id']) && $id === $tab['id']) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		/**
-		 * Insert a tab right after another one, or append it.
-		 *
-		 * @param array  $tabs    Registered tabs.
-		 * @param string $after   Tab id to follow.
-		 * @param array  $new_tab Tab to insert.
+		 * @param array $screens Registered panes.
 		 * @return array
 		 */
-		private static function insert_tab_after(array $tabs, string $after, array $new_tab): array
+		public static function register_screen($screens): array
 		{
-			$position = null;
+			$screens   = is_array($screens) ? $screens : array();
+			$screens[] = [
+				'id' => self::PANE_ID,
+				'label' => __('Swatches', 'smart-variations-images'),
+				'order' => 10,
+				'render' => [__CLASS__, 'render_screen'],
+			];
 
-			foreach ($tabs as $index => $tab) {
-				if (isset($tab['id']) && $after === $tab['id']) {
-					$position = $index;
-					break;
-				}
-			}
-
-			if (null === $position) {
-				$tabs[] = $new_tab;
-
-				return $tabs;
-			}
-
-			array_splice($tabs, $position + 1, 0, [$new_tab]);
-
-			return $tabs;
+			return $screens;
 		}
 
 		/**
@@ -230,11 +176,12 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 		 */
 		public static function render_screen(): void
 		{
-			$detected = SVI_Swatch_Import_Runner::get_detected();
+			$sources = SVI_Swatch_Import_Runner::detect_all();
 			$status_labels = [
-				SVI_Swatch_Import_Source::STATUS_ACTIVE => __('Plugin active', 'smart-variations-images'),
-				SVI_Swatch_Import_Source::STATUS_INACTIVE => __('Plugin installed, not active', 'smart-variations-images'),
-				SVI_Swatch_Import_Source::STATUS_DATA => __('Plugin removed, data left behind', 'smart-variations-images'),
+				SVI_Swatch_Import_Source::STATUS_ACTIVE => __('Installed and active', 'smart-variations-images'),
+				SVI_Swatch_Import_Source::STATUS_INACTIVE => __('Installed, not active', 'smart-variations-images'),
+				SVI_Swatch_Import_Source::STATUS_DATA => __('Removed, data left behind', 'smart-variations-images'),
+				SVI_Swatch_Import_Source::STATUS_NONE => __('Not on this site', 'smart-variations-images'),
 			];
 
 			?>
@@ -245,13 +192,8 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 				</div>
 
 				<p class="description">
-					<?php esc_html_e('SVI can read the swatch settings another plugin left in this database and copy them into SVI. The other plugin keeps working, so you can switch back until you are happy.', 'smart-variations-images'); ?>
+					<?php esc_html_e('SVI can read the swatch settings another plugin left in this database and copy them into SVI. Every supported plugin is listed below; greyed-out rows are plugins that are not installed on this site, so there is nothing to import from them.', 'smart-variations-images'); ?>
 				</p>
-
-				<?php if (empty($detected)) : ?>
-					<p><?php esc_html_e('No supported plugin data was found.', 'smart-variations-images'); ?></p>
-					<?php return; ?>
-				<?php endif; ?>
 
 				<table class="widefat striped svi-importer__sources">
 					<thead>
@@ -262,7 +204,7 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($detected as $slug => $report) : ?>
+						<?php foreach ($sources as $slug => $report) : ?>
 							<?php
 							$evidence = $report['evidence'];
 							$counts = [];
@@ -285,16 +227,25 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 							if (!empty($evidence['options'])) {
 								$counts[] = implode(', ', array_map('sanitize_text_field', (array) $evidence['options']));
 							}
+
+							$ready = !empty($counts);
 							?>
-							<tr>
+							<tr class="<?php echo $ready ? '' : 'svi-source--off'; ?>">
 								<td>
 									<label>
-										<input type="radio" name="svi_import_source" value="<?php echo esc_attr($slug); ?>" />
+										<input type="radio" name="svi_import_source" value="<?php echo esc_attr($slug); ?>" <?php disabled(!$ready); ?> />
 										<strong><?php echo esc_html($report['label']); ?></strong>
 									</label>
+									<?php if (!$ready) : ?>
+										<span class="svi-source__hint"><?php echo esc_html(
+											SVI_Swatch_Import_Source::STATUS_NONE === $report['status']
+												? __('Not installed on this site.', 'smart-variations-images')
+												: __('Installed, but no swatch settings saved yet.', 'smart-variations-images')
+										); ?></span>
+									<?php endif; ?>
 								</td>
 								<td><?php echo esc_html($status_labels[$report['status']] ?? $report['status']); ?></td>
-								<td><?php echo esc_html(implode(' · ', $counts)); ?></td>
+								<td><?php echo $ready ? esc_html(implode(' · ', $counts)) : '&mdash;'; ?></td>
 							</tr>
 						<?php endforeach; ?>
 					</tbody>
@@ -356,14 +307,14 @@ if (!class_exists('SVI_Swatch_Import_Admin')) {
 				'svi-swatch-importer',
 				$base . 'public/assets/css/swatch-importer.css',
 				[],
-				'1.0.1'
+				'1.0.2'
 			);
 
 			wp_enqueue_script(
 				'svi-swatch-importer',
 				$base . 'public/assets/js/swatch-importer.js',
 				[],
-				'1.0.1',
+				'1.0.2',
 				true
 			);
 

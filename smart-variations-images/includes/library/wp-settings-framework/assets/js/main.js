@@ -42,7 +42,10 @@
              * Watch for tab clicks.
              */
             watch: function() {
-                var tab_id = wpsfsvi.tabs.get_tab_id();
+                // A link with a tab hash (e.g. the swatches notice) wins over
+                // the tab this browser opened last.
+                var hash_id = window.location.hash;
+                var tab_id  = (hash_id && $('.wpsfsvi-nav__item-link[href="' + hash_id + '"]').length) ? hash_id : wpsfsvi.tabs.get_tab_id();
 
                 if (tab_id) {
                     wpsfsvi.tabs.set_active_tab(tab_id);
@@ -585,6 +588,90 @@
             }
         }
     };
+
+    /**
+     * Tab bar: arrow navigation when the tabs do not fit.
+     *
+     * The list scrolls sideways instead of pushing the page wide, and the two
+     * arrows appear only while there is something to scroll.
+     */
+    function wpsfsvi_init_nav_scroll() {
+        var wraps = document.querySelectorAll('.wpsfsvi-nav-wrap');
+
+        Array.prototype.forEach.call(wraps, function(wrap) {
+            var nav = wrap.querySelector('.wpsfsvi-nav');
+            var prev = wrap.querySelector('.wpsfsvi-nav__arrow--prev');
+            var next = wrap.querySelector('.wpsfsvi-nav__arrow--next');
+
+            if (!nav || !prev || !next) {
+                return;
+            }
+
+            var step = function() {
+                return Math.max(160, Math.round(nav.clientWidth * 0.6));
+            };
+
+            var update = function() {
+                var max = nav.scrollWidth - nav.clientWidth;
+                var overflowing = max > 4;
+                var offset = Math.abs(nav.scrollLeft);
+
+                wrap.classList.toggle('has-overflow', overflowing);
+                wrap.classList.toggle('is-start', offset <= 2);
+                wrap.classList.toggle('is-end', offset >= max - 2);
+
+                prev.disabled = !overflowing || offset <= 2;
+                next.disabled = !overflowing || offset >= max - 2;
+            };
+
+            prev.addEventListener('click', function() {
+                nav.scrollBy({ left: -step(), behavior: 'smooth' });
+            });
+
+            next.addEventListener('click', function() {
+                nav.scrollBy({ left: step(), behavior: 'smooth' });
+            });
+
+            // Bring the active tab fully into view, moving the list as little as possible.
+            var reveal = function() {
+                var active = nav.querySelector('.wpsfsvi-nav__item--active');
+
+                if (!active || nav.scrollWidth <= nav.clientWidth) {
+                    return;
+                }
+
+                var left = active.offsetLeft - 12;
+                var right = left + active.offsetWidth + 24;
+
+                if (left < nav.scrollLeft) {
+                    nav.scrollLeft = Math.max(0, left);
+                } else if (right > nav.scrollLeft + nav.clientWidth) {
+                    nav.scrollLeft = right - nav.clientWidth;
+                }
+            };
+
+            var refresh = function() {
+                update();
+                reveal();
+                update();
+            };
+
+            nav.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', refresh);
+
+            if (window.ResizeObserver) {
+                new ResizeObserver(refresh).observe(nav);
+            }
+
+            refresh();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', wpsfsvi_init_nav_scroll);
+    } else {
+        wpsfsvi_init_nav_scroll();
+    }
 
     $(document).ready(wpsfsvi.on_ready());
 

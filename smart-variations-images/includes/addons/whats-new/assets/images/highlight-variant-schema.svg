@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120" role="img" aria-label="One product group with three colour variants">
+  <rect width="200" height="120" fill="#f6f7f7"/>
+  <rect x="14" y="14" width="172" height="92" rx="8" fill="#ffffff" stroke="#dcdcde"/>
+  <text x="26" y="34" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#1d2327">ProductGroup</text>
+  <text x="26" y="48" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#646970">variesBy: color</text>
+  <rect x="26" y="58" width="46" height="38" rx="4" fill="#eef2f7" stroke="#c6d7ea"/>
+  <circle cx="49" cy="72" r="8" fill="#14213d"/>
+  <rect x="34" y="84" width="30" height="5" rx="2.5" fill="#d7dde5"/>
+  <rect x="78" y="58" width="46" height="38" rx="4" fill="#eef2f7" stroke="#c6d7ea"/>
+  <circle cx="101" cy="72" r="8" fill="#2e7d32"/>
+  <rect x="86" y="84" width="30" height="5" rx="2.5" fill="#d7dde5"/>
+  <rect x="130" y="58" width="46" height="38" rx="4" fill="#eef2f7" stroke="#c6d7ea"/>
+  <circle cx="153" cy="72" r="8" fill="#c62828"/>
+  <rect x="138" y="84" width="30" height="5" rx="2.5" fill="#d7dde5"/>
+</svg>

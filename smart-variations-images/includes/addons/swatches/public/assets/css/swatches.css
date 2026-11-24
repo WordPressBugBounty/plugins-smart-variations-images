@@ -156,38 +156,21 @@
     display: none;
 }
 
-/* Add to Cart in Catalog: a compact pill that sits on the swatch row and does
-   not inherit the theme's link or button typography (which is 19px in block
-   themes and breaks the row). */
-/* Colours come from the theme so the button always keeps its own contrast.
+/* Add to Cart in Catalog: the theme's own button.
+   Only visibility and the row layout are controlled here. Size, typography,
+   colours, border and hover (including the theme's hover icon) come from the
+   theme's `.button` rules so the card button matches every other button.
    The hidden state needs !important: themes style `.button` with more specific
    selectors and would otherwise keep it visible. */
 .svi-catalog-add-to-cart {
     display: none !important;
-    align-items: center;
     align-self: center;
     box-sizing: border-box;
-    min-height: 30px;
-    padding: 0 12px;
-    border-radius: 4px;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: 0.01em;
-    text-align: center;
     text-decoration: none !important;
-    white-space: nowrap;
-    opacity: 1;
-    transition: opacity 0.15s ease;
 }
 
 .svi-catalog-add-to-cart.visible {
-    display: inline-flex !important;
-}
-
-.svi-catalog-add-to-cart:hover {
-    opacity: 0.85;
+    display: inline-block !important;
 }
 
 .svi-catalog-add-to-cart:focus-visible {

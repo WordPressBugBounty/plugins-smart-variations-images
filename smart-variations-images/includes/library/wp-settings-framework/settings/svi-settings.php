@@ -6,6 +6,91 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 add_filter( 'wpsfsvi_register_settings_woosvi_options', 'wpsfsvi_svi_tabbed_settings' );
 add_filter( 'wpsfsvi_register_settings_clean_woosvi_options', 'wpsfsvi_svi_tabbed_settings_clean' );
+add_filter( 'wpsfsvi_tabs_layout_woosvi_options', 'wpsfsvi_svi_tabs_layout' );
+add_filter( 'wpsfsvi_register_settings_woosvi_options', 'wpsfsvi_svi_order_tabs', 99 );
+add_filter( 'wpsfsvi_register_settings_clean_woosvi_options', 'wpsfsvi_svi_order_tabs', 99 );
+/**
+ * Main tabs as a left sidebar.
+ *
+ * Short labels, more tabs than fit on one row: the horizontal strip needed
+ * arrow scrolling and hid half of them. Vertical shows every tab at once and
+ * falls back to a horizontal strip under 960px (see main.css).
+ *
+ * @param string $layout Current layout.
+ * @return string
+ */
+function wpsfsvi_svi_tabs_layout(  $layout  ) {
+    return 'vertical';
+}
+
+/**
+ * Order the tabs by how often they are opened.
+ *
+ * The switch people look for first (Global), then swatches, then the gallery
+ * addons, then the shop-facing features, and housekeeping last. Tabs added by
+ * a module that is not listed here keep their own order, just before
+ * Import / Export. The `group` key draws a divider between the blocks so the
+ * list reads as sections rather than one long column.
+ *
+ * @param array $wpsfsvi_settings Settings payload.
+ * @return array
+ */
+function wpsfsvi_svi_order_tabs(  $wpsfsvi_settings  ) {
+    if ( empty( $wpsfsvi_settings['tabs'] ) || !is_array( $wpsfsvi_settings['tabs'] ) ) {
+        return $wpsfsvi_settings;
+    }
+    $order = array(
+        'main'              => 10,
+        'swatches'          => 20,
+        'slider'            => 30,
+        'lightbox'          => 40,
+        'thumbnails'        => 50,
+        'video'             => 60,
+        'lens'              => 70,
+        'stacked'           => 80,
+        'fixes'             => 90,
+        'single_variations' => 100,
+        'variant_schema'    => 110,
+        'migration'         => 200,
+        'whats_new'         => 210,
+        'support'           => 220,
+        'import_export'     => 999,
+    );
+    $groups = array(
+        'slider'            => 'gallery',
+        'lightbox'          => 'gallery',
+        'thumbnails'        => 'gallery',
+        'video'             => 'gallery',
+        'lens'              => 'gallery',
+        'stacked'           => 'gallery',
+        'fixes'             => 'gallery',
+        'single_variations' => 'shop',
+        'variant_schema'    => 'shop',
+        'migration'         => 'help',
+        'whats_new'         => 'help',
+        'support'           => 'help',
+        'import_export'     => 'help',
+    );
+    $sorted = array();
+    foreach ( array_values( $wpsfsvi_settings['tabs'] ) as $position => $tab ) {
+        $id = ( isset( $tab['id'] ) ? (string) $tab['id'] : '' );
+        $tab['group'] = ( isset( $groups[$id] ) ? $groups[$id] : '' );
+        $sorted[] = array(
+            'tab'    => $tab,
+            'weight' => ( isset( $order[$id] ) ? $order[$id] : 500 ),
+            'order'  => $position,
+        );
+    }
+    usort( $sorted, static function ( $a, $b ) {
+        if ( $a['weight'] === $b['weight'] ) {
+            return $a['order'] <=> $b['order'];
+        }
+        return $a['weight'] <=> $b['weight'];
+    } );
+    $wpsfsvi_settings['tabs'] = array_column( $sorted, 'tab' );
+    return $wpsfsvi_settings;
+}
+
 /**
  * Tabbed example.
  *

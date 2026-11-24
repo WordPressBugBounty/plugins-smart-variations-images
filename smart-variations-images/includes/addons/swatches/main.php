@@ -37,6 +37,7 @@ if ( ! class_exists( 'SVI_Swatches_Main' ) ) {
 			require_once __DIR__ . '/class-svi-swatches-settings.php';
 			require_once __DIR__ . '/class-svi-swatches.php';
 			require_once __DIR__ . '/class-svi-swatches-frontend.php';
+			require_once __DIR__ . '/class-svi-swatches-blocks.php';
 			require_once __DIR__ . '/class-svi-swatches-product.php';
 
 			// Initialize Settings.
@@ -48,8 +49,15 @@ if ( ! class_exists( 'SVI_Swatches_Main' ) ) {
 			// Initialize Frontend Rendering.
 			SVI_Swatches_Frontend::init();
 
+			// Initialize the block theme bridge (Product Collection cards).
+			SVI_Swatches_Blocks::init();
+
 			// Initialize per-product overrides (admin).
 			SVI_Swatches_Product::init();
+
+			// One-time notice for installs that started with swatches enabled.
+			require_once __DIR__ . '/class-svi-swatches-notice.php';
+			( new SVI_Swatches_Notice() )->run();
 
 			// Swatch importer (free feature: import from other swatch plugins).
 			require_once __DIR__ . '/importer/bootstrap.php';

@@ -165,29 +165,43 @@ class SVI_Swatches
 			return $override;
 		}
 
-		$attribute_id    = $this->get_attribute_id_by_taxonomy($attribute);
-		$attribute_type  = $attribute_id ? (string) $this->get_attribute_swatch_type($attribute_id) : '';
+		$attribute_id   = $this->get_attribute_id_by_taxonomy($attribute);
+		$attribute_type = $attribute_id ? (string) $this->get_attribute_swatch_type($attribute_id) : '';
+		$resolved       = '';
 
 		if ('' !== $attribute_type) {
-			return $attribute_type;
+			$resolved = $attribute_type;
+		} else {
+			// Legacy stores kept the swatch kind in WooCommerce's attribute type.
+			// Reading it here means an upgraded store shows swatches on the very
+			// first request, before any conversion runs.
+			$resolved = $attribute_id ? $this->get_legacy_attribute_type($attribute_id) : '';
 		}
 
-		// Legacy stores kept the swatch kind in WooCommerce's attribute type.
-		// Reading it here means an upgraded store shows swatches on the very
-		// first request, before any conversion runs.
-		$legacy_type = $attribute_id ? $this->get_legacy_attribute_type($attribute_id) : '';
+		/**
+		 * Filters the swatch type resolved for an attribute.
+		 *
+		 * Lets a bridge module answer for attribute types SVI does not own, such
+		 * as the WooCommerce `wc-visual` type (colour and image per value). It
+		 * runs before the global default, which would otherwise turn every
+		 * attribute into the same type.
+		 *
+		 * @param string $resolved    Resolved type, empty when none applies.
+		 * @param string $attribute    Attribute taxonomy.
+		 * @param int    $product_id   Product ID.
+		 * @param int    $attribute_id Attribute taxonomy ID.
+		 */
+		$resolved = (string) apply_filters('svi_resolve_swatch_type', $resolved, $attribute, $product_id, $attribute_id);
 
-		if ('' !== $legacy_type) {
-			return $legacy_type;
+		if ('' === $resolved) {
+			$default = svi_get_option('swatch_type_default', 'none');
+
+			if (in_array($default, ['color', 'image', 'text', 'radio'], true)) {
+				$resolved = $default;
+			}
 		}
 
-		$default = svi_get_option('swatch_type_default', 'none');
-
-		if (in_array($default, ['color', 'image', 'text', 'radio'], true)) {
-			return $default;
-		}
-
-		return '';
+		return $resolved;
 	}
 
 	/**
@@ -438,7 +452,7 @@ class SVI_Swatches
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 		$url    = plugin_dir_url(__FILE__);
 		// Bump on every asset change so browsers pick the new file up.
-		$ver    = '1.3.10';
+		$ver    = '1.3.14';
 
 		wp_enqueue_style('svi-swatches', $url . 'public/assets/css/swatches' . $suffix . '.css', [], $ver);
 

@@ -63,24 +63,43 @@ class SVI_Swatches_Frontend
 
 	/**
 	 * Render swatches in catalog loop.
+	 *
+	 * Classic themes print them from the shop loop hook; block themes append
+	 * the same markup to the Product Collection item (see SVI_Swatches_Blocks).
 	 */
 	public static function render_catalog_swatches(): void
 	{
 		global $product;
 
-		if (!$product || !$product->is_type('variable')) {
+		if (!$product instanceof WC_Product) {
 			return;
+		}
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in catalog_swatches_html().
+		echo self::catalog_swatches_html($product);
+	}
+
+	/**
+	 * Swatch markup for one catalog card.
+	 *
+	 * @param WC_Product $product Product of the card.
+	 * @return string Empty when the card has nothing to show.
+	 */
+	public static function catalog_swatches_html($product): string
+	{
+		if (!$product instanceof WC_Product || !$product->is_type('variable')) {
+			return '';
 		}
 
 		// Check global catalog visibility first.
 		if (!svi_get_option('show_in_catalog', false)) {
-			return;
+			return '';
 		}
 
 		$attributes = $product->get_variation_attributes();
 
 		if (empty($attributes)) {
-			return;
+			return '';
 		}
 
 		// Show a single attribute when one is configured.
@@ -97,7 +116,7 @@ class SVI_Swatches_Frontend
 			}
 
 			if ('' === $match) {
-				return;
+				return '';
 			}
 
 			$attributes = [$match => $attributes[$match]];
@@ -164,32 +183,37 @@ class SVI_Swatches_Frontend
 		}
 
 		if ('' === $swatches_html) {
-			return;
+			return '';
 		}
+
+		$html = '';
 
 		// Slider Navigation Wrapper
 		if ($overflow === 'slider') {
-			echo '<div class="' . esc_attr($container_classes) . '">';
-			echo '<button type="button" class="svi-slider-nav svi-nav-prev" aria-label="' . esc_attr__('Previous', 'smart-variations-images') . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>';
+			$html .= '<div class="' . esc_attr($container_classes) . '">';
+			$html .= '<button type="button" class="svi-slider-nav svi-nav-prev" aria-label="' . esc_attr__('Previous', 'smart-variations-images') . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>';
 		}
 
-		echo '<div class="' . esc_attr(implode(' ', $wrapper_classes)) . '" style="' . esc_attr($style) . '">';
+		$html .= '<div class="' . esc_attr(implode(' ', $wrapper_classes)) . '" style="' . esc_attr($style) . '">';
 
-		echo $swatches_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup is escaped in generate_swatch_html().
+		$html .= $swatches_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup is escaped in generate_swatch_html().
 
 		if ($show_cart) {
-			// Placeholder for Add to Cart button (JS will handle visibility/action)
-			echo '<a href="#" class="button add_to_cart_button svi-catalog-add-to-cart" data-product_id="' . esc_attr($product->get_id()) . '">';
-			echo esc_html__('Add to Cart', 'woocommerce');
-			echo '</a>';
+			// JS fills the href with the chosen values: the button opens the
+			// product page, it does not add to the cart.
+			$html .= '<a href="#" class="button product_type_variable add_to_cart_button svi-catalog-add-to-cart" data-product_id="' . esc_attr($product->get_id()) . '">';
+			$html .= esc_html__('View product', 'woocommerce');
+			$html .= '</a>';
 		}
 
-		echo '</div>';
+		$html .= '</div>';
 
 		if ($overflow === 'slider') {
-			echo '<button type="button" class="svi-slider-nav svi-nav-next" aria-label="' . esc_attr__('Next', 'smart-variations-images') . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>';
-			echo '</div>'; // Close .svi-slider-container
+			$html .= '<button type="button" class="svi-slider-nav svi-nav-next" aria-label="' . esc_attr__('Next', 'smart-variations-images') . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>';
+			$html .= '</div>'; // Close .svi-slider-container
 		}
+
+		return $html;
 	}
 
 
@@ -283,7 +307,7 @@ class SVI_Swatches_Frontend
 	 *
 	 * @param WC_Product $product   Product.
 	 * @param string     $attribute Attribute key.
-	 * @return array<int, array{slug:string,name:string,term_id:int}>
+	 * @return array<int, array{slug:string,value:string,name:string,term_id:int}>
 	 */
 	private static function get_attribute_values(WC_Product $product, string $attribute): array
 	{
@@ -293,6 +317,8 @@ class SVI_Swatches_Frontend
 			foreach (wc_get_product_terms($product->get_id(), $attribute, ['fields' => 'all']) as $term) {
 				$values[] = [
 					'slug' => $term->slug,
+					// Taxonomy values are selected by term slug.
+					'value' => $term->slug,
 					'name' => $term->name,
 					'term_id' => (int) $term->term_id,
 				];
@@ -319,6 +345,10 @@ class SVI_Swatches_Frontend
 			foreach ($product_attribute->get_options() as $option) {
 				$values[] = [
 					'slug' => sanitize_title($option),
+					// The dropdown (and the variation data) keep the option text
+					// ("Large Print"), so that is what the swatch has to select.
+					// A sanitized slug would never match the <option value>.
+					'value' => $option,
 					'name' => $option,
 					'term_id' => 0,
 				];
@@ -634,6 +664,7 @@ class SVI_Swatches_Frontend
 
 		foreach ($terms as $term) {
 			$slug  = $term['slug'];
+			$value = isset($term['value']) && '' !== (string) $term['value'] ? (string) $term['value'] : $slug;
 			$label = $term['name'];
 
 			// A term missing from $options has no variation at all: the
@@ -674,7 +705,7 @@ class SVI_Swatches_Frontend
 				$values['image'] = $swatch_instance->get_auto_image($product_id, $attribute, $slug);
 			}
 
-			$selected_class = ($selected_slug === $slug) ? 'selected' : '';
+			$selected_class = ($selected_slug === $value || $selected_slug === $slug) ? 'selected' : '';
 			$inner          = '';
 			$swatch_classes = [
 				'svi-swatch',
@@ -690,6 +721,17 @@ class SVI_Swatches_Frontend
 					'<span class="svi-swatch-inner" style="%s"></span>',
 					esc_attr(SVI_Swatch_Values::build_color_css($values['colors']))
 				);
+			} elseif ('color' === $swatch_type && $values['image'] > 0) {
+				// A value can carry only an image (WooCommerce "color / image"
+				// attributes mix both per term).
+				$img_src = wp_get_attachment_image_url($values['image'], 'thumbnail');
+
+				if ($img_src) {
+					$inner = sprintf(
+						'<img src="%s" alt="" class="svi-swatch-image" loading="lazy" decoding="async" />',
+						esc_url($img_src)
+					);
+				}
 			} elseif ('image' === $swatch_type && $values['image'] > 0) {
 				$img_src = wp_get_attachment_image_url($values['image'], 'thumbnail');
 
@@ -699,6 +741,13 @@ class SVI_Swatches_Frontend
 						esc_url($img_src)
 					);
 				}
+			} elseif ('image' === $swatch_type && !empty($values['colors'])) {
+				// The mirror image of the case above: an image attribute whose
+				// value only has a colour still shows a colour, not a label.
+				$inner = sprintf(
+					'<span class="svi-swatch-inner" style="%s"></span>',
+					esc_attr(SVI_Swatch_Values::build_color_css($values['colors']))
+				);
 			} elseif ('radio' === $swatch_type) {
 				$inner = '<span class="svi-radio-circle" aria-hidden="true"></span><span class="svi-radio-label">' . esc_html($label) . '</span>';
 			}
@@ -792,14 +841,14 @@ class SVI_Swatches_Frontend
 				}
 
 				if ($is_available && $catalog_link_variation && '' !== $permalink) {
-					$extra .= ' data-url="' . esc_url(add_query_arg('attribute_' . $attribute, $slug, $permalink)) . '"';
+					$extra .= ' data-url="' . esc_url(add_query_arg('attribute_' . $attribute, $value, $permalink)) . '"';
 				}
 			}
 
 			$html .= sprintf(
 				'<button type="button" class="%1$s" data-value="%2$s" data-label="%3$s" role="radio" aria-checked="%4$s" aria-label="%3$s"%5$s%9$s>%6$s%7$s%8$s</button>',
 				esc_attr(implode(' ', array_filter($swatch_classes))),
-				esc_attr($slug),
+				esc_attr($value),
 				esc_attr($label),
 				$selected_class ? 'true' : 'false',
 				$is_disabled ? ' aria-disabled="true" tabindex="-1"' : ' tabindex="-1"',

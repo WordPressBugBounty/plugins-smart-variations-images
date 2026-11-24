@@ -1,0 +1,82 @@
+/**
+ * Variations as products — free styles.
+ *
+ * The card itself uses the theme's product card; only the details the theme
+ * cannot know about live here.
+ */
+
+/* Variations panel: the opt-in under the SVI gallery builder. */
+.svi-sv-variation-field {
+	clear: both;
+	margin: 8px 0 0;
+	padding-top: 8px;
+	border-top: 1px solid #eee;
+	font-size: 12px;
+}
+
+.svi-sv-variation-field label {
+	display: inline-block;
+	font-weight: 600;
+}
+
+.svi-sv-variation-field .description {
+	display: block;
+	margin-top: 4px;
+	color: #757575;
+}
+
+/* Shop cards. */
+.svi-sv-card {
+	position: relative;
+}
+
+.svi-sv-card .svi-sv-card-label {
+	display: inline-block;
+	margin: 0 0 4px;
+	font-size: 11px;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	opacity: .7;
+}
+
+/* Settings hint under the feature switch. */
+.svi-sv-pro-hint {
+	margin: 8px 0 0;
+	color: #757575;
+	font-size: 12px;
+}
+
+/* Bulk tool (PRO) on the settings screen. */
+.svi-sv-bulk__row {
+	margin: 0 0 12px;
+}
+
+.svi-sv-bulk__actions {
+	margin: 16px 0 8px;
+}
+
+.svi-sv-bulk__status {
+	font-weight: 600;
+	margin: 8px 0;
+}
+
+.svi-sv-bulk__bar {
+	background: #e6e9ee;
+	border-radius: 3px;
+	height: 10px;
+	overflow: hidden;
+	width: 100%;
+	max-width: 520px;
+}
+
+.svi-sv-bulk__bar span {
+	background: #2271b1;
+	display: block;
+	height: 100%;
+	transition: width .3s ease;
+	width: 0;
+}
+
+.svi-sv-bulk__resume {
+	margin-top: 10px;
+}

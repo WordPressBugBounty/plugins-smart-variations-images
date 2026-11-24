@@ -136,6 +136,7 @@
                     $wrapper.find('.svi-swatch').removeClass('selected');
                     $swatch.addClass('selected');
                     SVI_Swatches.updateSelectedLabel($wrapper, $swatch.data('label'));
+                    SVI_Swatches.followCatalogSelection($wrapper, $swatch);
 
                     // Update Add to Cart Button
                     const $container = $wrapper.closest('.svi-catalog-swatches');
@@ -167,6 +168,7 @@
                 if (!linkVariation) {
                     $wrapper.find('.svi-swatch').removeClass('selected');
                     $swatch.addClass('selected');
+                    SVI_Swatches.followCatalogSelection($wrapper, $swatch);
                     return;
                 }
 
@@ -191,10 +193,18 @@
 
             e.preventDefault();
 
-            // Find hidden select
+            // Find hidden select. Custom attribute names keep their label case
+            // ("Print") while the select is lower case ("attribute_print"), so
+            // the last lookup compares names case-insensitively.
             let $select = $form.find('select[name="' + attribute + '"]');
             if ($select.length === 0) {
                 $select = $form.find('select[name="attribute_' + attribute + '"]');
+            }
+            if ($select.length === 0) {
+                const wanted = ('attribute_' + String(attribute).replace(/^attribute_/, '')).toLowerCase();
+                $select = $form.find('select[name^="attribute_"]').filter(function () {
+                    return String(this.name).toLowerCase() === wanted;
+                });
             }
 
             if ($select.length === 0) return;
@@ -355,6 +365,33 @@
         },
 
         /**
+         * Real select name for a wrapper attribute.
+         *
+         * Custom attributes carry the label case in data-attribute ("Print")
+         * but the select is lower case ("attribute_print"), so the lookup is
+         * case-insensitive and falls back to the constructed name.
+         */
+        resolveSelectName: function ($form, attribute) {
+            const raw = String(attribute).replace(/^attribute_/, '');
+            const direct = $form.find('select[name="attribute_' + raw + '"]');
+
+            if (direct.length) {
+                return direct.attr('name');
+            }
+
+            const wanted = ('attribute_' + raw).toLowerCase();
+            let found = '';
+
+            $form.find('select[name^="attribute_"]').each(function () {
+                if (String(this.name).toLowerCase() === wanted) {
+                    found = this.name;
+                }
+            });
+
+            return found || ('attribute_' + raw);
+        },
+
+        /**
          * Debounced availability refresh.
          */
         scheduleAvailabilityUpdate: function () {
@@ -426,7 +463,7 @@
             $form.find('.svi-swatches-wrapper').each(function () {
                 const $wrapper = $(this);
                 const attribute = $wrapper.data('attribute');
-                const selectName = 'attribute_' + String(attribute).replace(/^attribute_/, '');
+                const selectName = SVI_Swatches.resolveSelectName($form, attribute);
                 const oosBehavior = $wrapper.data('oos') || 'blur';
 
                 $wrapper.find('.svi-swatch').each(function () {
@@ -504,7 +541,7 @@
             $form.find('.svi-swatches-wrapper').each(function () {
                 const $wrapper = $(this);
                 const attribute = String($wrapper.data('attribute')).replace(/^attribute_/, '');
-                const $select = $form.find('select[name="attribute_' + attribute + '"]');
+                const $select = $form.find('select[name="' + SVI_Swatches.resolveSelectName($form, $wrapper.data('attribute')) + '"]');
                 const current = $select.val() || '';
 
                 $wrapper.find('.svi-swatch').each(function () {
@@ -663,7 +700,7 @@
 
                 // Clicking the same value again brings the original picture back.
                 if ($img.length && $img.attr('src') === $swatch.attr('data-image')) {
-                    self.restoreCardImage($wrapper);
+                    self.restoreCardImage($wrapper, true);
                     return;
                 }
 
@@ -694,8 +731,22 @@
             return $();
         },
 
-        swapCardImage: function ($swatch) {
-            const $img = this.getCardImage($swatch.closest('.svi-catalog-wrapper'));
+        /**
+         * Show the picture of a value the shopper just picked.
+         *
+         * Hover mode previews on the way in; picking with the keyboard or a tap
+         * has no hover first, so the chosen swatch updates the card too. Click
+         * mode handles its own toggling and is left alone.
+         */
+        followCatalogSelection: function ($wrapper, $swatch) {
+            if ('hover' !== $wrapper.attr('data-image-action') || !$swatch.attr('data-image')) {
+                return;
+            }
+
+            this.swapCardImage($swatch);
+        },
+
+        swapCardImage: function ($swatch) {            const $img = this.getCardImage($swatch.closest('.svi-catalog-wrapper'));
             const src = $swatch.attr('data-image');
 
             if (!$img.length || !src) {
@@ -712,11 +763,28 @@
             $img.addClass('svi-card-image-swapped');
         },
 
-        restoreCardImage: function ($wrapper) {
+        /**
+         * Put the card picture back.
+         *
+         * A value the shopper picked outranks the hover preview: leaving the
+         * card keeps the picture of that value instead of falling back to the
+         * default one. `forceOriginal` is for the click mode, where clicking
+         * the swapped swatch again is meant to clear the swap.
+         */
+        restoreCardImage: function ($wrapper, forceOriginal) {
             const $img = this.getCardImage($wrapper);
-            const original = $img.data('sviOriginalSrc');
 
-            if (!$img.length || typeof original === 'undefined') {
+            if (!$img.length || typeof $img.data('sviOriginalSrc') === 'undefined') {
+                return;
+            }
+
+            const original = $img.data('sviOriginalSrc');
+            const $picked = forceOriginal ? $() : $wrapper.find('.svi-swatch.selected[data-image]').first();
+            const picked = $picked.length ? $picked.attr('data-image') : '';
+
+            if (picked && picked !== original) {
+                $img.attr('src', picked).removeAttr('srcset').removeAttr('sizes');
+                $img.addClass('svi-card-image-swapped');
                 return;
             }
 
@@ -771,7 +839,10 @@
 
                 $form.find('select[name^="attribute_"]').each(function () {
                     const $select = $(this);
-                    const $wrapper = $form.find('.svi-swatches-wrapper[data-attribute="' + $select.attr('name').replace('attribute_', '') + '"]');
+                    const attrName = $select.attr('name').replace('attribute_', '');
+                    const $wrapper = $form.find('.svi-swatches-wrapper').filter(function () {
+                        return String($(this).data('attribute')).toLowerCase() === String(attrName).toLowerCase();
+                    }).first();
 
                     if (!$wrapper.length || !$select.val()) {
                         return;
@@ -790,6 +861,11 @@
 
         handleReset: function (e) {
             $('.svi-swatch').removeClass('selected').attr('aria-checked', 'false');
+
+            // Nothing is picked any more, so the cards go back to their own picture.
+            $('.svi-catalog-wrapper').each(function () {
+                SVI_Swatches.restoreCardImage($(this));
+            });
 
             $('.svi-swatches-wrapper').each(function () {
                 SVI_Swatches.updateSelectedLabel($(this), '');

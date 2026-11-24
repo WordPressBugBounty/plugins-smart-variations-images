@@ -1,0 +1,54 @@
+/**
+ * Variations as products — PRO styles.
+ */
+
+.svi-sv-card-options {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin: 8px 0;
+}
+
+.svi-sv-card-options__label {
+	font-size: 11px;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	opacity: .65;
+	margin-right: 2px;
+}
+
+.svi-sv-option {
+	appearance: none;
+	background: #fff;
+	border: 1px solid #d7dde5;
+	border-radius: 4px;
+	color: inherit;
+	cursor: pointer;
+	font: inherit;
+	font-size: 12px;
+	line-height: 1;
+	padding: 6px 9px;
+	transition: border-color .15s ease, background-color .15s ease, color .15s ease;
+}
+
+.svi-sv-option:hover,
+.svi-sv-option:focus-visible {
+	border-color: #333;
+	outline: none;
+}
+
+.svi-sv-option.is-selected {
+	background: #333;
+	border-color: #333;
+	color: #fff;
+}
+
+.svi-sv-loading {
+	opacity: .6;
+	pointer-events: none;
+}
+
+.svi-sv-hover {
+	display: none;
+}

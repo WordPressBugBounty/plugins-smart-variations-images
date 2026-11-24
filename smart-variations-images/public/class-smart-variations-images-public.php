@@ -676,7 +676,13 @@ class Smart_Variations_Images_Public {
      */
     public function render_frontend( bool $from_template_override = false ) : void {
         global $product;
-        if ( $this->options->template === 'Divi' && $this->validate_runningDivi( $product ) && !wp_doing_ajax() ) {
+        if ( apply_filters(
+            'svi_skip_gallery_render',
+            false,
+            $product,
+            $from_template_override,
+            $this->options->template
+        ) ) {
             return;
         }
         $run = true;
@@ -1860,30 +1866,15 @@ CSS;
     /**
      * Check if the page is running Divi or a Divi template.
      *
+     * The Divi module detection lives in includes/addons/divi-gallery/.
+     *
      * @since    1.0.0
+     * @since    5.3.9 Divi 5 block modules are recognised.
      * @param    WC_Product $product The WooCommerce product object.
      * @return   bool True if running Divi, false otherwise.
      */
     public function validate_runningDivi( WC_Product $product ) : bool {
-        $post_content = get_post( $product->get_id() );
-        $content = $post_content->post_content;
-        $pos = strpos( $content, 'et_pb_wc_images' );
-        $pos2 = strpos( $content, 'et_pb_wc_gallery' );
-        if ( $pos !== false || $pos2 !== false ) {
-            return true;
-        }
-        if ( class_exists( 'ET_Theme_Builder_Request' ) ) {
-            $tb_layouts = et_theme_builder_get_template_layouts( ET_Theme_Builder_Request::from_post( $product->get_id() ) );
-            if ( !empty( $tb_layouts ) && $tb_layouts[ET_THEME_BUILDER_BODY_LAYOUT_POST_TYPE]['override'] ) {
-                $templateContent = get_the_content( null, false, $tb_layouts[ET_THEME_BUILDER_BODY_LAYOUT_POST_TYPE]['id'] );
-                $pos = strpos( $templateContent, 'et_pb_wc_images' );
-                $pos2 = strpos( $templateContent, 'et_pb_wc_gallery' );
-                if ( $pos !== false || $pos2 !== false ) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return (bool) apply_filters( 'svi_running_divi_gallery', false, $product );
     }
 
     /**

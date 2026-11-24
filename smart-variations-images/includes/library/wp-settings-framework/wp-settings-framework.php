@@ -2,6 +2,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Bundled framework class and dynamic option hook retain their legacy public API.
 
+require_once __DIR__ . '/class-wpsfsvi-subtabs.php';
+
 /**
  * WordPress Settings Framework
  *
@@ -36,6 +38,18 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		 * @var array
 		 */
 		private $tabs;
+
+		/**
+		 * Tab layout: horizontal (default) or vertical.
+		 *
+		 * Set with `'tabs_layout' => 'vertical'` in the settings array. The
+		 * vertical layout becomes a horizontal strip below 960px, so narrow and
+		 * touch admin screens keep working without a second markup path.
+		 *
+		 * @access private
+		 * @var string
+		 */
+		private $tabs_layout = 'horizontal';
 
 		/**
 		 * @access private
@@ -157,6 +171,10 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 			if (isset($this->settings_wrapper['sections'])) {
 				$this->tabs     = (isset($this->settings_wrapper['tabs'])) ? $this->settings_wrapper['tabs'] : array();
 				$this->settings = $this->settings_wrapper['sections'];
+
+				$layout = isset($this->settings_wrapper['tabs_layout']) ? (string) $this->settings_wrapper['tabs_layout'] : 'horizontal';
+				$layout = apply_filters('wpsfsvi_tabs_layout_' . $this->option_group, $layout);
+				$this->tabs_layout = ('vertical' === strtolower($layout)) ? 'vertical' : 'horizontal';
 				// If not, it's probably just an array of settings
 			} else {
 				$this->settings = $this->settings_wrapper;
@@ -238,7 +256,7 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 ?>
 			<div class="wpsfsvi-settings wpsfsvi-settings--<?php echo esc_attr($this->option_group); ?>">
 				<?php $this->settings_header(); ?>
-				<div class="wpsfsvi-settings__content">
+				<div class="wpsfsvi-settings__content wpsfsvi-settings__content--<?php echo esc_attr($this->tabs_layout); ?>">
 					<?php $this->settings(); ?>
 				</div>
 			</div>
@@ -1025,12 +1043,17 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 		 */
 		public function generate_custom_field($args)
 		{
+			// The wrapper lets the stylesheet collapse the label column for a
+			// field that has no label, so full-width screens keep their width.
+			echo '<div class="wpsfsvi-field-custom">';
+
 			if (isset($args['output']) && is_callable($args['output'])) {
 				call_user_func($args['output'], $args);
-				return;
+			} else {
+				echo wp_kses_post(isset($args['output']) ? $args['output'] : $args['default']);
 			}
 
-			echo wp_kses_post(isset($args['output']) ? $args['output'] : $args['default']);
+			echo '</div>';
 		}
 
 		/**
@@ -1341,9 +1364,15 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 
 			do_action('wpsfsvi_before_tab_links_' . $this->option_group);
 			?>
-			<ul class="wpsfsvi-nav">
+			<div class="wpsfsvi-nav-wrap wpsfsvi-nav-wrap--<?php echo esc_attr($this->tabs_layout); ?>">
+				<button type="button" class="wpsfsvi-nav__arrow wpsfsvi-nav__arrow--prev" aria-label="<?php esc_attr_e('Scroll tabs left', 'smart-variations-images'); ?>" disabled>
+					<span aria-hidden="true">&#8249;</span>
+				</button>
+				<ul class="wpsfsvi-nav wpsfsvi-nav--<?php echo esc_attr($this->tabs_layout); ?>">
 				<?php
 				$i = 0;
+				$last_group = '';
+
 				foreach ($this->tabs as $tab_data) {
 					if (!$this->tab_has_settings($tab_data['id'])) {
 						continue;
@@ -1356,6 +1385,15 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 					$tab_data['class'] .= self::add_show_hide_classes($tab_data);
 
 					$active = ($i == 0) ? 'wpsfsvi-nav__item--active' : '';
+
+					$group = isset($tab_data['group']) ? (string) $tab_data['group'] : '';
+
+					// Thin rule between groups; the strip hides it.
+					if ($i > 0 && '' !== $group && $group !== $last_group) {
+						echo '<li class="wpsfsvi-nav__divider" aria-hidden="true"></li>';
+					}
+
+					$last_group = $group;
 				?>
 					<li class="wpsfsvi-nav__item <?php echo esc_attr($active); ?>">
 						<a class="wpsfsvi-nav__item-link <?php echo esc_attr($tab_data['class']); ?>" href="#tab-<?php echo esc_attr($tab_data['id']); ?>"><?php echo esc_html($tab_data['title']); ?></a>
@@ -1364,10 +1402,14 @@ if (!class_exists('WordPressSettingsFrameworkSVI')) {
 					$i++;
 				}
 				?>
-				<li class="wpsfsvi-nav__item wpsfsvi-nav__item--last">
+				</ul>
+				<button type="button" class="wpsfsvi-nav__arrow wpsfsvi-nav__arrow--next" aria-label="<?php esc_attr_e('Scroll tabs right', 'smart-variations-images'); ?>" disabled>
+					<span aria-hidden="true">&#8250;</span>
+				</button>
+				<div class="wpsfsvi-nav__item--last">
 					<input type="submit" class="button-primary wpsfsvi-button-submit" value="<?php esc_attr_e('Save Changes', 'smart-variations-images'); ?>">
-				</li>
-			</ul>
+				</div>
+			</div>
 
 			<?php // Add this here so notices are moved. 
 			?>

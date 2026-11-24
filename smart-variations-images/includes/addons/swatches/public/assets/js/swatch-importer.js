@@ -103,6 +103,7 @@
 
 		var percent = total > 0 ? Math.round((done / total) * 100) : 100;
 		bar.style.width = Math.min(100, percent) + '%';
+		bar.parentElement.setAttribute('data-progress', percent + '%');
 		text.textContent = percent + '% (' + done + '/' + total + ')';
 	}
 
@@ -199,7 +200,7 @@
 				} else if (run.finished) {
 					var button = document.createElement('button');
 					button.type = 'button';
-					button.className = 'button button-link-delete';
+					button.className = 'button-link-delete svi-importer__undo-run';
 					button.textContent = window.sviImporterStrings ? window.sviImporterStrings.undo : 'Undo';
 					button.addEventListener('click', function () {
 						undo(run.id);

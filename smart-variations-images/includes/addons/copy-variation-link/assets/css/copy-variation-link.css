@@ -1,0 +1,48 @@
+/**
+ * Copy link to this variation.
+ */
+
+.svi-copy-link {
+	margin: 10px 0 14px;
+}
+
+.svi-copy-link__button {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 0;
+	background: none;
+	border: 0;
+	box-shadow: none;
+	color: inherit;
+	font: inherit;
+	font-size: 0.9em;
+	line-height: 1.4;
+	cursor: pointer;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.svi-copy-link__button:hover {
+	text-decoration-thickness: 2px;
+}
+
+.svi-copy-link__button:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+.svi-copy-link__icon {
+	display: inline-flex;
+}
+
+.svi-copy-link__status {
+	display: block;
+	margin-top: 4px;
+	font-size: 0.85em;
+}
+
+.svi-copy-link__status:empty {
+	display: none;
+}
